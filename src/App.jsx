@@ -1,4 +1,4 @@
-import { default as Layout } from "./components/Layout";
+import { Layout } from "./components";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
