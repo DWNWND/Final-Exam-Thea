@@ -8,7 +8,8 @@ export default function Home() {
         <title>Home | Holidayz</title>
       </Helmet>
       <div>
-        <h1>Home</h1>
+        <h1 className="text-center text-3xl font-bold underline">Hello World</h1>
+        <h1 className="text-sm">Home</h1>
       </div>
     </HelmetProvider>
   );
