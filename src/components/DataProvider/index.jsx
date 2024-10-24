@@ -24,5 +24,5 @@ export default function DataProvider({ children }) {
     console.log(venuesArray);
   }, [data]);
 
-  return <DataContext.Provider context={{ venues, setVenues, isLoading, isError }}>{children}</DataContext.Provider>;
+  return <DataContext.Provider value={{ venues, setVenues, isLoading, isError }}>{children}</DataContext.Provider>;
 }
