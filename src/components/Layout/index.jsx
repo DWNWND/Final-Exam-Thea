@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "../";
+import { ErrorFallback, DataProvider } from "../";
 
-export default function Layout() {
+export function Layout() {
   return (
     <div>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <h1>Layout</h1>
-        <Outlet />
+        <DataProvider>
+          <Outlet />
+        </DataProvider>
       </ErrorBoundary>
     </div>
   );
