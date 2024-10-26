@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from "react";
 import { Link } from "react-router-dom";
-import NavBtn from "../../../Buttons";
+import { NavBtn } from "../../../Buttons";
 import styles from "./HamburgerMenu.module.css";
 
 const OpenMenuContext = createContext();
