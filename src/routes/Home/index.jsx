@@ -1,4 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import SearchForm from "../../components/SearchForm";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <div>
         <h1 className="text-center text-3xl font-bold underline">Hello World</h1>
         <h1 className="text-sm">Home</h1>
+        <SearchForm />
       </div>
     </HelmetProvider>
   );
