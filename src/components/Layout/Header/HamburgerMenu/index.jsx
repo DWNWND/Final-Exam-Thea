@@ -1,5 +1,6 @@
 import { useState, createContext, useContext } from "react";
 import { Link } from "react-router-dom";
+import NavBtn from "../../../Buttons/NavBtn";
 import styles from "./HamburgerMenu.module.css";
 
 const OpenMenuContext = createContext();
@@ -84,19 +85,19 @@ function OpenMenu() {
         <div className={`${styles.line} lg:hidden`}></div>
         <li>
           <ul className="flex flex-col gap-2">
-            <li className={`${styles.openMenuBtn} p-2 px-20 rounded-lg flex justify-center content-center border border-solid border-primary-green`}>
-              <Link to="/:username" className={`${styles.openMenuBtnText} text-primary-green`} onClick={() => handleClick()}>
-                My profile
+            <li>
+              <Link to="/:username">
+                <NavBtn innerText="My profile" tailw="rounded" color="primary-green" />
               </Link>
             </li>
-            <li className={`${styles.openMenuBtn} p-2 px-20 rounded-lg flex justify-center content-center border border-solid border-primary-green`}>
-              <Link to="/:username/listings" className={`${styles.openMenuBtnText} text-primary-green`} onClick={() => handleClick()}>
-                My listings
+            <li>
+              <Link to="/:username/listings">
+                <NavBtn innerText="My listings" tailw="rounded" color="primary-green" />
               </Link>
             </li>
-            <li className={`${styles.openMenuBtn} p-2 px-20 rounded-lg flex justify-center content-center border border-solid border-primary-green`}>
-              <Link to="/:username/bookings" className={`${styles.openMenuBtnText} text-primary-green`} onClick={() => handleClick()}>
-                My bookings
+            <li>
+              <Link to="/:username/bookings">
+                <NavBtn innerText="My bookings" tailw="rounded" color="primary-green" />
               </Link>
             </li>
           </ul>

@@ -29,8 +29,7 @@ nav.active {
   z-index: 100;
 }
 
-.openMenuLink,
-.openMenuBtnText {
+.openMenuLink {
   font-family: "Inter", sans-serif;
   text-decoration: none;
   font-size: 1.125rem;
@@ -46,14 +45,6 @@ nav.active {
   @media (min-width: 1025px) {
     &:hover {
       text-decoration: underline;
-    }
-  }
-}
-
-.openMenuBtn {
-  @media (min-width: 1025px) {
-    &:hover {
-      box-shadow: 0 0 0 2px var(--color-comp-green);
     }
   }
 }
