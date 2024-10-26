@@ -16,7 +16,7 @@ export default function HamburgerMenu() {
       <OpenMenuContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
         <button className={styles.hamburgerMenuBtn} value="button to open and close menu" onClick={() => onHamburgerMenuClick()}>
           <div className={isMenuOpen ? "burger burger-squeeze open" : "burger burger-squeeze"}>
-            <div className={styles.hide}>menu</div>
+            <div className="hidden">menu</div>
             <div className="burger-lines"></div>
           </div>
         </button>
@@ -35,56 +35,71 @@ function OpenMenu() {
 
   return (
     <nav className={`${isMenuOpen ? styles.active : styles.hidden} ${styles.nav}`}>
-      <ul className={styles.navContainer}>
+      <ul className="flex flex-col lg:flex-row justify-evenly gap-4 p-6 bg-white">
         <li>
-          <Link to="/" className={styles.navLinkPages} onClick={() => handleClick()}>
+          <Link to="/" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
             Home
           </Link>
         </li>
+
         <li>
-          <div className={styles.navLinkPages}>Categories</div>
-          <ul className={styles.navLinkCategoryList}>
+          <Link to="/" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
+            Search accommodation
+          </Link>
+        </li>
+        <li>
+          <Link to="/new/listing" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
+            Add new listing
+          </Link>
+        </li>
+        <div className={`${styles.line} lg:hidden`}></div>
+        <li>
+          <ul className="flex flex-col gap-4 lg:gap-2">
             <li>
-              <Link to="/products/electronics" className={styles.navLinkCategories} onClick={() => handleClick()}>
-                Electronics
+              <Link to="/about" className={styles.openMenuLink} onClick={() => handleClick()}>
+                About Holidaze
               </Link>
             </li>
             <li>
-              <Link to="/products/audio" className={styles.navLinkCategories} onClick={() => handleClick()}>
-                Audio
-              </Link>
-            </li>
-            <li>
-              <Link to="/products/fashion" className={styles.navLinkCategories} onClick={() => handleClick()}>
-                Fashion
-              </Link>
-            </li>
-            <li>
-              <Link to="/products/beauty" className={styles.navLinkCategories} onClick={() => handleClick()}>
-                Beauty
-              </Link>
-            </li>
-            <li>
-              <Link to="/products/watches" className={styles.navLinkCategories} onClick={() => handleClick()}>
-                Watches
-              </Link>
-            </li>
-            <li>
-              <Link to="/products/shoes" className={styles.navLinkCategories} onClick={() => handleClick()}>
-                Shoes
+              <Link to="/contact" className={styles.openMenuLink} onClick={() => handleClick()}>
+                Contact us
               </Link>
             </li>
           </ul>
         </li>
         <li>
-          <Link to="/contact" className={styles.navLinkPages} onClick={() => handleClick()}>
-            Contact us
-          </Link>
+          <ul className="flex flex-col gap-4 lg:gap-2 text-black">
+            <li>
+              <Link to="/terms" className={styles.openMenuLink} onClick={() => handleClick()}>
+                Terms & conditions
+              </Link>
+            </li>
+            <li>
+              <Link to="/faq" className={styles.openMenuLink} onClick={() => handleClick()}>
+                FAQ
+              </Link>
+            </li>
+          </ul>
         </li>
+        <div className={`${styles.line} lg:hidden`}></div>
         <li>
-          <Link to="/support" className={styles.navLinkPages} onClick={() => handleClick()}>
-            Help & support
-          </Link>
+          <ul className="flex flex-col gap-2">
+            <li className="p-2 rounded-lg flex justify-center content-center border border-solid border-primary-green">
+              <Link to="/:username" className={`${styles.openMenuLink} text-primary-green`} onClick={() => handleClick()}>
+                My profile
+              </Link>
+            </li>
+            <li className="p-2 rounded-lg flex justify-center content-center border border-solid border-primary-green">
+              <Link to="/:username/listings" className={`${styles.openMenuLink} text-primary-green`} onClick={() => handleClick()}>
+                My listings
+              </Link>
+            </li>
+            <li className="p-2 rounded-lg flex justify-center content-center border border-solid border-primary-green">
+              <Link to="/:username/bookings" className={`${styles.openMenuLink} text-primary-green`} onClick={() => handleClick()}>
+                My bookings
+              </Link>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
