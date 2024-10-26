@@ -3,20 +3,19 @@ import { DataContext } from "../../DataProvider";
 
 export default function LocationLookAhead() {
   const { venues } = useContext(DataContext);
-
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchableLocations, setSearchableLocations] = useState([]);
 
-  let filteredLocations = [];
+  useEffect(() => {
+    if (venues && venues.length > 0) {
+      const locationsSet = new Set(venues.map((venue) => venue.location.city).filter((city) => city));
+      const locationsArr = Array.from(locationsSet);
+      setSearchableLocations(locationsArr);
+    }
+    console.log("searchableLocations", searchableLocations);
+  }, [venues]);
 
-  if (venues && venues.length > 0) {
-
-  const validCities = venues.filter((venue) => venue.location.city);
-  const uniqCities = [...new Map(validCities.map((venue) => [venue.location.city.toLowerCase(), venue])).values()];
-
-    filteredLocations = uniqCities.filter((venue) => venue.location.city.toLowerCase().includes(searchQuery.toLowerCase()));
-  }
-
-  console.log("uniq cities", filteredLocations);
+  const searchResult = searchableLocations.filter((location) => location.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <>
@@ -26,19 +25,15 @@ export default function LocationLookAhead() {
           {/* <img src={SearchIcon} alt="Search icon" /> */}
         </button>
       </form>
-      {filteredLocations.length > 0 && searchQuery.length > 0 && (
+      {searchableLocations && searchQuery.length > 0 && (
         <ul>
-          {filteredLocations.map((venue) => {
-            return (
-              <>
-                {searchQuery !== venue.location.city && (
-                  <li key={venue.id} onClick={() => setSearchQuery(venue.location.city)}>
-                    {venue.location.city}
-                  </li>
-                )}
-              </>
-            );
-          })}
+          {searchResult
+            .filter((location) => searchQuery.toLowerCase() !== location.toLowerCase())
+            .map((location) => (
+              <li key={location} onClick={() => setSearchQuery(location)}>
+                {location}
+              </li>
+            ))}
         </ul>
       )}
     </>
