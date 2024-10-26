@@ -20,7 +20,7 @@ export default function LocationLookAhead() {
   return (
     <>
       <form id="searchForm">
-        <input id="searchInput" type="search" placeholder="Search..." aria-label="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.trim())} />
+        <input id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.trim())} />
         <button value="search button" id="searchButton" type="submit" aria-label="Search">
           {/* <img src={SearchIcon} alt="Search icon" /> */}
         </button>
