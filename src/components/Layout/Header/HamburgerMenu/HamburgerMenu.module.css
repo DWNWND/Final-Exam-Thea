@@ -20,11 +20,10 @@ nav.active {
 
 .hamburgerMenuBtn {
   border: none;
-  padding: 0 0 0 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  max-height: 24px;
   z-index: 100;
 }
 
@@ -46,5 +45,5 @@ nav.active {
 .line {
   width: 100%;
   height: 1px;
-  background-color: var(--color-black);
+  background-color: var(--color-comp-green);
 }
