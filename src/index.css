@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Source Sans 3", sans-serif;
+  font-optical-sizing: auto;
+  box-sizing: border-box;
+  margin: 0;
+}
+
 /* burger recreated from: https://github.com/march08/animated-burgers/blob/master/packages/BurgerSqueeze/dist/styles.css */
 .burger {
   height: 3em;
