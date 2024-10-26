@@ -1,13 +1,21 @@
 /* burger icon is styled in index.css */
 
-.active {
-  transform: translateY(0);
+nav {
+  position: absolute;
+  top: 65px;
+  right: 0;
+  width: 100%;
   height: 100%;
+  color: #fff;
+  overflow: hidden;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease-in-out;
 }
 
-.hidden {
-  transform: translateY(-150%);
-  height: 100%;
+nav.active {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .hamburgerMenuBtn {
@@ -18,16 +26,6 @@
   align-items: center;
   max-height: 24px;
   z-index: 100;
-}
-
-.nav {
-  background-color: white;
-  position: fixed;
-  top: 65px;
-  left: 0;
-  width: 100%;
-  z-index: 99;
-  transition: all 0.7s ease-in-out;
 }
 
 .openMenuLink {

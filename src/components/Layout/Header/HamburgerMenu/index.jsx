@@ -34,7 +34,7 @@ function OpenMenu() {
   }
 
   return (
-    <nav className={`${isMenuOpen ? styles.active : styles.hidden} ${styles.nav}`}>
+    <nav className={`${isMenuOpen && styles.active}`}>
       <ul className="flex flex-col lg:flex-row justify-evenly gap-4 p-6 bg-white">
         <li>
           <Link to="/" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
@@ -54,7 +54,7 @@ function OpenMenu() {
         </li>
         <div className={`${styles.line} lg:hidden`}></div>
         <li>
-          <ul className="flex flex-col gap-4 lg:gap-2">
+          <ul className="flex flex-col gap-4 lg:gap-2  text-black">
             <li>
               <Link to="/about" className={styles.openMenuLink} onClick={() => handleClick()}>
                 About Holidaze
