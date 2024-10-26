@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { createContext } from "react";
 
-const page = 1;
-const limit = 10;
+// const page = 1;
+// const limit = 10;
+// &page=${page}&limit=${limit}
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const sortedByRating = `${apiBaseUrl}?sort=rating&sortOrder=desc&page=${page}&limit=${limit}`;
+const sortedByRating = `${apiBaseUrl}?sort=rating&sortOrder=desc`;
 
 export const DataContext = createContext();
 
