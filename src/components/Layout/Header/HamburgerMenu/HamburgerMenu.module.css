@@ -1,15 +1,17 @@
 /* burger icon is styled in index.css */
 
 nav {
-  position: absolute;
+  position: fixed;
   top: 65px;
   right: 0;
   width: 100%;
   height: 100%;
   color: #fff;
+  background-color: var(--color-white);
   overflow: hidden;
-  transform: translateX(100%);
+  transform: translateX(100vw);
   opacity: 0;
+  z-index: 100;
   transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease-in-out;
 }
 
@@ -27,18 +29,32 @@ nav.active {
   z-index: 100;
 }
 
-.openMenuLink {
+.openMenuLink,
+.openMenuBtnText {
   font-family: "Inter", sans-serif;
   text-decoration: none;
   font-size: 1.125rem;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   text-wrap: nowrap;
-  &:hover {
-    text-decoration: underline;
-  }
-  /* https://www.shecodes.io/athena/244018-how-to-make-the-text-scale-down-as-the-container-get-smaller#google_vignette */
+
   @media (min-width: 1025px) {
+    /* https://www.shecodes.io/athena/244018-how-to-make-the-text-scale-down-as-the-container-get-smaller#google_vignette */
     font-size: calc(0.8vw + 0.8vh); /* You can adjust this value according to your preference */
+  }
+}
+.openMenuLink {
+  @media (min-width: 1025px) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.openMenuBtn {
+  @media (min-width: 1025px) {
+    &:hover {
+      box-shadow: 0 0 0 2px var(--color-comp-green);
+    }
   }
 }
 

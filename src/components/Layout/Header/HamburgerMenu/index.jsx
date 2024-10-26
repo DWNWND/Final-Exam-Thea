@@ -84,18 +84,18 @@ function OpenMenu() {
         <div className={`${styles.line} lg:hidden`}></div>
         <li>
           <ul className="flex flex-col gap-2">
-            <li className="p-2 rounded-lg flex justify-center content-center border border-solid border-primary-green">
-              <Link to="/:username" className={`${styles.openMenuLink} text-primary-green`} onClick={() => handleClick()}>
+            <li className={`${styles.openMenuBtn} p-2 px-20 rounded-lg flex justify-center content-center border border-solid border-primary-green`}>
+              <Link to="/:username" className={`${styles.openMenuBtnText} text-primary-green`} onClick={() => handleClick()}>
                 My profile
               </Link>
             </li>
-            <li className="p-2 rounded-lg flex justify-center content-center border border-solid border-primary-green">
-              <Link to="/:username/listings" className={`${styles.openMenuLink} text-primary-green`} onClick={() => handleClick()}>
+            <li className={`${styles.openMenuBtn} p-2 px-20 rounded-lg flex justify-center content-center border border-solid border-primary-green`}>
+              <Link to="/:username/listings" className={`${styles.openMenuBtnText} text-primary-green`} onClick={() => handleClick()}>
                 My listings
               </Link>
             </li>
-            <li className="p-2 rounded-lg flex justify-center content-center border border-solid border-primary-green">
-              <Link to="/:username/bookings" className={`${styles.openMenuLink} text-primary-green`} onClick={() => handleClick()}>
+            <li className={`${styles.openMenuBtn} p-2 px-20 rounded-lg flex justify-center content-center border border-solid border-primary-green`}>
+              <Link to="/:username/bookings" className={`${styles.openMenuBtnText} text-primary-green`} onClick={() => handleClick()}>
                 My bookings
               </Link>
             </li>
