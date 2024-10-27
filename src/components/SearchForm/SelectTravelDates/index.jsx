@@ -10,8 +10,8 @@ export default function SelectTravelDates() {
 
   return (
     <div>
-      <input type="date" id="start" name="startDate" min={startDateStr} value={startDateStr}></input>
-      <input type="date" id="end" name="endDate" min={endDateStr} value={endDateStr}></input>
+      <input type="date" id="start" name="startDate" min={startDateStr} defaultValue={startDateStr}></input>
+      <input type="date" id="end" name="endDate" min={endDateStr} defaultValue={endDateStr}></input>
     </div>
   );
 }
