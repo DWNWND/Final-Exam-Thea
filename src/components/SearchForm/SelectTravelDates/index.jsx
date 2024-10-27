@@ -6,12 +6,9 @@ const initialState = {
 };
 
 function calculateNextDay(dateStr) {
-  const date = new Date(`${dateStr}T00:00:00`);
-  console.log("first date", date);
-  date.setDate(date.getDate() + 1);
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day + 1)); // Increment the day directly
   const nextDay = date.toISOString().split("T")[0];
-  console.log("date", date);
-  console.log("nextDay", nextDay);
   return nextDay;
 }
 
