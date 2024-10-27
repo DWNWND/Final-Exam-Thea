@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../../DataProvider";
 
-export default function LocationLookAhead() {
+export default function LocationLookAhead({ register, setValue }) {
   const { venues } = useContext(DataContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchableLocations, setSearchableLocations] = useState([]);
@@ -19,18 +19,21 @@ export default function LocationLookAhead() {
 
   return (
     <>
-      <form id="searchForm">
-        <input id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value.trim())} />
-        <button value="search button" id="searchButton" type="submit" aria-label="Search">
-          {/* <img src={SearchIcon} alt="Search icon" /> */}
-        </button>
-      </form>
+      <input {...register("location")} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
+      {/* <button value="search button" id="searchButton" type="submit" aria-label="Search">
+        <img src={SearchIcon} alt="Search icon" />
+      </button> */}
       {searchableLocations && searchQuery.length > 0 && (
         <ul>
           {searchResult
             .filter((location) => searchQuery.toLowerCase() !== location.toLowerCase())
             .map((location) => (
-              <li key={location} onClick={() => setSearchQuery(location)}>
+              <li
+                key={location}
+                onClick={() => {
+                  setSearchQuery(location);
+                  setValue("location", location);
+                }}>
                 {location}
               </li>
             ))}
