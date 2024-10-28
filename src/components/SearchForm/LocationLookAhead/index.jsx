@@ -1,20 +1,21 @@
 import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../../DataProvider";
 import { IoIosSearch } from "react-icons/io";
+import { searchableLocations } from "../../../assets/locations/searchableLocations.js";
 
 export default function LocationLookAhead({ register, setValue }) {
   const { venues } = useContext(DataContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchableLocations, setSearchableLocations] = useState([]);
+  // const [searchableLocations, setSearchableLocations] = useState([]);
 
-  useEffect(() => {
-    if (venues && venues.length > 0) {
-      const locationsSet = new Set(venues.map((venue) => venue.location.city).filter((city) => city));
-      const locationsArr = Array.from(locationsSet);
-      setSearchableLocations(locationsArr);
-    }
-    console.log("searchableLocations", searchableLocations);
-  }, [venues]);
+  // useEffect(() => {
+  //   if (venues && venues.length > 0) {
+  //     const locationsSet = new Set(venues.map((venue) => venue.location.city).filter((city) => city));
+  //     const locationsArr = Array.from(locationsSet);
+  //     setSearchableLocations(locationsArr);
+  //   }
+  //   console.log("searchableLocations", searchableLocations);
+  // }, [venues]);
 
   const searchResult = searchableLocations.filter((location) => location.toLowerCase().includes(searchQuery.toLowerCase()));
   const searchQueryAndResultMatches = searchableLocations.some((location) => location.toLowerCase() === searchQuery.toLowerCase());
