@@ -3,9 +3,10 @@ import SearchForm from "../../components/SearchForm";
 import style from "./Home.module.css";
 import SelectBtns from "../../components/Buttons/SelectBtn";
 import { useState } from "react";
-import VenueCards from "../../components/VenueCards";
+import CategorizedVenueCards from "../../components/Venues/CategorizedVenueCards";
 import { DataContext } from "../../components/DataProvider";
 import { useContext } from "react";
+import NewestListings from "../../components/Venues/NewestListings";
 
 export default function Home() {
   const [filters, setFilters] = useState("unique");
@@ -23,7 +24,10 @@ export default function Home() {
         </section>
         <section id="categorizedListings" className="p-4 flex flex-col gap-4">
           <SelectBtns filters={filters} setFilters={setFilters} />
-          <VenueCards filters={filters} venues={venues} />
+          <CategorizedVenueCards filters={filters} venues={venues} />
+        </section>
+        <section id="newestListings" className="p-4 bg-comp-green">
+          <NewestListings venues={venues} />
         </section>
       </div>
     </HelmetProvider>
