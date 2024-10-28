@@ -12,13 +12,13 @@ export default function SearchForm() {
   }
 
   return (
-    <div className="flex flex-col bg-white p-4 gap-4 rounded-lg shadow-md">
-      <h1 className="text-center text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
+    <div className=" bg-white p-6 rounded-lg shadow-md w-full h-fit">
+      <h1 className="text-center mb-8 text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <LocationLookAhead register={register} setValue={setValue} />
         <SelectTravelDates register={register} setValue={setValue} />
         <NumberOfGuests register={register} setValue={setValue} />
-        <CtaBtn type="submit" innerText="Search" tailw="rounded-full shadow-md bg-primary-green" mainCta={true} />
+        <CtaBtn type="submit" innerText="Search" tailw="mt-4 rounded-full shadow-md bg-primary-green" mainCta={true} />
       </form>
     </div>
   );
