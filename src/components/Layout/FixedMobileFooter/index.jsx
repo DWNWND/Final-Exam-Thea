@@ -10,7 +10,7 @@ export default function FixedMobileFooter() {
 
   if (!isMobile) return null;
   return (
-    <footer className="fixed bottom-0 w-full bg-white p-4 shadow-2xl">
+    <div className="fixed bottom-0 w-full bg-white p-4 shadow-2xl">
       <ul className="flex flex-row gap-2 ">
         <li className="w-full">
           <Link to={isLoggedIn ? "/:username/newListing" : "/login"}>
@@ -26,6 +26,6 @@ export default function FixedMobileFooter() {
           </Link>
         </li>
       </ul>
-    </footer>
+    </div>
   );
 }
