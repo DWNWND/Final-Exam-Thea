@@ -18,7 +18,7 @@ export default function SearchForm() {
         <LocationLookAhead register={register} setValue={setValue} />
         <SelectTravelDates register={register} setValue={setValue} />
         <NumberOfGuests register={register} setValue={setValue} />
-        <CtaBtn type="submit" innerText="Search" tailw="rounded-full shadow-md" color="primary-green" mainCta={true} />
+        <CtaBtn type="submit" innerText="Search" tailw="rounded-full shadow-md bg-primary-green" mainCta={true} />
       </form>
     </div>
   );
