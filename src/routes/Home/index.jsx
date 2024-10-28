@@ -1,5 +1,6 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import SearchForm from "../../components/SearchForm";
+import style from "./Home.module.css";
 
 export default function Home() {
   return (
@@ -7,11 +8,12 @@ export default function Home() {
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
         <title>Home | Holidayz</title>
+        {/* <script src="https://kit.fontawesome.com/279950e6bf.js" crossorigin="anonymous"></script> */}
       </Helmet>
       <div>
-        <h1 className="text-center text-3xl font-bold underline">Hello World</h1>
-        <h1 className="text-sm">Home</h1>
-        <SearchForm />
+        <section className={`${style.searchSection} p-4`}>
+          <SearchForm />
+        </section>
       </div>
     </HelmetProvider>
   );

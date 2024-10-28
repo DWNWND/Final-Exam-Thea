@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../../DataProvider";
+import { IoIosSearch } from "react-icons/io";
 
 export default function LocationLookAhead({ register, setValue }) {
   const { venues } = useContext(DataContext);
@@ -19,10 +20,10 @@ export default function LocationLookAhead({ register, setValue }) {
 
   return (
     <>
-      <input {...register("location")} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
-      {/* <button value="search button" id="searchButton" type="submit" aria-label="Search">
-        <img src={SearchIcon} alt="Search icon" />
-      </button> */}
+      <div className="flex justify-between items-center rounded-full border-primary-green border p-2 px-8  bg-white">
+        <input className=" bg-white w-full italic text-primary-green placeholder:text-primary-light" {...register("location")} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
+        <IoIosSearch className="text-2xl" />
+      </div>
       {searchableLocations && searchQuery.length > 0 && (
         <ul>
           {searchResult

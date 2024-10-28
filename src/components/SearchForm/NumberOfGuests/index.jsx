@@ -1,4 +1,7 @@
 import { useReducer, useEffect } from "react";
+// https://react-icons.github.io/react-icons/
+import { HiOutlinePlusSm } from "react-icons/hi";
+import { HiOutlineMinusSm } from "react-icons/hi";
 
 const initialState = { guests: 2 };
 
@@ -22,18 +25,17 @@ export default function NumberOfGuests({ register, setValue }) {
     setValue("numberOfGuests", state.guests);
   }, [state.guests, setValue]);
 
+  //add labels to the form inputs?
   return (
-    <div>
-      <label htmlFor="guests">Number of Guests:</label>
-      <div>
-        <button type="button" onClick={() => dispatch({ type: "decrement" })}>
-          &#45;
-        </button>
-        <input {...register("numberOfGuests")} type="number" id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
-        <button type="button" onClick={() => dispatch({ type: "increment" })}>
-          &#43;
-        </button>
-      </div>
+    <div className="w-full flex justify-center items-center gap-4">
+      <button className="rounded-full h-10 w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "decrement" })}>
+        <HiOutlineMinusSm className="text-primary-green" />
+      </button>
+      <input className="text-center text-primary-green" {...register("numberOfGuests")} type="number" id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
+      <button className="rounded-full h-10 w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "increment" })}>
+        <HiOutlinePlusSm className="text-primary-green" />
+      </button>
+      <p className="italic text-primary-green">guests</p>
     </div>
   );
 }

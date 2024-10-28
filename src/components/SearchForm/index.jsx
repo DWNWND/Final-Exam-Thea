@@ -2,6 +2,7 @@ import LocationLookAhead from "./LocationLookAhead";
 import SelectTravelDates from "./SelectTravelDates";
 import NumberOfGuests from "./NumberOfGuests";
 import { useForm } from "react-hook-form";
+import CtaBtn from "../Buttons/CtaBtn";
 
 export default function SearchForm() {
   const { register, setValue, handleSubmit } = useForm();
@@ -11,13 +12,14 @@ export default function SearchForm() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
+    <div className="flex flex-col bg-white p-4 gap-4 rounded-lg">
+      <h1 className="text-center text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <LocationLookAhead register={register} setValue={setValue} />
         <SelectTravelDates register={register} setValue={setValue} />
         <NumberOfGuests register={register} setValue={setValue} />
-        <input type="submit" />
+        <CtaBtn type="submit" innerText="Search" tailw="rounded-full" bgcolor="bg-primary-green" mainCta={true} />
       </form>
-    </>
+    </div>
   );
 }

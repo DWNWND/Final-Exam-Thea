@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import { CiCalendar } from "react-icons/ci";
 
 const initialState = {
   dateRange: [null, null], // Store both start and end date in an array
@@ -79,9 +80,9 @@ export default function SelectTravelDates({ register, setValue }) {
   }, [state.allDatesInRange, setValue]);
 
   return (
-    <div>
-      <h3>Select Travel Dates</h3>
+    <div className="flex justify-between items-center rounded-full border-primary-green border p-2 px-8  bg-white">
       <Flatpickr
+        className=" bg-white w-full italic text-primary-green placeholder:text-primary-light"
         options={{
           mode: "range", // Enable range selection
           minDate: startDateStr, // Disable dates before today
@@ -95,6 +96,7 @@ export default function SelectTravelDates({ register, setValue }) {
         }}
       />
       {/* Hidden inputs for react-hook-form */}
+      <CiCalendar className="text-2xl" />
       <input type="hidden" {...register("allDatesInRange")} />
     </div>
   );
