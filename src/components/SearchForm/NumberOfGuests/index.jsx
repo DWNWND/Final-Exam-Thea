@@ -28,11 +28,11 @@ export default function NumberOfGuests({ register, setValue }) {
   //add labels to the form inputs?
   return (
     <div className="w-full flex justify-center items-center gap-4">
-      <button className="shadow-md rounded-full h-10 w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "decrement" })}>
+      <button className="hover:shadow-md rounded-full h-10 w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "decrement" })}>
         <HiOutlineMinusSm className="text-primary-green" />
       </button>
-      <input className="text-center text-primary-green" {...register("numberOfGuests")} type="number" id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
-      <button className="shadow-md rounded-full h-10 w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "increment" })}>
+      <input type="number" readOnly className="text-center flex justify-center items-center content-center text-primary-green" {...register("numberOfGuests")} id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
+      <button className="hover:shadow-md rounded-full h-10 w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "increment" })}>
         <HiOutlinePlusSm className="text-primary-green" />
       </button>
       <p className="italic text-primary-green">guests</p>
