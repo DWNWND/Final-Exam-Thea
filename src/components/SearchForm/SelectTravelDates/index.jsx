@@ -2,6 +2,8 @@ import { useReducer, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
+import 'flatpickr/dist/themes/material_green.css';
+
 
 const initialState = {
   dateRange: [null, null], // Store both start and end date in an array
@@ -67,6 +69,7 @@ export default function SelectTravelDates({ register, setValue }) {
   useEffect(() => {
     dispatch({ type: "setStartDate", payload: startDateStr });
     dispatch({ type: "setEndDate", payload: initialEndDate });
+    dispatch({ type: "setAllDatesInRange", payload: [startDateStr, initialEndDate] });
   }, [startDateStr, initialEndDate]);
 
   useEffect(() => {
@@ -80,9 +83,9 @@ export default function SelectTravelDates({ register, setValue }) {
   }, [state.allDatesInRange, setValue]);
 
   return (
-    <div className="flex justify-between items-center rounded-full border-primary-green border p-2 px-8  bg-white">
+    <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white">
       <Flatpickr
-        className=" bg-white w-full italic text-primary-green placeholder:text-primary-light"
+        className=" p-2 bg-transparent w-full italic text-primary-green placeholder:text-primary-light"
         options={{
           mode: "range", // Enable range selection
           minDate: startDateStr, // Disable dates before today
