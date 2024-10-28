@@ -53,7 +53,7 @@ function OpenMenu() {
             Add new listing
           </Link>
         </li>
-        <div className={`${styles.line} lg:hidden`}></div>
+        <div className="line lg:hidden"></div>
         <li>
           <ul className="flex flex-col gap-4 lg:gap-2  text-black">
             <li>
@@ -82,7 +82,7 @@ function OpenMenu() {
             </li>
           </ul>
         </li>
-        <div className={`${styles.line} lg:hidden`}></div>
+        <div className="line lg:hidden"></div>
         <li>
           <ul className="flex flex-col gap-2">
             <li>
