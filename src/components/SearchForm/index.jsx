@@ -14,7 +14,7 @@ export default function SearchForm() {
     <>
       <form onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <LocationLookAhead register={register} setValue={setValue} />
-        <SelectTravelDates register={register} />
+        <SelectTravelDates register={register} setValue={setValue} />
         <NumberOfGuests register={register} setValue={setValue} />
         <input type="submit" />
       </form>
