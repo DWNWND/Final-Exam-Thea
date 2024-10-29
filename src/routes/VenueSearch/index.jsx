@@ -1,4 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import ListSearchForm from "../../components/SearchForm/ListSearchForm";
 
 export default function VenueSearch() {
   return (
@@ -10,6 +11,9 @@ export default function VenueSearch() {
       </Helmet>
       <div>
         <h1>Venue Search</h1>
+        <section>
+          <ListSearchForm />
+        </section>
       </div>
     </HelmetProvider>
   );
