@@ -13,7 +13,7 @@ export default function SearchForm() {
   }
 
   return (
-    <div className=" bg-white p-6 rounded-3xl shadow-md w-full h-fit">
+    <div className="bg-white p-6 rounded-3xl shadow-md w-full h-fit">
       <h1 className="text-center mb-8 text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <LocationLookAhead register={register} setValue={setValue} />
