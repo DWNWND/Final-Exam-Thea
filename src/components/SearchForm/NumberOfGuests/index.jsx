@@ -31,7 +31,7 @@ export default function NumberOfGuests({ register, setValue }) {
       <button className="hover:shadow-md rounded-full w-full lg:h-10 lg:w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "decrement" })}>
         <HiOutlineMinusSm className="text-primary-green" />
       </button>
-      <input type="number" readOnly className="text-center flex justify-center items-center content-center text-primary-green" {...register("numberOfGuests")} id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
+      <input type="number" readOnly className="text-center font-semibold flex justify-center items-center content-center text-primary-green" {...register("numberOfGuests")} id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
       <button className="hover:shadow-md rounded-full  w-full lg:h-10 lg:w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "increment" })}>
         <HiOutlinePlusSm className="text-primary-green" />
       </button>
