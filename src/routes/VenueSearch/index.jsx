@@ -1,15 +1,15 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-export default function ListingSpesific() {
+export default function VenueSearch() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>Listing | Holidayz</title> 
-        {/* add listing name */}
+        <title>Search| Holidayz</title>
+        {/* add search details */}
       </Helmet>
       <div>
-        <h1>Listing Spesific</h1>
+        <h1>Venue Search</h1>
       </div>
     </HelmetProvider>
   );
