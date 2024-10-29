@@ -11,109 +11,55 @@ export default function MoreFilters({ register, setValue }) {
 
   return (
     <>
-      <div className="w-full justify-center underline cursor-pointer flex items-center text-primary-green gap-2" onClick={() => handleClick()}>
+      <div className={`${openMoreFilters && "underline"} w-full justify-center hover:underline cursor-pointer flex items-center text-primary-green gap-2`} onClick={() => handleClick()}>
         <span>More filters</span>
         {openMoreFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
-
-      <div className="flex flex-col gap-6 md:flex-row md:gap-20 md:justify-evenly">
-        {openMoreFilters && (
-          <>
-            <div className="flex flex-col gap-2 md:pb-10">
-              <div className="text-primary-green uppercase font-semibold text-lg">Filters</div>
-              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
-                <div className="flex flex-col gap-2 xl:flex-row xl:gap-6">
-                  <div className="flex items-center">
-                    <input type="checkbox" id="freeWifi" className="h-6 w-6" onChange={(e) => setValue("freeWifi", e.target.checked)} />
-                    <label htmlFor="freeWifi" className="ml-2 text-nowrap text-black">
-                      Free wifi
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input id="freeParking" type="checkbox" className="h-6 w-6" onChange={(e) => setValue("freeParking", e.target.checked)} />
-                    <label htmlFor="freeParking" className="ml-2 text-nowrap text-black">
-                      Free parking
-                    </label>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 xl:flex-row xl:gap-6">
-                  <div className="flex items-center">
-                    <input id="petsAllowed" type="checkbox" className="h-6 w-6 " onChange={(e) => setValue("petsAllowed", e.target.checked)} />
-                    <label htmlFor="petsAllowed" className="ml-2 text-nowrap text-black">
-                      Pets allowed
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input id="freeBreakfast" type="checkbox" className="h-6 w-6" onChange={(e) => setValue("freeBreakfast", e.target.checked)} />
-                    <label htmlFor="freeBreakfast" className="ml-2 text-nowrap text-black">
-                      Breakfast included
-                    </label>
-                  </div>
-                </div>
+      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${openMoreFilters ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+        <div className="flex flex-col gap-6 md:flex-row md:gap-20 md:justify-evenly">
+          <div className="flex flex-col gap-2 md:pb-10">
+            <div className="text-primary-green uppercase font-semibold text-lg">Filters</div>
+            <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
+              <div className="flex flex-col gap-2 xl:flex-row xl:gap-6">
+                <Checkbox innerText="Free wifi" id="freeWifi" onChangeFunk={(e) => setValue("freeWifi", e.target.checked)} />
+                <Checkbox innerText="Free parking" id="freeParking" onChangeFunk={(e) => setValue("freeParking", e.target.checked)} />
+              </div>
+              <div className="flex flex-col gap-2 xl:flex-row xl:gap-6">
+                <Checkbox innerText="Pets allowed" id="petsAllowed" onChangeFunk={(e) => setValue("petsAllowed", e.target.checked)} />
+                <Checkbox innerText="Breakfast included" id="freeBreakfast" onChangeFunk={(e) => setValue("freeBreakfast", e.target.checked)} />
               </div>
             </div>
-            <div className="flex flex-col gap-2 md:pb-10">
-              <div className="text-primary-green uppercase font-semibold text-lg">Price range /night</div>
-              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center">
-                    <input id="priceRange1" type="checkbox" className="h-6 w-6" onChange={() => setValue("priceRange1", { start: 0, end: 100 })} />
-                    <label htmlFor="priceRange1" className="ml-2 text-nowrap text-black">
-                      kr 0 - 100
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input id="priceRange2" type="checkbox" className="h-6 w-6" onChange={() => setValue("priceRange2", { start: 100, end: 150 })} />
-                    <label htmlFor="priceRange2" className="ml-2 text-nowrap text-black">
-                      kr 100 - 150
-                    </label>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center">
-                    <input id="priceRange3" type="checkbox" className="h-6 w-6" onChange={() => setValue("priceRange3", { start: 150, end: 200 })} />
-                    <label htmlFor="priceRange3" className="ml-2 text-nowrap text-black">
-                      kr 150 - 200
-                    </label>
-                  </div>
-
-                  <div className="flex items-center">
-                    <input id="priceRange4" type="checkbox" className="h-6 w-6" onChange={() => setValue("priceRange4", { start: 200, end: 250 })} />
-                    <label htmlFor="priceRange4" className="ml-2 text-nowrap text-black">
-                      kr 200 - 250
-                    </label>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center">
-                    <input id="priceRange5" type="checkbox" className="h-6 w-6" onChange={() => setValue("priceRange5", { start: 250, end: 300 })} />
-                    <label htmlFor="priceRange5" className="ml-2 text-nowrap text-black">
-                      kr 250 - 300
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input id="priceRange6" type="checkbox" className="h-6 w-6" onChange={() => setValue("priceRange6", { start: 350, end: 400 })} />
-                    <label htmlFor="priceRange6" className="ml-2 text-nowrap text-black">
-                      kr 350 - 400
-                    </label>
-                  </div>
-                </div>
+          </div>
+          <div className="flex flex-col gap-2 md:pb-10">
+            <div className="text-primary-green uppercase font-semibold text-lg">Price range /night</div>
+            <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
+              <div className="flex flex-col gap-2">
+                <Checkbox innerText="kr 0 - 100" id="priceRange1" onChangeFunk={() => setValue("priceRange1", { start: 0, end: 100 })} />
+                <Checkbox innerText="kr 100 - 150" id="priceRange2" onChangeFunk={() => setValue("priceRange2", { start: 100, end: 150 })} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Checkbox innerText="kr 150 - 200" id="priceRange3" onChangeFunk={() => setValue("priceRange3", { start: 150, end: 200 })} />
+                <Checkbox innerText="kr 200 - 250" id="priceRange4" onChangeFunk={() => setValue("priceRange4", { start: 200, end: 250 })} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Checkbox innerText="kr 250 - 300" id="priceRange5" onChangeFunk={() => setValue("priceRange5", { start: 250, end: 300 })} />
+                <Checkbox innerText="kr 300 - 350" id="priceRange6" onChangeFunk={() => setValue("priceRange6", { start: 300, end: 350 })} />
               </div>
             </div>
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </>
   );
 }
 
-{
-  /* <div className="flex justify-between items-center">
-        <h2 className="text-primary-blue">Luxury stays</h2>
-        <input type="checkbox" className="form-checkbox h-6 w-6 text-primary-blue" name="luxury" ref={register} onChange={() => setValue("luxury", !getValue("luxury"))} />
-      </div>
-      <div className="flex justify-between items-center">
-        <h2 className="text-primary-blue">Rating</h2>
-        <input type="checkbox" className="form-checkbox h-6 w-6 text-primary-blue" name="rating" ref={register} onChange={() => setValue("rating", !getValue("rating"))} />
-      </div> */
+function Checkbox({ innerText, id, onChangeFunk }) {
+  return (
+    <div className="flex items-center">
+      <input id={id} type="checkbox" className="h-6 w-6 cursor-pointer" onChange={onChangeFunk} />
+      <label htmlFor={id} className="ml-2 text-nowrap text-black cursor-pointer">
+        {innerText}
+      </label>
+    </div>
+  );
 }
