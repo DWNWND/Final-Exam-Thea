@@ -19,11 +19,11 @@ export default function ListCategorized({ venues, filters }) {
               }
             })
             .map((venue) => (
-              <VenueCard venue={venue} />
+              <VenueCard venue={venue} key={venue.id} />
             ))}
         </div>
       )}
-      <Link className="underline text-black">View all listings from this category</Link>
+      <Link className="block mt-4 underline text-black">View all listings from this category</Link>
     </>
   );
 }
