@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import SearchForm from "../../components/SearchForm";
+import MainSearchForm from "../../components/SearchForm/MainSearchForm";
 import style from "./Home.module.css";
 import SelectBtns from "../../components/Buttons/SelectBtn";
 import { useState } from "react";
@@ -20,7 +20,7 @@ export default function Home() {
       </Helmet>
       <div>
         <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center`}>
-          <SearchForm />
+          <MainSearchForm />
         </section>
         <section id="categorizedListings" className="p-4 pb-12">
           <SelectBtns filters={filters} setFilters={setFilters} />
