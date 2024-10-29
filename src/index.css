@@ -15,6 +15,25 @@
   overflow-x: hidden;
 } */
 
+/* global checkbox styling */
+/* Default styling for checkbox */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #666; /* Modern browsers support accent-color for checkbox color */
+}
+
+/* Styling for the checked state */
+input[type="checkbox"]:checked {
+  accent-color: var(--color-primary-green); /* Changes checkbox color when checked (for modern browsers) */
+}
+
+/* Additional styling for custom effects */
+input[type="checkbox"]:checked + label {
+  color: var(--color-primary-green); /* Changes label color when checkbox is checked */
+  font-weight: bold;
+}
+
 /* Remove Arrows/Spinners from Number Inputs */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
