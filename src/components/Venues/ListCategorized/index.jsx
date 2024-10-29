@@ -5,7 +5,7 @@ export default function ListCategorized({ venues, filters }) {
   return (
     <>
       {venues && venues.length >= 2 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {venues
             .filter((venue) => {
               if (filters === "unique") {
@@ -17,13 +17,13 @@ export default function ListCategorized({ venues, filters }) {
               } else {
                 return venue;
               }
-            })
+            }).slice(0, 4)
             .map((venue) => (
               <VenueCard venue={venue} key={venue.id} />
             ))}
         </div>
       )}
-      <Link className="block mt-4 underline text-black">View all listings from this category</Link>
+      <Link className="md:text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
     </>
   );
 }
