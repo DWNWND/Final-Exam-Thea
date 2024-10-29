@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function MainSearchForm() {
-  const { register, setValue, getValue, handleSubmit, reset } = useForm();
+  const { register, setValue, getValues, handleSubmit, reset } = useForm();
   const { formData, setFormData } = useSearchStore();
   const navigate = useNavigate();
 
@@ -31,12 +31,12 @@ export default function MainSearchForm() {
       <h1 className="text-center mb-8 text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
       <form className="flex flex-col gap-4 md:gap-8" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <div className="flex flex-col lg:flex-row gap-4 ">
-          <LocationLookAhead register={register} setValue={setValue} />
-          <SelectTravelDates register={register} setValue={setValue} />
-          <NumberOfGuests register={register} setValue={setValue} />
+          <LocationLookAhead register={register} setValue={setValue} color="primary-green"/>
+          <SelectTravelDates register={register} setValue={setValue} color="primary-green" />
+          <NumberOfGuests register={register} setValue={setValue} color="primary-green" mainSearch={true}/>
           <CtaBtn type="submit" innerText="Search" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} />
         </div>
-        <MoreFilters register={register} setValue={setValue} getValue={getValue} />
+        <MoreFilters register={register} setValue={setValue} getValues={getValues} color="primary-green" mainSearch={true}/>
       </form>
     </div>
   );
