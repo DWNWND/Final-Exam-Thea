@@ -35,7 +35,7 @@ function OpenMenu() {
   }
 
   return (
-    <nav className={`${isMenuOpen && styles.active} shadow-md`}>
+    <nav className={`${isMenuOpen && styles.active} shadow-md border-t border-primary-green`}>
       <ul className="flex flex-col lg:flex-row justify-evenly gap-4 p-6 bg-white">
         <li>
           <Link to="/" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
