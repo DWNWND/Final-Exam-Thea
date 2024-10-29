@@ -18,7 +18,7 @@ function reducer(state, action) {
   }
 }
 
-export default function NumberOfGuests({ register, setValue }) {
+export default function NumberOfGuests({ register, setValue, color, mainSearch }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -28,14 +28,14 @@ export default function NumberOfGuests({ register, setValue }) {
   //add labels to the form inputs?
   return (
     <div className="w-full md:w-auto flex justify-center items-center gap-4 lg:gap-2">
-      <button className="hover:shadow-md rounded-full w-full lg:h-10 lg:w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "decrement" })}>
-        <HiOutlineMinusSm className="text-primary-green" />
+      <button className={`hover:shadow-md rounded-full w-full ${mainSearch && "lg:h-10 lg:w-10"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`} type="button" onClick={() => dispatch({ type: "decrement" })}>
+        <HiOutlineMinusSm className={`text-${color}`} />
       </button>
-      <input type="number" readOnly className="text-center font-semibold flex justify-center items-center content-center text-primary-green" {...register("numberOfGuests")} id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
-      <button className="hover:shadow-md rounded-full  w-full lg:h-10 lg:w-10 flex justify-center text-xl items-center text-primary-green border-primary-green border p-2" type="button" onClick={() => dispatch({ type: "increment" })}>
-        <HiOutlinePlusSm className="text-primary-green" />
+      <input type="number" readOnly className={`text-center font-semibold flex justify-center bg-transparent items-center content-center text-${color}`} {...register("numberOfGuests")} id="guests" name="guests" min="1" max="25" defaultValue={state.guests} />
+      <button className={`hover:shadow-md rounded-full  w-full ${mainSearch && "lg:h-10 lg:w-10"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`} type="button" onClick={() => dispatch({ type: "increment" })}>
+        <HiOutlinePlusSm className={`text-${color}`} />
       </button>
-      <p className="italic text-primary-green">guests</p>
+      <p className={`italic text-${color}`}>guests</p>
     </div>
   );
 }
