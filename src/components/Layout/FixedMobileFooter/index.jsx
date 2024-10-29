@@ -10,7 +10,7 @@ export default function FixedMobileFooter() {
 
   if (!isMobile) return null;
   return (
-    <div className="fixed bottom-0 w-full bg-white p-4 shadow-2xl">
+    <div className="fixed bottom-0 w-full bg-white p-4 shadow-2xl z-50">
       <ul className="flex flex-row gap-2 ">
         <li className="w-full">
           <Link to={isLoggedIn ? "/:username/newListing" : "/login"}>
