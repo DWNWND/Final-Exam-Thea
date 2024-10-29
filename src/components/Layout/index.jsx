@@ -3,16 +3,19 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback, DataProvider } from "../";
 import Header from "./Header";
 import Footer from "./Footer";
-import FixedMobileFooter from "./FixedMobileFooter";
+import FixedBtnDisplay from "./FixedBtnDisplay";
+import useCheckScreenSize from "../../hooks/useCheckScreenSize";
 
 export default function Layout() {
+  const isMobile = useCheckScreenSize();
+
   return (
     <>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <DataProvider>
           <Header />
           <Outlet />
-          <FixedMobileFooter />
+          {isMobile && <FixedBtnDisplay isMobile={isMobile}/>}
           <Footer />
         </DataProvider>
       </ErrorBoundary>
