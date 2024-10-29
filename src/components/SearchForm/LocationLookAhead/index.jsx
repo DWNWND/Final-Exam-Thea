@@ -23,14 +23,14 @@ export default function LocationLookAhead({ register, setValue }) {
   return (
     <div className="relative w-full flex">
       <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white w-full">
-        <input autoComplete="off" className=" p-2 bg-transparent w-full italic text-primary-green placeholder:text-primary-light" {...register("location")} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
-        <IoIosSearch className="text-2xl" />
+        <input autoComplete="off" className=" p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green" {...register("location")} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
+        <IoIosSearch className="text-2xl text-primary-green" />
       </div>
       {searchableLocations && searchQuery.length > 0 && (
         <div className={`${!searchQueryAndResultMatches && "bg-white border border-primary-green shadow-md"} rounded-md absolute top-12 w-full p-4 z-40`}>
           {!searchQueryAndResultMatches && (
             <>
-              <p className="italic text-primary-green mb-2">Please select a location from the list:</p>
+              <p className="italic text-primary-green mb-2">Please select a location from the list below:</p>
               <div className="line"></div>
             </>
           )}
@@ -39,7 +39,7 @@ export default function LocationLookAhead({ register, setValue }) {
               .filter((location) => searchQuery.toLowerCase() !== location.toLowerCase())
               .map((location) => (
                 <li
-                  className="hover:bg-primary-light p-2 cursor-pointer"
+                  className="hover:font-semibold p-2 cursor-pointer text-primary-green"
                   key={location}
                   onClick={() => {
                     setSearchQuery(location);
