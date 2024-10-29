@@ -22,11 +22,11 @@ export default function Home() {
         <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center`}>
           <SearchForm />
         </section>
-        <section id="categorizedListings" className="p-4 flex flex-col gap-4">
+        <section id="categorizedListings" className="p-4 pb-12">
           <SelectBtns filters={filters} setFilters={setFilters} />
           <ListCategorized filters={filters} venues={venues} />
         </section>
-        <section id="newestListings" className="p-4 bg-comp-green">
+        <section id="newestListings" className="p-4 py-12 bg-comp-green">
           <ListNewest venues={venues} />
         </section>
       </div>

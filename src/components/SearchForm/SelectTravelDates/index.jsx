@@ -83,9 +83,9 @@ export default function SelectTravelDates({ register, setValue }) {
   }, [state.allDatesInRange, setValue]);
 
   return (
-    <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white">
+    <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white w-full">
       <Flatpickr
-        className=" p-2 bg-transparent w-full italic text-primary-green placeholder:text-primary-light"
+        className="p-2 bg-transparent w-full italic text-primary-green placeholder:text-primary-light"
         options={{
           mode: "range", // Enable range selection
           minDate: startDateStr, // Disable dates before today

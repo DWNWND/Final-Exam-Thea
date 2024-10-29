@@ -21,13 +21,13 @@ export default function LocationLookAhead({ register, setValue }) {
   const searchQueryAndResultMatches = searchableLocations.some((location) => location.toLowerCase() === searchQuery.toLowerCase());
 
   return (
-    <div className="relative">
-      <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white">
+    <div className="relative w-full flex">
+      <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white w-full">
         <input autoComplete="off" className=" p-2 bg-transparent w-full italic text-primary-green placeholder:text-primary-light" {...register("location")} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
         <IoIosSearch className="text-2xl" />
       </div>
       {searchableLocations && searchQuery.length > 0 && (
-        <div className={`${!searchQueryAndResultMatches && "bg-white border border-primary-green shadow-md"} rounded-md absolute top-12 w-full p-4`}>
+        <div className={`${!searchQueryAndResultMatches && "bg-white border border-primary-green shadow-md"} rounded-md absolute top-12 w-full p-4 z-40`}>
           {!searchQueryAndResultMatches && (
             <>
               <p className="italic text-primary-green mb-2">Please select a location from the list:</p>
