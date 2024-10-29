@@ -85,7 +85,7 @@ export default function SelectTravelDates({ register, setValue }) {
   return (
     <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white w-full">
       <Flatpickr
-        className="p-2 bg-transparent w-full italic text-primary-green placeholder:text-primary-light"
+        className="p-2 bg-transparent w-full font-semibold text-primary-green"
         options={{
           mode: "range", // Enable range selection
           minDate: startDateStr, // Disable dates before today
@@ -99,123 +99,8 @@ export default function SelectTravelDates({ register, setValue }) {
         }}
       />
       {/* Hidden inputs for react-hook-form */}
-      <CiCalendar className="text-2xl" />
+      <CiCalendar className="text-2xl text-primary-green" />
       <input type="hidden" {...register("allDatesInRange")} />
     </div>
   );
 }
-
-//second try
-// import { useReducer, useEffect, useState } from "react";
-// import Flatpickr from "react-flatpickr";
-
-// const initialState = {
-//   startDate: "",
-//   endDate: "",
-// };
-
-// function calculateNextDay(dateStr) {
-//   const [year, month, day] = dateStr.split("-").map(Number);
-//   const date = new Date(Date.UTC(year, month - 1, day + 1)); // Increment the day directly
-//   const nextDay = date.toISOString().split("T")[0];
-//   return nextDay;
-// }
-
-// function dateReducer(state, action) {
-//   switch (action.type) {
-//     case "setStartDate":
-//       return {
-//         ...state,
-//         startDate: action.payload,
-//         endDate: state.endDate <= action.payload ? calculateNextDay(action.payload) : state.endDate,
-//       };
-//     case "setEndDate":
-//       return {
-//         ...state,
-//         endDate: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// }
-
-// export default function SelectTravelDates({ register }) {
-//   const [dateRange, setDateRange] = useState([null, null]);
-
-//   let today = new Date();
-
-//   let year = today.getFullYear();
-//   let month = today.getMonth() + 1; // the months are indexed starting with 0
-//   let date = today.getDate();
-
-//   const startDateStr = `${year}-${month}-${date}`;
-//   const initialEndDate = calculateNextDay(startDateStr);
-
-//   const [state, dispatch] = useReducer(dateReducer, {
-//     startDate: startDateStr,
-//     endDate: initialEndDate,
-//   });
-
-//   useEffect(() => {
-//     dispatch({ type: "setStartDate", payload: state.startDate });
-//   }, [state.startDate]);
-
-//   return (
-//     <div>
-//       <input {...register("startDate")} type="date" id="start" name="startDate" min={startDateStr} value={state.startDate} onChange={(e) => dispatch({ type: "setStartDate", payload: e.target.value })} />
-//       <input
-//         {...register("endDate")}
-//         type="date"
-//         id="end"
-//         name="endDate"
-//         min={state.startDate} // Ensure end date cannot be before start date
-//         value={state.endDate}
-//         onChange={(e) => dispatch({ type: "setEndDate", payload: e.target.value })}
-//       />
-//     </div>
-//   );
-// }
-
-//first try
-// import { useState, useEffect } from "react";
-
-// export default function SelectTravelDates({ register }) {
-//   const [startDate, setStartDate] = useState("");
-//   const [endDate, setEndDate] = useState("");
-
-//   let today = new Date();
-
-//   let year = today.getFullYear();
-//   let month = today.getMonth() + 1; // the months are indexed starting with 0
-//   let date = today.getDate();
-
-//   let startDateStr = `${year}-${month}-${date}`;
-//   let endDateStr = `${year}-${month}-${date + 1}`;
-
-//   function calculateNextDay(dateStr) {
-//     const date = new Date(dateStr); // Convert string to Date object
-//     date.setDate(date.getDate() + 1); // Increment the day by 1
-//     console.log("date", date);
-//     return date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
-//   }
-
-//   useEffect(() => {
-//     console.log("startDate", startDate);
-//     if (startDate) {
-//       setEndDate(calculateNextDay(startDate));
-//     }
-//     if (startDate && endDate <= startDate) {
-//       setEndDate(calculateNextDay(startDate));
-//     }
-//     if (!startDate) {
-//       setEndDate(endDateStr);
-//     }
-//   }, [, startDate]);
-
-//   return (
-//     <div>
-//       <input {...register("startDate")} type="date" id="start" name="startDate" min={startDateStr} defaultValue={startDateStr} onChange={(e) => setStartDate(e.target.value)}></input>
-//       <input {...register("endDate")} type="date" id="end" name="endDate" min={startDate} defaultValue={endDate} onChange={(e) => setEndDate(e.target.value)}></input>
-//     </div>
-//   );
-// }
