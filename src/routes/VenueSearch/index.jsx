@@ -1,7 +1,14 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import ListSearchForm from "../../components/SearchForm/ListSearchForm";
+import { DataContext } from "../../components/DataProvider";
+import { useContext } from "react";
+import ListSearch from "../../components/Venues/ListSearch";
+import { useSearchStore } from "../../stores/useSearchStore.js";
 
 export default function VenueSearch() {
+  const { venues } = useContext(DataContext);
+  const { formData } = useSearchStore();
+
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
@@ -9,12 +16,15 @@ export default function VenueSearch() {
         <title>Search| Holidayz</title>
         {/* add search details */}
       </Helmet>
-      <div>
-        <h1>Venue Search</h1>
-        <section>
+      <main className="flex flex-col xl:flex-row p-4 xl:gap-8">
+        <section className="max-w-md flex justify-center">
           <ListSearchForm />
         </section>
-      </div>
+        <section className="py-12 w-full">
+          <h1>Results for {formData.location}</h1>
+          <ListSearch venues={venues} searchQuery={formData} />
+        </section>
+      </main>
     </HelmetProvider>
   );
 }
