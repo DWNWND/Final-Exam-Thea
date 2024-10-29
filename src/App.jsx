@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <routes.Home /> },
-      { path: "search/:query", element: <routes.VenueSearch /> },
+      { path: "search", element: <routes.VenueSearch /> },
       { path: "venue/:id", element: <routes.VenueSpesific /> },
       { path: "booking/summary", element: <routes.BookingSummary /> },
       { path: "booking/details", element: <routes.BookingDetails /> },
