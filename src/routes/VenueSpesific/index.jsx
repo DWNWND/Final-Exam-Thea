@@ -9,28 +9,34 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export default function VenueSpesific() {
   const { id } = useParams();
-  const { data: singleVenueData, isLoading: singleVenueIsLoading, isError: singleVenueIsError } = useFetch(`${apiBaseUrl}/${id}`);
+  const { data: singleVenueData, isLoading: singleVenueIsLoading, isError: singleVenueIsError } = useFetch(`${apiBaseUrl}/${id}?_bookings=true&_owner=true`);
   const [singleVenue, setSingleVenue] = useState({});
   const { formData } = useSearchStore();
 
   useEffect(() => {
     if (singleVenueData && singleVenueData.data) {
       setSingleVenue(singleVenueData.data);
-      console.log("singleVenueData", singleVenue);
+      console.log("singleVenue VenueSpecific comp", singleVenue);
     }
   }, [singleVenueData]);
 
+  const isNotEmpty = (obj) => Object.keys(obj).length > 0;
+  const onlyRenderWhenSet = isNotEmpty(singleVenue);
+
   return (
-    <HelmetProvider>
-      <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
-        <title>Listing | Holidayz</title>
-        {/* add listing name */}
-      </Helmet>
-      <main>
-        <h1>Venue Spesific</h1>
-        <SingleVenue />
-      </main>
-    </HelmetProvider>
+    <>
+      {onlyRenderWhenSet && (
+        <HelmetProvider>
+          <Helmet prioritizeSeoTags>
+            <meta name="description" content="" />
+            <title> {singleVenue.name} | Holidayz</title>
+            {/* add Venue title */}
+          </Helmet>
+          <main className="p-4">
+            <SingleVenue venue={singleVenue} formData={formData} />
+          </main>
+        </HelmetProvider>
+      )}
+    </>
   );
 }
