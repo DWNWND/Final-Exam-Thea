@@ -1,7 +1,7 @@
 import LocationLookAhead from "../LocationLookAhead/index.jsx";
 import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
 import { useSearchStore } from "../../../stores/useSearchStore.js";
@@ -31,12 +31,12 @@ export default function MainSearchForm() {
       <h1 className="text-center mb-8 text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
       <form className="flex flex-col gap-4 md:gap-8" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <div className="flex flex-col lg:flex-row gap-4 ">
-          <LocationLookAhead register={register} setValue={setValue} color="primary-green"/>
+          <LocationLookAhead register={register} setValue={setValue} color="primary-green" />
           <SelectTravelDates register={register} setValue={setValue} color="primary-green" />
-          <NumberOfGuests register={register} setValue={setValue} color="primary-green" mainSearch={true}/>
+          <NumberOfGuests register={register} setValue={setValue} color="primary-green" mainSearch={true} />
           <CtaBtn type="submit" innerText="Search" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} />
         </div>
-        <MoreFilters register={register} setValue={setValue} getValues={getValues} color="primary-green" mainSearch={true}/>
+        <MoreFilters register={register} setValue={setValue} getValues={getValues} color="primary-green" mainSearch={true} />
       </form>
     </div>
   );
