@@ -11,7 +11,7 @@ export default function NavBtn({ innerText, tailw, color, clickFunc, arrow, open
     );
   } else {
     return (
-      <button onClick={clickFunc} className={`${tailw} p-1 px-3 w-full text-sm text-nowrap flex justify-center border border-solid border-${color} text-${color} uppercase hover:shadow-md`}>
+      <button onClick={clickFunc} className={`${tailw} p-1 px-3 w-full text-sm text-nowrap flex justify-center border border-solid border-${color} text-${color} uppercase hover:shadow-md cursor-pointer`}>
         {innerText}
       </button>
     );
