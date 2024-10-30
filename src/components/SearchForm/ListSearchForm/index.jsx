@@ -12,7 +12,7 @@ import NavBtn from "../../Buttons/NavBtn/index.jsx";
 export default function ListSearchForm() {
   const [openEditSearch, setopenEditSearch] = useState(false);
   const { register, setValue, getValues, handleSubmit, reset } = useForm();
-  const { formData, setFormData } = useSearchStore();
+  const { formData, updateFormData } = useSearchStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function ListSearchForm() {
 
   function onSubmit(data) {
     console.log(data);
-    setFormData(data); // Store data in Zustand store
+    updateFormData(data); // Store data in Zustand store
     navigate("/search");
   }
 
@@ -40,8 +40,7 @@ export default function ListSearchForm() {
       </h1>
       <p className="text-white text-center my-4">{formData.numberOfGuests} guests</p>
       <NavBtn clickFunc={handleClick} arrow={true} open={openEditSearch} innerText="Edit search" tailw="rounded my-4" color="white"></NavBtn>
-
-      <form className={`flex flex-col gap-4 md:gap-8 transition-max-height duration-500 ease-in-out overflow-hidden ${openEditSearch ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`} onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
+      <form className={`flex flex-col gap-4 md:gap-8 transition-max-height duration-500 ease-in-out overflow-hidden ${openEditSearch ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`} onSubmit={handleSubmit(onSubmit)} id="update-search-travel-form">
         <div className="flex flex-col gap-4 ">
           <LocationLookAhead register={register} setValue={setValue} color={"primary-blue"} />
           <SelectTravelDates register={register} setValue={setValue} color={"primary-blue"} />
