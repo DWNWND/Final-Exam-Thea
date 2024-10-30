@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import VenueCard from "../VenueCard";
+import { useContext } from "react";
+import { DataContext } from "../../../components/DataProvider";
 
-export default function ListCategorized({ venues, filters }) {
+export default function ListCategorized({ filters }) {
+  const { venues } = useContext(DataContext);
+
   return (
     <>
       {venues && venues.length >= 2 && (

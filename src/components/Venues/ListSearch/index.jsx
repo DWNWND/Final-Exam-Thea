@@ -1,8 +1,11 @@
 import LoadingIndicator from "../../LoadingIndicator";
 import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { DataContext } from "../../../components/DataProvider";
 
-export default function ListSearch({ venues, searchQuery, isLoading }) {
+export default function ListSearch({ searchQuery }) {
+  const { venues, isLoading } = useContext(DataContext);
   const [filteredVenues, setFilteredVenues] = useState([]);
   const [displayedVenues, setDisplayedVenues] = useState([]);
   const initialDisplayCount = 10;

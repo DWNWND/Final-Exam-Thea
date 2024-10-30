@@ -12,12 +12,10 @@ export default function Layout() {
   return (
     <>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <DataProvider>
           <Header />
           <Outlet />
           {isMobile && <FixedBtnDisplay isMobile={isMobile}/>}
           <Footer />
-        </DataProvider>
       </ErrorBoundary>
     </>
   );
