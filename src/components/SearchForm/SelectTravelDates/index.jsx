@@ -2,8 +2,7 @@ import { useReducer, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
-import 'flatpickr/dist/themes/material_green.css';
-
+import "flatpickr/dist/themes/material_green.css";
 
 const initialState = {
   dateRange: [null, null], // Store both start and end date in an array
@@ -70,6 +69,7 @@ export default function SelectTravelDates({ register, setValue, color }) {
     dispatch({ type: "setStartDate", payload: startDateStr });
     dispatch({ type: "setEndDate", payload: initialEndDate });
     dispatch({ type: "setAllDatesInRange", payload: [startDateStr, initialEndDate] });
+    register("allDatesInRange", { value: state.allDatesInRange });
   }, [startDateStr, initialEndDate]);
 
   useEffect(() => {
