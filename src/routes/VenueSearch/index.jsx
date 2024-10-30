@@ -6,7 +6,7 @@ import ListSearch from "../../components/Venues/ListSearch";
 import { useSearchStore } from "../../stores/useSearchStore.js";
 
 export default function VenueSearch() {
-  const { venues } = useContext(DataContext);
+  const { venues, isLoading } = useContext(DataContext);
   const { formData } = useSearchStore();
 
   return (
@@ -21,8 +21,8 @@ export default function VenueSearch() {
           <ListSearchForm />
         </section>
         <section className="py-12 w-full">
-          <h1>Results for {formData.location}</h1>
-          <ListSearch venues={venues} searchQuery={formData} />
+          <h1 className="font-bold text-xl text-black">Results for {formData.location}</h1>
+          <ListSearch venues={venues} searchQuery={formData} isLoading={isLoading}/>
         </section>
       </main>
     </HelmetProvider>
