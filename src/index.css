@@ -11,6 +11,20 @@
   margin: 0;
 }
 
+/* Targeting elements with data-weekend="true" */
+[data-weekend="true"] {
+  color: #8d4033 !important; /* Example color */
+}
+
+[data-some-month="true"] span {
+  color: var(--color-primary-blue) !important; /* Example color */
+}
+
+[data-some-year="true"] span {
+  color: var(--color-primary-blue) !important; /* Example color */
+  font-weight: 800;
+}
+
 /* body, html {
   overflow-x: hidden;
 } */
