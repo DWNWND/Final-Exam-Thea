@@ -3,31 +3,49 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
 import "flatpickr/dist/themes/material_green.css";
+import { useSearchStore } from "../../../stores/useSearchStore.js";
 
-const today = new Date();
-const tomorrow = new Date(today);
-tomorrow.setDate(today.getDate() + 1);
-
-const initialState = {
-  dateRange: { startDate: today, endDate: tomorrow }, // Store start and end date
-  allDatesInRange: [], // Store all dates in the range
-};
-
-// Format dates to "Y-m-d" for Flatpickr
-function formatDateString(date) {
-  const newDate = new Date(date);
-  return newDate.toISOString().split("T")[0]; // Formats to "YYYY-MM-DD"
+function getFormattedDate(date) {
+  return date.toISOString().split("T")[0]; // "YYYY-MM-DD"
 }
 
-// Helper to generate date range array
-function generateDateRange(start, end) {
-  const dateArray = [];
-  let currentDate = new Date(start);
-  while (currentDate <= end) {
-    dateArray.push(new Date(currentDate));
-    currentDate.setDate(currentDate.getDate() + 1);
+const todayString = getFormattedDate(new Date());
+const tomorrowString = getFormattedDate(new Date(new Date().setDate(new Date().getDate() + 1)));
+
+// const today = normalizeDateToUTC(new Date());
+// const tomorrow = normalizeDateToUTC(new Date(today));
+// tomorrow.setUTCDate(today.getUTCDate() + 1);
+
+// const today = new Date();
+// const tomorrow = new Date(today);
+// tomorrow.setDate(today.getDate() + 1);
+
+const initialState = {
+  dateRange: { startDate: todayString, endDate: tomorrowString }, // Store start and end date
+};
+
+// const initialState = {
+//   dateRange: { startDate: today, endDate: tomorrow }, // Store start and end date
+//   // allDatesInRange: [], // Store all dates in the range
+// };
+
+console.log("initialState", initialState.dateRange);
+
+// Format dates to "YYYY-MM-DD" without timezone shifts
+// function formatDateString(date) {
+//   const newDate = new Date(date);
+//   return newDate.toISOString().split("T")[0]; // Formats to "YYYY-MM-DD"
+// }
+
+// Utility to calculate all dates between start and end
+function generateDateRange(startDate, endDate) {
+  let dates = [];
+  let currentDate = new Date(startDate);
+  while (currentDate <= new Date(endDate)) {
+    dates.push(currentDate.toISOString().split("T")[0]); // Push date as "YYYY-MM-DD"
+    currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
   }
-  return dateArray;
+  return dates;
 }
 
 function dateReducer(state, action) {
@@ -46,42 +64,49 @@ function dateReducer(state, action) {
     case "setDateRange":
       return {
         ...state,
-        dateRange: { startDate: action.payload[0], endDate: action.payload[1] },
-        allDatesInRange: generateDateRange(action.payload[0], action.payload[1]),
+        dateRange: { startDate: getFormattedDate(action.payload[0]), endDate: getFormattedDate(action.payload[1]) },
+      };
+    case "setAllDatesInRange":
+      const [start, end] = action.payload;
+      return {
+        ...state,
+        dateRange: action.payload,
+        allDatesInRange: start && end ? generateDateRange(start, end) : [], // Generate all dates if both start and end are selected
       };
     default:
       return state;
   }
 }
 
-export default function SelectTravelDates({ register, setValue, color, formData }) {
+export default function SelectTravelDates({ register, setValue, color }) {
   const [state, dispatch] = useReducer(dateReducer, initialState);
+  const { setDateRange, setAllDatesRange, formData } = useSearchStore();
 
   useEffect(() => {
-    // dispatch({ type: "setStartDate", payload: initialState.dateRange.startDate });
-    // dispatch({ type: "setEndDate", payload: initialState.dateRange.endDate });
-
-    // Set initial date range and allDatesInRange in react-hook-form
+    // Update the form value whenever allDatesInRange changes
     setValue("allDatesInRange", state.allDatesInRange);
-    register("allDatesInRange", { value: state.allDatesInRange });
-  }, [register, setValue]);
-
-  useEffect(() => {
-    // Update form value whenever allDatesInRange changes
-    setValue("allDatesInRange", state.allDatesInRange);
+    setAllDatesRange(state.allDatesInRange);
   }, [state.allDatesInRange, setValue]);
 
-  let defaultDateString;
+  console.log("allDatesInRange", state.allDatesInRange);
 
-  if (formData && formData.allDatesInRange.length > 0) {
-    defaultDateString = `${formatDateString(formData.allDatesInRange[0])} to ${formatDateString(formData.allDatesInRange.at(-1))}`;
-    console.log("defaultDateString", defaultDateString);
-  } else {
-    defaultDateString = [state.dateRange.startDate, state.dateRange.endDate];
-    console.log("defaultDateString22", defaultDateString);
+  useEffect(() => {
+    setValue("dateRange", state.dateRange);
+  }, [state.dateRange]);
+
+  console.log("formData", formData);
+
+  function isEmpty(obj) {
+    return JSON.stringify(obj) === "{}";
   }
 
-  console.log("defaultDateStringxx", defaultDateString);
+  useEffect(() => {
+    if (isEmpty(formData.dateRange)) {
+      setDateRange(initialState.dateRange);
+    }
+  }, []);
+
+  const defaultDateString = `${formData.dateRange.startDate} to ${formData.dateRange.endDate}`;
 
   return (
     <div className={`flex justify-between items-center rounded-full border-${color} border px-3 bg-white w-full`}>
@@ -89,19 +114,25 @@ export default function SelectTravelDates({ register, setValue, color, formData 
         className={`p-2 bg-transparent w-full font-semibold text-${color}`}
         options={{
           mode: "range",
-          minDate: today, // Disable dates before today
+          minDate: todayString, // Disable dates before today
           dateFormat: "Y-m-d",
           defaultDate: defaultDateString,
         }}
         onChange={(selectedDates) => {
           if (selectedDates.length === 2) {
             // Only dispatch if both start and end dates are selected
+            const start = getFormattedDate(selectedDates[0]);
+            const end = getFormattedDate(selectedDates[1]);
             dispatch({ type: "setDateRange", payload: selectedDates });
+            setDateRange({ startDate: start, endDate: end });
+
+            dispatch({ type: "setAllDatesInRange", payload: selectedDates });
+            // setValue("dateRange", { startDate: start, endDate: end });
           }
         }}
       />
       <CiCalendar className={`text-2xl text-${color}`} />
-      <input type="hidden" {...register("allDatesInRange")} />
+      <input type="hidden" />
     </div>
   );
 }

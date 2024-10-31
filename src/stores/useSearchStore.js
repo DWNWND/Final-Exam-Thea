@@ -6,6 +6,7 @@ export const useSearchStore = create(
     (set) => ({
       formData: {
         allDatesInRange: [],
+        dateRange: {},
         location: "",
         numberOfGuests: 2,
         freeWifi: false,
@@ -22,6 +23,15 @@ export const useSearchStore = create(
       setFormData: (data) => set({ formData: data }),
       updateFormData: (data) => set((state) => ({ formData: { ...state.formData, ...data } })),
       clearFormData: () => set({ formData: {} }),
+      // New function to update only dateRange
+      setDateRange: (dateRange) =>
+        set((state) => ({
+          formData: {
+            ...state.formData,
+            dateRange,
+          },
+        })),
+      setAllDatesRange: (allDatesInRange) => set((state) => ({ formData: { ...state.formData, allDatesInRange } })),
     }),
     {
       name: "search-form", // Storage key

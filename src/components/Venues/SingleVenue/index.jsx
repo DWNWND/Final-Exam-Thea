@@ -11,11 +11,14 @@ import { FaWifi } from "react-icons/fa";
 // https://www.npmjs.com/package/@demark-pro/react-booking-calendar
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
+import { useSearchStore } from "../../../stores/useSearchStore.js";
 
 // CSS Modules, react-booking-calendar-cssmodules.css
 // import '@demark-pro/react-booking-calendar/dist/react-booking-calendar-cssmodules.css';
 
-export default function SingleVenue({ venue, formData }) {
+export default function SingleVenue({ venue }) {
+  const { formData, updateFormData } = useSearchStore();
+
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
 
@@ -36,7 +39,21 @@ export default function SingleVenue({ venue, formData }) {
     setHostDetailsOpen(!hostDetailsOpen);
   }
 
-  const nights = formData.allDatesInRange.length - 1;
+  function nightsBetween(startDate, endDate) {
+    const msPerDay = 24 * 60 * 60 * 1000; // Milliseconds per day
+    const diffInMs = new Date(endDate) - new Date(startDate); // Difference in milliseconds
+    const days = Math.floor(diffInMs / msPerDay);
+    return days > 0 ? days : 0; // Return 0 if the dates are the same or invalid
+  }
+
+  // Usage
+  const start = formData.dateRange.startDate;
+  const end = formData.dateRange.endDate;
+  console.log(nightsBetween(start, end)); // Output: 14
+
+  const nights = nightsBetween(formData.dateRange.startDate, formData.dateRange.endDate);
+
+  // const nights = formData.allDatesInRange.length - 1;
   const price = nights * venue.price;
 
   function handleClick() {
@@ -51,7 +68,9 @@ export default function SingleVenue({ venue, formData }) {
 
   const BookingCalendar = () => {
     const [selectedDates, setSelectedDates] = useState([]);
-    const myBooking = formData.allDatesInRange;
+    const myBooking = formData.allDatesRange;
+
+    console.log("myBooking", myBooking);
 
     let newBookingArr = [];
 
@@ -85,7 +104,7 @@ export default function SingleVenue({ venue, formData }) {
     );
   };
 
-  const startDate = new Date(formData.allDatesInRange[0]);
+  const startDate = new Date(formData.dateRange.startDate);
 
   const formattedStartDate = new Intl.DateTimeFormat("en-GB", {
     weekday: "short",
@@ -95,7 +114,7 @@ export default function SingleVenue({ venue, formData }) {
 
   console.log(formattedStartDate); // Output: "Mon 11 Nov"
 
-  const endDate = new Date(formData.allDatesInRange.at(-1));
+  const endDate = new Date(formData.dateRange.endDate);
 
   const formattedEndDate = new Intl.DateTimeFormat("en-GB", {
     weekday: "short",

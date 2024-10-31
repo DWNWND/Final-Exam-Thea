@@ -30,7 +30,7 @@ export default function MainSearchForm() {
     <div className="bg-white p-6 rounded-3xl md:m-10 lg:rounded-3xl lg:pt-20 lg:pl-20 lg:pr-20 md:py-10 shadow-md w-full h-fit">
       <h1 className="text-center mb-8 text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
       <form className="flex flex-col gap-4 md:gap-8" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
-        <div className="flex flex-col lg:flex-row gap-4 ">
+        <div className="flex flex-col lg:flex-row gap-4">
           <LocationLookAhead register={register} setValue={setValue} color="primary-green" />
           <SelectTravelDates register={register} setValue={setValue} color="primary-green" formData={formData} />
           <NumberOfGuests register={register} setValue={setValue} color="primary-green" mainSearch={true} />
