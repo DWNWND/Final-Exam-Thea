@@ -77,8 +77,11 @@ export default function SelectTravelDates({ register, setValue, color, formData 
     defaultDateString = `${formatDateString(formData.allDatesInRange[0])} to ${formatDateString(formData.allDatesInRange.at(-1))}`;
     console.log("defaultDateString", defaultDateString);
   } else {
-    defaultDateString = `${formatDateString(state.dateRange.startDate)} to ${formatDateString(state.dateRange.endDate)}`;
+    defaultDateString = [state.dateRange.startDate, state.dateRange.endDate];
+    console.log("defaultDateString22", defaultDateString);
   }
+
+  console.log("defaultDateStringxx", defaultDateString);
 
   return (
     <div className={`flex justify-between items-center rounded-full border-${color} border px-3 bg-white w-full`}>
@@ -88,8 +91,8 @@ export default function SelectTravelDates({ register, setValue, color, formData 
           mode: "range",
           minDate: today, // Disable dates before today
           dateFormat: "Y-m-d",
+          defaultDate: defaultDateString,
         }}
-        defaultValue={defaultDateString}
         onChange={(selectedDates) => {
           if (selectedDates.length === 2) {
             // Only dispatch if both start and end dates are selected

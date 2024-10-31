@@ -3,6 +3,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import { MdOutlinePets } from "react-icons/md";
+import { FaParking } from "react-icons/fa";
+import { MdEmojiFoodBeverage } from "react-icons/md";
+import { FaWifi } from "react-icons/fa";
 
 // https://www.npmjs.com/package/@demark-pro/react-booking-calendar
 import { Calendar } from "@demark-pro/react-booking-calendar";
@@ -49,33 +53,57 @@ export default function SingleVenue({ venue, formData }) {
     const [selectedDates, setSelectedDates] = useState([]);
     const myBooking = formData.allDatesInRange;
 
-    console.log("myBooking", myBooking);
-    
-    const newBookings = myBooking.map(([start, end]) => ({
-      startDate: new Date(start),
-      endDate: new Date(end),
-    }));
+    let newBookingArr = [];
 
-    console.log("now booking", newBookings);
+    for (let i = 0; i < myBooking.length; i++) {
+      const timestamp = Date.parse(myBooking[i]);
+      const dateObject = new Date(timestamp);
+      newBookingArr.push(dateObject);
+    }
+
+    let newBookingArr2 = [];
+    newBookingArr2.push(newBookingArr[0], newBookingArr.at(-1));
 
     return (
       <Calendar
-        bookings={newBookings}
-        // onClickDate={() => {}} // Disables date selection
+        // bookings={newBookingArr[0]}
+        // onClickDate={() => {}} // Disables date selections
         classNames={{
-          CalendarContainer: "w-full bg-comp-purple rounded-lg p-4",
-          DayReservation: "bg-primary-blue",
+          CalendarContainer: "bg-comp rounded-lg p-4",
+          DayReservation: "bg-comp-gray",
           WeekContent: "text-primary-blue",
           MonthContent: "text-primary-blue",
           MonthArrowNext: "text-primary-blue",
           MonthArrowPrev: "text-primary-blue",
+          DayToday: "border-none",
+          DaySelection: "bg-primary-green",
         }}
-        selected={selectedDates}
+        selected={newBookingArr2}
         reserved={reserved}
         onChange={setSelectedDates}
       />
     );
   };
+
+  const startDate = new Date(formData.allDatesInRange[0]);
+
+  const formattedStartDate = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  }).format(startDate);
+
+  console.log(formattedStartDate); // Output: "Mon 11 Nov"
+
+  const endDate = new Date(formData.allDatesInRange.at(-1));
+
+  const formattedEndDate = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  }).format(endDate);
+
+  console.log(formattedEndDate); // Output: "Mon 11 Nov"
 
   return (
     <div>
@@ -89,7 +117,7 @@ export default function SingleVenue({ venue, formData }) {
       <div className="relative">
         <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30">
           <h1 className="text-center text-2xl font-bold text-white">
-            from: {formData.allDatesInRange[0]} <br></br> to: {formData.allDatesInRange.at(-1)}
+            from: {formattedStartDate} <br></br> to: {formattedEndDate}
           </h1>
           <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">
             kr {price} ({nights} {nights < 1 ? "nights" : "night"})
@@ -117,24 +145,36 @@ export default function SingleVenue({ venue, formData }) {
       </div>
       <div className="flex flex-col gap-2">
         <div className="bg-comp-purple p-4 rounded-lg">
-          <div className="" onClick={() => toggleAmenities()}>
-            <h2 className="flex items-center gap-2 justify-between">
-              <span className="uppercase">Amenities</span> {amenitiesOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          <div className="">
+            <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={() => toggleAmenities()}>
+              <span className="uppercase font-semibold">Amenities</span> {amenitiesOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </h2>
             <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${amenitiesOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
-              <div className="flex flex-col mt-3">
-                <p className="">{venue.meta.breakfast && "Breakfast included"}</p>
-                <p className="">{venue.meta.parking && "Free parking"}</p>
-                <p className="">{venue.meta.pets && "Pets allowed"}</p>
-                <p className="">{venue.meta.wifi && "Free WiFi"}</p>
+              <div className="flex flex-col mt-3 gap-2 p-4">
+                <p className="flex items-center gap-2">
+                  <MdEmojiFoodBeverage />
+                  {venue.meta.breakfast && "Breakfast included"}
+                </p>
+                <p className="flex items-center gap-2">
+                  <FaParking />
+                  {venue.meta.parking && "Free parking"}
+                </p>
+                <p className="flex items-center gap-2">
+                  <MdOutlinePets />
+                  {venue.meta.pets && "Pets allowed"}
+                </p>
+                <p className="flex items-center gap-2">
+                  <FaWifi />
+                  {venue.meta.wifi && "Free WiFi"}
+                </p>
               </div>
             </div>
           </div>
         </div>
         <div className="bg-comp-purple p-4 rounded-lg">
-          <div className="" onClick={() => toggleDetails()}>
-            <h2 className="flex items-center gap-2 justify-between">
-              <span className="uppercase">Details</span> {detailsOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          <div className="">
+            <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={() => toggleDetails()}>
+              <span className="uppercase font-semibold">Details</span> {detailsOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </h2>
             <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${detailsOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
               <div className="flex flex-col mt-3">
@@ -144,9 +184,9 @@ export default function SingleVenue({ venue, formData }) {
           </div>
         </div>
         <div className="bg-comp-purple p-4 rounded-lg">
-          <div className="" onClick={() => toggleHostDetails()}>
-            <h2 className="flex items-center gap-2 justify-between">
-              <span className="uppercase">Host</span> {hostDetailsOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          <div className="">
+            <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={() => toggleHostDetails()}>
+              <span className="uppercase font-semibold">Host</span> {hostDetailsOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </h2>
             <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${hostDetailsOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
               <div className="flex mt-3 gap-4 items-center justify-between">
@@ -164,8 +204,8 @@ export default function SingleVenue({ venue, formData }) {
         </div>
         <div className="bg-comp-purple p-4 rounded-lg">
           <div className="">
-            <h2 className="flex items-center gap-2 justify-between" onClick={() => toggleAvailability()}>
-              <span className="uppercase">Availability</span> {availabilityOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={() => toggleAvailability()}>
+              <span className="uppercase font-semibold">Availability</span> {availabilityOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </h2>
             <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${availabilityOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
               <div className="flex mt-3 gap-4 items-center justify-between">
