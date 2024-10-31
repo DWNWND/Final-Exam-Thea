@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 
+// https://www.npmjs.com/package/@demark-pro/react-booking-calendar
+import { Calendar } from "@demark-pro/react-booking-calendar";
+import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
+
+// CSS Modules, react-booking-calendar-cssmodules.css
+// import '@demark-pro/react-booking-calendar/dist/react-booking-calendar-cssmodules.css';
+
 export default function SingleVenue({ venue, formData }) {
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -32,6 +39,44 @@ export default function SingleVenue({ venue, formData }) {
     console.log("clicked");
   }
 
+  // Assuming venue.bookings is an array of bookings with startDate and endDate properties
+  const reserved = venue.bookings.map((booking) => ({
+    startDate: new Date(booking.dateFrom),
+    endDate: new Date(booking.dateTo),
+  }));
+
+  const BookingCalendar = () => {
+    const [selectedDates, setSelectedDates] = useState([]);
+    const myBooking = formData.allDatesInRange;
+
+    console.log("myBooking", myBooking);
+    
+    const newBookings = myBooking.map(([start, end]) => ({
+      startDate: new Date(start),
+      endDate: new Date(end),
+    }));
+
+    console.log("now booking", newBookings);
+
+    return (
+      <Calendar
+        bookings={newBookings}
+        // onClickDate={() => {}} // Disables date selection
+        classNames={{
+          CalendarContainer: "w-full bg-comp-purple rounded-lg p-4",
+          DayReservation: "bg-primary-blue",
+          WeekContent: "text-primary-blue",
+          MonthContent: "text-primary-blue",
+          MonthArrowNext: "text-primary-blue",
+          MonthArrowPrev: "text-primary-blue",
+        }}
+        selected={selectedDates}
+        reserved={reserved}
+        onChange={setSelectedDates}
+      />
+    );
+  };
+
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between mb-4">
@@ -54,8 +99,8 @@ export default function SingleVenue({ venue, formData }) {
           <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg"></div>
           <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 object-cover rounded-lg" />
         </div>
-        <div className="absolute inset-x-0 -bottom-4 flex flex-col justify-center items-center gap-4">
-          <CtaBtn type="submit" innerText="Book property" tailw=" mt-4 md:mt-0 rounded-full bg-primary-blue w-80 z-30" mainCta={true} />
+        <div className="absolute inset-x-0 -bottom-4 flex flex-col justify-center items-center gap-4 px-6">
+          <CtaBtn type="submit" innerText="Book property" tailw="mt-4 md:mt-0 rounded-full bg-primary-blue w-full text-nowrap z-30" mainCta={true} />
         </div>
       </div>
       <div className="p-4 mt-6 flex justify-between">
@@ -118,13 +163,14 @@ export default function SingleVenue({ venue, formData }) {
           </div>
         </div>
         <div className="bg-comp-purple p-4 rounded-lg">
-          <div className="" onClick={() => toggleAvailability()}>
-            <h2 className="flex items-center gap-2 justify-between">
+          <div className="">
+            <h2 className="flex items-center gap-2 justify-between" onClick={() => toggleAvailability()}>
               <span className="uppercase">Availability</span> {availabilityOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </h2>
             <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${availabilityOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
               <div className="flex mt-3 gap-4 items-center justify-between">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 w-full">
+                  <BookingCalendar />
                   {/* <p className="">Available from: {venue.availability.from}</p>
                   <p className="">Available to: {venue.availability.to}</p> */}
                 </div>
