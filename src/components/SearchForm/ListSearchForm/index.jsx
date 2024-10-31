@@ -33,17 +33,36 @@ export default function ListSearchForm() {
     setopenEditSearch(!openEditSearch);
   }
 
+  const startDate = new Date(formData.allDatesInRange[0]);
+
+  const formattedStartDate = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  }).format(startDate);
+
+  console.log(formattedStartDate); // Output: "Mon 11 Nov"
+
+  const endDate = new Date(formData.allDatesInRange.at(-1));
+
+  const formattedEndDate = new Intl.DateTimeFormat("en-GB", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+  }).format(endDate);
+
+  console.log(formattedEndDate); // Output: "Mon 11 Nov"
+
+
   return (
     <div className="bg-primary-blue p-6 rounded-3xl md:m-10 md:py-10 shadow-md w-full h-fit xl:sticky xl:top-4">
-      <h1 className="text-center text-2xl font-bold text-white">
-        from: {formData.allDatesInRange[0]} <br></br> to: {formData.allDatesInRange.at(-1)}
-      </h1>
+      <h1 className="text-center text-2xl font-bold text-white">from: {formattedStartDate} <br></br> to: {formattedEndDate}</h1>
       <p className="text-white text-center my-4">{formData.numberOfGuests} guests</p>
       <NavBtn clickFunc={handleClick} arrow={true} open={openEditSearch} innerText="Edit search" tailw="rounded my-4" color="white"></NavBtn>
       <form className={`flex flex-col gap-4 md:gap-8 transition-max-height duration-500 ease-in-out overflow-hidden ${openEditSearch ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`} onSubmit={handleSubmit(onSubmit)} id="update-search-travel-form">
         <div className="flex flex-col gap-4 ">
           <LocationLookAhead register={register} setValue={setValue} color={"primary-blue"} />
-          <SelectTravelDates register={register} setValue={setValue} color={"primary-blue"} />
+          <SelectTravelDates register={register} setValue={setValue} color={"primary-blue"} formData={formData}/>
           <NumberOfGuests register={register} setValue={setValue} color={"white"} mainSearch={false} />
           <CtaBtn type="submit" innerText="Update" tailw="mt-4 md:mt-0 rounded-full bg-white" mainCta={false} color={"primary-blue"} />
         </div>

@@ -32,9 +32,9 @@ export default function MainSearchForm() {
       <form className="flex flex-col gap-4 md:gap-8" onSubmit={handleSubmit(onSubmit)} id="search-travel-form">
         <div className="flex flex-col lg:flex-row gap-4 ">
           <LocationLookAhead register={register} setValue={setValue} color="primary-green" />
-          <SelectTravelDates register={register} setValue={setValue} color="primary-green" />
+          <SelectTravelDates register={register} setValue={setValue} color="primary-green" formData={formData} />
           <NumberOfGuests register={register} setValue={setValue} color="primary-green" mainSearch={true} />
-          <CtaBtn type="submit" innerText="Search" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} />
+          <CtaBtn type="submit" innerText="Search" tailw="mt-4 md:mt-0 rounded-full bg-primary-green lg:max-w-8" mainCta={true} />
         </div>
         <MoreFilters register={register} setValue={setValue} getValues={getValues} color="primary-green" mainSearch={true} />
       </form>
