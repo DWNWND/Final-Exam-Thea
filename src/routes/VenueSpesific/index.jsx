@@ -32,7 +32,7 @@ export default function VenueSpesific() {
             <title> {singleVenue.name} | Holidayz</title>
             {/* add Venue title */}
           </Helmet>
-          <main className="p-4">
+          <main className="p-4 mb-12">
             <SingleVenue venue={singleVenue} formData={formData} />
           </main>
         </HelmetProvider>
