@@ -14,6 +14,7 @@ export default {
         blue: "#27346A",
         light: "#769089",
         dark: "#696A5C",
+        cta: "#F44336",
       },
       comp: {
         DEFAULT: "#ecebff",
