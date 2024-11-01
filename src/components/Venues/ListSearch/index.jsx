@@ -3,15 +3,17 @@ import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../components/DataProvider";
+import { useSearchStore } from "../../../stores/useSearchStore.js";
 
-export default function ListSearch({ searchQuery }) {
+export default function ListSearch() {
   const { venues, isLoading } = useContext(DataContext);
   const [filteredVenues, setFilteredVenues] = useState([]);
   const [displayedVenues, setDisplayedVenues] = useState([]);
   const initialDisplayCount = 10;
+  const { travelSearchData } = useSearchStore();
+  const searchQuery = travelSearchData;
 
   useEffect(() => {
-    // Filter venues based on searchQuery criteria
     const matches = venues.filter((venue) => {
       // Location filter
       if (searchQuery.location && searchQuery.location !== venue.location.city) return false;

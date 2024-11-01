@@ -7,7 +7,7 @@ import { useSearchStore } from "../../stores/useSearchStore.js";
 import { DataProvider } from "../../components/DataProvider";
 
 export default function VenueSearch() {
-  const { formData } = useSearchStore();
+  const { travelSearchData } = useSearchStore();
 
   return (
     <HelmetProvider>
@@ -22,8 +22,8 @@ export default function VenueSearch() {
           <ListSearchForm />
         </section>
         <section className="py-12 w-full">
-          <h1 className="font-bold text-xl text-black">Results for {formData.location}</h1>
-          <ListSearch searchQuery={formData}/>
+          <h1 className="font-bold text-xl text-black">Results for {travelSearchData.location}</h1>
+          <ListSearch/>
         </section>
       </DataProvider>
       </main>
