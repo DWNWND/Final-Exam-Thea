@@ -10,6 +10,8 @@ import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBet
 import BookingCalendar from "../../BookingCalendar/index.jsx";
 import { useSearchStore } from "../../../stores/useSearchStore.js";
 import { IoIosClose } from "react-icons/io";
+import { FaShare } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 
 export default function SingleVenue({ venue }) {
   const { travelSearchData } = useSearchStore();
@@ -74,14 +76,14 @@ export default function SingleVenue({ venue }) {
           <SelectTravelDates color="primary-blue" tailw={`my-4 transition-max-height duration-500 ease-in-out overflow-hidden ${editDates ? "max-w-full  md:max-w-64  opacity-100" : "max-w-0 opacity-0"}`} />
         </div>
         <div className="flex gap-4">
-          <Link className="underline">save</Link>
-          <Link className="underline">share</Link>
+          <FaShare />
+          <FaRegHeart />
         </div>
       </div>
       <div className="relative">
         <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer" onClick={toggleModal}>
           <h1 className="text-center text-2xl font-bold text-white">
-            from: {formattedStartDate} <br></br> to: {formattedEndDate}
+            {formattedStartDate} - {formattedEndDate}
           </h1>
           <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">
             kr {price} ({nights} {nights > 1 ? "nights" : "night"})
