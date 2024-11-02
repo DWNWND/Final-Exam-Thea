@@ -37,9 +37,9 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4">
-      <h1 className="text-2xl mb-6 uppercase text-primary-green">Register</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4  h-svh flex items-center flex-col justify-center">
+      <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">Register new user</h1>
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label htmlFor="username" className="block text-primary-green mb-2">
             Username
@@ -76,7 +76,7 @@ export default function RegisterForm() {
           <CtaBtn type="submit" innerText="Register" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} />
         </div>
       </form>
-      <Link to="/login" className="block text-sm underline mt-4 text-primary-green hover:text-primary-blue">
+      <Link to="/login" className="w-full block text-sm underline mt-4 text-primary-green hover:text-primary-blue">
         Already have an account? Login
       </Link>
     </div>
