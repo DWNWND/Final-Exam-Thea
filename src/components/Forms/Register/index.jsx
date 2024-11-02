@@ -5,6 +5,92 @@ import useAuthStore from "../../../stores/useAuthStore.js";
 import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import { Link } from "react-router-dom";
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const apiRegisterExt = import.meta.env.VITE_API_REGISTER;
+const apiKey = import.meta.env.VITE_VITE_API_KEY;
+
+const registerUrl = apiBaseUrl + apiRegisterExt;
+
+const apiLoginExt = import.meta.env.VITE_API_LOGIN;
+
+const loginUrl = apiBaseUrl + apiLoginExt;
+
+
+async function callApiWith(url, options = {}) {
+  return fetch(url, {
+    ...options,
+    headers: headers(Boolean(options.body)),
+  });
+}
+
+function headers(hasBody = false) {
+  const headers = new Headers();
+  // const token = load("token");
+
+  // if (token) {
+  //   headers.append("Authorization", `Bearer ${token}`);
+  // }
+  if (apiKey) {
+    headers.append("X-Noroff-API-Key", apiKey);
+  }
+  if (hasBody) {
+    headers.append("Content-Type", "application/json");
+  }
+  return headers;
+}
+
+async function registerUser(name, email, password) {
+  // const url = API_BASE + API_REGISTER;
+  const response = await callApiWith(registerUrl, {
+    method: "POST",
+    body: JSON.stringify({ name, email, password }),
+  });
+
+  console.log("response", response);
+  // if (response.status === 201) {
+  //   login(email, password);
+  //   return;
+  // }
+
+  // if (response.status === 400) {
+  //   throw new Error("There is already an account with these credentials, try logging in instead.");
+  // } else if (response.status >= 401) {
+  //   throw new Error("An unexpected error occured, please try again later.");
+  // }
+}
+
+async function login(email, password) {
+  // const url = API_BASE + API_LOGIN;
+  const response = await callApiWith(loginUrl, {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (response.status === 200) {
+    const result = await response.json();
+    const { accessToken, ...profile } = result.data;
+    // save("token", accessToken);
+    // save("profile", profile);
+
+    console.log("User logged in:", profile);
+
+    // const deployed = checkIfDeployed();
+    // if (deployed) {
+    //   location.pathname = `/${baseRepoUrl}`;
+    // }
+    // if (!deployed) {
+    //   location.pathname = "/";
+    // }
+    return;
+  }
+  if (response.status === 401) {
+    throw new Error("Email and/or password does not match.");
+  } else if (response.status === 400 || response.status >= 402) {
+    throw new Error("An error occured. Check that your credentials are correct or try again later.");
+  }
+}
+
+
 // Validation schema for registration
 const registerSchema = yup.object().shape({
   username: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
@@ -25,15 +111,11 @@ export default function RegisterForm() {
     resolver: yupResolver(registerSchema),
   });
 
-  const login = useAuthStore((state) => state.login);
+  // const login = useAuthStore((state) => state.login);
 
   const onSubmit = (data) => {
-    const userData = {
-      username: data.username,
-      email: data.email,
-    };
-    login(userData); // Simulate a successful registration
-    console.log("User registered:", userData);
+    registerUser(data.username, data.email, data.password); // Simulate a successful registration
+    login(data); // Log in the user after registration
   };
 
   return (

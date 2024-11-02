@@ -7,8 +7,8 @@ const page = 1;
 const limit = 10;
 // ?page=${page}&limit=${limit}
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const sortedByRating = `${apiBaseUrl}?sort=created&sortOrder=desc`;
+const apiVenuesUrl = import.meta.env.VITE_API_VENUES_URL;
+const sortedByRating = `${apiVenuesUrl}?sort=created&sortOrder=desc`;
 
 export const DataContext = createContext();
 
