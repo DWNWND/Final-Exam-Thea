@@ -1,16 +1,11 @@
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import { Link } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch.jsx";
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-const apiLoginExt = import.meta.env.VITE_API_LOGIN;
-const apiKey = import.meta.env.VITE_VITE_API_KEY;
-
-const url = apiBaseUrl + apiLoginExt;
+import useAuth from "../../../hooks/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -18,64 +13,10 @@ const schema = yup.object().shape({
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
 
-async function callApiWith(url, options = {}) {
-  return fetch(url, {
-    ...options,
-    headers: headers(Boolean(options.body)),
-  });
-}
-
-function headers(hasBody = false) {
-  const headers = new Headers();
-  // const token = load("token");
-
-  // if (token) {
-  //   headers.append("Authorization", `Bearer ${token}`);
-  // }
-  if (apiKey) {
-    headers.append("X-Noroff-API-Key", apiKey);
-  }
-  if (hasBody) {
-    headers.append("Content-Type", "application/json");
-  }
-  return headers;
-}
-
-async function login(email, password) {
-  // const url = API_BASE + API_LOGIN;
-  const response = await callApiWith(url, {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-  });
-
-  if (response.status === 200) {
-    const result = await response.json();
-    const { accessToken, ...profile } = result.data;
-    // save("token", accessToken);
-    // save("profile", profile);
-
-    // console.log("accessToken", accessToken);
-
-    // console.log("User logged in:", profile);
-
-    // const deployed = checkIfDeployed();
-    // if (deployed) {
-    //   location.pathname = `/${baseRepoUrl}`;
-    // }
-    // if (!deployed) {
-    //   location.pathname = "/";
-    // }
-    return accessToken;
-  }
-  if (response.status === 401) {
-    throw new Error("Email and/or password does not match.");
-  } else if (response.status === 400 || response.status >= 402) {
-    throw new Error("An error occured. Check that your credentials are correct or try again later.");
-  }
-}
-
 export default function LoginForm() {
-  const { setAccessToken } = useAuthStore();
+  const { login, error } = useAuth();
+  const { setIsLoggedIn } = useAuthStore();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -86,9 +27,12 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data) => {
-    const accessToken = await login(data.email, data.password);
-    console.log("accessToken", accessToken);
-    setAccessToken(accessToken);
+    login(data.email, data.password);
+    setIsLoggedIn(true);
+
+    if (!error) {
+      navigate("/" + data.userName);
+    }
   };
 
   return (
