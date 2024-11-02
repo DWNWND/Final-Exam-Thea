@@ -28,9 +28,9 @@ export default function LoginForm() {
 
   const onSubmit = async (data) => {
     login(data.email, data.password);
-    setIsLoggedIn(true);
 
-    if (!error) {
+    if (!loading && !error) {
+      setIsLoggedIn(true);
       navigate("/" + data.userName);
     }
   };
