@@ -9,6 +9,7 @@ export default {
       DEFAULT: "#19161A",
       black: "#19161A",
       white: "#ffffff",
+      whiteTransparent: "rgba(255, 255, 255, 0.8)",
       primary: {
         green: "#2D521E",
         blue: "#27346A",
