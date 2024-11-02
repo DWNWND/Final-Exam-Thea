@@ -70,14 +70,12 @@ export default function SingleVenue({ venue }) {
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row items-center justify-between mb-4">
-        <div className="flex gap-4 w-full">
-          <NavBtn clickFunc={toggleEditDates} arrow={false} innerText="Edit travel dates" tailw="items-center rounded my-4 md:max-w-40" color="primary-blue" />
-          <SelectTravelDates color="primary-blue" tailw={`my-4 transition-max-height duration-500 ease-in-out overflow-hidden ${editDates ? "max-w-full  md:max-w-64  opacity-100" : "max-w-0 opacity-0"}`} />
-        </div>
-        <div className="flex gap-4">
-          <FaShare />
-          <FaRegHeart />
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className={`flex w-full`}>
+          <button onClick={toggleEditDates} className={`text-nowrap flex justify-center border border-solid border-primary-green text-primary-green uppercase hover:shadow-md cursor-pointer w-full items-center rounded transition-max-height duration-500 ease-in-out overflow-hidden  my-4 ${!editDates ? "px-3 max-w-full  md:max-w-64  opacity-100" : "max-w-0 opacity-0"}`}>
+            Edit travel dates
+          </button>
+          <SelectTravelDates toggleDatesFunc={toggleEditDates} color="primary-blue" tailw={`transition-max-height duration-500 ease-in-out overflow-hidden  my-4 ${editDates ? "px-3 max-w-full  md:max-w-64  opacity-100" : "max-w-0 opacity-0"}`} />
         </div>
       </div>
       <div className="relative">
@@ -170,6 +168,10 @@ export default function SingleVenue({ venue }) {
             </div>
           </div>
         </Details>
+        <div className="flex gap-8 justify-center pt-10 text-2xl text-primary-blue">
+          <FaRegHeart />
+          <FaShare />
+        </div>
       </div>
     </div>
   );
