@@ -6,8 +6,6 @@ export default function BackBtn({ innerText, tailw }) {
   const handleBack = useBackButton();
   const hasPreviousRoute = useNavigationStore((state) => state.hasPreviousRoute());
 
-  console.log("backto", hasPreviousRoute);
-
   // // Conditionally render the back button based on hasPreviousRoute
   if (!hasPreviousRoute) {
     return null; // Don't render the button if there's no previous route
