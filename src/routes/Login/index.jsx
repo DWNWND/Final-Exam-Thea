@@ -8,9 +8,9 @@ export default function Login() {
         <meta name="description" content="" />
         <title>Login | Holidayz</title>
       </Helmet>
-      <div>
+      <main>
         <LoginForm />
-      </div>
+      </main>
     </HelmetProvider>
   );
 }
