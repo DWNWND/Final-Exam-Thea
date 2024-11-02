@@ -11,6 +11,10 @@
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth; /* This enables smooth scrolling */
+}
+
 /* Targeting elements with data-weekend="true" */
 [data-weekend="true"] {
   color: #8d4033 !important; /* Example color */
