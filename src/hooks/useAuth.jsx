@@ -64,7 +64,7 @@ export default function useAuth() {
       setUserName(response.data.name);
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
-      setError(err.message);
+      setError(err);
     } finally {
       setLoading(false);
     }
