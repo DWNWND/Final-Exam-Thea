@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useAuthStore from "../stores/useAuthStore";
-
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_VITE_API_KEY;
 
@@ -52,13 +51,13 @@ export default function useAuth() {
     }
   };
 
-  const register = async (email, password) => {
+  const registerNewUser = async (userName, email, password) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await callApiWith("/api/register", {
+      const response = await callApiWith(apiBaseUrl + "/auth/register", {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name: userName, email, password }),
       });
       setUser(response.data);
       setAccessToken(response.data.accessToken);
@@ -76,6 +75,6 @@ export default function useAuth() {
     loading,
     error,
     login,
-    register,
+    registerNewUser,
   };
 }
