@@ -4,11 +4,10 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_VITE_API_KEY;
 
 export default function useAuth() {
-  const { setAccessToken, setUserName } = useAuthStore();
+  const { setAccessToken, setUserName, setUser } = useAuthStore();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
 
   const callApiWith = async (url, options) => {
     try {
@@ -40,9 +39,9 @@ export default function useAuth() {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
-      setUser(response.data);
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
+      setUser(response.data);
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       setError(err.message);
@@ -59,9 +58,9 @@ export default function useAuth() {
         method: "POST",
         body: JSON.stringify({ name: userName, email, password }),
       });
-      setUser(response.data);
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
+      setUser(response.data);
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       setError(err);
@@ -71,7 +70,6 @@ export default function useAuth() {
   };
 
   return {
-    user,
     loading,
     error,
     login,
