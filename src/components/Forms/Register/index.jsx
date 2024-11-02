@@ -19,7 +19,7 @@ const registerSchema = yup.object().shape({
 });
 
 export default function RegisterForm() {
-  const { registerNewUser, error } = useAuth();
+  const { registerNewUser, loading, error } = useAuth();
   const { setIsLoggedIn } = useAuthStore();
   const navigate = useNavigate();
 
@@ -43,7 +43,8 @@ export default function RegisterForm() {
     }
   };
 
-  console.log("errors", errors);
+  //add more levels of userFeedback for the different errorcodes
+  console.log("errors", error);
 
   return (
     <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4  h-svh flex items-center flex-col justify-center">
