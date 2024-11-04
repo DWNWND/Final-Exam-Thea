@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { NavBtn } from "../../../Buttons";
 import styles from "./HamburgerMenu.module.css";
 import { OpenMenuContext } from "../../../../contexts";
-
+import useAuthStore from "../../../../stores/useAuthStore";
 
 export default function HamburgerMenu() {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
@@ -27,8 +27,10 @@ export default function HamburgerMenu() {
 
 function OpenMenu() {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
+  const { userName } = useAuthStore();
 
   function handleClick() {
+    console.log("clicked");
     setIsMenuOpen(!isMenuOpen);
   }
 
@@ -81,26 +83,28 @@ function OpenMenu() {
           </Link>
         </li>
       </ul>
-      <div className="bg-comp-green h-full">
-        <div className="bg-primary-green h-px"></div>
-        <ul className="flex flex-col gap-4 p-5">
-          <li>
-            <Link to="/:username">
-              <NavBtn innerText="My profile" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
-            </Link>
-          </li>
-          <li>
-            <Link to="/:username/listings">
-              <NavBtn innerText="My listings" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
-            </Link>
-          </li>
-          <li>
-            <Link to="/:username/bookings">
-              <NavBtn innerText="My bookings" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {userName && (
+        <div className="bg-comp-green h-full">
+          <div className="bg-primary-green h-px"></div>
+          <ul className="flex flex-col gap-4 p-5">
+            <li>
+              <Link to={`/user/${userName}`}>
+                <NavBtn clickFunc={handleClick} innerText="My profile" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
+              </Link>
+            </li>
+            <li>
+              <Link to="/:username/listings">
+                <NavBtn clickFunc={handleClick} innerText="My listings" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
+              </Link>
+            </li>
+            <li>
+              <Link to="/:username/bookings">
+                <NavBtn clickFunc={handleClick} innerText="My bookings" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }
