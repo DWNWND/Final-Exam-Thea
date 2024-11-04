@@ -12,6 +12,7 @@ function getFormattedDate(date) {
 const todayString = getFormattedDate(new Date());
 const tomorrowString = getFormattedDate(new Date(new Date().setDate(new Date().getDate() + 1)));
 
+// how can i make the preset dates update automatically if the day changes while the user is searching?
 // Utility to calculate all dates between start and end
 function generateAllTravelDates(startDate, endDate) {
   let dates = [];
