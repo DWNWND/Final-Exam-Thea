@@ -1,17 +1,19 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import UserProfile from "../../../components/User/UserProfile";
-import { Link } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore";
+import ProfileLinks from "../../../components/User/ProfileLinks";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../../stores/useAuthStore.js";
 
 export default function MyProfile() {
-  const { logOut } = useAuthStore();
+  const { accessToken } = useAuthStore();
   const navigate = useNavigate();
 
-  function handleLogOut() {
-    logOut();
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/");
+    }
+  }, [accessToken]);
 
   return (
     <HelmetProvider>
@@ -21,18 +23,7 @@ export default function MyProfile() {
       </Helmet>
       <main className="pt-16">
         <section className="flex flex-col p-6 gap-2">
-          <Link to="/" className="text-primary-blue underline text-lg">
-            Book your next stay
-          </Link>
-          <Link to="/user/mySettings" className="text-primary-blue underline text-lg">
-            Register as a venue manager
-          </Link>
-          <Link to="/user/newListing" className="text-primary-blue underline text-lg">
-            Add new listing
-          </Link>
-          <Link className="text-primary-blue underline text-lg" onClick={() => handleLogOut()}>
-            Log out
-          </Link>
+          <ProfileLinks />
         </section>
         <section className="flex flex-col p-2 gap-2">
           <UserProfile />
