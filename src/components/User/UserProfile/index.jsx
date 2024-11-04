@@ -14,6 +14,10 @@ export default function UserProfile() {
   const { userName, accessToken } = useAuthStore();
   const { callApiWith } = useFetchUser(accessToken);
 
+  if (!accessToken) {
+    return null;
+  }
+  
   const fetchData = async () => {
     const response = await callApiWith(`${url}/holidaze/profiles/${userName}?_venues=true&_bookings=true`, {
       method: "GET",
@@ -32,9 +36,9 @@ export default function UserProfile() {
       {user && (
         <>
           <div className="bg-comp-purple rounded-lg p-4">
-            {user.venueManger && <VenueManagerBadge />}
-            <UserDetails />
-            <SettingsBtn userName={userName}/>
+            {user.venueManager && <VenueManagerBadge />}
+            <UserDetails user={user} />
+            <SettingsBtn userName={userName} />
           </div>
           {/* <div className="p-4 italic">User registered: {user && user.createdAt}</div> */}
           {user.bookings.length > 1 && user.venues.length > 1 && <SelectionBtns selector={selector} setSelector={setSelector} />}
@@ -63,7 +67,7 @@ function VenueManagerBadge() {
   );
 }
 
-function SettingsBtn({userName}) {
+function SettingsBtn({ userName }) {
   return (
     <Link to={`/user/${userName}/settings`} className="block text-center w-full border-primary-blue border text-primary-blue text-lg px-3 py-2 rounded-lg">
       my settings
@@ -83,9 +87,7 @@ function SelectionBtns({ selector, setSelector }) {
     </div>
   );
 }
-function UserDetails() {
-  const { user } = useAuthStore();
-
+function UserDetails({ user }) {
   return (
     <>
       {user && (
