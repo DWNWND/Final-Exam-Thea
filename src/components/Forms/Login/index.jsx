@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 
 export default function LoginForm() {
   const { login, loading, error } = useAuth();
-  const { setIsLoggedIn } = useAuthStore();
+  const { setIsLoggedIn, userName } = useAuthStore();
   const navigate = useNavigate();
 
   const {
@@ -32,12 +32,11 @@ export default function LoginForm() {
 
     if (!loading && !error) {
       setIsLoggedIn(true);
-      navigate("/" + data.userName);
+      navigate("/user/" + userName);
     }
   };
 
   //add more levels of userFeedback for the different errorcodes
-  console.log("errors", error);
 
   return (
     <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4 h-svh flex items-center flex-col justify-center">
