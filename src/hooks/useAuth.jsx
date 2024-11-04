@@ -1,10 +1,11 @@
 import { useState } from "react";
 import useAuthStore from "../stores/useAuthStore";
+import { set } from "react-hook-form";
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_VITE_API_KEY;
 
 export default function useAuth() {
-  const { setAccessToken, setUserName, setUser } = useAuthStore();
+  const { setAccessToken, setUserName, setVenueManager } = useAuthStore();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -41,7 +42,7 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      setUser(response.data);
+      setVenueManager(response.data.venueManager);
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       setError(err.message);
@@ -60,7 +61,7 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      setUser(response.data);
+      setVenueManager(response.data.venueManager);
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       setError(err);
