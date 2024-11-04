@@ -18,7 +18,7 @@ function Loader() {
 
 export default function VenueSpesific() {
   const { id } = useParams();
-  const { data: singleVenueData, isLoading: singleVenueIsLoading, isError: singleVenueIsError } = useFetch(`${apiBaseUrl}/${id}?_bookings=true&_owner=true`);
+  const { data: singleVenueData, isLoading: singleVenueIsLoading, isError: singleVenueIsError } = useFetch(`${apiBaseUrl}/holidaze/venues/${id}?_bookings=true&_owner=true`);
   const [singleVenue, setSingleVenue] = useState({});
   // const { formData } = useSearchStore();
 
