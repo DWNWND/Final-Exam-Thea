@@ -3,6 +3,7 @@ import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
+import useInactivityTimer from "./hooks/useInactivityTimer";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  useInactivityTimer()
+  
   return (
     <RouterProvider router={router}>
       <ScrollToTop />
