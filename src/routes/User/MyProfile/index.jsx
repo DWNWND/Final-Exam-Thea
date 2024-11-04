@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import UserInfo from "../../../components/User/UserInfo";
+import UserProfile from "../../../components/User/UserProfile";
 import { Link } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ export default function MyProfile() {
           </Link>
         </section>
         <section className="flex flex-col p-2 gap-2">
-          <UserInfo />
+          <UserProfile />
         </section>
       </main>
     </HelmetProvider>
