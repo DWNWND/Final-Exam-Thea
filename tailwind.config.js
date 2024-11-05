@@ -22,6 +22,7 @@ export default {
         purple: "#CCCBDB",
         gray: "#EFF1EE",
         green: "#C0D1B9",
+        greenDark: "#B2BDAE"
       },
       success: "#4A9948",
       warning: "#C78910",
