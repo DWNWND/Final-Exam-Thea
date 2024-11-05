@@ -20,6 +20,7 @@ export const useSearchStore = create(
         price400to500: false,
         price500: false,
       },
+      selectedVenue: {},
       // Set individual fields
       setTravelDates: (travelDates) => set((state) => ({ travelSearchData: { ...state.travelSearchData, travelDates } })),
       setAllDatesArr: (allDatesArr) => set((state) => ({ travelSearchData: { ...state.travelSearchData, allDatesArr } })),
@@ -35,6 +36,7 @@ export const useSearchStore = create(
       setPrice300to400: (price300to400) => set((state) => ({ travelSearchData: { ...state.travelSearchData, price300to400 } })),
       setPrice400to500: (price400to500) => set((state) => ({ travelSearchData: { ...state.travelSearchData, price400to500 } })),
       setPrice500: (price500) => set((state) => ({ travelSearchData: { ...state.travelSearchData, price500 } })),
+      setSelectedVenue: (venue) => set({ selectedVenue: venue }),
       // Clear form data
       clearTravelSearchStore: () => set({ travelSearchData: {} }),
     }),
