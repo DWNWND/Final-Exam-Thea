@@ -1,11 +1,10 @@
 import { useState } from "react";
 import ListBookings from "../ListBookings";
 import React, { useEffect } from "react";
-import useFetchUser from "../../../hooks/useFetchUser";
+import useFetchUser from "../../../hooks/useApiCall";
 import useAuthStore from "../../../stores/useAuthStore";
 import ListVenues from "../ListVenues";
 import { Link } from "react-router-dom";
-
 
 export default function UserProfile({ user }) {
   const [selector, setSelector] = useState("bookings");

@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
-export default function useFetchUser(token) {
+export default function useApiCall(token) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
