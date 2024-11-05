@@ -1,10 +1,9 @@
 import { useState } from "react";
 import ListBookings from "../ListBookings";
-import React, { useEffect } from "react";
-import useFetchUser from "../../../hooks/useApiCall";
 import useAuthStore from "../../../stores/useAuthStore";
 import ListVenues from "../ListVenues";
 import { Link } from "react-router-dom";
+import ProfileLinks from "../ProfileLinks";
 
 export default function UserProfile({ user }) {
   const [selector, setSelector] = useState("bookings");
@@ -14,37 +13,15 @@ export default function UserProfile({ user }) {
     return null;
   }
 
-  // const fetchData = async () => {
-  //   const response = await callApiWith(`${url}/holidaze/profiles/${userName}?_venues=true&_bookings=true`, {
-  //     method: "GET",
-  //   });
-  //   setUser(response.data);
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   return (
     <>
-      <div className="bg-comp-purple rounded-lg p-4">
+      <div className="bg-comp-purple p-6 rounded-3xl md:py-10 shadow-md w-full h-fit xl:sticky xl:top-20">
         {user.venueManager && <VenueManagerBadge />}
         <UserDetails user={user} />
         <SettingsBtn userName={userName} />
       </div>
       {/* <div className="p-4 italic">User registered: {user && user.createdAt}</div> */}
-      {user.bookings.length > 1 && user.venues.length > 1 && <SelectionBtns selector={selector} setSelector={setSelector} />}
-      {user.bookings.length > 1 ? (
-        <ListBookings bookings={user.bookings} />
-      ) : (
-        <div className="flex flex-col justify-center items-center my-6 gap-4">
-          <p className="italic text-center">You currently have no bookings</p>
-          <Link to="/" className="text-primary-blue underline text-lg">
-            Start planning your next adventure now!
-          </Link>
-        </div>
-      )}
-      {user.venues.length > 1 && <ListVenues venues={user.venues} />}
+
     </>
   );
 }
@@ -65,18 +42,6 @@ function SettingsBtn({ userName }) {
   );
 }
 
-function SelectionBtns({ selector, setSelector }) {
-  return (
-    <div className="flex flex-col gap-2 pt-4 pb-8 lg:flex-row md:justify-center lg:justify-start">
-      <button onClick={() => setSelector("bookings")} className={`${selector === "bookings" ? "bg-primary-green text-white" : "border border-solid border-color-primary-green text-primary-green"} md:w-auto text-nowrap rounded-full w-full p-2 px-20 flex justify-center uppercase hover:shadow-md`}>
-        My bookings
-      </button>
-      <button onClick={() => setSelector("listings")} className={`${selector === "listings" ? "bg-primary-green text-white" : "border border-solid border-color-primary-green text-primary-green"} md:w-auto text-nowrap rounded-full w-full p-2 px-20 flex justify-center uppercase hover:shadow-md`}>
-        My listings
-      </button>
-    </div>
-  );
-}
 function UserDetails({ user }) {
   return (
     <>
