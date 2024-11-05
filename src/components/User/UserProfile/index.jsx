@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import ProfileLinks from "../ProfileLinks";
 
 export default function UserProfile({ user }) {
-  const [selector, setSelector] = useState("bookings");
   const { userName, accessToken } = useAuthStore();
 
   if (!accessToken) {

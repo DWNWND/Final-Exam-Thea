@@ -20,9 +20,10 @@ export default function MyListings() {
       <meta name="description" content="" />
       <title>Booking Success | Holidayz</title>
     </Helmet>
-    <div>
+    <main>
       <h1>My Listings</h1>
-    </div>
+      {/* <ListVenues/> */}
+    </main>
     </HelmetProvider>
   );
 }

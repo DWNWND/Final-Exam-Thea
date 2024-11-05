@@ -29,6 +29,7 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const { userName, accessToken } = useAuthStore();
   const { callApiWith } = useFetchUser(accessToken);
+  const [selector, setSelector] = useState("bookings");
 
   if (!accessToken) {
     navigate("/");
@@ -78,7 +79,7 @@ export default function MyProfile() {
                 </Link>
               </div>
             )}
-            {user.venues.length > 1 && <ListVenues venues={user.venues} />}
+            {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4"/>}
           </section>
         </main>
       )}
