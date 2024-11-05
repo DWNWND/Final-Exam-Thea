@@ -16,10 +16,11 @@ import useAuthStore from "../../../stores/useAuthStore.js";
 import getFormattedDate from "../../../utils/dateUtils/formayDateForFlatpickr.js";
 import { set } from "react-hook-form";
 import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr.js";
+import { useNavigate } from "react-router-dom";
 
 export default function SingleVenue({ venue }) {
   const { userName } = useAuthStore();
-  const { travelSearchData, setTravelDates, setAllDatesArr } = useSearchStore();
+  const { travelSearchData, selectedVenue, setTravelDates, setAllDatesArr, setSelectedVenue } = useSearchStore();
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [availabilityOpen, setAvailabilityOpen] = useState(false);
@@ -31,6 +32,7 @@ export default function SingleVenue({ venue }) {
   const [formattedEndDate, setFormattedEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [nights, setNights] = useState(0);
+  const navigate = useNavigate();
 
   function toggleAmenities() {
     setAmenitiesOpen(!amenitiesOpen);
@@ -116,6 +118,11 @@ export default function SingleVenue({ venue }) {
     endDate: new Date(booking.dateTo),
   }));
 
+  function bookPropertyFunc() {
+    setSelectedVenue(venue);
+    navigate("/booking/summary");
+  }
+
   return (
     <div>
       {/* Image Modal */}
@@ -152,7 +159,7 @@ export default function SingleVenue({ venue }) {
           <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
         </div>
         <div className="absolute inset-x-0 -bottom-4 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
-          <CtaBtn type="submit" innerText="Book property" tailw="md:text-2xl py-3 shadow-lg mt-4 md:mt-0 rounded-full bg-primary-blue w-full text-nowrap z-30" mainCta={true} />
+        <button onClick={() => bookPropertyFunc()} type="button" className={`md:text-2xl py-3 shadow-lg mt-4 md:mt-0 rounded-full bg-primary-blue text-nowrap z-30 w-full p-2 px-20 flex justify-center font-semibold text-xl text-white uppercase hover:shadow-md hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp`}>Book property</button>
         </div>
       </div>
       <div className="p-4 mt-6 flex justify-between">
