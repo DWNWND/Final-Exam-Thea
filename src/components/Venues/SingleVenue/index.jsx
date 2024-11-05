@@ -1,5 +1,5 @@
 import { CtaBtn, NavBtn } from "../../Buttons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { MdOutlinePets, MdEmojiFoodBeverage } from "react-icons/md";
@@ -12,15 +12,25 @@ import { useSearchStore } from "../../../stores/useSearchStore.js";
 import { IoIosClose } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import useAuthStore from "../../../stores/useAuthStore.js";
+import getFormattedDate from "../../../utils/dateUtils/formayDateForFlatpickr.js";
+import { set } from "react-hook-form";
+import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr.js";
 
 export default function SingleVenue({ venue }) {
-  const { travelSearchData } = useSearchStore();
+  const { userName } = useAuthStore();
+  const { travelSearchData, setTravelDates, setAllDatesArr } = useSearchStore();
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [availabilityOpen, setAvailabilityOpen] = useState(false);
   const [hostDetailsOpen, setHostDetailsOpen] = useState(false);
   const [editDates, setEditDates] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [defaultDateString, setDefaultDateString] = useState("");
+  const [formattedStartDate, setFormattedStartDate] = useState("");
+  const [formattedEndDate, setFormattedEndDate] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [nights, setNights] = useState(0);
 
   function toggleAmenities() {
     setAmenitiesOpen(!amenitiesOpen);
@@ -42,19 +52,69 @@ export default function SingleVenue({ venue }) {
     setIsModalOpen(!isModalOpen);
   }
 
-  const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
-  const price = nights * venue.price;
+  const todayString = getFormattedDate(new Date());
+  const tomorrowString = getFormattedDate(new Date(new Date().setDate(new Date().getDate() + 1)));
+
+  useEffect(() => {
+    if (!travelSearchData.travelDates || Object.keys(travelSearchData.travelDates).length === 0) {
+      // Set initial date range if empty
+      setTravelDates({ startDate: todayString, endDate: tomorrowString });
+      setAllDatesArr(generateAllTravelDates(todayString, tomorrowString));
+      setDefaultDateString(`${todayString} to ${tomorrowString}`);
+
+      const startDate = new Date(todayString);
+      const formattedStartDate = formatDateForDisplay(startDate);
+      setFormattedStartDate(formattedStartDate);
+
+      const endDate = new Date(tomorrowString);
+      const formattedEndDate = formatDateForDisplay(endDate);
+      setFormattedEndDate(formattedEndDate);
+
+      const nights = claculateNightsBetween(todayString, tomorrowString);
+      const price = nights * venue.price;
+      setTotalPrice(price);
+      setNights(nights);
+    } else {
+      setDefaultDateString(`${travelSearchData.travelDates.startDate} to ${travelSearchData.travelDates.endDate}`);
+
+      const startDate = new Date(travelSearchData.travelDates.startDate);
+      const formattedStartDate = formatDateForDisplay(startDate);
+      setFormattedStartDate(formattedStartDate);
+
+      const endDate = new Date(travelSearchData.travelDates.endDate);
+      const formattedEndDate = formatDateForDisplay(endDate);
+      setFormattedEndDate(formattedEndDate);
+
+      const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
+      const price = nights * venue.price;
+      setTotalPrice(price);
+      setNights(nights);
+    }
+
+    // Set up an interval to check for a date change every minute
+    const interval = setInterval(() => {
+      const newTodayString = todayString;
+      const newTomorrowString = tomorrowString;
+
+      // If the day has changed, update the dates in the store and defaultDateString
+      if (newTodayString !== todayString) {
+        setTravelDates({ startDate: newTodayString, endDate: newTomorrowString });
+        setAllDatesArr(generateAllTravelDates(newTodayString, newTomorrowString));
+        setDefaultDateString(`${newTodayString} to ${newTomorrowString}`);
+      }
+    }, 10 * 60 * 1000); // Check every 10 minutes
+
+    // Clear the interval on component unmount
+    return () => clearInterval(interval);
+  }, [travelSearchData.travelDates, setTravelDates, setAllDatesArr]);
+
+  // const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
+  // const price = nights * venue.price;
 
   const reserved = venue.bookings.map((booking) => ({
     startDate: new Date(booking.dateFrom),
     endDate: new Date(booking.dateTo),
   }));
-
-  const startDate = new Date(travelSearchData.travelDates.startDate);
-  const formattedStartDate = formatDateForDisplay(startDate);
-
-  const endDate = new Date(travelSearchData.travelDates.endDate);
-  const formattedEndDate = formatDateForDisplay(endDate);
 
   return (
     <div>
@@ -84,7 +144,7 @@ export default function SingleVenue({ venue }) {
             {formattedStartDate} - {formattedEndDate}
           </h1>
           <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">
-            kr {price} ({nights} {nights > 1 ? "nights" : "night"})
+            kr {totalPrice} ({nights} {nights > 1 ? "nights" : "night"})
           </div>
         </div>
         <div className="cursor-pointer" onClick={toggleModal}>
@@ -163,9 +223,7 @@ export default function SingleVenue({ venue }) {
         </Details>
         <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
           <div className="flex mt-3 gap-4 p-4 py-10 bg-comp rounded-lg justify-center">
-            <div className="flex flex-col gap-1 w-full items-center">
-              <BookingCalendar reserved={reserved} />
-            </div>
+            <div className="flex flex-col gap-1 w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={reserved} />}</div>
           </div>
         </Details>
         <div className="flex gap-8 justify-center pt-10 text-2xl text-primary-blue">
