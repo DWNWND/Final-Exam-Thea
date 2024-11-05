@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
-export default function ProfileLinks() {
-  const { logOut, userName, venueManager } = useAuthStore();
+export default function ProfileLinks({ venueManager }) {
+  const { logOut, userName } = useAuthStore();
   const navigate = useNavigate();
 
   function handleLogOut() {
@@ -11,7 +11,6 @@ export default function ProfileLinks() {
     navigate("/");
   }
 
-  console.log(venueManager);
   return (
     <>
       <Link to="/" className="text-primary-blue underline text-lg">
