@@ -60,6 +60,7 @@ export default function RegisterForm() {
           <CtaBtn type="submit" innerText="Register" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} />
         </div>
       </form>
+      <p className="text-danger text-xs mt-3">{error && error.message}</p>
       <Link to="/login" className="w-full block text-sm underline mt-4 text-primary-green hover:text-primary-blue">
         Already have an account? Login
       </Link>
