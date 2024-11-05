@@ -1,7 +1,7 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-export default function VenueCard({ venue }) {
+export default function VenueCard({ venue, myVenues }) {
   return (
     <div className="rounded-lg shadow-md bg-white">
       <div className="relative">
@@ -23,6 +23,11 @@ export default function VenueCard({ venue }) {
           <p>★ {venue.rating}</p>
         </div>
       </div>
+      {myVenues && (
+        <div className="p-2">
+          <button className={` rounded p-1 px-3 w-full text-nowrap flex justify-center border border-solid border-primary-blue text-primary-blue uppercase hover:shadow-md cursor-pointer`}>Edit listing</button>
+        </div>
+      )}
     </div>
   );
 }
