@@ -1,17 +1,19 @@
 import ArrowRightBtn from "../../Buttons/ArrowRightBtn";
+import SquareBtn from "../../Buttons/SquareBtn";
+import { Link } from "react-router-dom";
 
 export default function VenueCard({ venue, myVenues = false, myBookings = false }) {
   return (
-    <div className="rounded-lg shadow-md bg-white border-comp">
+    <Link to={"/venue/" + venue.id} className="rounded-lg shadow-sm bg-white border border-comp hover:shadow-lg transition duration-300 ease-in-out">
       <div className="relative">
         <ArrowRightBtn href={"/venue/" + venue.id} myVenues={myVenues} myBookings={myBookings} />
-        <div className={`absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg`}></div>
+        <div className={`absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg hover:bg-opacity-0 transition duration-300 ease-in-out `}></div>
         <img src={venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className={`w-full h-48 object-cover rounded-t-lg`} />
         <p className="absolute font-bold text-2xl text-white bottom-2 right-2">kr {venue.price}/night</p>
       </div>
       <div className="p-4 flex justify-between">
         <div>
-          <h3 className="text-xl font-bold text-black">{venue.name}</h3>
+          <h3 className="text-xl font-bold text-black hover:underline">{venue.name}</h3>
           <p className="text-black">
             {venue.location.city}, {venue.location.country}
           </p>
@@ -40,6 +42,6 @@ export default function VenueCard({ venue, myVenues = false, myBookings = false 
           )}
         </div>
       )}
-    </div>
+    </Link>
   );
 }
