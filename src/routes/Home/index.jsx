@@ -1,7 +1,7 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainSearchForm from "../../components/Forms/SearchTravel/MainSearchForm";
 import style from "./Home.module.css";
-import SelectBtns from "../../components/Buttons/SelectBtn";
+import SelectCategoryBtns from "../../components/ButtonGroupes/SelectCategoryBtns";
 import { useState } from "react";
 import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";
@@ -22,7 +22,7 @@ export default function Home() {
             <MainSearchForm />
           </section>
           <section id="categorizedListings" className="p-4 pb-12">
-            <SelectBtns filters={filters} setFilters={setFilters} />
+            <SelectCategoryBtns filters={filters} setFilters={setFilters} />
             <ListCategorized filters={filters} />
           </section>
           <section id="newestListings" className="p-4 py-12 bg-comp-green">
