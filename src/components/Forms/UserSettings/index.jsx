@@ -7,9 +7,11 @@ import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import useApiCall from "../../../hooks/useApiCall.jsx";
+import SquareBtn from "../../Buttons/SquareBtn";
 
 const url = import.meta.env.VITE_API_BASE_URL;
 
+//fix delete user functionality
 //think about adding possibility to edit email, username and password
 const updateSettingsSchema = yup.object().shape({
   bio: yup.string().min(3, "Bio must be at least 3 characters").required("Bio is required"),
@@ -69,7 +71,7 @@ export default function SettingsForm() {
   return (
     <>
       {user && (
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6 max-w-[50rem] w-full">
           <Checkbox id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></Checkbox>
           <StringInput type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} error={errors.bo} register={register}></StringInput>
           <div>
@@ -86,9 +88,7 @@ export default function SettingsForm() {
               <StringInput type="text" id="banner.alt" label="Image description" placeholder="Something about the banner image" defaultValue={user.banner.alt} error={errors.banner} register={register}></StringInput>
             </div>
           </div>
-          <button onClick={handleSubmit(onSubmit)} className="bg-primary-green text-white rounded-full uppercase p-2">
-            Save changes
-          </button>
+          <SquareBtn clickFunc={handleSubmit(onSubmit)} innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
           <div className="text-danger">{error}</div>
           <div className="underline text-center mb-8">Delete user</div>
         </form>
