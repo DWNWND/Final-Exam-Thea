@@ -6,20 +6,23 @@ export default function useApiCall(token) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const headers = useCallback((hasBody = false) => {
-    const headers = new Headers();
+  const headers = useCallback(
+    (hasBody = false) => {
+      const headers = new Headers();
 
-    if (token) {
-      headers.append("Authorization", `Bearer ${token}`);
-    }
-    if (apiKey) {
-      headers.append("X-Noroff-API-Key", apiKey);
-    }
-    if (hasBody) {
-      headers.append("Content-Type", "application/json");
-    }
-    return headers;
-  }, [token]);
+      if (token) {
+        headers.append("Authorization", `Bearer ${token}`);
+      }
+      if (apiKey) {
+        headers.append("X-Noroff-API-Key", apiKey);
+      }
+      if (hasBody) {
+        headers.append("Content-Type", "application/json");
+      }
+      return headers;
+    },
+    [token]
+  );
 
   const callApiWith = useCallback(
     async (url, options = {}) => {
@@ -33,10 +36,11 @@ export default function useApiCall(token) {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || "An error occurred");
+          console.error("Error logged", errorData.errors[0].message);
+          throw new Error(errorData.errors[0].message || "An error occurred");
+        } else if (response.ok) {
+          return await response.json();
         }
-
-        return await response.json();
       } catch (err) {
         setError(err.message || "An unexpected error occurred");
         throw err; // Re-throw the error for additional handling if needed
