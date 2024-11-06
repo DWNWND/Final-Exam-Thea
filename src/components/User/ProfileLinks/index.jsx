@@ -12,7 +12,7 @@ export default function ProfileLinks({ venueManager }) {
   }
 
   return (
-    <div className="flex flex-col p-6 gap-2 ">
+    <div className="flex flex-col mb-6 p-2 gap-2 ">
       <Link to="/" className="text-primary-blue underline text-lg">
         Book your next stay
       </Link>
