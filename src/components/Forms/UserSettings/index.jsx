@@ -6,7 +6,7 @@ import * as yup from "yup";
 import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import useAuthStore from "../../../stores/useAuthStore.js";
-import useFetchUser from "../../../hooks/useApiCall.jsx";
+import useApiCall from "../../../hooks/useApiCall.jsx";
 
 const url = import.meta.env.VITE_API_BASE_URL;
 
@@ -27,7 +27,7 @@ const updateSettingsSchema = yup.object().shape({
 export default function SettingsForm() {
   const [user, setUser] = useState(null);
   const { userName, accessToken, setVenueManager } = useAuthStore();
-  const { callApiWith, loading, error } = useFetchUser(accessToken);
+  const { callApiWith, loading, error } = useApiCall(accessToken);
   const navigate = useNavigate();
 
   const fetchData = async () => {
