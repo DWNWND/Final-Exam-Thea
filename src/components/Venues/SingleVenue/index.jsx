@@ -15,6 +15,8 @@ import getFormattedDate from "../../../utils/dateUtils/formayDateForFlatpickr.js
 import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr.js";
 import { useNavigate } from "react-router-dom";
 import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
+import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
+import RoundBtn from "../../Buttons/RoundBtn/index.jsx";
 
 export default function SingleVenue({ venue }) {
   const { travelSearchData, selectedVenue, setTravelDates, setAllDatesArr, setSelectedVenue } = useSearchStore();
@@ -154,9 +156,7 @@ export default function SingleVenue({ venue }) {
       )}
       <div className="flex flex-col md:flex-row items-center gap-3 mb-4">
         <div className={`flex w-full`}>
-          <button onClick={toggleEditDates} className={`text-nowrap flex justify-center border border-solid border-primary-green text-primary-green uppercase hover:shadow-md cursor-pointer w-full items-center rounded transition-max-height duration-500 ease-in-out overflow-hidden ${!editDates ? "px-3 max-w-full md:max-w-64  opacity-100" : "max-w-0 opacity-0"}`}>
-            Edit travel dates
-          </button>
+          <SquareBtn clickFunc={toggleEditDates} innerText="Edit travel dates" transition="transition-max-height duration-500 ease-in-out" tailw={`flex justify-center items-center overflow-hidden ${!editDates ? "px-3 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 p-0 px-0"}`} bgColor="white" textColor="primary-green" borderColor="primary-green" />
           <SelectTravelDates toggleDatesFunc={toggleEditDates} color="primary-blue" tailw={`transition-max-height duration-500 ease-in-out overflow-hidden  ${editDates ? "px-3 max-w-full  md:max-w-64 opacity-100" : "max-w-0 opacity-0"}`} />
         </div>
         <NumberOfGuests color="primary-blue" mainSearch="false" />
@@ -175,9 +175,7 @@ export default function SingleVenue({ venue }) {
           <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
         </div>
         <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
-          <button onClick={() => bookPropertyFunc()} type="button" disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges} className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-comp-gray text-primary-light" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp"} md:text-2xl py-3 mt-4 md:mt-0 rounded-full text-nowrap z-30 w-full p-2 px-20 flex justify-center  text-xl uppercase `}>
-            {travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}
-          </button>
+          <RoundBtn innerText={travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"} clickFunc={() => bookPropertyFunc()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges} tailw={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-comp-gray text-primary-light" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase`} bgColor="primary-blue" borderColor="primary-blue" textColor="white" />
         </div>
       </div>
       <p className="mt-8 text-danger text-center">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
