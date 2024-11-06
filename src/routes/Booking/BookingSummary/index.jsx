@@ -5,6 +5,7 @@ import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.
 import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
 import { Link } from "react-router-dom";
 import RoundBtn from "../../../components/Buttons/RoundBtn/index.jsx";
+import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function BookingSummary() {
   const { accessToken, userName } = useAuthStore();
@@ -25,7 +26,7 @@ export default function BookingSummary() {
         <meta name="description" content="" />
         <title>Booking summary | Holidayz</title>
       </Helmet>
-      <main className="pt-20 relative p-4">
+      <MainElement tailw="relative">
         <h1 className="uppercase text-3xl font-bold text-center text-primary-blue mb-4">Booking Summary</h1>
         <div className="relative">
           <div className="absolute inset-x-0 bottom-4 flex flex-col justify-center items-center gap-4 z-30">
@@ -53,7 +54,7 @@ export default function BookingSummary() {
             <RoundBtn innerText="Continue as guest" bordered={false} bgColor="primary-green" textColor="white" />
           </Link>
         )}
-      </main>
+      </MainElement>
     </HelmetProvider>
   );
 }

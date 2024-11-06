@@ -6,6 +6,7 @@ import { useState } from "react";
 import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
+import MainElement from "../../components/MainElement";
 
 export default function Home() {
   const [filters, setFilters] = useState("unique");
@@ -16,7 +17,7 @@ export default function Home() {
         <meta name="description" content="" />
         <title>Home | Holidayz</title>
       </Helmet>
-      <main>
+      <MainElement>
         <DataProvider>
           <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center min-h-screen`}>
             <MainSearchForm />
@@ -29,7 +30,7 @@ export default function Home() {
             <ListNewest />
           </section>
         </DataProvider>
-      </main>
+      </MainElement >
     </HelmetProvider>
   );
 }

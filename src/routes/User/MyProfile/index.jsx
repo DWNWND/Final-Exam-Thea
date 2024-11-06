@@ -8,6 +8,7 @@ import useFetchUser from "../../../hooks/useApiCall.jsx";
 import ListBookings from "../../../components/User/ListBookings";
 import ListVenues from "../../../components/User/ListVenues";
 import { Link } from "react-router-dom";
+import MainElement from "../../../components/MainElement/index.jsx";
 
 // function SelectionBtns({ selector, setSelector }) {
 //   return (
@@ -60,7 +61,7 @@ export default function MyProfile() {
         <title>My Profile | Holidayz</title>
       </Helmet>
       {user && (
-        <main className="flex flex-col gap-8 lg:flex-row p-4 xl:gap-8 pt-20">
+        <MainElement tailw="flex flex-col gap-8 lg:flex-row xl:gap-8">
           <section className="flex flex-col md:px-6 gap-2 lg:max-w-md">
             <div className="xl:sticky xl:top-20 xl:pb-9">
               <ProfileLinks venueManager={user.venueManager} />
@@ -83,7 +84,7 @@ export default function MyProfile() {
               {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4" />}
             </div>
           </section>
-        </main>
+        </MainElement>
       )}
     </HelmetProvider>
   );

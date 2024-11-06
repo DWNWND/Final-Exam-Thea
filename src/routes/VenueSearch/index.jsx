@@ -5,6 +5,7 @@ import { useContext } from "react";
 import ListSearch from "../../components/Venues/ListSearch";
 import { useSearchStore } from "../../stores/useSearchStore.js";
 import { DataProvider } from "../../components/DataProvider";
+import MainElement from "../../components/MainElement/index.jsx";
 
 export default function VenueSearch() {
   const { travelSearchData } = useSearchStore();
@@ -16,7 +17,7 @@ export default function VenueSearch() {
         <title>Search| Holidayz</title>
         {/* add search details */}
       </Helmet>
-      <main className="flex flex-col lg:flex-row p-4 xl:gap-8 pt-20">
+      <MainElement tailw="flex flex-col lg:flex-row xl:gap-8">
         <DataProvider>
           <section className="lg:max-w-md flex justify-center">
             <ListSearchForm />
@@ -26,7 +27,7 @@ export default function VenueSearch() {
             <ListSearch />
           </section>
         </DataProvider>
-      </main>
+      </MainElement>
     </HelmetProvider>
   );
 }

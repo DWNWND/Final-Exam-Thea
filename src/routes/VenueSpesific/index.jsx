@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch.jsx";
 import { useParams } from "react-router-dom";
 import { useSearchStore } from "../../stores/useSearchStore.js";
+import MainElement from "../../components/MainElement/index.jsx";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -41,7 +42,7 @@ export default function VenueSpesific() {
             <title> {singleVenue.name} | Holidayz</title>
             {/* add Venue title */}
           </Helmet>
-          <main className="p-4 mb-12 pt-20">{singleVenueIsLoading ? <Loader /> : <SingleVenue venue={singleVenue} />}</main>
+          <MainElement>{singleVenueIsLoading ? <Loader /> : <SingleVenue venue={singleVenue} />}</MainElement>
         </HelmetProvider>
       )}
     </>
