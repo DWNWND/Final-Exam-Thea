@@ -9,18 +9,18 @@ import ListBookings from "../../../components/User/ListBookings";
 import ListVenues from "../../../components/User/ListVenues";
 import { Link } from "react-router-dom";
 
-function SelectionBtns({ selector, setSelector }) {
-  return (
-    <div className="flex flex-col gap-2 pt-4 pb-8 lg:flex-row md:justify-center lg:justify-start">
-      <button onClick={() => setSelector("bookings")} className={`${selector === "bookings" ? "bg-primary-green text-white" : "border border-solid border-color-primary-green text-primary-green"} md:w-auto text-nowrap rounded-full w-full p-2 px-20 flex justify-center uppercase hover:shadow-md`}>
-        My bookings
-      </button>
-      <button onClick={() => setSelector("listings")} className={`${selector === "listings" ? "bg-primary-green text-white" : "border border-solid border-color-primary-green text-primary-green"} md:w-auto text-nowrap rounded-full w-full p-2 px-20 flex justify-center uppercase hover:shadow-md`}>
-        My listings
-      </button>
-    </div>
-  );
-}
+// function SelectionBtns({ selector, setSelector }) {
+//   return (
+//     <div className="flex flex-col gap-2 pt-4 pb-8 lg:flex-row md:justify-center lg:justify-start">
+//       <button onClick={() => setSelector("bookings")} className={`${selector === "bookings" ? "bg-primary-green text-white" : "border border-solid border-color-primary-green text-primary-green"} md:w-auto text-nowrap rounded-full w-full p-2 px-20 flex justify-center uppercase hover:shadow-md`}>
+//         My bookings
+//       </button>
+//       <button onClick={() => setSelector("listings")} className={`${selector === "listings" ? "bg-primary-green text-white" : "border border-solid border-color-primary-green text-primary-green"} md:w-auto text-nowrap rounded-full w-full p-2 px-20 flex justify-center uppercase hover:shadow-md`}>
+//         My listings
+//       </button>
+//     </div>
+//   );
+// }
 
 const url = import.meta.env.VITE_API_BASE_URL;
 
@@ -62,7 +62,7 @@ export default function MyProfile() {
       {user && (
         <main className="flex flex-col gap-8 lg:flex-row p-4 xl:gap-8 pt-20">
           <section className="flex flex-col md:px-6 gap-2 lg:max-w-md">
-            <div className="xl:sticky xl:top-20">
+            <div className="xl:sticky xl:top-20 xl:pb-9">
               <ProfileLinks venueManager={user.venueManager} />
               <UserProfile user={user} />
             </div>
