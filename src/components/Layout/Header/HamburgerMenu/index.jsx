@@ -85,27 +85,27 @@ function OpenMenu() {
         </li>
       </ul>
       {accessToken && (
-        <div className="bg-comp-green h-full">
+        <div className="bg-comp-gray h-full">
           <div className="bg-primary-green h-px"></div>
           <ul className="flex flex-col gap-4 p-5">
             <li>
               <Link to={`/user/${userName}/new/listing`}>
-                <SquareBtn clickFunc={handleClick} innerText="Publish new listing" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                <SquareBtn clickFunc={handleClick} innerText="Publish new listing" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             <li>
               <Link to={`/user/${userName}/listings`}>
-                <SquareBtn clickFunc={handleClick} innerText="My listings" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                <SquareBtn clickFunc={handleClick} innerText="My listings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             <li>
               <Link to={`/user/${userName}/bookings`}>
-                <SquareBtn clickFunc={handleClick} innerText="my bookings" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                <SquareBtn clickFunc={handleClick} innerText="my bookings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             <li>
               <Link to={accessToken ? `/user/${userName}` : "/login"}>
-                <RoundBtn innerText={accessToken ? "My profile" : "Login"} bordered={accessToken ? false : true} bgColor="primary-green" textColor="white" />
+                <RoundBtn innerText={accessToken ? "My profile" : "Login"} bgColor="primary-green" textColor="white" />
               </Link>
             </li>
           </ul>
