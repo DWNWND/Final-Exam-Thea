@@ -16,7 +16,7 @@ export default function Header() {
   const hasPreviousRoute = useNavigationStore((state) => state.hasPreviousRoute());
 
   return (
-    <header className={`fixed w-full flex items-center justify-between p-4 bg-gray-800 z-50 bg-white ${!isMenuOpen && "bg-opacity-50"}`}>
+    <header className={`fixed w-full flex items-center justify-between p-4 z-50 bg-white bg-opacity-50`}>
       <div className="flex flex-row items-center gap-8">
         <div className={`${!hasPreviousRoute ? "hidden" : "w-6"}`}>
           <ArrowLeftBtn />
