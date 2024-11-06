@@ -14,19 +14,19 @@ export default function FixedBtnDisplay() {
   // if (!isMobile) return null;
 
   return (
-    <div className={`${isMobile && "fixed bottom-0 w-full shadow-2xl p-4 bg-white bg-opacity-70"}  ${isMenuOpen && "hidden"} z-50`}>
+    <div className={`${isMobile && "fixed bottom-0 w-full shadow-2xl p-4 bg-white bg-opacity-70"}  ${isMenuOpen && ""} z-50`}>
       <ul className="flex flex-row gap-4">
         <li className="w-full">
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>
-            <SquareBtn innerText="List your place" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
+            <SquareBtn innerText="List your place" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
           </Link>
         </li>
         <li className="w-full">
-          <SquareBtn innerText="Nok" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
+          <SquareBtn innerText="Nok" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
         </li>
         <li className="w-full">
           <Link to={accessToken ? `/user/${userName}` : "/login"}>
-            <RoundBtn innerText={accessToken ? "My profile" : "Login"} bordered={accessToken ? false : true} bgColor="primary-green" textColor="white" />
+            <RoundBtn innerText={accessToken ? "My profile" : "Login"} bgColor="primary-green" borderColor="primary-green" textColor="white" />
           </Link>
         </li>
       </ul>

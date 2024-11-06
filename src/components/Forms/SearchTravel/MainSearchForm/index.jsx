@@ -21,7 +21,7 @@ export default function MainSearchForm() {
           <LocationLookAhead color="primary-green" />
           <SelectTravelDates color="primary-green" tailw={"px-3"} />
           <NumberOfGuests color="primary-green" mainSearch={true} />
-          <RoundBtn type="submit" innerText="Search" bgColor="primary-green" textColor="white" />
+          <RoundBtn tailw="py-2" type="submit" innerText="Search" bgColor="primary-green" textColor="white" />
         </div>
         <MoreFilters color="primary-green" mainSearch={true} />
       </form>
