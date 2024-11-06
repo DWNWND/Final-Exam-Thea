@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function VenueCard({ venue, myVenues = false, myBookings = false }) {
   return (
-    <Link to={"/venue/" + venue.id} className="rounded-lg shadow-sm bg-white border border-comp hover:shadow-lg transition duration-300 ease-in-out">
+    <Link to={"/venue/" + venue.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out">
       <div className="relative">
         <ArrowRightBtn href={"/venue/" + venue.id} myVenues={myVenues} myBookings={myBookings} />
         <div className={`absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg hover:bg-opacity-0 transition duration-300 ease-in-out `}></div>
@@ -22,26 +22,24 @@ export default function VenueCard({ venue, myVenues = false, myBookings = false 
           <p>★ {venue.rating}</p>
         </div>
       </div>
-      {myVenues && !myBookings && (
-        <div className="p-2 flex flex-col gap-2 ">
-          {/* fix these links */}
-          {myVenues && !myBookings && (
-            <>
-              <Link to={`/user/edit/listing`}>
-                <SquareBtn innerText="Edit listing" tailw="hover:bg-comp-gray bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
-              </Link>
-              <Link to={`/user/:listingId/occupancy`}>
-                <SquareBtn innerText="Check occupancy" tailw="hover:bg-comp-gray bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
-              </Link>
-            </>
-          )}
-          {!myVenues && myBookings && (
-            <Link to={`/user/:bookingId/cancel`}>
-              <SquareBtn innerText="Cancel booking" tailw="hover:bg-comp bg-opacity-50" bordered={true} bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
+      <div className="p-2 flex flex-col gap-2 ">
+        {/* fix these links */}
+        {myVenues && !myBookings && (
+          <>
+            <Link to={`/user/edit/listing`}>
+              <SquareBtn innerText="Edit listing" tailw="hover:bg-comp-gray bg-opacity-50 lowercase" bgColor="white" textColor="primary-green" />
             </Link>
-          )}
-        </div>
-      )}
+            <Link to={`/user/:listingId/occupancy`}>
+              <SquareBtn innerText="Check occupancy" tailw="hover:bg-comp-gray bg-opacity-50 lowercase" bgColor="white" textColor="primary-green" />
+            </Link>
+          </>
+        )}
+        {!myVenues && myBookings && (
+          <Link to={`/user/:bookingId/cancel`}>
+            <SquareBtn innerText="Cancel booking" tailw="hover:bg-comp bg-opacity-50 lowercase" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
+          </Link>
+        )}
+      </div>
     </Link>
   );
 }
