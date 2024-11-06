@@ -8,7 +8,7 @@ nav {
   height: 100%;
   /* color: #fff; */
   background-color: var(--color-white);
-  overflow: hidden;
+  /* overflow: hidden; */
   transform: translateX(100vw);
   opacity: 0;
   z-index: 100;
