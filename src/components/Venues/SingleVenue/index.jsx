@@ -130,7 +130,7 @@ export default function SingleVenue({ venue }) {
   }, [travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate, venue]);
 
   function bookPropertyFunc() {
-    if (travelSearchData.numberOfGuests <= venue.maxGuests && isTravelOutsideAllRanges) {
+    if (travelSearchData.numberOfGuests <= venue.maxGuests && travelDatesOutsideRanges) {
       setSelectedVenue(venue);
       navigate("/booking/summary");
     } else {
