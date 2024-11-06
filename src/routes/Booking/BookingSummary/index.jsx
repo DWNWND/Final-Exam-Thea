@@ -4,6 +4,7 @@ import { useSearchStore } from "../../../stores/useSearchStore.js";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
 import { Link } from "react-router-dom";
+import RoundBtn from "../../../components/Buttons/RoundBtn/index.jsx";
 
 export default function BookingSummary() {
   const { accessToken, userName } = useAuthStore();
@@ -44,19 +45,13 @@ export default function BookingSummary() {
             SUM TOTAL: kr {price} ({nights} {nights > 1 ? "nights" : "night"})
           </div>
         </div>
-        {accessToken ? (
-          <Link to="/booking/details" type="button" className={` md:text-2xl py-3 shadow-lg mt-4 mb-10 rounded-full bg-primary-blue text-nowrap z-30 w-full p-2 px-20 flex justify-center font-semibold text-xl text-white uppercase hover:shadow-md hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp`}>
-            Continue
+        <Link to={accessToken ? `/booking/details` : "/login"}>
+          <RoundBtn innerText={accessToken ? `Continue as ${userName}` : "Login"} bordered={false} bgColor="primary-green" textColor="white" />
+        </Link>
+        {!accessToken && (
+          <Link to="/booking/details">
+            <RoundBtn innerText="Continue as guest" bordered={false} bgColor="primary-green" textColor="white" />
           </Link>
-        ) : (
-          <>
-            <Link to="/login" type="button" className={`md:text-2xl py-3 shadow-lg mt-4 rounded-full bg-primary-blue text-nowrap z-30 w-full p-2 px-20 flex justify-center font-semibold text-xl text-white uppercase hover:shadow-md hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp`}>
-              Login
-            </Link>
-            <Link to="/booking/details" type="button" className={`md:text-xl text-md py-3 shadow-lg mt-4 mb-10 border border-primary-blue rounded-full bg-white text-nowrap z-30 w-full p-2 px-20 flex justify-center font-normal text-primary-blue uppercase hover:shadow-md hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp`}>
-              Continue as guest
-            </Link>
-          </>
         )}
       </main>
     </HelmetProvider>

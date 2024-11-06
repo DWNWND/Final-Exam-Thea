@@ -1,9 +1,10 @@
-import { useState, createContext, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { NavBtn } from "../../../Buttons";
 import styles from "./HamburgerMenu.module.css";
 import { OpenMenuContext } from "../../../../contexts";
 import useAuthStore from "../../../../stores/useAuthStore";
+import SquareBtn from "../../../Buttons/SquareBtn";
+import RoundBtn from "../../../Buttons/RoundBtn";
 
 export default function HamburgerMenu() {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
@@ -27,7 +28,7 @@ export default function HamburgerMenu() {
 
 function OpenMenu() {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
-  const { userName } = useAuthStore();
+  const { userName, accessToken } = useAuthStore();
 
   function handleClick() {
     console.log("clicked");
@@ -83,23 +84,28 @@ function OpenMenu() {
           </Link>
         </li>
       </ul>
-      {userName && (
+      {accessToken && (
         <div className="bg-comp-green h-full">
           <div className="bg-primary-green h-px"></div>
           <ul className="flex flex-col gap-4 p-5">
             <li>
-              <Link to={`/user/${userName}`}>
-                <NavBtn clickFunc={handleClick} innerText="My profile" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
+              <Link to={`/user/${userName}/new/listing`}>
+                <SquareBtn clickFunc={handleClick} innerText="Publish new listing" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             <li>
-              <Link to="/:username/listings">
-                <NavBtn clickFunc={handleClick} innerText="My listings" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
+              <Link to={`/user/${userName}/listings`}>
+                <SquareBtn clickFunc={handleClick} innerText="My listings" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             <li>
-              <Link to="/:username/bookings">
-                <NavBtn clickFunc={handleClick} innerText="My bookings" tailw="rounded bg-whiteTransparent hover:bg-white " color="primary-green" />
+              <Link to={`/user/${userName}/bookings`}>
+                <SquareBtn clickFunc={handleClick} innerText="my bookings" tailw="hover:bg-white bg-opacity-50" bordered={true} bgColor="white" textColor="primary-green" borderColor="primary-green" />
+              </Link>
+            </li>
+            <li>
+              <Link to={accessToken ? `/user/${userName}` : "/login"}>
+                <RoundBtn innerText={accessToken ? "My profile" : "Login"} bordered={accessToken ? false : true} bgColor="primary-green" textColor="white" />
               </Link>
             </li>
           </ul>

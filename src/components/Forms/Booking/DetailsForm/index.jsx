@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
 import { useSearchStore } from "../../../../stores/useSearchStore.js";
@@ -9,6 +8,7 @@ import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDispl
 import claculateNightsBetween from "../../../../utils/calcNights/claculateNightsBetween.js";
 import useAuthStore from "../../../../stores/useAuthStore.js";
 import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
+import RoundBtn from "../../../Buttons/RoundBtn";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -81,7 +81,7 @@ export default function DetailsForm() {
         <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" error={errors.checkIn} register={register} errorMessage={errors.checkIn && errors.checkIn.message} />
         <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" error={errors.specialRequests} register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} />
         <div className="flex items-center justify-between">
-          <CtaBtn type="submit" innerText="Next" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} />
+        <RoundBtn type="submit" innerText="Next" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
         </div>
       </form>
     </div>

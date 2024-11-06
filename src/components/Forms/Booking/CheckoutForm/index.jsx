@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
 import { useSearchStore } from "../../../../stores/useSearchStore.js";
@@ -10,6 +9,7 @@ import claculateNightsBetween from "../../../../utils/calcNights/claculateNights
 import useAuthStore from "../../../../stores/useAuthStore.js";
 import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
 import useApiCall from "../../../../hooks/useApiCall.jsx";
+import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 
 const url = import.meta.env.VITE_API_BASE_URL;
 
@@ -93,7 +93,7 @@ export default function CheckoutForm() {
         <StringInput type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} />
         <StringInput type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} />
         <div className="flex items-center justify-between">
-          <CtaBtn type="submit" innerText="Complete payment" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} />
+          <RoundBtn type="submit" innerText="Complete payment" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
         </div>
         <p className="text-danger">{loading && "Loading..."}</p>
         <p className="text-danger">{error && error}</p>

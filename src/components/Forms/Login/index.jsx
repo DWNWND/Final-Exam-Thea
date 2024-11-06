@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useAuthStore from "../../../stores/useAuthStore.js";
-import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
+import RoundBtn from "../../Buttons/RoundBtn";
 
 // Validation schema
 // remeber to implement validation on email etc.
@@ -51,7 +51,7 @@ export default function LoginForm() {
         <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" error={errors.email} register={register} errorMessage={errors.email && errors.email.message} />
         <StringInput type="password" id="password" label="Password" placeholder="• • • • • • •" error={errors.password} register={register} errorMessage={errors.password && errors.password.message} />
         <div className="flex items-center justify-between">
-          <CtaBtn type="submit" innerText="Login" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"}></CtaBtn>
+          <RoundBtn type="submit" innerText="Login" bgColor="primary-green" textColor="white" />
         </div>
       </form>
       <p className="text-danger text-xs mt-3">{error && error.message}</p>

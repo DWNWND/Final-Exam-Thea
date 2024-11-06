@@ -1,9 +1,9 @@
 import LocationLookAhead from "../LocationLookAhead/index.jsx";
 import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
-import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
 import { useNavigate } from "react-router-dom";
+import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 
 export default function MainSearchForm() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function MainSearchForm() {
           <LocationLookAhead color="primary-green" />
           <SelectTravelDates color="primary-green" tailw={"px-3"} />
           <NumberOfGuests color="primary-green" mainSearch={true} />
-          <CtaBtn type="submit" innerText="Search" tailw="mt-4 md:mt-0 rounded-full bg-primary-green lg:max-w-8" mainCta={true} />
+          <RoundBtn type="submit" innerText="Search" bgColor="primary-green" textColor="white" />
         </div>
         <MoreFilters color="primary-green" mainSearch={true} />
       </form>
