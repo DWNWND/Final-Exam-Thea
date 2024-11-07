@@ -25,7 +25,7 @@ export default function FixedBtnDisplay() {
           <SquareBtn innerText="Nok" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
         </li>
         <li className="w-full">
-          <Link to={accessToken ? `/user/${userName}` : "/login"}>
+          <Link to={accessToken ? `/user/${userName}` : "/login"} className="w-full">
             <RoundBtn innerText={accessToken ? "My profile" : "Login"} bgColor="primary-green" borderColor="primary-green" textColor="white" />
           </Link>
         </li>
