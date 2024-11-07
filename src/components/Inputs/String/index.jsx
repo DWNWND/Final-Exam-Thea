@@ -5,6 +5,7 @@ export default function StringInput({ type, id, label, placeholder, error, regis
   const [showPassword, setShowPassword] = useState(false);
   const isTextarea = id === "description";
 
+  console.log("error stringinput", error);
   // Toggle password visibility
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
