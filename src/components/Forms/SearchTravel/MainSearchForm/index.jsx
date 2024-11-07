@@ -14,16 +14,17 @@ export default function MainSearchForm() {
   }
 
   return (
-    <div className="bg-white p-6 rounded-3xl md:m-10 lg:rounded-full lg:pt-20 lg:pl-20 lg:pr-20 md:py-10 shadow-md w-full h-fit">
+    <div className="bg-white p-6 rounded-3xl md:m-10 lg:rounded-full lg:pl-20 lg:pr-20 md:py-20 shadow-md w-full h-fit">
       <h1 className="text-center mb-8 text-2xl font-bold uppercase text-primary-green">Book your next trip now</h1>
       <form onSubmit={(e) => searchFunc(e)} className="flex flex-col gap-4 md:gap-8" id="search-travel-form">
         <div className="flex flex-col lg:flex-row gap-4">
           <LocationLookAhead color="primary-green" />
-          <SelectTravelDates color="primary-green" tailw={"px-3"} />
+          <SelectTravelDates color="primary-green" />
+          {/* tailw={"px-3"} */}
           <NumberOfGuests color="primary-green" mainSearch={true} />
-          <RoundBtn tailw="py-2" type="submit" innerText="Search" bgColor="primary-green" textColor="white" />
+          <RoundBtn type="submit" innerText="Search" bgColor="primary-green" textColor="white" />
         </div>
-        <MoreFilters color="primary-green" mainSearch={true} />
+        <MoreFilters color="primary-green" />
       </form>
     </div>
   );

@@ -3,22 +3,20 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { useSearchStore } from "../../../../stores/useSearchStore.js";
 import Checkbox from "../../../Inputs/Checkbox/index.jsx";
+import ArrowDownBtn from "../../../Buttons/ArrowDownBtn/index.jsx";
 
-export default function MoreFilters({ color, mainSearch }) {
+export default function MoreFilters({ color, mainSearch = true}) {
   const [openMoreFilters, setOpenMoreFilters] = useState(false);
   const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useSearchStore();
 
-  function handleClick() {
+  function toggleOpenMoreFilters() {
     setOpenMoreFilters(!openMoreFilters);
   }
 
   return (
-    <>
-      <div className={`${openMoreFilters && "underline"} w-full justify-center hover:underline cursor-pointer flex items-center text-${color} gap-2`} onClick={() => handleClick()}>
-        <span>More filters</span>
-        {openMoreFilters ? <IoIosArrowUp /> : <IoIosArrowDown />}
-      </div>
-      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${openMoreFilters ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+    <div>
+      <ArrowDownBtn clickFunc={toggleOpenMoreFilters} innerText="More filters" link={true} mainSearch={mainSearch} open={openMoreFilters} />
+      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${openMoreFilters ? "max-h-[1000px] opacity-100 mt-6" : "max-h-0 opacity-0"}`}>
         <div className={`flex flex-col gap-6 ${mainSearch && "md:flex-row md:gap-20 md:justify-evenly"}`}>
           <div className={`flex flex-col gap-2 ${mainSearch && "md:pb-10"}`}>
             <div className={`text-${color} uppercase font-semibold text-lg`}>Filters</div>
@@ -52,7 +50,7 @@ export default function MoreFilters({ color, mainSearch }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

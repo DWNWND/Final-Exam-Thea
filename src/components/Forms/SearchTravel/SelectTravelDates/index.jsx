@@ -44,7 +44,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, t
   }, [travelSearchData.travelDates, setTravelDates, setAllDatesArr]);
 
   return (
-    <div className={`${tailw} flex justify-between items-center rounded-full border-${color} border bg-white w-full`}>
+    <div className={`${tailw} px-3 flex justify-between items-center rounded-full border-${color} border bg-white w-full`}>
       {defaultDateString && travelSearchData.travelDates && travelSearchData.travelDates.startDate && travelSearchData.travelDates.endDate && (
         <>
           <Flatpickr

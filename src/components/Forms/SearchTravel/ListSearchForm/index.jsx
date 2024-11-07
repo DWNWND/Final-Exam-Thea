@@ -35,17 +35,15 @@ export default function ListSearchForm() {
         from: {formattedStartDate} <br></br> to: {formattedEndDate}
       </h1>
       <p className="text-white text-center my-4">{travelSearchData.numberOfGuests} guests</p>
-      <ArrowDownBtn clickFunc={toggleOpenEditSearch} innerText="Edit search" tailw="" color="white" open={openEditSearch} />
-
-      {/* <NavBtn clickFunc={toggleOpenEditSearch} arrow={true} open={openEditSearch} innerText="Edit search" tailw="rounded my-4" color="white"></NavBtn> */}
-      <form className={`flex flex-col gap-4 md:gap-8 transition-max-height duration-500 ease-in-out overflow-hidden ${openEditSearch ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`} id="update-search-travel-form">
+      <ArrowDownBtn clickFunc={toggleOpenEditSearch} innerText="Edit search" tailw="" mainSearch={false} open={openEditSearch} />
+      <form className={`flex flex-col gap-4 md:gap-8 transition-max-height duration-500 ease-in-out overflow-hidden ${openEditSearch ? "max-h-[1000px] opacity-100  mt-6" : "max-h-0 opacity-0"}`} id="update-search-travel-form">
         <div className="flex flex-col gap-4 ">
-          <LocationLookAhead color={"primary-blue"} />
-          <SelectTravelDates color={"primary-blue"} />
-          <NumberOfGuests color={"white"} mainSearch={false} />
-          <CtaBtn type="submit" innerText="Update" tailw="mt-4 md:mt-0 rounded-full bg-white" mainCta={false} color={"primary-blue"} />
+          <LocationLookAhead color="primary-blue" />
+          <SelectTravelDates color="primary-blue" />
+          <NumberOfGuests color="white" mainSearch={false} />
+          <CtaBtn type="submit" innerText="Update" tailw="mt-4 md:mt-0 rounded-full bg-white" mainCta={false} color="primary-blue" />
         </div>
-        <MoreFilters color={"white"} mainSearch={false} />
+        <MoreFilters mainSearch={false} color="white"/>
       </form>
     </div>
   );
