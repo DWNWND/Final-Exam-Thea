@@ -35,15 +35,23 @@ export default function VenueSpesific() {
 
   return (
     <>
-      {onlyRenderWhenSet && (
-        <HelmetProvider>
-          <Helmet prioritizeSeoTags>
-            <meta name="description" content="" />
-            <title> {singleVenue.name} | Holidayz</title>
-            {/* add Venue title */}
-          </Helmet>
-          <MainElement>{singleVenueIsLoading ? <Loader /> : <SingleVenue venue={singleVenue} />}</MainElement>
-        </HelmetProvider>
+      {singleVenueIsLoading ? (
+        <Loader />
+      ) : (
+        <>
+          {onlyRenderWhenSet && (
+            <HelmetProvider>
+              <Helmet prioritizeSeoTags>
+                <meta name="description" content="" />
+                <title> {singleVenue.name} | Holidayz</title>
+                {/* add Venue title */}
+              </Helmet>
+              <MainElement>
+                <SingleVenue venue={singleVenue} />
+              </MainElement>
+            </HelmetProvider>
+          )}
+        </>
       )}
     </>
   );
