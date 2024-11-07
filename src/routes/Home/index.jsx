@@ -17,7 +17,7 @@ export default function Home() {
         <meta name="description" content="" />
         <title>Home | Holidayz</title>
       </Helmet>
-      <MainElement tailw="p-0 pt-0">
+      <MainElement homePage={true}>
         <DataProvider>
           <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center min-h-screen`}>
             <MainSearchForm />

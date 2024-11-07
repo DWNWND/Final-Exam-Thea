@@ -21,7 +21,7 @@ export default function NewListing() {
         <meta name="description" content="" />
         <title>New Listing | Holidayz</title>
       </Helmet>
-      <MainElement>
+      <MainElement tailw="bg-comp">
         <h1 className="hidden uppercase text-2xl text-primary-green text-center mb-6">New Listing</h1>
         <NewListingForm />
       </MainElement>
