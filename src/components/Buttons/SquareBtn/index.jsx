@@ -6,10 +6,11 @@ export default function SquareBtn({
   textColor = "primary-green",
   borderColor = "primary-green",
   transition = "transition duration-300 ease-in-out",
+  disabled = false,
 }) {
-  const buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
+  const buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full md:w-auto items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
   return (
-    <button onClick={clickFunc} className={`${buttonClasses} ${transition}`}>
+    <button onClick={clickFunc} disabled={disabled} className={`${buttonClasses} ${transition}`}>
       {innerText}
     </button>
   );

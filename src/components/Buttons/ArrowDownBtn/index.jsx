@@ -1,20 +1,14 @@
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
-
-//this is used in the listingSearchForm
-export default function ArrowDownBtn({
-  innerText,
-  tailw = "",
-  color = "primary-green",
-  clickFunc = () => {},
-  open = false,
-}) {
-  const buttonClasses = `${tailw} p-1 px-3 w-full rounded my-4 text-nowrap flex items-center justify-center uppercase hover:shadow-md cursor-pointer text-${color} border border-${color}`;
+export default function ArrowDownBtn({ innerText, tailw = "", clickFunc = () => {}, open = false, link = false, mainSearch = true }) {
+  const buttonClasses = `${tailw} p-1 px-3 w-auto max-w-auto rounded text-nowrap flex items-center justify-center uppercase  ${link ? "" : "border lg:hover:shadow-md"} cursor-pointer transition duration-300 ease-in-out ${mainSearch && (open ? "border-primary-green text-primary-green" : "hover:text-primary-green hover:border-primary-green border-primary-light text-primary-light")} ${!mainSearch && (open ? "border-comp text-comp" : "hover:text-white hover:border-white border-comp-purple text-comp-purple")}`;
 
   return (
     <div onClick={clickFunc} className={buttonClasses}>
       {innerText}
-      <span className="ml-2">{open ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
+      <span className={`ml-2 transition-transform duration-300 ease-in-out ${open ? "rotate-180" : "rotate-0"}`}>
+        <IoIosArrowDown />
+      </span>
     </div>
   );
 }

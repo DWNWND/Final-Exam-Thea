@@ -8,7 +8,7 @@ export default function RoundBtn({
   borderColor = "primary-green",
   disabled = false,
 }) {
-  const buttonClasses = `text-nowrap flex justify-center items-center h-full p-1 px-4 w-full text-nowrap uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+  const buttonClasses = `py-2 px-6 w-full md:w-auto h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
 
   return (
     <button type={type} onClick={clickFunc} className={buttonClasses} disabled={disabled}>
