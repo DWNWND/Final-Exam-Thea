@@ -7,6 +7,7 @@ export default function SquareBtn({
   borderColor = "primary-green",
   transition = "transition duration-300 ease-in-out",
   disabled = false,
+  type = "button",
 }) {
   const buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full md:w-auto items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
   return (
