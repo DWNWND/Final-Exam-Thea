@@ -2,6 +2,7 @@ import ArrowRightBtn from "../../Buttons/ArrowRightBtn";
 import SquareBtn from "../../Buttons/SquareBtn";
 import { Link } from "react-router-dom";
 
+//the Link cannot be a descendant of another Link (ex. the ArrowRightBtn)
 export default function VenueCard({ venue, myVenues = false, myBookings = false }) {
   return (
     <Link to={"/venue/" + venue.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out">
