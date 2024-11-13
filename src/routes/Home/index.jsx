@@ -22,7 +22,7 @@ export default function Home() {
           <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center min-h-screen`}>
             <MainSearchForm />
           </section>
-          <section id="categorizedListings" className="p-4 pb-12">
+          <section id="categorizedListings" className="p-4 pb-12 md:my-10">
             <SelectCategoryBtns filters={filters} setFilters={setFilters} />
             <ListCategorized filters={filters} />
           </section>

@@ -21,7 +21,7 @@ export default function Login() {
         <meta name="description" content="" />
         <title>Login | Holidayz</title>
       </Helmet>
-      <MainElement>
+      <MainElement tailw="flex items-center justify-center">
         <LoginForm />
       </MainElement>
     </HelmetProvider>

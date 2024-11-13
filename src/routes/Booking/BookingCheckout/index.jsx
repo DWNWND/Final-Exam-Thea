@@ -9,7 +9,7 @@ export default function BookingCheckout() {
         <meta name="description" content="" />
         <title>Booking details | Holidayz</title>
       </Helmet>
-      <MainElement>
+      <MainElement tailw="flex justify-center">
         <CheckoutForm />
       </MainElement>
     </HelmetProvider>

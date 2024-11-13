@@ -21,7 +21,7 @@ export default function Register() {
         <meta name="description" content="" />
         <title>Register New User| Holidayz</title>
       </Helmet>
-      <MainElement>
+      <MainElement tailw="flex items-center justify-center">
         <RegisterForm />
       </MainElement>
     </HelmetProvider>

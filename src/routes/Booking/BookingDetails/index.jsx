@@ -14,7 +14,7 @@ export default function BookingDetails() {
         <meta name="description" content="" />
         <title>Booking details | Holidayz</title>
       </Helmet>
-      <MainElement>
+      <MainElement tailw="flex justify-center">
         <DetailsForm />
       </MainElement>
     </HelmetProvider>
