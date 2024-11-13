@@ -5,16 +5,48 @@ import { OpenMenuContext } from "../../../contexts";
 import useAuthStore from "../../../stores/useAuthStore";
 import SquareBtn from "../../Buttons/SquareBtn";
 import RoundBtn from "../../Buttons/RoundBtn";
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 export default function FixedBtnDisplay() {
   const { isMenuOpen } = useContext(OpenMenuContext);
   const { userName, accessToken } = useAuthStore();
+  const location = useLocation();
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY === 0) {
+      setIsVisible(true);
+    } else {
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down, hide header
+        setIsVisible(false);
+      } else {
+        // Scrolling up, show header
+        setIsVisible(true);
+      }
+    }
+    setLastScrollY(currentScrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+
+  console.log("location", location);
   const isMobile = useCheckScreenSize();
-  // if (!isMobile) return null;
+
+  if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register")) {
+    return null;
+  }
 
   return (
-    <div className={`${isMobile && "fixed bottom-0 w-full shadow-2xl p-4 bg-white bg-opacity-70"}  ${isMenuOpen && ""} z-50`}>
+    <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-4 bg-white bg-opacity-70`}  ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
       <ul className="flex flex-row gap-4">
         <li className="w-full">
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>
