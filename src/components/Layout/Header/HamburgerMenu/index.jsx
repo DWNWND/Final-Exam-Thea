@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import styles from "./HamburgerMenu.module.css";
 import { OpenMenuContext } from "../../../../contexts";
 import useAuthStore from "../../../../stores/useAuthStore";
 import SquareBtn from "../../../Buttons/SquareBtn";
@@ -15,7 +14,7 @@ export default function HamburgerMenu() {
 
   return (
     <>
-      <button className={`${styles.hamburgerMenuBtn} w-6 h-6`} value="button to open and close menu" onClick={() => onHamburgerMenuClick()}>
+      <button className={`w-6 h-6 border-0 p-0 flex justify-center items-center z-[100]`} value="button to open and close menu" onClick={() => onHamburgerMenuClick()}>
         <div className={isMenuOpen ? "burger burger-squeeze open" : "burger burger-squeeze"}>
           <div className="hidden">menu</div>
           <div className="burger-lines"></div>
@@ -31,55 +30,47 @@ function OpenMenu() {
   const { userName, accessToken } = useAuthStore();
 
   function handleClick() {
-    console.log("clicked");
     setIsMenuOpen(!isMenuOpen);
   }
 
-  // // useEffect(() => {
-  // //   if (isMenuOpen) {
-  // //     document.body.style.overflow = "hidden";
-  // //   } else {
-  // //     document.body.style.overflow = "unset";
-  //   }
-  // }, [isMenuOpen]);
-
   return (
-    <nav className={`${isMenuOpen && styles.active} shadow-md border-t border-primary-green`}>
-      <ul className="py-10 flex flex-col lg:flex-row justify-between p-8 gap-4">
+    <nav
+      className={`${isMenuOpen ? "opacity-100 z-50" : "opacity-0 -translate-y-full z-0"} 0
+      shadow-md border-t border-primary-green fixed top-[64px] md:top-[73px] left-0 w-full transition-all duration-500 ease-in-out`}>
+      <ul className="py-10 bg-white flex flex-col lg:flex-row justify-between p-8 gap-4">
         <li>
-          <Link to="/" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
+          <Link to="/" className={`text-nowrap text-black font-semibold`} onClick={() => handleClick()}>
             Home
           </Link>
         </li>
         <li>
-          <Link to="/" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
+          <Link to="/" className={`text-nowrap text-black font-semibold`} onClick={() => handleClick()}>
             Search accommodation
           </Link>
         </li>
         <li>
-          <Link to="/new/listing" className={`${styles.openMenuLink} text-black font-semibold`} onClick={() => handleClick()}>
+          <Link to="/new/listing" className={`text-nowrap text-black font-semibold`} onClick={() => handleClick()}>
             Add new listing
           </Link>
         </li>
-        <div className="line lg:hidden"></div>
-
+        <div className="w-full h-0.5 bg-comp-green lg:hidden"></div>
         <li>
-          <Link to="/about" className={styles.openMenuLink} onClick={() => handleClick()}>
+          <Link to="/about" className="text-nowrap" onClick={() => handleClick()}>
             About Holidaze
           </Link>
         </li>
         <li>
-          <Link to="/contact" className={styles.openMenuLink} onClick={() => handleClick()}>
+          <Link to="/contact" className="text-nowrap" onClick={() => handleClick()}>
             Contact us
           </Link>
         </li>
         <li>
-          <Link to="/terms" className={styles.openMenuLink} onClick={() => handleClick()}>
+          <Link to="/terms" className="text-nowrap" onClick={() => handleClick()}>
             Terms & conditions
           </Link>
         </li>
         <li>
-          <Link to="/faq" className={styles.openMenuLink} onClick={() => handleClick()}>
+          <Link to="/faq" className="text-nowrap" onClick={() => handleClick()}>
             FAQ
           </Link>
         </li>
@@ -87,7 +78,7 @@ function OpenMenu() {
       {accessToken && (
         <div className="bg-comp-gray h-full">
           <div className="bg-primary-green h-px"></div>
-          <ul className="flex flex-col gap-4 p-5">
+          <ul className="flex flex-col gap-4 p-8">
             <li>
               <Link to={`/user/${userName}/new/listing`}>
                 <SquareBtn clickFunc={handleClick} innerText="Publish new listing" bgColor="white" textColor="primary-green" borderColor="primary-green" />
@@ -103,11 +94,11 @@ function OpenMenu() {
                 <SquareBtn clickFunc={handleClick} innerText="my bookings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to={accessToken ? `/user/${userName}` : "/login"}>
                 <RoundBtn innerText={accessToken ? "My profile" : "Login"} bgColor="primary-green" textColor="white" />
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       )}
