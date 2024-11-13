@@ -71,7 +71,7 @@ export default function SettingsForm() {
   return (
     <>
       {user && (
-        <form className="flex flex-col gap-6 max-w-[50rem] w-full">
+        <form className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm">
           <Checkbox id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></Checkbox>
           <StringInput type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} error={errors.bo} register={register}></StringInput>
           <div>
@@ -90,7 +90,7 @@ export default function SettingsForm() {
           </div>
           <SquareBtn clickFunc={handleSubmit(onSubmit)} innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
           <div className="text-danger">{error}</div>
-          <div className="underline text-center mb-8">Delete user</div>
+          <div className="underline text-center">Delete user</div>
         </form>
       )}
     </>
