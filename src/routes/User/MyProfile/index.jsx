@@ -61,16 +61,16 @@ export default function MyProfile() {
         <title>My Profile | Holidayz</title>
       </Helmet>
       {user && (
-        <MainElement tailw="flex flex-col gap-8 lg:flex-row xl:gap-8">
-          <section className="flex flex-col md:px-6 gap-2 lg:max-w-md">
-            <div className="xl:sticky xl:top-20 xl:pb-9">
+        <MainElement tailw="flex flex-col gap-8 lg:flex-row">
+          <section className="flex flex-col gap-2 lg:max-w-md">
+            <div className="xl:sticky xl:top-6 xl:pb-9">
               <ProfileLinks venueManager={user.venueManager} />
               <UserProfile user={user} />
             </div>
           </section>
-          <section className="md:px-6 w-full pb-10">
+          <section className="w-full pb-10">
             {/* {user.bookings.length >= 1 && user.venues.length >= 1 && <SelectionBtns selector={selector} setSelector={setSelector} />} */}
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-12">
               {user.bookings.length >= 1 ? (
                 <ListBookings bookings={user.bookings} maxVenuesShown="4" />
               ) : (
