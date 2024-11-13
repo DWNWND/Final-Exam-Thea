@@ -7,7 +7,7 @@ import PaypalLogo from "../../../assets/logos/paypal-logo.png";
 
 function CopyRight() {
   return (
-    <div className={`${styles.copyRight} py-1 mt-12 w-full bg-comp flex justify-center items-center text-primary-blue`}>
+    <div className={`${styles.copyRight} py-1 mt-12 w-full bg-desatBlue flex justify-center items-center text-primary-blue`}>
       <p>&copy; 2024 Thea Oland</p>
     </div>
   );
@@ -15,7 +15,7 @@ function CopyRight() {
 
 export default function Footer() {
   return (
-    <footer className="pt-10 pb-24 w-full bg-comp p-8">
+    <footer className="pt-10 pb-24 w-full bg-desatBlue p-8">
       <div className="flex flex-col justify-between gap-8 md:flex-row lg:gap-20">
         <div className="flex flex-col justify-evenly gap-8 md:flex-row lg:gap-20">
           <div className={`${styles.footerCol} flex flex-col gap-2`}>
