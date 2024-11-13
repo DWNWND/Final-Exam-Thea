@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
+import RoundBtn from "../../Buttons/RoundBtn";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -49,7 +50,7 @@ export default function RegisterForm() {
   console.log("errors", error);
 
   return (
-    <div className="max-w-md mx-auto px-8 pt-16 pb-8 mb-4  h-svh flex items-center flex-col justify-center">
+    <div className="max-w-[50rem] mx-auto  flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
       <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">Register new user</h1>
       <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
         <StringInput type="text" id="userName" label="Username" placeholder="Your username" error={errors.userName} register={register} errorMessage={errors.userName && errors.userName.message} />
@@ -57,12 +58,14 @@ export default function RegisterForm() {
         <StringInput type="password" id="password" label="Password" placeholder="• • • • • • •" error={errors.password} register={register} errorMessage={errors.password && errors.password.message} />
         <StringInput type="password" id="confirmPassword" label="Confirm Password" placeholder="• • • • • • •" error={errors.confirmPassword} register={register} errorMessage={errors.confirmPassword && errors.confirmPassword.message} />
         <div className="flex items-center justify-between">
-          <CtaBtn type="submit" innerText="Register" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} />
+          <RoundBtn type="submit" innerText="Register" bgColor="primary-green" textColor="white" />
+
+          {/* <CtaBtn type="submit" innerText="Register" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} /> */}
         </div>
       </form>
       <p className="text-danger text-xs mt-3">{error && error.message}</p>
-      <Link to="/login" className="w-full block text-sm underline mt-4 text-primary-green hover:text-primary-blue">
-        Already have an account? Login
+      <Link to="/login" className="w-full block underline mt-4 text-primary-green hover:text-primary-blue">
+        Already have an account?
       </Link>
     </div>
   );

@@ -45,7 +45,7 @@ export default function LoginForm() {
   //add more levels of userFeedback for the different errorcodes
 
   return (
-    <div className="max-w-md mx-auto px-8 pb-8 pt-16 mb-4 h-svh flex items-center flex-col justify-center">
+    <div className="mx-auto w-full flex items-center flex-col max-w-[50rem] m-4 p-8 bg-white rounded-lg shadow-sm">
       <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">Login</h1>
       <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
         <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" error={errors.email} register={register} errorMessage={errors.email && errors.email.message} />
@@ -55,10 +55,10 @@ export default function LoginForm() {
         </div>
       </form>
       <p className="text-danger text-xs mt-3">{error && error.message}</p>
-      <Link to="/#" className=" w-full block text-sm underline mt-4 text-primary-green hover:text-primary-blue">
+      <Link to="/#" className=" w-full block underline mt-4 text-primary-green hover:text-primary-blue">
         Forgot your password?
       </Link>
-      <Link to="/register" className=" w-full block text-sm underline mt-4 text-primary-green hover:text-primary-blue">
+      <Link to="/register" className=" w-full block underline mt-4 text-primary-green hover:text-primary-blue">
         Register new user
       </Link>
     </div>

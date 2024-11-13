@@ -73,7 +73,7 @@ export default function CheckoutForm() {
 
   //add more levels of userFeedback for the different errorcodes
   return (
-    <div className="max-w-md mx-auto pb-8 mb-4 flex items-center flex-col justify-center">
+    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm">
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
         <p className="font-semibold">{selectedVenue.name}</p>
         <p>
@@ -92,11 +92,11 @@ export default function CheckoutForm() {
         <StringInput type="text" id="cardNumber" label="Card Number" placeholder="1234 5678 9012 3456" error={errors.cardNumber} register={register} errorMessage={errors.cardNumber && errors.cardNumber.message} />
         <StringInput type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} />
         <StringInput type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} />
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between my-6">
           <RoundBtn type="submit" innerText="Complete payment" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
         </div>
-        <p className="text-danger">{loading && "Loading..."}</p>
-        <p className="text-danger">{error && error}</p>
+        {loading && <p className="text-danger">{loading && "Loading..."}</p>}
+        {error && <p className="text-danger">{error && error}</p>}
       </form>
     </div>
   );
