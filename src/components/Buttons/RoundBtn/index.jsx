@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 export default function RoundBtn({
   type = "button",
   innerText,
@@ -8,7 +10,15 @@ export default function RoundBtn({
   borderColor = "primary-green",
   disabled = false,
 }) {
-  const buttonClasses = `py-2 px-6 w-full md:w-auto h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+  const location = useLocation();
+
+  let buttonClasses;
+
+  if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register") || location.pathname.toLowerCase().includes("booking")) {
+    buttonClasses = `py-2 px-6 w-full h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+  } else {
+    buttonClasses = `py-2 px-6 w-full md:w-auto h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+  }
 
   return (
     <button type={type} onClick={clickFunc} className={buttonClasses} disabled={disabled}>

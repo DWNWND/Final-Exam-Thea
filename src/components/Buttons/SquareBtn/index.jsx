@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 export default function SquareBtn({
   innerText,
   tailw = "", // Default to an empty string if not provided
@@ -9,7 +11,16 @@ export default function SquareBtn({
   disabled = false,
   type = "button",
 }) {
-  const buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full md:w-auto items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
+  const location = useLocation();
+
+  let buttonClasses;
+
+  if (location.pathname.toLowerCase().includes("user")) {
+    buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
+  } else {
+    buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full md:w-auto items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
+  }
+
   return (
     <button onClick={clickFunc} disabled={disabled} className={`${buttonClasses} ${transition}`}>
       {innerText}
