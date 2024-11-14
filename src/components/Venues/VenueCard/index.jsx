@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 export default function VenueCard({ venue, myVenues = false, myBookings = false }) {
   return (
     <div className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
-      <Link to={"/venue/" + venue.id} className="h-full w-full absolute opacity-20 hover:opacity-0  transition duration-300 ease-in-out z-30 rounded-lg">
+      <Link to={"/venue/" + venue.id} className="h-full w-full absolute opacity-20 hover:opacity-0  transition duration-300 ease-in-out z-20 rounded-lg">
         <div className={`bg-black w-full rounded-t-lg hover:bg-opacity-0 h-48`}></div>
       </Link>
       <div className="relative">
-        <ArrowRightBtn href={"/venue/" + venue.id} myVenues={myVenues} myBookings={myBookings} tailw="z-40" />
+        <ArrowRightBtn href={"/venue/" + venue.id} myVenues={myVenues} myBookings={myBookings} tailw="z-30" />
         <img src={venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className={`w-full h-48 object-cover rounded-t-lg`} />
-        <p className="absolute font-bold text-2xl text-white bottom-2 right-2 z-40">kr {venue.price}/night</p>
+        <p className="absolute font-bold text-2xl text-white bottom-2 right-2 z-30">kr {venue.price}/night</p>
       </div>
       <div className="p-4 flex flex-col gap-4">
         <div className="flex justify-between">
