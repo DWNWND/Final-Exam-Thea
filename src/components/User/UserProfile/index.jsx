@@ -36,7 +36,7 @@ function VenueManagerBadge() {
 function SettingsBtn({ userName }) {
   return (
     <Link to={`/user/${userName}/settings`}>
-      <SquareBtn innerText="my settings" tailw="lowercase" bgColor="transparent" textColor="primary-purple" />
+      <SquareBtn innerText="my settings" width="full" tailw="lowercase" bgColor="transparent" textColor="primary-purple" />
     </Link>
 
     // <Link to={`/user/${userName}/settings`} className="block text-center w-full border-primary-blue border text-primary-blue text-lg px-3 py-2 rounded-lg">
