@@ -154,10 +154,13 @@ export default function SingleVenue({ venue }) {
           </div>
         </div>
       )}
-      <div className="flex flex-col md:flex-row items-center gap-3 mb-4">
-        <div className={`flex w-full`}>
-          <SquareBtn clickFunc={toggleEditDates} innerText="Edit travel dates" transition="transition-max-height duration-500 ease-in-out" tailw={`flex justify-center items-center overflow-hidden ${!editDates ? "px-3 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 p-0 px-0"}`} bgColor="white" textColor="primary-green" borderColor="primary-green" />
-          <SelectTravelDates toggleDatesFunc={toggleEditDates} color="primary-blue" tailw={`transition-max-height duration-500 ease-in-out overflow-hidden  ${editDates ? "px-3 max-w-full  md:max-w-64 opacity-100" : "max-w-0 opacity-0"}`} />
+      <div className="flex flex-col md:flex-row gap-3 mb-4">
+        <div className={`flex w-full md:max-w-64`}>
+          {/* same as squareBtn, it would be too much to style it  */}
+          <button onClick={toggleEditDates} className={`text-nowrap flex  py-2 justify-center w-full h-full uppercase rounded hover:shadow-md cursor-pointer transition-max-height duration-500 ease-in-out items-center overflow-hidden ${!editDates ? "px-4 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 px-0"} bg-white text-primary-blue border border-primary-blue`}>
+            Edit travel dates
+          </button>
+          <SelectTravelDates toggleDatesFunc={toggleEditDates} editDates={editDates} color="primary-blue" />
         </div>
         <NumberOfGuests color="primary-blue" mainSearch="false" />
       </div>
@@ -175,7 +178,7 @@ export default function SingleVenue({ venue }) {
           <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
         </div>
         <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
-          <RoundBtn innerText={travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"} clickFunc={() => bookPropertyFunc()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges} tailw={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-comp-gray text-primary-light" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase`} bgColor="primary-blue" borderColor="primary-blue" textColor="white" />
+          <RoundBtn width="full" innerText={travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"} clickFunc={() => bookPropertyFunc()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges} tailw={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-comp-gray text-primary-light" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase`} bgColor="primary-blue" borderColor="primary-blue" textColor="white" />
         </div>
       </div>
       <p className="mt-8 text-danger text-center">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
@@ -189,7 +192,7 @@ export default function SingleVenue({ venue }) {
           <p className="text-black font-semibold mt-4">kr {venue.price}/night</p>
         </div>
         <div>
-          <p>★ {venue.rating}</p>
+          <p className="text-nowrap">★ {venue.rating}</p>
         </div>
       </div>
       <div className="flex flex-col gap-2">
