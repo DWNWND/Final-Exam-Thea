@@ -9,7 +9,7 @@ export default function ListNewest() {
 
   return (
     <>
-      <h2 className="font-bold text-2xl text-primary-green uppercase mb-4">Our newest Listings</h2>
+      <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">Our newest Listings</h2>
       {venues && venues.length >= 2 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
           {venues.slice(0, 10).map((venue) => (
@@ -17,7 +17,7 @@ export default function ListNewest() {
           ))}
         </div>
       )}
-      <Link className="md:text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
+      <Link className="lg:ml-4 text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
     </>
   );
 }

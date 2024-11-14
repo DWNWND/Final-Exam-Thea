@@ -27,7 +27,7 @@ export default function ListCategorized({ filters }) {
             ))}
         </div>
       )}
-      <Link className="md:text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
+      <Link className="lg:ml-4 text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
     </>
   );
 }
