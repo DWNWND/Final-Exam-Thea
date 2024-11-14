@@ -50,7 +50,7 @@ export default function RegisterForm() {
   console.log("errors", error);
 
   return (
-    <div className="max-w-[50rem] mx-auto  flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
+    <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
       <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">Register new user</h1>
       <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
         <StringInput type="text" id="userName" label="Username" placeholder="Your username" error={errors.userName} register={register} errorMessage={errors.userName && errors.userName.message} />
