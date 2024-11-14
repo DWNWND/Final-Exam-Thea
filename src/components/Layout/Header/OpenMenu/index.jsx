@@ -14,7 +14,7 @@ export default function OpenMenu() {
 
   return (
     <nav className={`transition-max-height z-50 duration-500 ease-in-out h-svh overflow-hidden ${isMenuOpen ? "md:max-h-[1000px] max-h-svh" : "max-h-0"} `}>
-      <ul className="py-10 md:py-20 bg-desatBlue flex flex-col lg:flex-row justify-between px-8 md:px-20 gap-4">
+      <ul className="py-10 md:py-20 bg-white flex flex-col lg:flex-row justify-between px-8 md:px-20 gap-4">
         <li>
           <Link to="/" className={`text-nowrap text-black font-semibold md:text-lg hover:text-primary-green`} onClick={() => handleClick()}>
             Home
@@ -53,7 +53,7 @@ export default function OpenMenu() {
         </li>
       </ul>
       {accessToken && (
-        <div className="bg-desatBlue h-full">
+        <div className=" bg-white h-full">
           {/* <div className="bg-primary-green h-px"></div> */}
           <ul className="flex flex-col md:flex-row gap-4 md:gap-8 px-8 md:px-20 items-stretch w-full">
             <li className="w-full">
