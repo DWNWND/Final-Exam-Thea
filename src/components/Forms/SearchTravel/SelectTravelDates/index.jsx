@@ -16,32 +16,59 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, t
   const tomorrowString = getFormattedDate(new Date(new Date().setDate(new Date().getDate() + 1)));
 
   useEffect(() => {
+    const updateDatesIfPast = () => {
+      const { startDate, endDate } = travelSearchData.travelDates || {};
+      
+      // Determine if dates are in the past or if endDate is today
+      const startDateInPast = startDate && new Date(startDate) < new Date(todayString);
+      const endDateInPast = endDate && new Date(endDate) < new Date(todayString);
+      const endDateIsToday = endDate && new Date(endDate).toDateString() === new Date(todayString).toDateString();
+
+      if (startDateInPast && endDateInPast) {
+        // Both startDate and endDate are in the past, set to today and tomorrow
+        setTravelDates({ startDate: todayString, endDate: tomorrowString });
+        setAllDatesArr(generateAllTravelDates(todayString, tomorrowString));
+        setDefaultDateString(`${todayString} to ${tomorrowString}`);
+        console.log("Both dates in the past");
+      }
+      if (startDateInPast) {
+        // Only startDate is in the past, update to today
+        const newEndDate = endDateIsToday ? tomorrowString : endDate;
+        setTravelDates({ startDate: todayString, endDate: newEndDate });
+        setAllDatesArr(generateAllTravelDates(todayString, newEndDate));
+        setDefaultDateString(`${todayString} to ${newEndDate}`);
+        console.log("Only startDate in the past");
+      }
+      if (endDateIsToday) {
+        // Only startDate is in the past, update to today
+        const newEndDate = endDateIsToday ? tomorrowString : endDate;
+        setTravelDates({ endDate: newEndDate });
+        setAllDatesArr(generateAllTravelDates(startDate, newEndDate));
+        setDefaultDateString(`${startDate} to ${newEndDate}`);
+        console.log("endDate is today");
+      } else {
+        // No dates are in the past, set default date string
+        setDefaultDateString(`${startDate} to ${endDate}`);
+        console.log("No dates in the  past");
+      }
+    };
+
+    // Initial check on component mount/reload
     if (!travelSearchData.travelDates || Object.keys(travelSearchData.travelDates).length === 0) {
       // Set initial date range if empty
       setTravelDates({ startDate: todayString, endDate: tomorrowString });
       setAllDatesArr(generateAllTravelDates(todayString, tomorrowString));
-
       setDefaultDateString(`${todayString} to ${tomorrowString}`);
     } else {
-      setDefaultDateString(`${travelSearchData.travelDates.startDate} to ${travelSearchData.travelDates.endDate}`);
+      updateDatesIfPast();
     }
 
-    // Set up an interval to check for a date change every minute
-    const interval = setInterval(() => {
-      const newTodayString = todayString;
-      const newTomorrowString = tomorrowString;
-
-      // If the day has changed, update the dates in the store and defaultDateString
-      if (newTodayString !== todayString) {
-        setTravelDates({ startDate: newTodayString, endDate: newTomorrowString });
-        setAllDatesArr(generateAllTravelDates(newTodayString, newTomorrowString));
-        setDefaultDateString(`${newTodayString} to ${newTomorrowString}`);
-      }
-    }, 10 * 60 * 1000); // Check every 10 minutes
+    // Set up interval to check for past dates every 10 minutes
+    const interval = setInterval(updateDatesIfPast, 10 * 60 * 1000);
 
     // Clear the interval on component unmount
     return () => clearInterval(interval);
-  }, [travelSearchData.travelDates, setTravelDates, setAllDatesArr]);
+  }, []); // Dependency array left empty for initial mount/reload behavior
 
   return (
     <div className={`${tailw} px-3 flex justify-between items-center rounded-full border-${color} border bg-white w-full`}>
