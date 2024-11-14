@@ -22,7 +22,7 @@ export default function VenueCard({ venue, myVenues = false, myBookings = false 
             </p>
           </div>
           <div>
-            <p>★ {venue.rating}</p>
+            <p className="text-nowrap">★ {venue.rating}</p>
           </div>
         </div>
         <div className="flex flex-col gap-2 ">

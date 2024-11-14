@@ -14,16 +14,16 @@ export default function VenueSearch() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>Search| Holidayz</title>
+        <title>Stays in {travelSearchData.location} | Holidayz</title>
         {/* add search details */}
       </Helmet>
-      <MainElement tailw="flex flex-col lg:flex-row xl:gap-8">
+      <MainElement tailw="flex flex-col lg:flex-row gap-8">
         <DataProvider>
           <section className="lg:max-w-md flex justify-center">
             <ListSearchForm />
           </section>
-          <section className="py-12 w-full">
-            <h1 className="font-bold text-xl text-black">Results for {travelSearchData.location}</h1>
+          <section className=" w-full">
+            <h1 className="font-bold text-2xl text-black">Results for {travelSearchData.location}</h1>
             <ListSearch />
           </section>
         </DataProvider>
