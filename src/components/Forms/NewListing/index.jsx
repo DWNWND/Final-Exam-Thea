@@ -139,8 +139,8 @@ export default function NewListingForm() {
   };
 
   return (
-    <div className="max-w-[50rem] m-auto">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 my-14">
+    <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
         {formStep === 0 && (
           <section>
             <h2 className="mb-1 mt-3 text-xl md:text-2xl text-center text-primary-green">What is the name of your property?</h2>
@@ -288,7 +288,7 @@ export default function NewListingForm() {
               <div key={index} className={`w-2 h-2 rounded-full ${index <= formStep ? "bg-primary-green" : "bg-comp-green"} ${index <= formStep ? "cursor-pointer" : "cursor-not-allowed"}`} aria-label={`Go to step ${index + 1}`}></div>
             ))}
           </div>
-          <SquareBtn innerText="Next" type="button" clickFunc={nextStep} disabled={!isValid || formStep === 8} tailw={`${formStep === 8 ? "opacity-0" : "opacity-100"} hover:bg-white bg-opacity-50 ${!isValid && "opacity-50"}`} bgColor="white" textColor="primary-green" borderColor="comp-primary-green" />
+          <SquareBtn innerText="Next" type="button" clickFunc={nextStep} disabled={!isValid || formStep === 8} width="auto" tailw={`${formStep === 8 ? "opacity-0" : "opacity-100"} hover:bg-white bg-opacity-50 ${!isValid && "opacity-50"}`} bgColor="white" textColor="primary-green" borderColor="comp-primary-green" />
         </div>
         {formStep === 8 && (
           <>
