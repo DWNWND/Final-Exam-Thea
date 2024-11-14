@@ -30,16 +30,16 @@ export default function VenueCard({ venue, myVenues = false, myBookings = false 
           {myVenues && !myBookings && (
             <>
               <Link to={`/user/edit/listing`} className="z-40">
-                <SquareBtn innerText="Edit listing" tailw="hover:bg-comp-gray bg-opacity-50 lowercase" bgColor="white" textColor="primary-green" />
+                <SquareBtn innerText="Edit listing" width="full" tailw="hover:bg-comp-gray bg-opacity-50 lowercase" bgColor="white" textColor="primary-green" />
               </Link>
               <Link to={`/user/:listingId/occupancy`} className="z-40">
-                <SquareBtn innerText="Check occupancy" tailw="hover:bg-comp-gray bg-opacity-50 lowercase" bgColor="white" textColor="primary-green" />
+                <SquareBtn innerText="Check occupancy" width="full" tailw="hover:bg-comp-gray bg-opacity-50 lowercase" bgColor="white" textColor="primary-green" />
               </Link>
             </>
           )}
           {!myVenues && myBookings && (
             <Link to={`/user/:bookingId/cancel`} className="z-40">
-              <SquareBtn innerText="Cancel booking" tailw="hover:bg-comp bg-opacity-50 lowercase" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
+              <SquareBtn innerText="Cancel booking" width="full" tailw="hover:bg-comp bg-opacity-50 lowercase" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
             </Link>
           )}
         </div>
