@@ -10,15 +10,16 @@ export default function SquareBtn({
   transition = "transition duration-300 ease-in-out",
   disabled = false,
   type = "button",
+  width = "auto",
 }) {
   const location = useLocation();
 
   let buttonClasses;
 
   if (location.pathname.toLowerCase().includes("user")) {
-    buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
+    buttonClasses = `${tailw} text-nowrap flex justify-center p-2 px-4 w-full items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
   } else {
-    buttonClasses = `${tailw} text-nowrap flex justify-center p-1 px-3 w-full md:w-auto items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
+    buttonClasses = `${tailw} text-nowrap flex justify-center p-2 px-4 w-full md:w-${width} items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
   }
 
   return (
@@ -27,3 +28,5 @@ export default function SquareBtn({
     </button>
   );
 }
+
+//fix the width prop instead of rendering by location
