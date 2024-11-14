@@ -12,15 +12,7 @@ export default function SquareBtn({
   type = "button",
   width = "auto",
 }) {
-  const location = useLocation();
-
-  let buttonClasses;
-
-  if (location.pathname.toLowerCase().includes("user")) {
-    buttonClasses = `${tailw} text-nowrap flex justify-center p-2 px-4 w-full items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
-  } else {
-    buttonClasses = `${tailw} text-nowrap flex justify-center p-2 px-4 w-full md:w-${width} items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
-  }
+  const buttonClasses = `${tailw} text-nowrap flex justify-center p-2 px-4 w-full md:w-${width} items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
 
   return (
     <button onClick={clickFunc} disabled={disabled} className={`${buttonClasses} ${transition}`}>
