@@ -8,7 +8,7 @@ import getFormattedDate from "../../../../utils/dateUtils/formayDateForFlatpickr
 import generateAllTravelDates from "../../../../utils/dateUtils/generateAllDatesArr.js";
 
 // how can i make the preset dates update automatically if the day changes while the user is searching?
-export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, tailw }) {
+export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }) {
   const { travelSearchData, setTravelDates, setAllDatesArr } = useSearchStore();
   const [defaultDateString, setDefaultDateString] = useState("");
 
@@ -18,7 +18,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, t
   useEffect(() => {
     const updateDatesIfPast = () => {
       const { startDate, endDate } = travelSearchData.travelDates || {};
-      
+
       // Determine if dates are in the past or if endDate is today
       const startDateInPast = startDate && new Date(startDate) < new Date(todayString);
       const endDateInPast = endDate && new Date(endDate) < new Date(todayString);
@@ -71,7 +71,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, t
   }, []); // Dependency array left empty for initial mount/reload behavior
 
   return (
-    <div className={`${tailw} px-3 flex justify-between items-center rounded-full border-${color} border bg-white w-full`}>
+    <div className={`flex justify-between items-center rounded-full border-${color} border bg-white w-full transition-max-height duration-500 ease-in-out overflow-hidden  ${editDates ? "px-3 max-w-full opacity-100" : "px-0 max-w-0 opacity-0"}`}>
       {defaultDateString && travelSearchData.travelDates && travelSearchData.travelDates.startDate && travelSearchData.travelDates.endDate && (
         <>
           <Flatpickr
