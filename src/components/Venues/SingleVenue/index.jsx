@@ -10,13 +10,10 @@ import { useSearchStore } from "../../../stores/useSearchStore.js";
 import { IoIosClose } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import useAuthStore from "../../../stores/useAuthStore.js";
 import getFormattedDate from "../../../utils/dateUtils/formayDateForFlatpickr.js";
 import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr.js";
 import { useNavigate } from "react-router-dom";
 import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
-import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
-import RoundBtn from "../../Buttons/RoundBtn/index.jsx";
 
 export default function SingleVenue({ venue }) {
   const { travelSearchData, selectedVenue, setTravelDates, setAllDatesArr, setSelectedVenue } = useSearchStore();
@@ -145,8 +142,8 @@ export default function SingleVenue({ venue }) {
     <div>
       {/* Image Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" onClick={toggleModal}>
-          <div className="relative">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-75" onClick={toggleModal}>
+          <div className="relative ">
             <button className="absolute top-2 right-2 text-white text-3xl" onClick={toggleModal}>
               <IoIosClose />
             </button>
@@ -178,12 +175,15 @@ export default function SingleVenue({ venue }) {
           <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
         </div>
         <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
-          <RoundBtn width="full" innerText={travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"} clickFunc={() => bookPropertyFunc()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges} tailw={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-comp-gray text-primary-light" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase`} bgColor="primary-blue" borderColor="primary-blue" textColor="white" />
+          {/* same as round btn, it would not work with the conditional rendering */}
+          <button type="button" className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp hover:shadow-md cursor-pointer"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full  transition duration-300 ease-in-out`} onClick={() => bookPropertyFunc()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges}>
+            {travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}
+          </button>
         </div>
       </div>
       <p className="mt-8 text-danger text-center">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
       <p className="text-danger text-center">{!travelDatesOutsideRanges && "This property is fully booked for the selected travel dates"}</p>
-      <div className="p-4 mt-6 flex justify-between">
+      <div className="p-4 mb-2 md:my-6 flex justify-between">
         <div>
           <h3 className="text-xl font-bold text-black">{venue.name}</h3>
           <p className="text-black">
@@ -197,38 +197,22 @@ export default function SingleVenue({ venue }) {
       </div>
       <div className="flex flex-col gap-2">
         <Details title="Amenities" toggleState={amenitiesOpen} toggleFunc={toggleAmenities}>
-          <div className="flex flex-col mt-3 gap-2 p-4">
-            <p className="flex items-center gap-4">
-              {venue.meta.breakfast && (
-                <>
-                  <MdEmojiFoodBeverage />
-                  Breakfast included
-                </>
-              )}
+          <div className="flex flex-col mt-3 gap-2 p-6  bg-white bg-opacity-100 border border-primary-blue rounded-lg">
+            <p className={`flex items-center gap-4 ${venue.meta.breakfast ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+              <MdEmojiFoodBeverage />
+              Breakfast included
             </p>
-            <p className="flex items-center gap-4">
-              {venue.meta.parking && (
-                <>
-                  <FaParking />
-                  Free parking
-                </>
-              )}
+            <p className={`flex items-center gap-4 ${venue.meta.parking ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+              <FaParking />
+              Free parking
             </p>
-            <p className="flex items-center gap-4">
-              {venue.meta.pets && (
-                <>
-                  <MdOutlinePets />
-                  Pets allowed
-                </>
-              )}
+            <p className={`flex items-center gap-4 ${venue.meta.pets ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+              <MdOutlinePets />
+              Pets allowed
             </p>
-            <p className="flex items-center gap-4">
-              {venue.meta.wifi && (
-                <>
-                  <FaWifi />
-                  Free WiFi
-                </>
-              )}
+            <p className={`flex items-center gap-4 ${venue.meta.wifi ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+              <FaWifi />
+              Free WiFi
             </p>
           </div>
         </Details>
@@ -238,26 +222,28 @@ export default function SingleVenue({ venue }) {
           </div>
         </Details>
         <Details title="Host details" toggleState={hostDetailsOpen} toggleFunc={toggleHostDetails}>
-          <div className="flex mt-3 gap-4 items-center p-4">
+          <div className="flex mt-3 gap-4 items-center p-2 md:p-4">
             <div>
-              <img src={venue.owner.avatar.url} className="max-w-20 max-h-20 rounded-full"></img>
+              <img src={venue.owner.avatar.url} className="min-w-20 min-h-20 max-w-20 max-h-20 object-cover rounded-full"></img>
             </div>
             <div className="flex flex-col gap-1">
-              <p className="font-semibold">{venue.owner.name}</p>
+              <p className="font-semibold uppercase text-lg">{venue.owner.name}</p>
               <p className="">{venue.owner.bio}</p>
-              <p className="">Contact host via: {venue.owner.email}</p>
+              <a href={`mailto:${venue.owner.email}`} className="underline">
+                click here to contact host
+              </a>
             </div>
           </div>
         </Details>
         <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
-          <div className="flex mt-3 gap-4 p-4 py-10 bg-comp rounded-lg justify-center">
-            <div className="flex flex-col gap-1 w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div>
-          </div>
+          {/* <div className="flex mt-3 gap-4 p-4 py-10 bg-white rounded-lg justify-center border border-primary-blue "> */}
+            <div className="  mt-3 gap-2 flex flex-col w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div>
+          {/* </div> */}
         </Details>
-        <div className="flex gap-8 justify-center pt-10 text-2xl text-primary-blue">
-          <FaRegHeart />
-          <FaShare />
-        </div>
+      </div>
+      <div className="flex gap-8 justify-center pt-10 md:my-10 text-2xl text-primary-blue">
+        <FaRegHeart />
+        <FaShare />
       </div>
     </div>
   );
@@ -265,7 +251,7 @@ export default function SingleVenue({ venue }) {
 
 function Details({ title, toggleState, toggleFunc, children }) {
   return (
-    <div className="bg-comp-purple p-4 rounded-lg ">
+    <div className="bg-comp-purple p-4 rounded-lg h-full">
       <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={() => toggleFunc()}>
         <span className="uppercase font-semibold">{title}</span> {toggleState ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </h2>

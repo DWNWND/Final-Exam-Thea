@@ -16,9 +16,9 @@ export default function RoundBtn({
   let buttonClasses;
 
   if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register") || location.pathname.toLowerCase().includes("booking")) {
-    buttonClasses = `py-2 px-6 w-full h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+    buttonClasses = `${disabled && "bg-comp"} py-2 px-6 w-full h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
   } else {
-    buttonClasses = `py-2 px-6 w-full md:w-${width} h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+    buttonClasses = `${disabled && "bg-comp"} py-2 px-6 w-full md:w-${width} h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
   }
 
   return (

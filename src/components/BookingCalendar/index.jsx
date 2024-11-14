@@ -10,10 +10,11 @@ export default function BookingCalendar({ reserved }) {
   return (
     <Calendar
       classNames={{
-        CalendarContainer: "bg-comp rounded-lg p-4 w-full",
+        CalendarContainer: "bg-white border border-primary-blue rounded-lg p-6 w-full",
         DayReservation: "bg-comp-gray",
         WeekContent: "text-primary-blue",
         MonthContent: "text-primary-blue",
+        DayContent: "text-primary-blue",
         MonthArrowNext: "text-primary-blue",
         MonthArrowPrev: "text-primary-blue",
         DayToday: "border-none",
