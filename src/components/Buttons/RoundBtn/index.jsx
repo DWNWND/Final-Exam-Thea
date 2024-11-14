@@ -9,6 +9,7 @@ export default function RoundBtn({
   textColor = "white",
   borderColor = "primary-green",
   disabled = false,
+  width = "auto",
 }) {
   const location = useLocation();
 
@@ -17,7 +18,7 @@ export default function RoundBtn({
   if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register") || location.pathname.toLowerCase().includes("booking")) {
     buttonClasses = `py-2 px-6 w-full h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
   } else {
-    buttonClasses = `py-2 px-6 w-full md:w-auto h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
+    buttonClasses = `py-2 px-6 w-full md:w-${width} h-full text-nowrap flex justify-center items-center uppercase rounded-full hover:shadow-md cursor-pointer transition duration-300 ease-in-out text-${textColor} bg-${bgColor} ${tailw} border border-${borderColor}`;
   }
 
   return (
@@ -26,3 +27,5 @@ export default function RoundBtn({
     </button>
   );
 }
+
+//fix the width prop instead of rendering by location
