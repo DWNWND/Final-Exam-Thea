@@ -48,7 +48,6 @@ export default function FixedBtnDisplay() {
     };
   }, [lastScrollY]);
 
-  console.log("location", location);
   const isMobile = useCheckScreenSize();
 
   if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register")) {
