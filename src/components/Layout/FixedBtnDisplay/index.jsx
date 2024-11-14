@@ -56,8 +56,8 @@ export default function FixedBtnDisplay() {
   }
 
   return (
-    <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-4 bg-desatBlue`}  ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
-      <ul className="flex flex-row gap-4">
+    <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-3 bg-white`}  ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
+      <ul className="flex flex-row gap-3 md:gap-4">
         <li className="w-full">
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>
             <SquareBtn innerText="List your place" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
