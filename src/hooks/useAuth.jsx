@@ -11,26 +11,27 @@ export default function useAuth() {
   const [error, setError] = useState(null);
 
   const callApiWith = async (url, options) => {
-    try {
-      const response = await fetch(url, {
-        ...options,
-        headers: {
-          "Content-Type": "application/json",
-          "X-Noroff-API-Key": apiKey,
-          ...(options.headers || {}),
-        },
-      });
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Noroff-API-Key": apiKey,
+        ...(options.headers || {}),
+      },
+    });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("errorData", errorData);
-        throw new Error(errorData.errors[0].message || "Error when calling API");
-      }
+    if (!response.ok) {
+      const errorData = await response.json();
 
-      return await response.json();
-    } catch (error) {
-      throw error; // Re-throw the error for the calling function to handle
+      //consle.log for debugging
+      console.log("errro catched in apiCall", errorData);
+
+      const error = new Error("Error when calling API");
+      error.data = errorData; // Attach the original error object
+      throw error;
     }
+
+    return await response.json();
   };
 
   const login = async (email, password) => {
@@ -47,8 +48,9 @@ export default function useAuth() {
       return { success: true };
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
-      setError(err);
-      return { success: false, error: err };
+      console.log("error catched in login func", err.data);
+      // setError(err.data);
+      return { success: false, error: err.data };
     } finally {
       setLoading(false);
     }
@@ -68,8 +70,9 @@ export default function useAuth() {
       return { success: true };
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
-      setError(err);
-      return { success: false, error: err };
+      console.log("error catched in register func", err.data);
+      // setError(err);
+      return { success: false, error: err.data };
     } finally {
       setLoading(false);
     }

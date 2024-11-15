@@ -7,26 +7,29 @@ import useAuth from "../../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
+import { useState } from "react";
+import SmallLoader from "../../SmallLoader";
 
 // Validation schema
 // remeber to implement validation on email etc.
-const schema = yup.object().shape({
-  email: yup.string().email("Please enter a valid email").required("Email is required"),
-  password: yup.string().min(6).required("Password is required"),
+const loginSchema = yup.object().shape({
+  email: yup.string().required("Email is required"),
+  password: yup.string().required("Password is required"),
 });
 
 export default function LoginForm() {
   const { login, loading, error } = useAuth();
-  const { setIsLoggedIn, userName } = useAuthStore();
+  const { userName } = useAuthStore();
   const navigate = useNavigate();
+  const [errorCode, setErrorCode] = useState(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+    trigger,
+    watch,
+  } = useForm({ mode: "onChange", resolver: yupResolver(loginSchema) });
 
   const onSubmit = async (data) => {
     const result = await login(data.email, data.password);
@@ -34,27 +37,27 @@ export default function LoginForm() {
     // Check if there was an error
     if (!loading && !error && result.success) {
       // Assume login returns an object with a success property
-      setIsLoggedIn(true);
       navigate("/user/" + userName);
-    } else if (error) {
+    } else if (!result.success) {
+      setErrorCode(result.error.statusCode);
+
       // Handle error feedback if necessary (optional)
-      console.error("Login failed:", result.error || error); // Log error for debugging
+      console.log("Login failed:", result.error || error); // Log error for debugging
+      console.log("error code", result.error.statusCode);
     }
   };
-
-  //add more levels of userFeedback for the different errorcodes
 
   return (
     <div className="mx-auto w-full flex items-center flex-col max-w-[50rem] m-4 p-8 bg-white rounded-lg shadow-sm">
       <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">Login</h1>
       <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" error={errors.email} register={register} errorMessage={errors.email && errors.email.message} />
-        <StringInput type="password" id="password" label="Password" placeholder="• • • • • • •" error={errors.password} register={register} errorMessage={errors.password && errors.password.message} />
+        <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" register={register} setErrorCode={setErrorCode} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
+        <StringInput type="password" id="password" label="Password" placeholder="• • • • • • •" register={register} setErrorCode={setErrorCode} errorMessage={errors.password && errors.password.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between">
           <RoundBtn type="submit" innerText="Login" bgColor="primary-green" textColor="white" />
         </div>
       </form>
-      <p className="text-danger text-xs mt-3">{error && error.message}</p>
+      {loading ? <SmallLoader /> : <p className="text-danger text-xs mt-3">{(errorCode && errorCode <= 401 && "Wrong email or password") || (errorCode && errorCode === 404 && "User not found") || (errorCode && errorCode === 500 && "Server error")}</p>}
       <Link to="/#" className=" w-full block underline mt-4 text-primary-green hover:text-primary-blue">
         Forgot your password?
       </Link>
