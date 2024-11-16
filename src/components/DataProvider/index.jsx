@@ -18,8 +18,6 @@ export function DataProvider({ children }) {
   // const location = useLocation();
   // const page = location.pathname;
 
-  console.log("venues", venues);
-
   //fetched all venues from the API and filter out the ones with missing location data, so that the search results will be accurate. Would wish that this was already fixed by the api, so that i could fetch it by page ang with a page limit, and not fetch all.
   useEffect(() => {
     setIsLoading(true);
@@ -27,7 +25,7 @@ export function DataProvider({ children }) {
       const filteredOutMissingLocations = allVenuesArr.filter((venue) => {
         return venue.location.city && venue.location.country;
       });
-      console.log("filteredOutMissingLocations", filteredOutMissingLocations);
+      // console.log("filteredOutMissingLocations", filteredOutMissingLocations);
       setVenues(filteredOutMissingLocations);
     }
   }, [data, allVenuesArr]);
