@@ -83,10 +83,11 @@ export default function SettingsForm() {
     // Check if there was an error
     if (!loading && !error && result.success) {
       // Assume login returns an object with a success property
-      navigate(`/user/${userName}`);
       console.log("profile updated");
-      setUserFeedbackMessage("Profile successfully updated");
+      setVenueManager(data.venueManager);
       setErrorMessage("");
+      setUserFeedbackMessage("Profile successfully updated");
+      navigate(`/user/${userName}`);
     } else if (!result.success) {
       setErrorMessage(result.error.errors[0].message);
       setUserFeedbackMessage("");
@@ -101,14 +102,14 @@ export default function SettingsForm() {
     <>
       {user && (
         <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
-          <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">My settings</h1>
-          <form className="flex flex-col gap-6 w-full">
-            <div className="flex justify-between items-center">
-              <Checkbox id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></Checkbox>
-              <div className="underline hover:text-danger text-primary-light cursor-pointer" onClick={() => setShowModal(true)}>
-                delete user
-              </div>
+          <div className="flex justify-between items-center w-full mb-6">
+            <h1 className="text-2xl  uppercase text-primary-green">My settings</h1>
+            <div className="underline hover:text-danger text-primary-light cursor-pointer" onClick={() => setShowModal(true)}>
+              delete user
             </div>
+          </div>
+          <form className="flex flex-col gap-6 w-full">
+            <Checkbox id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></Checkbox>
             <StringInput type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} errorMessage={errors.bio && errors.bio.message} register={register} trigger={trigger} watch={watch}></StringInput>
             <div>
               <h2 className="mb-2 text-primary-green">Avatar</h2>
