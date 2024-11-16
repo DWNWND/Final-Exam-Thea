@@ -1,3 +1,4 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 export const OpenMenuContext = createContext();
+export const DataContext = createContext();
