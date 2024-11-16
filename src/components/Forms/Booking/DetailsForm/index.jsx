@@ -9,6 +9,9 @@ import claculateNightsBetween from "../../../../utils/calcNights/claculateNights
 import useAuthStore from "../../../../stores/useAuthStore.js";
 import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
 import RoundBtn from "../../../Buttons/RoundBtn";
+import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
+import { useEffect } from "react";
+import { useState } from "react";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -25,6 +28,19 @@ export default function DetailsForm() {
   const { travelSearchData, selectedVenue } = useSearchStore();
   const { setBookingData } = useBookingDataStore();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  const { loading, setLoading, error, fetchUser } = useAuthedFetch(accessToken);
+
+  const fetchData = async () => {
+    const response = await fetchUser(`/holidaze/profiles/${userName}`);
+    console.log("response66:", response);
+    setUser(response.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [accessToken]);
 
   const startDate = new Date(travelSearchData.travelDates.startDate);
   const formattedStartDate = formatDateForDisplay(startDate);
@@ -78,9 +94,9 @@ export default function DetailsForm() {
       </div>
       {/* fix the default value of the email to actually be the email */}
       <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="firstName" label="First name" placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
+        <StringInput type="text" id="firstName" label="First name" defaultValue={user && user.name} placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" register={register} errorMessage={errors.lastName && errors.lastName.message} trigger={trigger} watch={watch} />
-        <StringInput type="email" id="email" label="Email address" defaultValue={accessToken && userName} placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
+        <StringInput type="email" id="email" label="Email address" defaultValue={user && user.email} placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" register={register} errorMessage={errors.checkIn && errors.checkIn.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between my-6">
