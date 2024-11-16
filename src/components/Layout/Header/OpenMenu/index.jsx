@@ -48,7 +48,7 @@ export default function OpenMenu() {
         </li>
       </ul>
       {accessToken && (
-        <div className=" bg-white h-full">
+        <div className=" bg-comp-green h-full md:py-10 border-primary-green border">
           {/* <div className="bg-primary-green h-px"></div> */}
           <ul className="flex flex-col md:flex-row gap-4 md:gap-8 px-8 md:px-20 items-stretch w-full">
             <li className="w-full">
