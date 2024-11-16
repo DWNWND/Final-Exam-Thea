@@ -61,8 +61,8 @@ export default function VenueCard({ venue, isLoading, setIsLoading, myVenues = f
               <Link to={`/user/${userName}/occupancy`} className="z-40">
                 <SquareBtn innerText="Check occupancy" width="full" tailw="lowercase" bgColor="white" textColor="primary-green" />
               </Link>
-              <Link to={venueManager && `/user/${userName}/edit/${venue.id}`} className="z-40">
-                <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={venueManager} width="full" tailw="lowercase" bgColor="white" textColor="primary-green" />
+              <Link to={`${venueManager ? `/user/${userName}/edit/${venue.id}` : ""}`} className="z-40">
+                <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tailw="lowercase" bgColor="white" textColor="primary-green" />
               </Link>
             </>
           )}
