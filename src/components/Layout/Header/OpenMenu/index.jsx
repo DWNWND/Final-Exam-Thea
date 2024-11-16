@@ -25,11 +25,6 @@ export default function OpenMenu() {
             Search accommodation
           </Link>
         </li>
-        <li>
-          <Link to="/new/listing" className={`text-nowrap text-black font-semibold md:text-lg  hover:text-primary-green`} onClick={() => handleClick()}>
-            Add new listing
-          </Link>
-        </li>
         <div className="w-full h-0.5 bg-comp-green lg:hidden"></div>
         <li>
           <Link to="/about" className="text-nowrap md:text-lg  hover:text-primary-green" onClick={() => handleClick()}>
@@ -68,7 +63,7 @@ export default function OpenMenu() {
             </li>
             <li className="w-full">
               <Link to={`/user/${userName}/bookings`}>
-                <SquareBtn clickFunc={handleClick} width="full" innerText="my bookings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                <SquareBtn clickFunc={handleClick} width="full" innerText="My bookings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             {/* <li>
