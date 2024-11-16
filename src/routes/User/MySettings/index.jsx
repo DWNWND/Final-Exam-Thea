@@ -22,7 +22,6 @@ export default function MySettings() {
         <title>My Settings | Holidayz</title>
       </Helmet>
       <MainElement tailw="flex flex-col items-center">
-        <h1 className="uppercase text-lg text-primary-blue mb-6 md:text-2xl">Profile settings</h1>
         <SettingsForm />
       </MainElement>
     </HelmetProvider>
