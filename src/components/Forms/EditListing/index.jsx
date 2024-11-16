@@ -45,14 +45,14 @@ const editListingSchema = yup.object().shape({
 export default function EditListingForm() {
   const { id } = useParams();
   const { updateListing, loading, error } = usePut();
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { userName, accessToken, setVenueManager } = useAuthStore();
-  const { callApiWith } = useApiCall(accessToken);
-  const navigate = useNavigate();
-  const { data: singleVenueData, isLoading: singleVenueIsLoading, isError: singleVenueIsError } = useFetch(`${url}/holidaze/venues/${id}`);
+  // const { userName, accessToken, setVenueManager } = useAuthStore();
+  // const { callApiWith } = useApiCall(accessToken);
+  // const navigate = useNavigate();
+  const { data: singleVenueData } = useFetch(`${url}/holidaze/venues/${id}`);
   const venue = singleVenueData.data;
 
   const {
@@ -125,26 +125,26 @@ export default function EditListingForm() {
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
-            <StringInput type="text" id="name" label="Listing title" placeholder="Our magical cabin" defaultValue={venue.name} register={register} errorMessage={venue.name && venue.name.message} trigger={trigger} watch={watch} />
-            <StringInput type="text" id="description" label="Description" placeholder="Tucked away in the forest, our cabin is the perfect getaway..." defaultValue={venue.description} register={register} errorMessage={venue.description && venue.description.message} trigger={trigger} watch={watch} />
-            <StringInput type="number" id="price" label="NOK/night" placeholder="200" defaultValue={venue.price} register={register} errorMessage={venue.price && venue.price.message} trigger={trigger} watch={watch} />
-            <StringInput type="number" id="maxGuests" label="Number of guests" placeholder="4" defaultValue={venue.maxGuests} register={register} errorMessage={venue.maxGuests && venue.maxGuests.message} trigger={trigger} watch={watch} />
-            <StringInput type="number" id="rating" label="Rating number between 1-5" placeholder="5" defaultValue={venue.rating} register={register} errorMessage={venue.rating && venue.rating.message} trigger={trigger} watch={watch} />
-            <StringInput type="text" id="location.address" label="Address" placeholder="44 holland drive" defaultValue={venue.location.address} register={register} errorMessage={venue.location.address && venue.location.address.message} trigger={trigger} watch={watch} />
-            <StringInput type="text" id="location.city" label="City" placeholder="New Amterdam" defaultValue={venue.location.city} register={register} errorMessage={venue.location.city && venue.location.city.message} trigger={trigger} watch={watch} />
-            <StringInput type="text" id="location.zip" label="Zip code" placeholder="10683" defaultValue={venue.location.zip} register={register} errorMessage={venue.location.zip && venue.location.zip.message} trigger={trigger} watch={watch} />
-            <StringInput type="text" id="location.country" label="Country" placeholder="Holland" defaultValue={venue.location.country} register={register} errorMessage={venue.location.country && venue.location.country.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="name" label="Listing title" placeholder="Our magical cabin" defaultValue={venue.name && venue.name} register={register} errorMessage={errors.name && errors.name.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="description" label="Description" placeholder="Tucked away in the forest, our cabin is the perfect getaway..." defaultValue={venue.description && venue.description} register={register} errorMessage={errors.description && errors.description.message} trigger={trigger} watch={watch} />
+            <StringInput type="number" id="price" label="NOK/night" placeholder="200" defaultValue={venue.price} register={register} errorMessage={errors.price && errors.price.message} trigger={trigger} watch={watch} />
+            <StringInput type="number" id="maxGuests" label="Number of guests" placeholder="4" defaultValue={venue.maxGuests && venue.maxGuests} register={register} errorMessage={errors.maxGuests && errors.maxGuests.message} trigger={trigger} watch={watch} />
+            <StringInput type="number" id="rating" label="Rating number between 1-5" placeholder="5" defaultValue={venue.rating && venue.rating} register={register} errorMessage={errors.rating && errors.rating.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="location.address" label="Address" placeholder="44 holland drive" defaultValue={venue.location.address && venue.location.address} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="location.city" label="City" placeholder="New Amterdam" defaultValue={venue.location.city && venue.location.city} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="location.zip" label="Zip code" placeholder="10683" defaultValue={venue.location.zip && venue.location.zip} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="location.country" label="Country" placeholder="Holland" defaultValue={venue.location.country && venue.location.country} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
             <div className="flex flex-col gap-3 mb-4">
               <h3 className="text-primary-green text-lg">Amenities</h3>
               <div className="flex gap-3 flex-col md:flex-row md:gap-8">
-                <Checkbox id="meta.wifi" innerText="Free Wifi" checked={venue.meta.wifi} register={register} color="primary-green"></Checkbox>
-                <Checkbox id="meta.parking" innerText="Free parking" checked={venue.meta.parking} register={register} color="primary-green"></Checkbox>
-                <Checkbox id="meta.breakfast" innerText="Breakfast included" checked={venue.meta.breakfast} register={register} color="primary-green"></Checkbox>
-                <Checkbox id="meta.pets" innerText="Pets allowed" checked={venue.meta.pets} register={register} color="primary-green"></Checkbox>
+                <Checkbox id="meta.wifi" innerText="Free Wifi" checked={venue.meta.wifi && venue.meta.wifi} register={register} color="primary-green"></Checkbox>
+                <Checkbox id="meta.parking" innerText="Free parking" checked={venue.meta.parking && venue.meta.parking} register={register} color="primary-green"></Checkbox>
+                <Checkbox id="meta.breakfast" innerText="Breakfast included" checked={venue.meta.breakfast && venue.meta.breakfast} register={register} color="primary-green"></Checkbox>
+                <Checkbox id="meta.pets" innerText="Pets allowed" checked={venue.meta.pets && venue.meta.pets} register={register} color="primary-green"></Checkbox>
               </div>
             </div>
-            <StringInput type="text" id="media[0].url" label="Image url" placeholder="https://www.example.com/image.jpg" defaultValue={venue.media[0].url} register={register} errorMessage={venue.media[0].url && venue.media[0].url.message} trigger={trigger} watch={watch} />
-            <StringInput type="text" id="media[0].alt" label="Description" placeholder="Our magical cabin" defaultValue={venue.media[0].alt} register={register} errorMessage={venue.media[0].alt && venue.media[0].alt.message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="media[0].url" label="Image url" placeholder="https://www.example.com/image.jpg" defaultValue={venue.media[0].url && venue.media[0].url} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
+            <StringInput type="text" id="media[0].alt" label="Description" placeholder="Our magical cabin" defaultValue={venue.media[0].alt && venue.media[0].alt} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
 
             <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" width="full" innerText="Save changes" tailw="hover:bg-white bg-opacity-50 mt-5" bgColor="white" textColor="primary-green" borderColor="primary-green" />
 
