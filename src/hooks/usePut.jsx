@@ -58,9 +58,33 @@ export default function usePut() {
     }
   };
 
+  const updateListing = async (data, additionalRefs) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await callApiWith(apiBaseUrl + additionalRefs, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
+      console.log("response:", response);
+      // setAccessToken(response.data.accessToken);
+      // setUserName(response.data.name);
+      // setVenueManager(response.data.venueManager);
+      return { success: true };
+      // Handle any other logic like saving token, redirecting, etc.
+    } catch (err) {
+      console.log("error catched in update listing func", err.data);
+      // setError(err.data);
+      return { success: false, error: err.data };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     error,
     updateProfile,
+    updateListing,
   };
 }
