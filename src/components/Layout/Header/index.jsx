@@ -53,9 +53,9 @@ export default function Header() {
   }, [lastScrollY]);
 
   return (
-    <header className={` shadow-sm transition-transform z-[100] fixed w-full ${isVisible ? "translate-y-0" : "-translate-y-full"} transition-max-height duration-500 ease-in-out overflow-hidden ${isMenuOpen ? "max-h-[1000px]" : "max-h-full"}`}>
+    <header className={`shadow-sm transition-transform z-[100] fixed w-full ${isVisible ? "translate-y-0" : "-translate-y-full"} transition-max-height duration-500 ease-in-out overflow-hidden ${isMenuOpen ? "max-h-[1000px]" : "max-h-full"}`}>
       <div className={` bg-white w-full h-full flex items-center justify-between p-4 bg-opacity-100 z-[100] ${isMenuOpen && "bg-opacity-100"}`}>
-        <div className="flex flex-row items-center gap-8 z-50">
+        <div className="flex flex-row items-center gap-8 z-50" onClick={() => setIsMenuOpen(false)}>
           <div className={`${!hasPreviousRoute ? "hidden" : "w-6"}`}>
             <ArrowLeftBtn />
           </div>

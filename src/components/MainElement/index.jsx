@@ -3,7 +3,6 @@ import { useContext } from "react";
 
 export default function MainElement({ children, tailw, homePage = false }) {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
-  
 
   return (
     <div className="relative">
