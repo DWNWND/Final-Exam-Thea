@@ -19,6 +19,15 @@ html {
   scroll-behavior: smooth; /* This enables smooth scrolling */
 }
 
+/* https://unsplash.com/photos/birds-eye-view-of-islands-guNIjIuUcgY */
+.backgroundImage {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.21), rgba(0, 0, 0, 0.216)), url("./assets/images/denys-nevozhai-guNIjIuUcgY-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
+  background-size: cover;
+}
+
 /* Targeting elements with data-weekend="true" */
 [data-weekend="true"] {
   color: #8d4033 !important; /* Example color */
@@ -32,7 +41,6 @@ html {
   color: var(--color-primary-blue) !important; /* Example color */
   font-weight: 800;
 }
-
 
 /* global checkbox styling */
 /* Default styling for checkbox */

@@ -1,6 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainSearchForm from "../../components/Forms/SearchTravel/MainSearchForm";
-import style from "./Home.module.css";
 import SelectCategoryBtns from "../../components/ButtonGroupes/SelectCategoryBtns";
 import { useState } from "react";
 import ListCategorized from "../../components/Venues/ListCategorized";
@@ -17,9 +16,9 @@ export default function Home() {
         <meta name="description" content="" />
         <title>Home | Holidayz</title>
       </Helmet>
-      <MainElement homePage={true}>
+      <MainElement noPadding={true}>
         <DataProvider>
-          <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center min-h-screen`}>
+        <section id="searchHeader" className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
             <MainSearchForm />
           </section>
           <section id="categorizedListings" className="p-4 pb-12 md:my-10">
