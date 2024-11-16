@@ -7,25 +7,6 @@ export default function useFetch(url, headers) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  // const headers = (action) => {
-  //   if (action === "auth") {
-  //     return {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //         "X-Noroff-API-Key": apiKey,
-  //       },
-  //     };
-  //   }
-  //   if (action === "post") {
-  //     return {
-  //       method: POST,
-  //       body: JSON.stringify({ email, password }),
-  //     };
-  //   } else if (!action) {
-  //     return null;
-  //   }
-  // };
-
   useEffect(() => {
     async function getData() {
       try {
@@ -38,10 +19,11 @@ export default function useFetch(url, headers) {
         console.log(error);
         setIsError(true);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     }
     getData();
   }, [url]);
-  return { data, isLoading, isError };
+  return { data, setIsLoading, isLoading, isError };
 }
+
