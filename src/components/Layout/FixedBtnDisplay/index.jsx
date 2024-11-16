@@ -50,9 +50,9 @@ export default function FixedBtnDisplay() {
 
   const isMobile = useCheckScreenSize();
 
-  if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register")) {
-    return null;
-  }
+  // if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register")) {
+  //   return null;
+  // }
 
   return (
     <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-3 bg-white`}  ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
