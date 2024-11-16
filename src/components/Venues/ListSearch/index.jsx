@@ -2,13 +2,12 @@ import LoadingIndicator from "../../LoadingIndicator";
 import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { DataContext } from "../../../components/DataProvider";
+import { DataContext } from "../../../contexts";
 import { useSearchStore } from "../../../stores/useSearchStore.js";
-
 
 //fix loadmore btn!!
 export default function ListSearch() {
-  const { venues, isLoading } = useContext(DataContext);
+  const { venues, isLoading, setIsLoading } = useContext(DataContext);
   const [filteredVenues, setFilteredVenues] = useState([]);
   const [displayedVenues, setDisplayedVenues] = useState([]);
   const initialDisplayCount = 10;
@@ -50,6 +49,7 @@ export default function ListSearch() {
 
     setFilteredVenues(matches);
     setDisplayedVenues(matches.slice(0, initialDisplayCount)); // Set initial displayed venues
+    setIsLoading(false);
   }, [venues, searchQuery]);
 
   const handleLoadMore = () => {
@@ -59,29 +59,29 @@ export default function ListSearch() {
 
   return (
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <LoadingIndicator />
       ) : (
+        <> */}
+      {/* {filteredVenues.length > 0 ? ( */}
         <>
-          {filteredVenues.length > 0 ? (
-            <>
-              <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} venues (matching your search)`}</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {displayedVenues.map((venue) => (
-                  <VenueCard venue={venue} key={venue.id} />
-                ))}
-              </div>
-              {filteredVenues.length > displayedVenues.length && (
-                <button onClick={handleLoadMore} className="mt-4 px-4 py-2 bg-primary-green text-white rounded-lg">
-                  Load more listings
-                </button>
-              )}
-            </>
-          ) : (
-            <div className="text-center my-6 text-gray-600">No listings match your search.</div>
+          <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} venues (matching your search)`}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {displayedVenues.map((venue) => (
+              <VenueCard venue={venue} key={venue.id} isLoading={isLoading} setIsLoading={setIsLoading} />
+            ))}
+          </div>
+          {filteredVenues.length > displayedVenues.length && (
+            <button onClick={handleLoadMore} className="mt-4 px-4 py-2 bg-primary-green text-white rounded-lg">
+              Load more listings
+            </button>
           )}
         </>
-      )}
+      {/* ) : (
+        <div className="text-center my-6 text-gray-600">No listings match your search.</div>
+      )} */}
+      {/* </>
+      )} */}
     </>
   );
 }
