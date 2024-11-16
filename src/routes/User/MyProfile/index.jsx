@@ -37,7 +37,6 @@ export default function MyProfile() {
 
   const fetchData = async () => {
     const response = await fetchUser(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
-    console.log("response44:", response);
     setUser(response.data);
   };
 
