@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import MainElement from "../../../components/MainElement/index.jsx";
+import EditListingForm from "../../../components/Forms/EditListing/index.jsx";
 
 export default function EditListing() {
   const { accessToken } = useAuthStore();
@@ -21,7 +22,7 @@ export default function EditListing() {
         <title>Edit Listing | Holidayz</title>
       </Helmet>
       <MainElement>
-        <h1>Edit Listing</h1>
+        <EditListingForm />
       </MainElement>
     </HelmetProvider>
   );
