@@ -10,6 +10,7 @@ import ListVenues from "../../../components/User/ListVenues";
 import { Link } from "react-router-dom";
 import MainElement from "../../../components/MainElement/index.jsx";
 import Loader from "../../../components/Loader/index.jsx";
+import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
 
 // function SelectionBtns({ selector, setSelector }) {
 //   return (
@@ -30,18 +31,13 @@ export default function MyProfile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const { userName, accessToken } = useAuthStore();
-  const { loading, error, callApiWith } = useFetchUser(accessToken);
-  const [selector, setSelector] = useState("bookings");
-
-  if (!accessToken) {
-    navigate("/");
-    // return null;
-  }
+  // const { loading, error, callApiWith } = useFetchUser(accessToken);
+  // const [selector, setSelector] = useState("bookings");
+  const { loading, setLoading, error, fetchUser } = useAuthedFetch(accessToken);
 
   const fetchData = async () => {
-    const response = await callApiWith(`${url}/holidaze/profiles/${userName}?_venues=true&_bookings=true`, {
-      method: "GET",
-    });
+    const response = await fetchUser(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+    console.log("response44:", response);
     setUser(response.data);
   };
 
@@ -61,40 +57,34 @@ export default function MyProfile() {
         <meta name="description" content="" />
         <title>My Profile | Holidayz</title>
       </Helmet>
-      <>
-        {loading ? (
-          <Loader />
-        ) : (
+      <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
+        {user && (
           <>
-            {user && (
-              <MainElement tailw="flex flex-col gap-8 lg:flex-row">
-                <section className="flex flex-col gap-2 lg:max-w-md">
-                  <div className="xl:sticky xl:top-6 xl:pb-9">
-                    <ProfileLinks venueManager={user.venueManager} />
-                    <UserProfile user={user} />
+            <section className="flex flex-col gap-2 lg:max-w-md">
+              <div className="xl:sticky xl:top-6 xl:pb-9">
+                <ProfileLinks venueManager={user.venueManager} />
+                <UserProfile user={user} />
+              </div>
+            </section>
+            <section className="w-full pb-10">
+              {/* {user.bookings.length >= 1 && user.venues.length >= 1 && <SelectionBtns selector={selector} setSelector={setSelector} />} */}
+              <div className="flex flex-col gap-12">
+                {user.bookings.length >= 1 ? (
+                  <ListBookings bookings={user.bookings} maxVenuesShown="4" isLoading={loading} setIsLoading={setLoading} />
+                ) : (
+                  <div className="flex flex-col justify-center items-center my-6 gap-4">
+                    <p className="italic text-center">You currently have no bookings</p>
+                    <Link to="/" className="text-primary-blue underline text-lg">
+                      Start planning your next adventure now!
+                    </Link>
                   </div>
-                </section>
-                <section className="w-full pb-10">
-                  {/* {user.bookings.length >= 1 && user.venues.length >= 1 && <SelectionBtns selector={selector} setSelector={setSelector} />} */}
-                  <div className="flex flex-col gap-12">
-                    {user.bookings.length >= 1 ? (
-                      <ListBookings bookings={user.bookings} maxVenuesShown="4" />
-                    ) : (
-                      <div className="flex flex-col justify-center items-center my-6 gap-4">
-                        <p className="italic text-center">You currently have no bookings</p>
-                        <Link to="/" className="text-primary-blue underline text-lg">
-                          Start planning your next adventure now!
-                        </Link>
-                      </div>
-                    )}
-                    {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4" />}
-                  </div>
-                </section>
-              </MainElement>
-            )}
+                )}
+                {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4" isLoading={loading} setIsLoading={setLoading} />}
+              </div>
+            </section>
           </>
         )}
-      </>
+      </MainElement>
     </HelmetProvider>
   );
 }
