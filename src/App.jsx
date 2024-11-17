@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       { path: "booking/summary", element: <routes.BookingSummary /> },
       { path: "booking/details", element: <routes.BookingDetails /> },
       { path: "booking/checkout", element: <routes.BookingCheckout /> },
-      { path: "booking/confirmation", element: <routes.BookingConfirmation /> },
+      { path: "booking/confirmation/:id", element: <routes.BookingConfirmation /> },
       { path: "login", element: <routes.Login /> },
       { path: "register", element: <routes.Register /> },
       { path: "/user/:username", element: <routes.MyProfile /> },
