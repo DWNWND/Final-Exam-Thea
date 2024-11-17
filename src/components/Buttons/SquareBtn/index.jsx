@@ -11,11 +11,12 @@ export default function SquareBtn({
   disabled = false,
   type = "button",
   width = "auto",
+  funcProp = null,
 }) {
   const buttonClasses = `${tailw} text-nowrap flex justify-center p-2 px-4 w-full md:w-${width} items-center h-full text-nowrap uppercase rounded hover:shadow-md cursor-pointer text-${textColor} bg-${bgColor} border border-${borderColor}`;
 
   return (
-    <button onClick={clickFunc} disabled={disabled} className={`${buttonClasses} ${transition}`}>
+    <button onClick={() => clickFunc(funcProp && funcProp)} disabled={disabled} className={`${buttonClasses} ${transition}`}>
       {innerText}
     </button>
   );
