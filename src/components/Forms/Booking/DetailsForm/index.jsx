@@ -27,7 +27,7 @@ const schema = yup.object().shape({
 export default function DetailsForm() {
   const { accessToken, userName } = useAuthStore();
   const { travelSearchData, selectedVenue } = useSearchStore();
-  const { setBookingData } = useBookingDataStore();
+  const { setBookingData, setBookingEmail } = useBookingDataStore();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
