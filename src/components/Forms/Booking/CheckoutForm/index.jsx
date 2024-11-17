@@ -59,14 +59,15 @@ export default function CheckoutForm() {
           body: JSON.stringify(bookingData),
         });
         setSuccessfulBookingId(response.data.id);
+        return response.data.id
       };
 
-      await sendData();
+      const bookingId = await sendData();
 
-      if (!loading && !error && successfulBookingId) {
+      if (!loading && !error && bookingId) {
         setErrorMessage("");
         setUserFeedbackMessage("Payment successful");
-        navigate(`/booking/confirmation/${successfulBookingId}`);
+        navigate(`/booking/confirmation/${bookingId}`);
       }
     } catch (error) {
       setErrorMessage("Booking failed: " + error);
