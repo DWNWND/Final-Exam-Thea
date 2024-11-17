@@ -14,6 +14,9 @@ import getFormattedDate from "../../../utils/dateUtils/formayDateForFlatpickr.js
 import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr.js";
 import { useNavigate } from "react-router-dom";
 import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
+import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
+import useAuthStore from "../../../stores/useAuthStore.js";
+import { Link } from "react-router-dom";
 
 export default function SingleVenue({ venue }) {
   const { travelSearchData, selectedVenue, setTravelDates, setAllDatesArr, setSelectedVenue } = useSearchStore();
@@ -22,7 +25,8 @@ export default function SingleVenue({ venue }) {
   const [availabilityOpen, setAvailabilityOpen] = useState(false);
   const [hostDetailsOpen, setHostDetailsOpen] = useState(false);
   const [editDates, setEditDates] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageModal, setImageModal] = useState(false);
+  const [promptModal, setPromptModal] = useState(false);
   const [formattedStartDate, setFormattedStartDate] = useState("");
   const [formattedEndDate, setFormattedEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
@@ -30,6 +34,8 @@ export default function SingleVenue({ venue }) {
   const [nights, setNights] = useState(0);
   const [travelDatesOutsideRanges, setTravelDatesOutsideRanges] = useState(true);
   const navigate = useNavigate();
+  const { accessToken, userName } = useAuthStore();
+  const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
 
   function toggleAmenities() {
     setAmenitiesOpen(!amenitiesOpen);
@@ -47,8 +53,12 @@ export default function SingleVenue({ venue }) {
     setEditDates(!editDates);
   }
   // Toggle modal open/close
-  function toggleModal() {
-    setIsModalOpen(!isModalOpen);
+  function toggleImageModal() {
+    setImageModal(!imageModal);
+  }
+
+  function togglePromptModal() {
+    setPromptModal(!promptModal);
   }
 
   const todayString = getFormattedDate(new Date());
@@ -128,124 +138,164 @@ export default function SingleVenue({ venue }) {
     console.log("isTravelOutsideAllRanges", isTravelOutsideAllRanges);
   }, [travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate, venue]);
 
-  function bookPropertyFunc() {
+  function bookPropertyFunc(continueAs) {
+    setPromptModal(false);
+
     if (travelSearchData.numberOfGuests <= venue.maxGuests && travelDatesOutsideRanges) {
       setSelectedVenue(venue);
-      navigate("/booking/summary");
-    } else {
-      alert("The property is not available for the selected dates or number of guests. Please select different dates or number of guests");
-      //do not use alert, send feedback in a different way!
+
+      if (continueAs === "guest") {
+        navigate("/booking/details");
+      }
+      if (continueAs === userName) {
+        navigate("/booking/details");
+      }
+      if (continueAs === "login") {
+        navigate("/login");
+      }
+      if (continueAs === "register") {
+        navigate("/register");
+      } else {
+        setUserFeedbackMessage("We're sorry. This property is not available for the selected dates or number of guests. Please select different dates or number of guests");
+      }
     }
   }
 
   return (
-    <div>
-      {/* Image Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-75" onClick={toggleModal}>
-          <div className="relative ">
-            <button className="absolute top-2 right-2 text-white text-3xl" onClick={toggleModal}>
-              <IoIosClose />
+    <>
+      <div>
+        {/* Image Modal */}
+        {imageModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-75" onClick={toggleImageModal}>
+            <div className="relative ">
+              <button className="absolute top-2 right-2 text-white text-3xl" onClick={toggleImageModal}>
+                <IoIosClose />
+              </button>
+              <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="max-w-full max-h-screen rounded-lg" />
+            </div>
+          </div>
+        )}
+        <div className="flex flex-col md:flex-row gap-3 mb-4">
+          <div className={`flex w-full md:max-w-64`}>
+            {/* same as squareBtn, it would be too much to style it  */}
+            <button onClick={toggleEditDates} className={`text-nowrap flex  py-2 justify-center w-full h-full uppercase rounded hover:shadow-md cursor-pointer transition-max-height duration-500 ease-in-out items-center overflow-hidden ${!editDates ? "px-4 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 px-0"} bg-white text-primary-blue border border-primary-blue`}>
+              Edit travel dates
             </button>
-            <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="max-w-full max-h-screen rounded-lg" />
+            <SelectTravelDates toggleDatesFunc={toggleEditDates} editDates={editDates} color="primary-blue" />
+          </div>
+          <NumberOfGuests color="primary-blue" mainSearch="false" />
+        </div>
+        <div className="relative">
+          <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer" onClick={toggleImageModal}>
+            <h1 className="text-center text-2xl font-bold text-white">
+              {formattedStartDate} - {formattedEndDate}
+            </h1>
+            <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">
+              kr {totalPrice} ({nights} {nights > 1 ? "nights" : "night"})
+            </div>
+          </div>
+          <div className="cursor-pointer" onClick={toggleImageModal}>
+            <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg"></div>
+            <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
+          </div>
+          <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
+            {/* same as round btn, it would not work with the conditional rendering */}
+            <button type="button" className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp hover:shadow-md cursor-pointer"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full  transition duration-300 ease-in-out`} onClick={() => togglePromptModal()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges}>
+              {travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}
+            </button>
+          </div>
+        </div>
+        <p className="mt-8 text-danger text-center">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
+        <p className="text-danger text-center">{!travelDatesOutsideRanges && "This property is fully booked for the selected travel dates"}</p>
+        <div className="p-4 mb-2 md:my-6 flex justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-black">{venue.name}</h3>
+            <p className="text-black">
+              {venue.location.city}, {venue.location.country}
+            </p>
+            <p className="text-black font-semibold mt-4">kr {venue.price}/night</p>
+          </div>
+          <div>
+            <p className="text-nowrap">★ {venue.rating}</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Details title="Amenities" toggleState={amenitiesOpen} toggleFunc={toggleAmenities}>
+            <div className="flex flex-col mt-3 gap-2 p-6  bg-white bg-opacity-100 border border-primary-blue rounded-lg">
+              <p className={`flex items-center gap-4 ${venue.meta.breakfast ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                <MdEmojiFoodBeverage />
+                Breakfast included
+              </p>
+              <p className={`flex items-center gap-4 ${venue.meta.parking ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                <FaParking />
+                Free parking
+              </p>
+              <p className={`flex items-center gap-4 ${venue.meta.pets ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                <MdOutlinePets />
+                Pets allowed
+              </p>
+              <p className={`flex items-center gap-4 ${venue.meta.wifi ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                <FaWifi />
+                Free WiFi
+              </p>
+            </div>
+          </Details>
+          <Details title="Description" toggleState={descriptionOpen} toggleFunc={toggleDescription}>
+            <div className="flex flex-col mt-3  p-4">
+              <p className="">{venue.description}</p>
+            </div>
+          </Details>
+          <Details title="Host details" toggleState={hostDetailsOpen} toggleFunc={toggleHostDetails}>
+            <div className="flex mt-3 gap-4 items-center p-2 md:p-4">
+              <div>
+                <img src={venue.owner.avatar.url} className="min-w-20 min-h-20 max-w-20 max-h-20 object-cover rounded-full"></img>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="font-semibold uppercase text-lg">{venue.owner.name}</p>
+                <p className="">{venue.owner.bio}</p>
+                <a href={`mailto:${venue.owner.email}`} className="underline">
+                  click here to contact host
+                </a>
+              </div>
+            </div>
+          </Details>
+          <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
+            {/* <div className="flex mt-3 gap-4 p-4 py-10 bg-white rounded-lg justify-center border border-primary-blue "> */}
+            <div className="  mt-3 gap-2 flex flex-col w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div>
+            {/* </div> */}
+          </Details>
+        </div>
+        <div className="flex gap-8 justify-center pt-10 md:my-10 text-2xl text-primary-blue">
+          <FaRegHeart />
+          <FaShare />
+        </div>
+      </div>
+      {promptModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
+            <h2 className="text-xl font-bold mb-4 text-primary-blue">Continue booking as:</h2>
+            <p className="text-sm mb-6 text-primary-blue">Choose how you would like to proceed with the booking</p>
+            <div className="flex flex-col justify-end gap-4">
+              {accessToken ? (
+                <>
+                  <SquareBtn clickFunc={bookPropertyFunc} funcProp="guest" type="button" width="full" innerText="guest" tailw="" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                  <SquareBtn clickFunc={bookPropertyFunc} funcProp={userName} type="button" width="full" innerText={`${userName}`} tailw="" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
+                </>
+              ) : (
+                <>
+                  <div className="flex gap-4">
+                    <SquareBtn clickFunc={bookPropertyFunc} funcProp="guest" type="button" width="full" innerText="guest" tailw="" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                    <SquareBtn clickFunc={bookPropertyFunc} funcProp="register" type="button" width="full" innerText="register new user" tailw="" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
+                  </div>
+                  <SquareBtn clickFunc={bookPropertyFunc} funcProp="login" type="button" width="full" innerText="login" tailw="" bgColor="primary-green" textColor="white" borderColor="primary-green" />
+                </>
+              )}
+            </div>
+            {userFeedbackMessage && <p className="text-danger text-xs text-center">{userFeedbackMessage}</p>}
           </div>
         </div>
       )}
-      <div className="flex flex-col md:flex-row gap-3 mb-4">
-        <div className={`flex w-full md:max-w-64`}>
-          {/* same as squareBtn, it would be too much to style it  */}
-          <button onClick={toggleEditDates} className={`text-nowrap flex  py-2 justify-center w-full h-full uppercase rounded hover:shadow-md cursor-pointer transition-max-height duration-500 ease-in-out items-center overflow-hidden ${!editDates ? "px-4 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 px-0"} bg-white text-primary-blue border border-primary-blue`}>
-            Edit travel dates
-          </button>
-          <SelectTravelDates toggleDatesFunc={toggleEditDates} editDates={editDates} color="primary-blue" />
-        </div>
-        <NumberOfGuests color="primary-blue" mainSearch="false" />
-      </div>
-      <div className="relative">
-        <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer" onClick={toggleModal}>
-          <h1 className="text-center text-2xl font-bold text-white">
-            {formattedStartDate} - {formattedEndDate}
-          </h1>
-          <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">
-            kr {totalPrice} ({nights} {nights > 1 ? "nights" : "night"})
-          </div>
-        </div>
-        <div className="cursor-pointer" onClick={toggleModal}>
-          <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg"></div>
-          <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
-        </div>
-        <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
-          {/* same as round btn, it would not work with the conditional rendering */}
-          <button type="button" className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp hover:shadow-md cursor-pointer"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full  transition duration-300 ease-in-out`} onClick={() => bookPropertyFunc()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges}>
-            {travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}
-          </button>
-        </div>
-      </div>
-      <p className="mt-8 text-danger text-center">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
-      <p className="text-danger text-center">{!travelDatesOutsideRanges && "This property is fully booked for the selected travel dates"}</p>
-      <div className="p-4 mb-2 md:my-6 flex justify-between">
-        <div>
-          <h3 className="text-xl font-bold text-black">{venue.name}</h3>
-          <p className="text-black">
-            {venue.location.city}, {venue.location.country}
-          </p>
-          <p className="text-black font-semibold mt-4">kr {venue.price}/night</p>
-        </div>
-        <div>
-          <p className="text-nowrap">★ {venue.rating}</p>
-        </div>
-      </div>
-      <div className="flex flex-col gap-2">
-        <Details title="Amenities" toggleState={amenitiesOpen} toggleFunc={toggleAmenities}>
-          <div className="flex flex-col mt-3 gap-2 p-6  bg-white bg-opacity-100 border border-primary-blue rounded-lg">
-            <p className={`flex items-center gap-4 ${venue.meta.breakfast ? "text-primary-blue" : "text-comp-purple line-through"} `}>
-              <MdEmojiFoodBeverage />
-              Breakfast included
-            </p>
-            <p className={`flex items-center gap-4 ${venue.meta.parking ? "text-primary-blue" : "text-comp-purple line-through"} `}>
-              <FaParking />
-              Free parking
-            </p>
-            <p className={`flex items-center gap-4 ${venue.meta.pets ? "text-primary-blue" : "text-comp-purple line-through"} `}>
-              <MdOutlinePets />
-              Pets allowed
-            </p>
-            <p className={`flex items-center gap-4 ${venue.meta.wifi ? "text-primary-blue" : "text-comp-purple line-through"} `}>
-              <FaWifi />
-              Free WiFi
-            </p>
-          </div>
-        </Details>
-        <Details title="Description" toggleState={descriptionOpen} toggleFunc={toggleDescription}>
-          <div className="flex flex-col mt-3  p-4">
-            <p className="">{venue.description}</p>
-          </div>
-        </Details>
-        <Details title="Host details" toggleState={hostDetailsOpen} toggleFunc={toggleHostDetails}>
-          <div className="flex mt-3 gap-4 items-center p-2 md:p-4">
-            <div>
-              <img src={venue.owner.avatar.url} className="min-w-20 min-h-20 max-w-20 max-h-20 object-cover rounded-full"></img>
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="font-semibold uppercase text-lg">{venue.owner.name}</p>
-              <p className="">{venue.owner.bio}</p>
-              <a href={`mailto:${venue.owner.email}`} className="underline">
-                click here to contact host
-              </a>
-            </div>
-          </div>
-        </Details>
-        <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
-          {/* <div className="flex mt-3 gap-4 p-4 py-10 bg-white rounded-lg justify-center border border-primary-blue "> */}
-            <div className="  mt-3 gap-2 flex flex-col w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div>
-          {/* </div> */}
-        </Details>
-      </div>
-      <div className="flex gap-8 justify-center pt-10 md:my-10 text-2xl text-primary-blue">
-        <FaRegHeart />
-        <FaShare />
-      </div>
-    </div>
+    </>
   );
 }
 
