@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-export default function StringInput({ type, id, label, placeholder, defaultValue, setErrorCode = () => {}, errorMessage, register, trigger, watch }) {
+export default function StringInput({ type, id, label, placeholder, defaultValue, setErrorMessage = () => {}, errorMessage, register, trigger, watch }) {
   const [showPassword, setShowPassword] = useState(false);
   const isTextarea = id === "description";
 
@@ -10,7 +10,7 @@ export default function StringInput({ type, id, label, placeholder, defaultValue
 
   // Clear error on change and validate
   useEffect(() => {
-    setErrorCode(null);
+    setErrorMessage("");
     if (currentValue) {
       trigger(id); // Trigger validation whenever there's a change
     }
