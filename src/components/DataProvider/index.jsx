@@ -12,7 +12,7 @@ const apiVenuesUrl = import.meta.env.VITE_API_VENUES_URL;
 const sortedByRating = `${apiVenuesUrl}?sort=created&sortOrder=desc`;
 
 export function DataProvider({ children }) {
-  const { data, isLoading, setIsLoading, isError } = useFetch(`${sortedByRating}`);
+  const { data, loading, setLoading, error } = useFetch(`${sortedByRating}`);
   const [venues, setVenues] = useState([]);
   const allVenuesArr = data.data;
   // const location = useLocation();
@@ -20,15 +20,16 @@ export function DataProvider({ children }) {
 
   //fetched all venues from the API and filter out the ones with missing location data, so that the search results will be accurate. Would wish that this was already fixed by the api, so that i could fetch it by page ang with a page limit, and not fetch all.
   useEffect(() => {
-    setIsLoading(true);
+    setLoading(true);
     if (allVenuesArr && allVenuesArr.length >= 0) {
       const filteredOutMissingLocations = allVenuesArr.filter((venue) => {
         return venue.location.city && venue.location.country;
       });
       // console.log("filteredOutMissingLocations", filteredOutMissingLocations);
       setVenues(filteredOutMissingLocations);
+      setLoading(false);
     }
   }, [data, allVenuesArr]);
 
-  return <DataContext.Provider value={{ venues, setVenues, isLoading, setIsLoading, isError }}>{children}</DataContext.Provider>;
+  return <DataContext.Provider value={{ venues, setVenues, loading, error }}>{children}</DataContext.Provider>;
 }

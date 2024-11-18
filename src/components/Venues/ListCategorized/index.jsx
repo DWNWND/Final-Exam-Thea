@@ -5,7 +5,7 @@ import { DataContext } from "../../../contexts";
 import Loader from "../../../components/Loader";
 
 export default function ListCategorized({ filters }) {
-  const { venues, isLoading, setIsLoading, isError } = useContext(DataContext);
+  const { venues, loading, error } = useContext(DataContext);
 
   return (
     // <>
@@ -29,7 +29,7 @@ export default function ListCategorized({ filters }) {
                 })
                 .slice(0, 4)
                 .map((venue) => (
-                  <VenueCard venue={venue} key={venue.id} isLoading={isLoading} setIsLoading={setIsLoading} />
+                  <VenueCard venue={venue} key={venue.id} loading={loading} />
                 ))}
             </div>
           )}

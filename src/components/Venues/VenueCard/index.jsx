@@ -4,25 +4,16 @@ import { Link } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore";
 import { useEffect, useState } from "react";
 
-export default function VenueCard({ venue, bookingId, isLoading, setIsLoading, myVenues = false, myBookings = false, setSelectedBooking = () => {}, setPromptModal = () => {} }) {
+export default function VenueCard({ venue, bookingId, loading, myVenues = false, myBookings = false, setSelectedBooking = () => {}, setCancellationModal = () => {} }) {
   const { userName, venueManager } = useAuthStore();
 
   function cancelBookingPrompt() {
     setSelectedBooking({ name: venue.name, id: bookingId });
     console.log("canceling booking...", bookingId, venue.name);
-    setPromptModal(true);
+    setCancellationModal(true);
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Simulate data being loaded after 2 seconds
-    }, 1000);
-
-    return () => clearTimeout(timer); // Cleanup timer on unmount
-  }, []);
-
-  if (isLoading) {
-    // Render skeleton loader
+  if (loading) {
     return (
       <div className="rounded-lg shadow-sm bg-white relative flex flex-col">
         <div className="animate-pulse">
@@ -30,8 +21,6 @@ export default function VenueCard({ venue, bookingId, isLoading, setIsLoading, m
           <div className="p-4 flex flex-col gap-4 ">
             <div className="h-6 bg-comp-gray rounded w-3/4"></div>
             <div className="h-4 bg-comp-gray rounded w-1/2"></div>
-            {/* <div className="h-6 bg-comp rounded w-full"></div>
-            <div className="h-6 bg-comp rounded w-full"></div> */}
           </div>
         </div>
       </div>
@@ -70,7 +59,7 @@ export default function VenueCard({ venue, bookingId, isLoading, setIsLoading, m
                     <SquareBtn innerText="Check occupancy" width="full" tailw="lowercase" bgColor="white" textColor="primary-green" />
                   </Link>
                   <Link to={`${venueManager ? `/user/${userName}/edit/${venue.id}` : ""}`} className="z-40">
-                    <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tailw="lowercase" bgColor="white" textColor="primary-green" />
+                    <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tailw={`${!venueManager && "hover:shadow-none cursor-default"} lowercase`} bgColor="white" textColor="primary-green" />
                   </Link>
                 </>
               )}

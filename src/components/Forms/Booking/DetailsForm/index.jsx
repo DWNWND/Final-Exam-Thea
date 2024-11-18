@@ -16,7 +16,7 @@ import { useNavigationStore } from "../../../../stores/useNavigationStore.js";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
-const schema = yup.object().shape({
+const detailsSchema = yup.object().shape({
   firstName: yup.string().min(3, "Firstname must be at least 3 characters").required("Firstname is required"),
   lastName: yup.string().min(3, "Lastname must be at least 3 characters").required("Lastname is required"),
   checkIn: yup.string().required("Please provide checkin time"),
@@ -28,11 +28,11 @@ export default function DetailsForm() {
   const { accessToken, userName } = useAuthStore();
   const { travelSearchData, selectedVenue } = useSearchStore();
   const { setBookingData, setBookingEmail } = useBookingDataStore();
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
 
-  const { loading, setLoading, error, fetchUser } = useAuthedFetch(accessToken);
+  const { loading, error, fetchUser } = useAuthedFetch(accessToken);
   const setPreviousRoute = useNavigationStore((state) => state.setPreviousRoute);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const response = await fetchUser(`/holidaze/profiles/${userName}`);
@@ -44,15 +44,6 @@ export default function DetailsForm() {
     setPreviousRoute(`/venue/${selectedVenue.id}`);
   }, [accessToken]);
 
-  const startDate = new Date(travelSearchData.travelDates.startDate);
-  const formattedStartDate = formatDateForDisplay(startDate);
-
-  const endDate = new Date(travelSearchData.travelDates.endDate);
-  const formattedEndDate = formatDateForDisplay(endDate);
-
-  const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
-  const price = nights * selectedVenue.price;
-
   const {
     register,
     handleSubmit,
@@ -62,7 +53,7 @@ export default function DetailsForm() {
     reset,
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(detailsSchema),
     defaultValues: {
       firstName: user?.name || "",
       lastName: "",
@@ -85,8 +76,6 @@ export default function DetailsForm() {
     }
   }, [user, reset]);
 
-  // const login = useAuthStore((state) => state.login);
-
   const onSubmit = () => {
     const booking = {
       dateFrom: travelSearchData.travelDates.startDate,
@@ -99,10 +88,44 @@ export default function DetailsForm() {
     navigate("/booking/checkout");
   };
 
-  //add more levels of userFeedback for the different errorcodes
+  const startDate = new Date(travelSearchData.travelDates.startDate);
+  const formattedStartDate = formatDateForDisplay(startDate);
+
+  const endDate = new Date(travelSearchData.travelDates.endDate);
+  const formattedEndDate = formatDateForDisplay(endDate);
+
+  const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
+  const price = nights * selectedVenue.price;
+
+  if (loading && loading) {
+    return (
+      <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full animate-pulse">
+        <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
+          <div className="h-6 bg-comp-gray rounded w-3/4"></div> {/* Venue name */}
+          <div className="h-4 bg-comp-gray rounded w-2/3 mt-2"></div> {/* Date range */}
+          <div className="h-4 bg-comp-gray rounded w-1/4 mt-2"></div> {/* Guest count */}
+          <div className="h-6 bg-comp-gray rounded-full w-1/2 mt-4"></div> {/* Price summary */}
+        </div>
+        <div className="w-full my-6">
+          <div className="h-8 bg-comp-gray rounded w-1/3 mb-2"></div> {/* Details header */}
+          <div className="h-4 bg-comp-gray rounded w-1/2"></div> {/* Subtext */}
+        </div>
+        <form className="w-full flex flex-col gap-4 md:gap-6">
+          <div className="h-12 bg-comp-gray rounded"></div> {/* First Name Input */}
+          <div className="h-12 bg-comp-gray rounded"></div> {/* Last Name Input */}
+          <div className="h-12 bg-comp-gray rounded"></div> {/* Email Input */}
+          <div className="h-12 bg-comp-gray rounded"></div> {/* Check-In Input */}
+          <div className="h-12 bg-comp-gray rounded"></div> {/* Special Requests Input */}
+          <div className="flex items-center justify-between my-6">
+            <div className="h-10 bg-comp-gray rounded-full w-24"></div> {/* Submit Button Placeholder */}
+          </div>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
-      {/* <p className="text-danger text-xs"></p> */}
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
         <p className="font-semibold">{selectedVenue.name}</p>
         <p>
@@ -117,7 +140,6 @@ export default function DetailsForm() {
         <h1 className="text-2xl uppercase text-primary-green w-full">Your details</h1>
         <p className="text-sm italic text-primary-blue w-full">Please enter your details to complete your booking</p>
       </div>
-      {/* fix the default value of the email to actually be the email */}
       <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
         <StringInput type="text" id="firstName" label="First name" placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" register={register} errorMessage={errors.lastName && errors.lastName.message} trigger={trigger} watch={watch} />
@@ -126,7 +148,6 @@ export default function DetailsForm() {
         <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between my-6">
           <RoundBtn type="submit" innerText="Next" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
-          {/* {loading ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>} */}
         </div>
       </form>
     </div>
