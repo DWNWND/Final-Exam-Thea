@@ -31,31 +31,27 @@ import useApiCall from "../../../hooks/useApiCall.jsx";
 const url = import.meta.env.VITE_API_BASE_URL;
 
 export default function MyProfile() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
   const { userName, accessToken } = useAuthStore();
-  // const { loading, error, callApiWith } = useFetchUser(accessToken);
-  // const [selector, setSelector] = useState("bookings");
-  const { loading, setLoading, error, fetchUser } = useAuthedFetch(accessToken);
+  const { loading: loadingInFetch, error: errorInFetch, fetchUser } = useAuthedFetch(accessToken);
   const { loading: loadingCancellation, error: errorCancellation, callApiWith } = useApiCall(accessToken);
+
+  const [user, setUser] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
-  const [promptModal, setPromptModal] = useState(false);
+  const [cancellationModal, setCancellationModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const response = await fetchUser(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
     setUser(response.data);
-    console.log("console log fetchData run", response.data.bookings);
-    console.log("isloading", loading);
-    setLoading(false); //fix the handling of the loading states - maybe this should be in the api call hooks instead
   };
 
   useEffect(() => {
     fetchData();
     setUserFeedbackMessage("");
     setErrorMessage("");
-  }, [promptModal]);
+  }, [cancellationModal]);
 
   useEffect(() => {
     if (!accessToken) {
@@ -64,7 +60,7 @@ export default function MyProfile() {
   }, [accessToken]);
 
   function handleExitCancellation() {
-    setPromptModal(false);
+    setCancellationModal(false);
     setSelectedBooking(null);
   }
 
@@ -92,6 +88,7 @@ export default function MyProfile() {
         <title>My Profile | Holidayz</title>
       </Helmet>
       <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
+        {errorInFetch && <p className="text-danger text-center">We encountered an unexpected issue while processing your request. Please try again later. If the problem persists, contact our support team.</p>}
         {user && (
           <>
             <section className="flex flex-col gap-2 lg:max-w-md">
@@ -104,7 +101,7 @@ export default function MyProfile() {
               {/* {user.bookings.length >= 1 && user.venues.length >= 1 && <SelectionBtns selector={selector} setSelector={setSelector} />} */}
               <div className="flex flex-col gap-12">
                 {user.bookings.length >= 1 ? (
-                  <ListBookings bookings={user.bookings} maxVenuesShown="4" isLoading={loading} setIsLoading={setLoading} setSelectedBooking={setSelectedBooking} setPromptModal={setPromptModal} />
+                  <ListBookings bookings={user.bookings} maxVenuesShown="4" loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                 ) : (
                   <div className="flex flex-col justify-center items-center my-6 gap-4">
                     <p className="italic text-center">You currently have no bookings</p>
@@ -113,10 +110,10 @@ export default function MyProfile() {
                     </Link>
                   </div>
                 )}
-                {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4" isLoading={loading} setIsLoading={setLoading} />}
+                {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4" loading={loadingInFetch} />}
               </div>
             </section>
-            {promptModal && (
+            {cancellationModal && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
                   <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to cancel your booking at {selectedBooking.name}?</h2>
