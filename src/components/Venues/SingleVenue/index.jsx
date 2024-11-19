@@ -162,6 +162,8 @@ export default function SingleVenue({ venue }) {
     }
   }
 
+  const yourListing = userName === venue.owner.name;
+
   return (
     <>
       <div>
@@ -203,15 +205,15 @@ export default function SingleVenue({ venue }) {
             {/* same as round btn, it would not work with the conditional rendering */}
             <button
               type="button"
-              className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges || userName === venue.owner.name ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer"} 
+              className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges || yourListing? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer"} 
     text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full transition-all duration-300 ease-in-out`}
               onClick={() => togglePromptModal()}
-              disabled={(travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges) || userName === venue.owner.name}>
-              {!userName === venue.owner.name ? <>{travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}</> : "Book"}
+              disabled={(travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges) || yourListing}>
+              {!yourListing ? <>{travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}</> : "Book"}
             </button>
           </div>
         </div>
-        {!userName === venue.owner.name ? (
+        {!yourListing ? (
           <>
             <p className="mt-8 text-danger text-center italic">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
             <p className="text-danger text-center italic">{!travelDatesOutsideRanges && "This property is fully booked for the selected travel dates"}</p>
