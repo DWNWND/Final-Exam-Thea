@@ -7,7 +7,7 @@ import { useSearchStore } from "../../../stores/useSearchStore.js";
 
 //fix loadmore btn!!
 export default function ListSearch() {
-  const { venues, isLoading, setIsLoading } = useContext(DataContext);
+  const { venues, loading } = useContext(DataContext);
   const [filteredVenues, setFilteredVenues] = useState([]);
   const [displayedVenues, setDisplayedVenues] = useState([]);
   const initialDisplayCount = 10;
@@ -49,7 +49,7 @@ export default function ListSearch() {
 
     setFilteredVenues(matches);
     setDisplayedVenues(matches.slice(0, initialDisplayCount)); // Set initial displayed venues
-    setIsLoading(false);
+    // setIsLoading(false);
   }, [venues, searchQuery]);
 
   const handleLoadMore = () => {
@@ -68,7 +68,7 @@ export default function ListSearch() {
           <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} venues (matching your search)`}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {displayedVenues.map((venue) => (
-              <VenueCard venue={venue} key={venue.id} isLoading={isLoading} setIsLoading={setIsLoading} />
+              <VenueCard venue={venue} key={venue.id} loading={loading} />
             ))}
           </div>
           {filteredVenues.length > displayedVenues.length && (
