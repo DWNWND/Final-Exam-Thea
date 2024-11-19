@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 // import { Outlet } from "react-router-dom";
 // import { createContext } from "react";
 import { DataContext } from "../../contexts/index.jsx";
-
+import { searchableLocations } from "../../assets/locations/searchableLocations.js";
+import { capitalizeWords } from "../../utils/capWords/capitalizeWords.js";
 // const page = 1;
 // const limit = 10;
 // ?page=${page}&limit=${limit}
@@ -25,7 +26,15 @@ export function DataProvider({ children }) {
       const filteredOutMissingLocations = allVenuesArr.filter((venue) => {
         return venue.location.city && venue.location.country;
       });
-      // console.log("filteredOutMissingLocations", filteredOutMissingLocations);
+
+      filteredOutMissingLocations.forEach((venue) => {
+        if (venue.location && venue.location.city) {
+          const capitalizedCity = capitalizeWords(venue.location.city); // Capitalize the city
+          if (!searchableLocations.includes(capitalizedCity)) {
+            searchableLocations.push(capitalizedCity); // Add if not already in the array
+          }
+        }
+      });
       setVenues(filteredOutMissingLocations);
       setLoading(false);
     }
