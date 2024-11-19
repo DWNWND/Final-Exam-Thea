@@ -29,13 +29,13 @@ export default function DetailsForm() {
   const { travelSearchData, selectedVenue } = useSearchStore();
   const { setBookingData, setBookingEmail } = useBookingDataStore();
 
-  const { loading, error, fetchUser } = useAuthedFetch(accessToken);
+  const { loading, error, fetchWithAuthentication } = useAuthedFetch(accessToken);
   const setPreviousRoute = useNavigationStore((state) => state.setPreviousRoute);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    const response = await fetchUser(`/holidaze/profiles/${userName}`);
+    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}`);
     setUser(response.data);
   };
 
