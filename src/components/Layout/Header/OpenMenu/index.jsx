@@ -57,12 +57,12 @@ export default function OpenMenu() {
               </Link>
             </li>
             <li className="w-full">
-              <Link to={`/user/${userName}/listings`}>
+              <Link to={`/user/${userName}/mylistings`}>
                 <SquareBtn clickFunc={handleClick} width="full" innerText="My listings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
             <li className="w-full">
-              <Link to={`/user/${userName}/bookings`}>
+              <Link to={`/user/${userName}/mybookings`}>
                 <SquareBtn clickFunc={handleClick} width="full" innerText="My bookings" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               </Link>
             </li>
