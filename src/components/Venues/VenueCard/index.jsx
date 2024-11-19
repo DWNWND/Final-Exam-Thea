@@ -65,7 +65,7 @@ export default function VenueCard({ venue, bookingId, bookingDates = null, loadi
   return (
     <>
       {venue && (
-        <div className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
+        <div key={venue.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
           <Link to={"/venue/" + venue.id} className="h-48 w-full absolute z-30 rounded-lg"></Link>
           <div className="bg-black w-full rounded-t-lg h-48 z-20 opacity-20 absolute"></div>
           <div className="relative">
