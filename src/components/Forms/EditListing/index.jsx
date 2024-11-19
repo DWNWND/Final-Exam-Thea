@@ -13,7 +13,7 @@ import usePut from "../../../hooks/usePut";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 
-const url = import.meta.env.VITE_API_BASE_URL;
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 //think about adding possibility to edit email, username and password??
 const editListingSchema = yup.object().shape({
@@ -48,11 +48,13 @@ export default function EditListingForm() {
   // const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  // const { userName, accessToken, setVenueManager } = useAuthStore();
-  // const { callApiWith } = useApiCall(accessToken);
-  // const navigate = useNavigate();
-  const { data: singleVenueData } = useFetch(`${url}/holidaze/venues/${id}`);
+  const [errorDeletionMessage, setErrorDeletionMessage] = useState("");
+  const [userFeedbackDeletionMessage, setUserFeedbackDeletionMessage] = useState("");
+  const [deletionModal, setDeletionModal] = useState(false);
+  const { userName, accessToken, setVenueManager } = useAuthStore();
+  const { loading: loadingDeletion, error: errorDeletion, callApiWith } = useApiCall(accessToken);
+  const navigate = useNavigate();
+  const { data: singleVenueData, error: errorInFetch } = useFetch(`${apiBaseUrl}/holidaze/venues/${id}`);
   const venue = singleVenueData.data;
 
   const {
@@ -63,52 +65,38 @@ export default function EditListingForm() {
     watch,
   } = useForm({ mode: "onChange", resolver: yupResolver(editListingSchema) });
 
-  // const fetchData = async () => {
-  //   const response = await callApiWith(`${url}/holidaze/venues/${id}}`, {
-  //     method: "GET",
-  //   });
-  //   setUser(response.data);
-  //   console.log("response:", response);
-  //   // setVenueManager(response.data.venueManager);
-  // };
+  function handleExitDeletion() {
+    setDeletionModal(false);
+  }
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  //mockup:
   const handleDelete = async () => {
-    // setLoading(true);
     try {
-      // Simulate API call to delete user
-      console.log("Deleting listing...");
-      // Add your API call here
-      setUserFeedbackMessage("listing deleted successfully.");
-      setErrorMessage("");
+      await callApiWith(`${apiBaseUrl}/holidaze/venues/${id}`, {
+        method: "DELETE",
+      });
+      if (!loadingDeletion && !errorDeletion) {
+        setUserFeedbackDeletionMessage("listing deleted successfully.");
+        setErrorDeletionMessage("");
+        navigate(`/user/${userName}`);
+        handleExitDeletion();
+      }
     } catch (err) {
-      setErrorMessage("Failed to delete listing.");
-    } finally {
-      // setLoading(false);
-      setShowModal(false); // Close modal after action
+      console.log("error:", err);
+      setErrorDeletionMessage("Failed to delete listing.");
     }
   };
 
   const onSubmit = async (data) => {
-    // console.log("username:", data.userName);
     const result = await updateListing(data, `/holidaze/venues/${id}`);
 
-    // Check if there was an error
     if (!loading && !error && result.success) {
-      // Assume login returns an object with a success property
-      // navigate(`/user/${userName}`);
-      console.log("listing updated");
+      navigate(`/user/${userName}`);
       setUserFeedbackMessage("Listing successfully updated");
       setErrorMessage("");
     } else if (!result.success) {
       setErrorMessage(result.error.errors[0].message);
       setUserFeedbackMessage("");
 
-      // Handle error feedback if necessary (optional)
       console.log("update listing failed:", result.error || error); // Log error for debugging
       console.log("error message", result.error.errors[0].message);
     }
@@ -116,11 +104,17 @@ export default function EditListingForm() {
 
   return (
     <>
+      {errorInFetch && (
+        <div className="bg-white max-w-[50rem] flex flex-col align-center justify-center mx-auto  mt-10 gap-4 rounded-lg p-4 min-m-2">
+          <p className="text-center text-lg">We encountered an unexpected issue while processing your request. Please try again later. If the problem persists, contact our support team.</p>
+          <p className=" text-danger italic w-full bg-desatBlue p-4 text-center rounded-lg">{errorInFetch}</p>
+        </div>
+      )}
       {venue && (
         <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
           <div className="flex justify-between items-center w-full mb-6">
             <h1 className="text-2xl  uppercase text-primary-green">Edit listing</h1>
-            <div className="underline hover:text-danger text-primary-light cursor-pointer" onClick={() => setShowModal(true)}>
+            <div className="underline hover:text-danger text-primary-light cursor-pointer" onClick={() => setDeletionModal(true)}>
               delete listing
             </div>
           </div>
@@ -153,15 +147,16 @@ export default function EditListingForm() {
         </div>
       )}
 
-      {showModal && (
+      {deletionModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
-            <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to delete your profile?</h2>
+            <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to delete this listing?</h2>
             <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
             <div className="flex justify-end gap-4">
-              <SquareBtn clickFunc={() => setShowModal(false)} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+              <SquareBtn clickFunc={() => handleExitDeletion()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
             </div>
+            {loadingDeletion ? <SmallLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
           </div>
         </div>
       )}
