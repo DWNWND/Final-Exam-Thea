@@ -16,8 +16,8 @@ export default function ListNewest() {
         ) : ( */}
           <>
             {venues && venues.length >= 2 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
-                {venues.slice(0, 10).map((venue) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 ">
+                {venues.slice(0, 6).map((venue) => (
                   <VenueCard venue={venue} key={venue.id} loading={loading} />
                 ))}
               </div>
