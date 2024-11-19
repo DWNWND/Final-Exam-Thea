@@ -30,7 +30,7 @@ export default function useAuthedFetch() {
     return await response.json();
   };
 
-  const fetchUser = async (additionalRefs) => {
+  const fetchWithAuthentication = async (additionalRefs) => {
     setLoading(true);
     setError(null);
     try {
@@ -38,7 +38,9 @@ export default function useAuthedFetch() {
         method: "GET",
       });
       console.log("response from authedFetch:", response);
-      setVenueManager(response.data.venueManager);
+      if (response.data.venueManager) {
+        setVenueManager(response.data.venueManager);
+      }
       return { success: true, data: response.data };
     } catch (err) {
       console.log("error catched in fetch user func", err.data);
@@ -51,6 +53,6 @@ export default function useAuthedFetch() {
   return {
     loading,
     error,
-    fetchUser,
+    fetchWithAuthentication,
   };
 }
