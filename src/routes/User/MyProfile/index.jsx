@@ -14,6 +14,7 @@ import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
 import SmallLoader from "../../../components/SmallLoader/index.jsx";
 import useApiCall from "../../../hooks/useApiCall.jsx";
+import { IoIosClose } from "react-icons/io";
 
 // function SelectionBtns({ selector, setSelector }) {
 //   return (
@@ -28,11 +29,11 @@ import useApiCall from "../../../hooks/useApiCall.jsx";
 //   );
 // }
 
-const url = import.meta.env.VITE_API_BASE_URL;
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export default function MyProfile() {
   const { userName, accessToken } = useAuthStore();
-  const { loading: loadingInFetch, error: errorInFetch, fetchUser } = useAuthedFetch(accessToken);
+  const { loading: loadingInFetch, error: errorInFetch, fetchWithAuthentication } = useAuthedFetch(accessToken);
   const { loading: loadingCancellation, error: errorCancellation, callApiWith } = useApiCall(accessToken);
 
   const [user, setUser] = useState(null);
@@ -41,14 +42,25 @@ export default function MyProfile() {
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
   const navigate = useNavigate();
+  const [userBookings, setUserBookings] = useState([]);
+  const [userVenues, setUserVenues] = useState([]);
 
-  const fetchData = async () => {
-    const response = await fetchUser(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+  const fetchUser = async () => {
+    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}`);
     setUser(response.data);
   };
 
+  const fetchBookings = async () => {
+    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true`);
+    setUserBookings(response.data);
+  };
+
+  const fetchVenues = async () => {
+    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/venues?_bookings=true`);
+    setUserVenues(response.data);
+  };
+
   useEffect(() => {
-    fetchData();
     setUserFeedbackMessage("");
     setErrorMessage("");
   }, [cancellationModal]);
@@ -56,6 +68,10 @@ export default function MyProfile() {
   useEffect(() => {
     if (!accessToken) {
       navigate("/");
+    } else {
+      fetchUser();
+      fetchBookings();
+      fetchVenues();
     }
   }, [accessToken]);
 
@@ -66,7 +82,7 @@ export default function MyProfile() {
 
   const handleCancellation = async () => {
     try {
-      await callApiWith(`${url}/holidaze/bookings/${selectedBooking.id}`, {
+      await callApiWith(`${apiBaseUrl}/holidaze/bookings/${selectedBooking.id}`, {
         method: "DELETE",
       });
 
@@ -100,8 +116,8 @@ export default function MyProfile() {
             <section className="w-full pb-10">
               {/* {user.bookings.length >= 1 && user.venues.length >= 1 && <SelectionBtns selector={selector} setSelector={setSelector} />} */}
               <div className="flex flex-col gap-12">
-                {user.bookings.length >= 1 ? (
-                  <ListBookings bookings={user.bookings} maxVenuesShown="4" loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                {userBookings.length >= 1 ? (
+                  <ListBookings key={userBookings.id} bookings={userBookings} maxVenuesShown="6" loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                 ) : (
                   <div className="flex flex-col justify-center items-center my-6 gap-4">
                     <p className="italic text-center">You currently have no bookings</p>
@@ -110,17 +126,20 @@ export default function MyProfile() {
                     </Link>
                   </div>
                 )}
-                {user.venues.length > 1 && <ListVenues venues={user.venues} maxVenuesShown="4" loading={loadingInFetch} />}
+                {userVenues.length > 1 && <ListVenues key={userVenues.id} venues={userVenues} maxVenuesShown="6" loading={loadingInFetch} />}
               </div>
             </section>
             {cancellationModal && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
-                  <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to cancel your booking at {selectedBooking.name}?</h2>
-                  <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => handleExitCancellation()}>
+                <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10 relative">
+                  <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={() => handleExitCancellation()}>
+                    <IoIosClose />
+                  </button>
+                  <h2 className="text-xl font-bold mb-4 text-primary-blue">Are you sure you want to cancel your booking at {selectedBooking.name}?</h2>
+                  <p className="text-sm mb-6 text-primary-blue">This action cannot be undone.</p>
                   <div className="flex justify-end gap-4 mb-5">
-                    <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-                    <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
+                    <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-primary-blue hover:text-white" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
+                    <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white" bgColor="white" textColor="danger" borderColor="danger" />
                   </div>
                   {loadingCancellation ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
                 </div>
