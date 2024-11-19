@@ -11,6 +11,7 @@ export { default as MyProfile } from "./User/MyProfile";
 export { default as MyListings } from "./User/MyListings";
 export { default as MyBookings } from "./User/MyBookings";
 export { default as EditListing } from "./User/EditListing";
+export { default as Occupancy } from "./User/Occupancy";
 
 export { default as BookingCheckout } from "./Booking/BookingCheckout";
 export { default as BookingConfirmation } from "./Booking/BookingConfirmation";
