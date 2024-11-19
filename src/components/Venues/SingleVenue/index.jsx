@@ -17,6 +17,7 @@ import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
 import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import { Link } from "react-router-dom";
+import ArrowDownBtn from "../../Buttons/ArrowDownBtn/index.jsx";
 
 export default function SingleVenue({ venue }) {
   const { travelSearchData, selectedVenue, setTravelDates, setAllDatesArr, setSelectedVenue } = useSearchStore();
@@ -98,7 +99,7 @@ export default function SingleVenue({ venue }) {
       setNights(nights);
     }
 
-    // Set up an interval to check for a date change every minute
+    // Set up an interval to check for a date change
     const interval = setInterval(() => {
       const newTodayString = todayString;
       const newTomorrowString = tomorrowString;
@@ -198,15 +199,27 @@ export default function SingleVenue({ venue }) {
             <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg"></div>
             <img src={venue.media && venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
           </div>
-          <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-20">
+          <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-[10rem]">
             {/* same as round btn, it would not work with the conditional rendering */}
-            <button type="button" className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-lg hover:border hover:border-primary-blue hover:text-primary-blue hover:bg-comp hover:shadow-md cursor-pointer"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full  transition duration-300 ease-in-out`} onClick={() => togglePromptModal()} disabled={travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges}>
-              {travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}
+            <button
+              type="button"
+              className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges || userName === venue.owner.name ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer"} 
+    text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full transition-all duration-300 ease-in-out`}
+              onClick={() => togglePromptModal()}
+              disabled={(travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges) || userName === venue.owner.name}>
+              {!userName === venue.owner.name ? <>{travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges ? "Unavailable" : "Book"}</> : "Book"}
             </button>
           </div>
         </div>
-        <p className="mt-8 text-danger text-center">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
-        <p className="text-danger text-center">{!travelDatesOutsideRanges && "This property is fully booked for the selected travel dates"}</p>
+        {!userName === venue.owner.name ? (
+          <>
+            <p className="mt-8 text-danger text-center italic">{travelSearchData.numberOfGuests > venue.maxGuests && `This property only accepts ${venue.maxGuests} guests pr. booking`}</p>
+            <p className="text-danger text-center italic">{!travelDatesOutsideRanges && "This property is fully booked for the selected travel dates"}</p>
+          </>
+        ) : (
+          <p className="mt-8 text-center italic">you are the owner of this listing and can therefore not book it</p>
+        )}
+
         <div className="p-4 mb-2 md:my-6 flex justify-between">
           <div>
             <h3 className="text-xl font-bold text-black">{venue.name}</h3>
@@ -271,14 +284,17 @@ export default function SingleVenue({ venue }) {
         </div>
       </div>
       {promptModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={togglePromptModal}>
+          <div className="bg-white relative p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
+            <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={togglePromptModal}>
+              <IoIosClose />
+            </button>
             <h2 className="text-xl font-bold mb-4 text-primary-blue">Continue booking as:</h2>
             <p className="text-sm mb-6 text-primary-blue">Choose how you would like to proceed with the booking</p>
             <div className="flex flex-col justify-end gap-4">
               {accessToken ? (
                 <>
-                  <SquareBtn clickFunc={bookPropertyFunc} funcProp="guest" type="button" width="full" innerText="guest" tailw="" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                  <SquareBtn clickFunc={bookPropertyFunc} funcProp="guest" type="button" width="full" innerText="guest" tailw="" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
                   <SquareBtn clickFunc={bookPropertyFunc} funcProp={userName} type="button" width="full" innerText={`${userName}`} tailw="" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
                 </>
               ) : (
@@ -303,7 +319,8 @@ function Details({ title, toggleState, toggleFunc, children }) {
   return (
     <div className="bg-comp-purple p-4 rounded-lg h-full">
       <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={() => toggleFunc()}>
-        <span className="uppercase font-semibold">{title}</span> {toggleState ? <IoIosArrowUp /> : <IoIosArrowDown />}
+        <span className="uppercase font-semibold">{title}</span>
+        <ArrowDownBtn tailw="text-primary-blue border-none" mainSearch={false} link={true} open={toggleState} />
       </h2>
       <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${toggleState ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>{children}</div>
     </div>
