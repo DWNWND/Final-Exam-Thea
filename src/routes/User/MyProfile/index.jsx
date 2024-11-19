@@ -117,7 +117,7 @@ export default function MyProfile() {
               {/* {user.bookings.length >= 1 && user.venues.length >= 1 && <SelectionBtns selector={selector} setSelector={setSelector} />} */}
               <div className="flex flex-col gap-12">
                 {userBookings.length >= 1 ? (
-                  <ListBookings key={userBookings.id} bookings={userBookings} maxVenuesShown="6" loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                  <ListBookings bookings={userBookings} maxVenuesShown="6" loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                 ) : (
                   <div className="flex flex-col justify-center items-center my-6 gap-4">
                     <p className="italic text-center">You currently have no bookings</p>
@@ -126,7 +126,7 @@ export default function MyProfile() {
                     </Link>
                   </div>
                 )}
-                {userVenues.length > 1 && <ListVenues key={userVenues.id} venues={userVenues} maxVenuesShown="6" loading={loadingInFetch} />}
+                {userVenues.length > 1 && <ListVenues venues={userVenues} maxVenuesShown="6" loading={loadingInFetch} />}
               </div>
             </section>
             {cancellationModal && (
