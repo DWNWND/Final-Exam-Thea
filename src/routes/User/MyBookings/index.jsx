@@ -8,57 +8,65 @@ import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import { IoIosClose } from "react-icons/io";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
+import ErrorFallback from "../../../components/ErrorFallback/index.jsx";
+import ListOfBookings from "../../../components/User/ListOfBookings/index.jsx";
 
 export default function MyBookings() {
   const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [cancellationModal, setCancellationModal] = useState(false);
+  const [mainErrorMessage, setMainErrorMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
   const { loading: loadingCancellation, error: errorCancellation, callApiWith } = useApiCall(accessToken);
   const [userBookings, setUserBookings] = useState([]);
   const { loading: loadingInFetch, error: errorInFetch, fetchWithAuthentication } = useAuthedFetch(accessToken);
 
-  const fetchBookings = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true`);
-    setUserBookings(response.data);
-  };
+  // const fetchBookings = async () => {
+  //   const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true`);
+  //   if (response.success) {
+  //     setUserBookings(response.data);
+  //   } else {
+  //     setMainErrorMessage(response.error.errors[0].message);
+  //   }
+  // };
 
   useEffect(() => {
     if (!accessToken) {
       navigate("/");
     } else {
-      fetchBookings();
+      // fetchBookings();
     }
   }, [accessToken]);
 
-  useEffect(() => {
-    setUserFeedbackMessage("");
-    setErrorMessage("");
-  }, [cancellationModal]);
+  // useEffect(() => {
+  //   setUserFeedbackMessage("");
+  //   setErrorMessage("");
+  // }, [cancellationModal]);
 
-  function handleExitCancellation() {
-    setCancellationModal(false);
-    setSelectedBooking(null);
-  }
+  // function handleExitCancellation() {
+  //   setCancellationModal(false);
+  //   setSelectedBooking(null);
+  // }
 
-  const handleCancellation = async () => {
-    try {
-      await callApiWith(`${apiBaseUrl}/holidaze/bookings/${selectedBooking.id}`, {
-        method: "DELETE",
-      });
+  // const handleCancellation = async () => {
+  //   try {
+  //     await callApiWith(`${apiBaseUrl}/holidaze/bookings/${selectedBooking.id}`, {
+  //       method: "DELETE",
+  //     });
 
-      if (!loadingCancellation && !errorCancellation) {
-        setErrorMessage("");
-        setUserFeedbackMessage("Cancellation successful");
-        handleExitCancellation();
-      }
-    } catch (error) {
-      setErrorMessage("Cancellation failed: " + error);
-      setUserFeedbackMessage("");
-    }
-  };
+  //     if (!loadingCancellation && !errorCancellation) {
+  //       setErrorMessage("");
+  //       setUserFeedbackMessage("Cancellation successful");
+  //       handleExitCancellation();
+  //     }
+  //   } catch (error) {
+  //     setErrorMessage("Cancellation failed: " + error);
+  //     setUserFeedbackMessage("");
+  //   }
+  // };
+
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
@@ -66,7 +74,8 @@ export default function MyBookings() {
         <title>Booking Success | Holidayz</title>
       </Helmet>
       <MainElement>
-        {errorInFetch && <p className="text-danger text-center">We encountered an unexpected issue while processing your request. Please try again later. If the problem persists, contact our support team.</p>}
+        <ListOfBookings />
+        {/* {errorInFetch && <ErrorFallback errorMessage={mainErrorMessage} />}
         {userBookings && userBookings.length > 1 && <ListBookings bookings={userBookings} maxVenuesShown="4" loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />}
         {cancellationModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => handleExitCancellation()}>
@@ -83,7 +92,7 @@ export default function MyBookings() {
               {loadingCancellation ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
             </div>
           </div>
-        )}
+        )} */}
       </MainElement>
     </HelmetProvider>
   );
