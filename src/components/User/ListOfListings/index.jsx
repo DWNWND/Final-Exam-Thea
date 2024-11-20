@@ -7,10 +7,11 @@ import { SmallSpinnerLoader } from "../../Loaders";
 import ErrorFallback from "../../ErrorFallback";
 
 export default function ListOfListings() {
-  const [allListings, setAllListings] = useState([]);
-  const [displayedListings, setDisplayedListings] = useState([]);
   const { accessToken, userName } = useAuthStore();
   const { loading: loadingInFetch, error: errorInFetch, fetchWithAuthentication } = useAuthedFetch(accessToken);
+
+  const [allListings, setAllListings] = useState([]);
+  const [displayedListings, setDisplayedListings] = useState([]);
   const [mainErrorMessage, setMainErrorMessage] = useState("");
   const [loadMoreLoader, setLoadMoreLoader] = useState(false);
 
