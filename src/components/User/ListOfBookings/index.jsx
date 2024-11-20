@@ -85,7 +85,7 @@ export default function ListOfBookings() {
         <>
           <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-8 rounded-lg">
             <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>
-            <p className="text-black">{`Showing ${displayedBookings.length < allBookings.length ? displayedBookings.length : allBookings.length} of ${allBookings.length} ${allBookings.length > 1 ? "bookings" : "booking"}`}</p>
+            <p className="text-black">{`Showing ${displayedBookings.length < allBookings.length ? displayedBookings.length : allBookings.length} of ${allBookings.length} ${allBookings.length > 1 ? "booking" : "bookings"}`}</p>
             {displayedBookings && displayedBookings.length >= 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-4 ">
                 {displayedBookings.map((booking) => (
