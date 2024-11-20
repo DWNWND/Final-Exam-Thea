@@ -1,4 +1,3 @@
-import UserProfile from "../../../components/User/UserProfile";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
@@ -29,7 +28,7 @@ export default function ProfileOverview() {
   const [userListings, setUserListings] = useState([]);
 
   const maxBookingsShown = 6;
-  const maxListingsShown = 6;
+  const maxListingsShown = 3;
 
   const fetchUser = async () => {
     const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}`);
