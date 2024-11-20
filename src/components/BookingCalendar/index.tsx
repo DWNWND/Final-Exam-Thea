@@ -3,10 +3,27 @@ import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
 import { useSearchStore } from "../../stores/useSearchStore.js";
 
-export default function BookingCalendar({ reserved }) {
+type CalendarDate = string | Date;
+
+// Define the reserved date structure
+interface ReservedDate {
+  startDate: CalendarDate;
+  endDate: CalendarDate;
+}
+
+// Define the props type
+interface BookingCalendarProps {
+  reserved: ReservedDate[];
+}
+
+export default function BookingCalendar({ reserved }: BookingCalendarProps) {
   const { travelSearchData } = useSearchStore();
 
-  let requestedDates = [travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate];
+  const requestedDates: CalendarDate[] = [travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate];
+
+  console.log("requestedDates", requestedDates);
+  console.log("reserved", reserved);
+
   return (
     <Calendar
       classNames={{
@@ -16,7 +33,6 @@ export default function BookingCalendar({ reserved }) {
         MonthContent: "text-primary-blue",
         DayContent: "text-primary-blue",
         MonthArrowNext: "text-primary-blue",
-        MonthArrowPrev: "text-primary-blue",
         DayToday: "border-none",
         DaySelection: "border border-primary-blue bg-transparent",
       }}
