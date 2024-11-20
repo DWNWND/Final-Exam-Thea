@@ -1,13 +1,12 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore.js";
+import {useAuthStore} from "../../../stores";
 import MainElement from "../../../components/MainElement/index.jsx";
 import VenueOccupancy from "../../../components/User/VenueOccupancy/index.jsx";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch.jsx";
 import Loader from "../../../components/Loader/index.jsx";
-import { useState } from "react";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
 import SmallLoader from "../../../components/SmallLoader/index.jsx";
@@ -86,7 +85,9 @@ export default function Occupancy() {
                 {cancellationModal && (
                   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
-                      <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to cancel {selectedBooking.customer}'s booking from {selectedBooking.dateFrom} to {selectedBooking.dateTo}?</h2>
+                      <h2 className="text-xl font-bold mb-4 text-primary-green">
+                        Are you sure you want to cancel {selectedBooking.customer}'s booking from {selectedBooking.dateFrom} to {selectedBooking.dateTo}?
+                      </h2>
                       <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
                       <div className="flex justify-end gap-4 mb-5">
                         <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />

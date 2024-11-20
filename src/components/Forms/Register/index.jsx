@@ -1,8 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import useAuthStore from "../../../stores/useAuthStore.js";
-import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +8,7 @@ import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
 import SmallLoader from "../../SmallLoader";
-import { useSearchStore } from "../../../stores/useSearchStore.ts";
-import { useNavigationStore } from "../../../stores/useNavigationStore.js";
+import { useSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.

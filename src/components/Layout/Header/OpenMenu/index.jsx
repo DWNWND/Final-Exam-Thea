@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { OpenMenuContext } from "../../../../contexts";
-import useAuthStore from "../../../../stores/useAuthStore";
+import { useAuthStore } from "../../../../stores";
 import SquareBtn from "../../../Buttons/SquareBtn";
 
 export default function OpenMenu() {

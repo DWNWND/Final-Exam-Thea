@@ -3,7 +3,7 @@ import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
-import { useSearchStore } from "../../../stores/useSearchStore.ts";
+import { useSearchStore } from "../../../stores";
 
 //fix loadmore btn!!
 export default function ListSearch() {
@@ -64,19 +64,19 @@ export default function ListSearch() {
       ) : (
         <> */}
       {/* {filteredVenues.length > 0 ? ( */}
-        <>
-          <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} venues (matching your search)`}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {displayedVenues.map((venue) => (
-              <VenueCard venue={venue} key={venue.id} loading={loading} />
-            ))}
-          </div>
-          {filteredVenues.length > displayedVenues.length && (
-            <button onClick={handleLoadMore} className="mt-4 px-4 py-2 bg-primary-green text-white rounded-lg">
-              Load more listings
-            </button>
-          )}
-        </>
+      <>
+        <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} venues (matching your search)`}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {displayedVenues.map((venue) => (
+            <VenueCard venue={venue} key={venue.id} loading={loading} />
+          ))}
+        </div>
+        {filteredVenues.length > displayedVenues.length && (
+          <button onClick={handleLoadMore} className="mt-4 px-4 py-2 bg-primary-green text-white rounded-lg">
+            Load more listings
+          </button>
+        )}
+      </>
       {/* ) : (
         <div className="text-center my-6 text-gray-600">No listings match your search.</div>
       )} */}

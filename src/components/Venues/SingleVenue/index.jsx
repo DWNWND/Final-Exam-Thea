@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { MdOutlinePets, MdEmojiFoodBeverage } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import SelectTravelDates from "../../Forms/SearchTravel/SelectTravelDates/index.jsx";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
 import BookingCalendar from "../../BookingCalendar/index";
-import { useSearchStore } from "../../../stores/useSearchStore.ts";
+import { useSearchStore, useAuthStore } from "../../../stores";
 import { IoIosClose } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
@@ -15,8 +14,6 @@ import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr
 import { useNavigate } from "react-router-dom";
 import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
 import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
-import useAuthStore from "../../../stores/useAuthStore.js";
-import { Link } from "react-router-dom";
 import ArrowDownBtn from "../../Buttons/ArrowDownBtn/index.jsx";
 
 export default function SingleVenue({ venue }) {
@@ -60,6 +57,7 @@ export default function SingleVenue({ venue }) {
 
   function togglePromptModal() {
     setPromptModal(!promptModal);
+    setUserFeedbackMessage("");
   }
 
   const todayString = getFormattedDate(new Date());
@@ -136,14 +134,12 @@ export default function SingleVenue({ venue }) {
     }
     const isTravelOutsideAllRanges = isOutsideAllRanges(travelStart, travelEnd, reserved); // true if travelDates is outside all ranges, false otherwise
     setTravelDatesOutsideRanges(isTravelOutsideAllRanges);
-    console.log("isTravelOutsideAllRanges", isTravelOutsideAllRanges);
   }, [travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate, venue]);
 
   function bookPropertyFunc(continueAs) {
-    setPromptModal(false);
-
     if (travelSearchData.numberOfGuests <= venue.maxGuests && travelDatesOutsideRanges) {
       setSelectedVenue(venue);
+      setPromptModal(false);
 
       if (continueAs === "guest") {
         navigate("/booking/details");
@@ -156,9 +152,9 @@ export default function SingleVenue({ venue }) {
       }
       if (continueAs === "register") {
         navigate("/register");
-      } else {
-        setUserFeedbackMessage("We're sorry. This property is not available for the selected dates or number of guests. Please select different dates or number of guests");
       }
+    } else {
+      setUserFeedbackMessage("We're sorry. This property is not available for the selected dates or number of guests. Please select different dates or number of guests");
     }
   }
 
@@ -205,7 +201,7 @@ export default function SingleVenue({ venue }) {
             {/* same as round btn, it would not work with the conditional rendering */}
             <button
               type="button"
-              className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges || yourListing? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer"} 
+              className={`${travelSearchData.numberOfGuests > venue.maxGuests || !travelDatesOutsideRanges || yourListing ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer"} 
     text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full transition-all duration-300 ease-in-out`}
               onClick={() => togglePromptModal()}
               disabled={(travelSearchData.numberOfGuests > venue.maxGuests && !travelDatesOutsideRanges) || yourListing}>
@@ -286,7 +282,7 @@ export default function SingleVenue({ venue }) {
         </div>
       </div>
       {promptModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={togglePromptModal}>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white relative p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
             <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={togglePromptModal}>
               <IoIosClose />
@@ -309,7 +305,7 @@ export default function SingleVenue({ venue }) {
                 </>
               )}
             </div>
-            {userFeedbackMessage && <p className="text-danger text-xs text-center">{userFeedbackMessage}</p>}
+            {userFeedbackMessage && <p className="text-danger text-xs text-center mt-5">{userFeedbackMessage}</p>}
           </div>
         </div>
       )}

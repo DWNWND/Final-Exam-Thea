@@ -1,6 +1,6 @@
 import VenueCard from "../../Venues/VenueCard";
 import { Link } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore";
+import {useAuthStore} from "../../../stores";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";

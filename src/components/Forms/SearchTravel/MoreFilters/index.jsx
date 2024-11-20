@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
-import { useSearchStore } from "../../../../stores/useSearchStore.ts";
+import { useSearchStore } from "../../../../stores";
 import Checkbox from "../../../Inputs/Checkbox/index.jsx";
 import ArrowDownBtn from "../../../Buttons/ArrowDownBtn/index.jsx";
 
-export default function MoreFilters({ color, mainSearch = true}) {
+export default function MoreFilters({ color, mainSearch = true }) {
   const [openMoreFilters, setOpenMoreFilters] = useState(false);
   const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useSearchStore();
 

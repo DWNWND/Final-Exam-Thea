@@ -1,6 +1,6 @@
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useBackButton } from "../../../hooks/useBackBtn";
-import { useNavigationStore } from "../../../stores/useNavigationStore";
+import { useNavigationStore } from "../../../stores";
 import { FaArrowLeft } from "react-icons/fa6";
 
 export default function ArrowLeftBtn() {

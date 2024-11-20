@@ -2,7 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import LoginForm from "../../components/Forms/Login";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../stores/useAuthStore.js";
+import { useAuthStore } from "../../stores";
 import MainElement from "../../components/MainElement/index.jsx";
 
 export default function Login() {

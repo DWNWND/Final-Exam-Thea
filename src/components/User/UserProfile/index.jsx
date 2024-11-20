@@ -1,9 +1,6 @@
-import { useState } from "react";
-import ListBookings from "../ListBookings";
-import useAuthStore from "../../../stores/useAuthStore";
-import ListVenues from "../ListVenues";
+
+import {useAuthStore} from "../../../stores";
 import { Link } from "react-router-dom";
-import ProfileLinks from "../ProfileLinks";
 import SquareBtn from "../../Buttons/SquareBtn";
 
 export default function UserProfile({ user }) {

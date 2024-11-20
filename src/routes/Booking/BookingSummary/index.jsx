@@ -1,6 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import useAuthStore from "../../../stores/useAuthStore.js";
-import { useSearchStore } from "../../../stores/useSearchStore.ts";
+import { useSearchStore, useAuthStore } from "../../../stores";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
 import { Link } from "react-router-dom";

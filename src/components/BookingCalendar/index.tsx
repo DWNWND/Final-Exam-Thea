@@ -1,7 +1,7 @@
 // https://www.npmjs.com/package/@demark-pro/react-booking-calendar
 import { Calendar } from "@demark-pro/react-booking-calendar";
 import "@demark-pro/react-booking-calendar/dist/react-booking-calendar.css";
-import { useSearchStore } from "../../stores/useSearchStore.js";
+import { useSearchStore } from "../../stores";
 
 type CalendarDate = string | Date;
 
@@ -20,9 +20,6 @@ export default function BookingCalendar({ reserved }: BookingCalendarProps) {
   const { travelSearchData } = useSearchStore();
 
   const requestedDates: CalendarDate[] = [travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate];
-
-  console.log("requestedDates", requestedDates);
-  console.log("reserved", reserved);
 
   return (
     <Calendar

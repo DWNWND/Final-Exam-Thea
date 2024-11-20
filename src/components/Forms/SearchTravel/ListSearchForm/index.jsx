@@ -3,7 +3,7 @@ import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
 import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
-import { useSearchStore } from "../../../../stores/useSearchStore.ts";
+import { useSearchStore } from "../../../../stores";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
@@ -43,7 +43,7 @@ export default function ListSearchForm() {
           <NumberOfGuests color="white" mainSearch={false} />
           <CtaBtn type="submit" innerText="Update" tailw="mt-4 md:mt-0 rounded-full bg-white" mainCta={false} color="primary-blue" />
         </div>
-        <MoreFilters mainSearch={false} color="white"/>
+        <MoreFilters mainSearch={false} color="white" />
       </form>
     </div>
   );

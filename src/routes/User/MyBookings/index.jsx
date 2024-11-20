@@ -1,11 +1,10 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore.js";
+import { useAuthStore } from "../../../stores";
 import MainElement from "../../../components/MainElement/index.jsx";
 import ListBookings from "../../../components/User/ListBookings/index.jsx";
 import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
-import { useState } from "react";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import { IoIosClose } from "react-icons/io";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";

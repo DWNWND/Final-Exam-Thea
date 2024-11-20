@@ -1,4 +1,4 @@
-import { useNavigationStore } from "../stores/useNavigationStore";
+import { useNavigationStore } from "../stores";
 import { useNavigate } from "react-router-dom";
 
 export const useBackButton = () => {

@@ -1,9 +1,9 @@
-import { useReducer, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
 import "flatpickr/dist/themes/material_green.css";
-import { useSearchStore } from "../../../../stores/useSearchStore.ts";
+import { useSearchStore } from "../../../../stores";
 import getFormattedDate from "../../../../utils/dateUtils/formayDateForFlatpickr.js";
 import generateAllTravelDates from "../../../../utils/dateUtils/generateAllDatesArr.js";
 
@@ -29,7 +29,6 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
         setTravelDates({ startDate: todayString, endDate: tomorrowString });
         setAllDatesArr(generateAllTravelDates(todayString, tomorrowString));
         setDefaultDateString(`${todayString} to ${tomorrowString}`);
-        console.log("Both dates in the past");
       }
       if (startDateInPast) {
         // Only startDate is in the past, update to today
@@ -37,7 +36,6 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
         setTravelDates({ startDate: todayString, endDate: newEndDate });
         setAllDatesArr(generateAllTravelDates(todayString, newEndDate));
         setDefaultDateString(`${todayString} to ${newEndDate}`);
-        console.log("Only startDate in the past");
       }
       if (endDateIsToday) {
         // Only startDate is in the past, update to today
@@ -45,11 +43,9 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
         setTravelDates({ endDate: newEndDate });
         setAllDatesArr(generateAllTravelDates(startDate, newEndDate));
         setDefaultDateString(`${startDate} to ${newEndDate}`);
-        console.log("endDate is today");
       } else {
         // No dates are in the past, set default date string
         setDefaultDateString(`${startDate} to ${endDate}`);
-        console.log("No dates in the  past");
       }
     };
 
@@ -68,7 +64,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
 
     // Clear the interval on component unmount
     return () => clearInterval(interval);
-  }, []); // Dependency array left empty for initial mount/reload behavior
+  }, [travelSearchData]); // Dependency array left empty for initial mount/reload behavior
 
   return (
     <div className={`flex justify-between items-center rounded-full border-${color} border bg-white w-full transition-max-height duration-500 ease-in-out overflow-hidden  ${editDates ? "px-3 max-w-full opacity-100" : "px-0 max-w-0 opacity-0"}`}>

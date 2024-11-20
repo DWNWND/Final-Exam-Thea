@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore";
+import {useAuthStore} from "../../../stores";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileLinks({ venueManager }) {

@@ -1,7 +1,7 @@
 import ArrowRightBtn from "../../Buttons/ArrowRightBtn";
 import SquareBtn from "../../Buttons/SquareBtn";
 import { Link } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore";
+import { useAuthStore } from "../../../stores";
 import { useEffect, useState } from "react";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 

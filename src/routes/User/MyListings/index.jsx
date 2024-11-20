@@ -1,7 +1,7 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../../stores/useAuthStore.js";
+import {useAuthStore} from "../../../stores";
 import MainElement from "../../../components/MainElement/index.jsx";
 import ListVenues from "../../../components/User/ListVenues/index.jsx";
 import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAuthStore from "../stores/useAuthStore";
+import {useAuthStore} from "../stores";
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_VITE_API_KEY;
 

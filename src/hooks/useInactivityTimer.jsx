@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-import useAuthStore from "../stores/useAuthStore.js";
-import { useSearchStore } from "../stores/useSearchStore.js";
+import { useSearchStore, useAuthStore } from "../stores";
 
 const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
 

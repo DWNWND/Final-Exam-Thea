@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import useAuthStore from "../../../stores/useAuthStore.js";
+import { useAuthStore } from "../../../stores";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

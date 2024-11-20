@@ -1,6 +1,6 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
-import useAuthStore from "../../../stores/useAuthStore.js";
+import { useAuthStore } from "../../../stores";
 import { useNavigate } from "react-router-dom";
 import SettingsForm from "../../../components/Forms/UserSettings/index.jsx";
 import MainElement from "../../../components/MainElement/index.jsx";

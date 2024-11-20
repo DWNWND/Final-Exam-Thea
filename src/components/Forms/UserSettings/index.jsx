@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
-import useAuthStore from "../../../stores/useAuthStore.js";
+import { useAuthStore } from "../../../stores";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import SquareBtn from "../../Buttons/SquareBtn";
 import SmallLoader from "../../SmallLoader";

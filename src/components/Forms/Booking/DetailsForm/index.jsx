@@ -3,18 +3,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
-import { useSearchStore } from "../../../../stores/useSearchStore.ts";
+import { useSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../../utils/calcNights/claculateNightsBetween.js";
-import useAuthStore from "../../../../stores/useAuthStore.js";
-import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
 import RoundBtn from "../../../Buttons/RoundBtn";
 import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useNavigationStore } from "../../../../stores/useNavigationStore.js";
+import { useEffect, useState } from "react";
 
-// Validation schema for registration
 // remeber to implement validation on email etc.
 const detailsSchema = yup.object().shape({
   firstName: yup.string().min(3, "Firstname must be at least 3 characters").required("Firstname is required"),

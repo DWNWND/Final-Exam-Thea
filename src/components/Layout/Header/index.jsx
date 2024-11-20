@@ -1,14 +1,13 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogoIcon from "../../../assets/logos/holidaize-logo.svg";
 import { useState, useEffect } from "react";
 import HamburgerBtn from "./HamburgerBtn";
-// import styles from "./Header.module.css";
 import useCheckScreenSize from "../../../hooks/useCheckScreenSize";
 import FixedBtnDisplay from "../FixedBtnDisplay";
 import { useContext } from "react";
 import { OpenMenuContext } from "../../../contexts";
 import ArrowLeftBtn from "../../Buttons/ArrowLeftBtn";
-import { useNavigationStore } from "../../../stores/useNavigationStore";
+import { useNavigationStore } from "../../../stores";
 import OpenMenu from "./OpenMenu";
 
 export default function Header() {
