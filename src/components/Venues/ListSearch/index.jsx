@@ -3,7 +3,7 @@ import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
-import { useSearchStore } from "../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../stores/useSearchStore.ts";
 
 //fix loadmore btn!!
 export default function ListSearch() {

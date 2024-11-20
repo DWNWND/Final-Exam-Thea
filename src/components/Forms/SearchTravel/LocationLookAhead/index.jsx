@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { useSearchStore } from "../../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../../stores/useSearchStore.ts";
 import { searchableLocations } from "../../../../assets/locations/searchableLocations.js";
 
 export default function LocationLookAhead({ color }) {

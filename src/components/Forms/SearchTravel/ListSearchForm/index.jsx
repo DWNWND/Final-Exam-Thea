@@ -3,7 +3,7 @@ import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
 import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
-import { useSearchStore } from "../../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../../stores/useSearchStore.ts";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";

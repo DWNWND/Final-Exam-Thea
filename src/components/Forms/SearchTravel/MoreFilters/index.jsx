@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
-import { useSearchStore } from "../../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../../stores/useSearchStore.ts";
 import Checkbox from "../../../Inputs/Checkbox/index.jsx";
 import ArrowDownBtn from "../../../Buttons/ArrowDownBtn/index.jsx";
 

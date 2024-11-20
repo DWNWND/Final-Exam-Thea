@@ -3,7 +3,7 @@ import SingleVenue from "../../components/Venues/SingleVenue";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch.jsx";
 import { useParams } from "react-router-dom";
-import { useSearchStore } from "../../stores/useSearchStore.js";
+// import { useSearchStore } from "../../stores/useSearchStore.ts";
 import MainElement from "../../components/MainElement/index.jsx";
 import Loader from "../../components/Loader/index.jsx";
 

@@ -9,7 +9,7 @@ import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
 import SmallLoader from "../../SmallLoader";
-import { useSearchStore } from "../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../stores/useSearchStore.ts";
 import { useNavigationStore } from "../../../stores/useNavigationStore.js";
 
 const loginSchema = yup.object().shape({

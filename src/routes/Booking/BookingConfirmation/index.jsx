@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import useBookingDataStore from "../../../stores/useBookingDataStore.js";
 import { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch.jsx";
-import { useSearchStore } from "../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../stores/useSearchStore.ts";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
 import RoundBtn from "../../../components/Buttons/RoundBtn/index.jsx";

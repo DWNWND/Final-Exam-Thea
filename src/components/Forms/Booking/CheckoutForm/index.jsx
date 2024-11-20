@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
-import { useSearchStore } from "../../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../../stores/useSearchStore.ts";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../../utils/calcNights/claculateNightsBetween.js";
 import useAuthStore from "../../../../stores/useAuthStore.js";
