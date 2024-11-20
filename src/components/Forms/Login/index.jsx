@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
-import SmallLoader from "../../SmallLoader";
+import {SmallSpinnerLoader} from "../../Loaders";
 import { useSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
 
 const loginSchema = yup.object().shape({
@@ -71,7 +71,7 @@ export default function LoginForm() {
           <RoundBtn type="submit" innerText="Login" bgColor="primary-green" textColor="white" />
         </div>
       </form>
-      {loading ? <SmallLoader /> : <p className="text-danger text-xs mt-3">{errorMessage && errorMessage}</p>}
+      {loading ? <SmallSpinnerLoader /> : <p className="text-danger text-xs mt-3">{errorMessage && errorMessage}</p>}
       <Link to="/#" className=" w-full block underline mt-4 text-primary-green hover:text-primary-blue">
         Forgot your password?
       </Link>

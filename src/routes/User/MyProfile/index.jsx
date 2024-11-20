@@ -3,15 +3,14 @@ import UserProfile from "../../../components/User/UserProfile";
 import ProfileLinks from "../../../components/User/ProfileLinks";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {useAuthStore} from "../../../stores";
+import { useAuthStore } from "../../../stores";
 import ListBookings from "../../../components/User/ListBookings";
 import ListVenues from "../../../components/User/ListVenues";
 import { Link } from "react-router-dom";
 import MainElement from "../../../components/MainElement/index.jsx";
-import Loader from "../../../components/Loader/index.jsx";
 import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
-import SmallLoader from "../../../components/SmallLoader/index.jsx";
+import {SmallSpinnerLoader} from "../../../components/Loaders";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import { IoIosClose } from "react-icons/io";
 
@@ -140,7 +139,7 @@ export default function MyProfile() {
                     <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-primary-blue hover:text-white" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
                     <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white" bgColor="white" textColor="danger" borderColor="danger" />
                   </div>
-                  {loadingCancellation ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+                  {loadingCancellation ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
                 </div>
               </div>
             )}

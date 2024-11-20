@@ -9,7 +9,7 @@ import claculateNightsBetween from "../../../../utils/calcNights/claculateNights
 import useApiCall from "../../../../hooks/useApiCall.jsx";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 import { useState } from "react";
-import SmallLoader from "../../../SmallLoader/index.jsx";
+import { SmallSpinnerLoader } from "../../../Loaders";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -105,7 +105,7 @@ export default function CheckoutForm() {
         <div className="flex items-center justify-between my-6">
           <RoundBtn type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
         </div>
-        {loading ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+        {loading ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
       </form>
     </div>
   );

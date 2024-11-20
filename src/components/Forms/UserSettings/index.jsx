@@ -8,7 +8,7 @@ import StringInput from "../../Inputs/String";
 import { useAuthStore } from "../../../stores";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import SquareBtn from "../../Buttons/SquareBtn";
-import SmallLoader from "../../SmallLoader";
+import {SmallSpinnerLoader} from "../../Loaders";
 import usePut from "../../../hooks/usePut";
 
 const url = import.meta.env.VITE_API_BASE_URL;
@@ -127,7 +127,7 @@ export default function SettingsForm() {
               </div>
             </div>
             <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-            {loading ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+            {loading ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
           </form>
         </div>
       )}

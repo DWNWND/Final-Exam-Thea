@@ -1,15 +1,14 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {useAuthStore} from "../../../stores";
+import { useAuthStore } from "../../../stores";
 import MainElement from "../../../components/MainElement/index.jsx";
 import VenueOccupancy from "../../../components/User/VenueOccupancy/index.jsx";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch.jsx";
-import Loader from "../../../components/Loader/index.jsx";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
-import SmallLoader from "../../../components/SmallLoader/index.jsx";
+import {SmallSpinnerLoader} from "../../../components/Loaders";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -93,7 +92,7 @@ export default function Occupancy() {
                         <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
                         <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
                       </div>
-                      {loadingCancellation ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+                      {loadingCancellation ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
                     </div>
                   </div>
                 )}

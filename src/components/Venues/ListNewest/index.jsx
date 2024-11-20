@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import VenueCard from "../VenueCard";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
-import Loader from "../../../components/Loader";
+import {BigSpinnerLoader} from "../../../components/Loaders";
 
 export default function ListNewest() {
   const { venues, loading, error } = useContext(DataContext);
@@ -12,7 +12,7 @@ export default function ListNewest() {
       <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">Our newest Listings</h2>
       {/* <>
         {isLoading ? (
-          <Loader />
+          <BigSpinnerLoader />
         ) : ( */}
           <>
             {venues && venues.length >= 2 && (

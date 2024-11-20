@@ -1,10 +1,10 @@
 import VenueCard from "../../Venues/VenueCard";
 import { Link } from "react-router-dom";
-import {useAuthStore} from "../../../stores";
+import { useAuthStore } from "../../../stores";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-import SmallLoader from "../../SmallLoader";
+import {BigSpinnerLoader} from "../../Loaders";
 
 export default function ListBookings({ bookings, maxVenuesShown, loading, setSelectedBooking, setCancellationModal }) {
   const { userName } = useAuthStore();
@@ -47,7 +47,7 @@ export default function ListBookings({ bookings, maxVenuesShown, loading, setSel
             <button onClick={handleLoadMore} className="mt-4 px-4 py-2 bg-primary-blue text-white rounded-full w-full">
               Load more bookings
             </button>
-            {loadMoreLoader && <SmallLoader />}
+            {loadMoreLoader && <BigSpinnerLoader />}
           </>
         )}
       </>

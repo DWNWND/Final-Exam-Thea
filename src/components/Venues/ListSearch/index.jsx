@@ -1,4 +1,4 @@
-import LoadingIndicator from "../../LoadingIndicator";
+import {BigSpinnerLoader} from "../../Loaders";
 import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
@@ -60,7 +60,7 @@ export default function ListSearch() {
   return (
     <>
       {/* {isLoading ? (
-        <LoadingIndicator />
+        <BigSpinnerLoader />
       ) : (
         <> */}
       {/* {filteredVenues.length > 0 ? ( */}

@@ -8,7 +8,7 @@ import StringInput from "../../Inputs/String";
 import { useAuthStore } from "../../../stores";
 import useApiCall from "../../../hooks/useApiCall.jsx";
 import SquareBtn from "../../Buttons/SquareBtn";
-import SmallLoader from "../../SmallLoader";
+import {SmallSpinnerLoader} from "../../Loaders";
 import usePut from "../../../hooks/usePut";
 import { useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
@@ -142,7 +142,7 @@ export default function EditListingForm() {
 
             <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" width="full" innerText="Save changes" tailw="hover:bg-white bg-opacity-50 mt-5" bgColor="white" textColor="primary-green" borderColor="primary-green" />
 
-            {loading ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+            {loading ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
           </form>
         </div>
       )}
@@ -156,7 +156,7 @@ export default function EditListingForm() {
               <SquareBtn clickFunc={() => handleExitDeletion()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
             </div>
-            {loadingDeletion ? <SmallLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
+            {loadingDeletion ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
           </div>
         </div>
       )}

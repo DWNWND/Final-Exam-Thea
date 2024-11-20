@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import VenueCard from "../VenueCard";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
-import Loader from "../../../components/Loader";
+import { BigSpinnerLoader } from "../../../components/Loaders";
 
 export default function ListCategorized({ filters }) {
   const { venues, loading, error } = useContext(DataContext);
@@ -10,7 +10,7 @@ export default function ListCategorized({ filters }) {
   return (
     // <>
     //   {isLoading ? (
-    //     <Loader />
+    //     <BigSpinnerLoader />
     //   ) : (
     <>
       <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">{filters}</h2>

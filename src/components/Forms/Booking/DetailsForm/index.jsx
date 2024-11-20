@@ -9,6 +9,7 @@ import claculateNightsBetween from "../../../../utils/calcNights/claculateNights
 import RoundBtn from "../../../Buttons/RoundBtn";
 import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
 import { useEffect, useState } from "react";
+import { DetailsFormSkeletonLoader } from "../../../Loaders";
 
 // remeber to implement validation on email etc.
 const detailsSchema = yup.object().shape({
@@ -92,59 +93,35 @@ export default function DetailsForm() {
   const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
   const price = nights * selectedVenue.price;
 
-  if (loading && loading) {
-    return (
-      <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full animate-pulse">
+  return (
+    <>
+      {loading && loading && <DetailsFormSkeletonLoader />}
+      <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
         <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
-          <div className="h-6 bg-comp-gray rounded w-3/4"></div> {/* Venue name */}
-          <div className="h-4 bg-comp-gray rounded w-2/3 mt-2"></div> {/* Date range */}
-          <div className="h-4 bg-comp-gray rounded w-1/4 mt-2"></div> {/* Guest count */}
-          <div className="h-6 bg-comp-gray rounded-full w-1/2 mt-4"></div> {/* Price summary */}
+          <p className="font-semibold">{selectedVenue.name}</p>
+          <p>
+            {formattedStartDate} - {formattedEndDate}
+          </p>
+          <p>{travelSearchData.numberOfGuests} guests</p>
+          <div className="rounded-full font-bold  text-primary-blue">
+            SUM TOTAL: kr {price} ({nights} {nights > 1 ? "nights" : "night"})
+          </div>
         </div>
         <div className="w-full my-6">
-          <div className="h-8 bg-comp-gray rounded w-1/3 mb-2"></div> {/* Details header */}
-          <div className="h-4 bg-comp-gray rounded w-1/2"></div> {/* Subtext */}
+          <h1 className="text-2xl uppercase text-primary-green w-full">Your details</h1>
+          <p className="text-sm italic text-primary-blue w-full">Please enter your details to complete your booking</p>
         </div>
-        <form className="w-full flex flex-col gap-4 md:gap-6">
-          <div className="h-12 bg-comp-gray rounded"></div> {/* First Name Input */}
-          <div className="h-12 bg-comp-gray rounded"></div> {/* Last Name Input */}
-          <div className="h-12 bg-comp-gray rounded"></div> {/* Email Input */}
-          <div className="h-12 bg-comp-gray rounded"></div> {/* Check-In Input */}
-          <div className="h-12 bg-comp-gray rounded"></div> {/* Special Requests Input */}
+        <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
+          <StringInput type="text" id="firstName" label="First name" placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
+          <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" register={register} errorMessage={errors.lastName && errors.lastName.message} trigger={trigger} watch={watch} />
+          <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
+          <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" register={register} errorMessage={errors.checkIn && errors.checkIn.message} trigger={trigger} watch={watch} />
+          <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} trigger={trigger} watch={watch} />
           <div className="flex items-center justify-between my-6">
-            <div className="h-10 bg-comp-gray rounded-full w-24"></div> {/* Submit Button Placeholder */}
+            <RoundBtn type="submit" innerText="Next" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
           </div>
         </form>
       </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
-      <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
-        <p className="font-semibold">{selectedVenue.name}</p>
-        <p>
-          {formattedStartDate} - {formattedEndDate}
-        </p>
-        <p>{travelSearchData.numberOfGuests} guests</p>
-        <div className="rounded-full font-bold  text-primary-blue">
-          SUM TOTAL: kr {price} ({nights} {nights > 1 ? "nights" : "night"})
-        </div>
-      </div>
-      <div className="w-full my-6">
-        <h1 className="text-2xl uppercase text-primary-green w-full">Your details</h1>
-        <p className="text-sm italic text-primary-blue w-full">Please enter your details to complete your booking</p>
-      </div>
-      <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="firstName" label="First name" placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
-        <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" register={register} errorMessage={errors.lastName && errors.lastName.message} trigger={trigger} watch={watch} />
-        <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
-        <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" register={register} errorMessage={errors.checkIn && errors.checkIn.message} trigger={trigger} watch={watch} />
-        <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} trigger={trigger} watch={watch} />
-        <div className="flex items-center justify-between my-6">
-          <RoundBtn type="submit" innerText="Next" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
-        </div>
-      </form>
-    </div>
+    </>
   );
 }

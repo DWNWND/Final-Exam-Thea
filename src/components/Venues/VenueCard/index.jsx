@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { useEffect, useState } from "react";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
+import { VenueCardSkeletonLoader } from "../../Loaders";
 
 export default function VenueCard({ venue, bookingId, bookingDates = null, loading, myVenues = false, myBookings = false, setSelectedBooking = () => {}, setCancellationModal = () => {} }) {
   const { userName, venueManager } = useAuthStore();
@@ -48,22 +49,9 @@ export default function VenueCard({ venue, bookingId, bookingDates = null, loadi
     }
   }, [bookingDates]);
 
-  if (loading) {
-    return (
-      <div className="rounded-lg shadow-sm bg-white relative flex flex-col">
-        <div className="animate-pulse">
-          <div className="h-48 bg-comp-gray rounded-t-lg"></div>
-          <div className="p-4 flex flex-col gap-4 ">
-            <div className="h-6 bg-comp-gray rounded w-3/4"></div>
-            <div className="h-4 bg-comp-gray rounded w-1/2"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
+      {loading && <VenueCardSkeletonLoader />}
       {venue && (
         <div key={venue.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
           <Link to={"/venue/" + venue.id} className="h-48 w-full absolute z-30 rounded-lg"></Link>

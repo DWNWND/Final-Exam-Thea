@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
-import SmallLoader from "../../SmallLoader";
+import {SmallSpinnerLoader} from "../../Loaders";
 import { useSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
 
 // Validation schema for registration
@@ -78,7 +78,7 @@ export default function RegisterForm() {
           {/* <CtaBtn type="submit" innerText="Register" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} /> */}
         </div>
       </form>
-      {loading ? <SmallLoader /> : <p className="text-danger text-xs mt-3">{errorMessage && errorMessage} </p>}
+      {loading ? <SmallSpinnerLoader /> : <p className="text-danger text-xs mt-3">{errorMessage && errorMessage} </p>}
       <Link to="/login" className="w-full block underline mt-4 text-primary-green hover:text-primary-blue">
         Already have an account?
       </Link>

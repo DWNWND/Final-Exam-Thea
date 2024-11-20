@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch.jsx";
 import { useParams } from "react-router-dom";
 import MainElement from "../../components/MainElement/index.jsx";
-import Loader from "../../components/Loader/index.jsx";
+import {BigSpinnerLoader} from "../../components/Loaders";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -26,7 +26,7 @@ export default function VenueSpesific() {
   return (
     <>
       {singleVenueIsLoading ? (
-        <Loader />
+        <BigSpinnerLoader />
       ) : (
         <>
           {onlyRenderWhenSet && (
