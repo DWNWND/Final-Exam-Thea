@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {useAuthStore} from "../stores";
+import { useAuthStore } from "../stores";
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -23,7 +23,7 @@ export default function useAuthedFetch() {
       const errorData = await response.json();
       console.log("errror catched in apiCall", errorData);
       const error = new Error("Error when calling API");
-      error.data = errorData; // Attach the original error object
+      error.data = errorData; // Attached the original error object
       throw error;
     }
 
@@ -37,13 +37,12 @@ export default function useAuthedFetch() {
       const response = await callApiWith(apiBaseUrl + additionalRefs, {
         method: "GET",
       });
-      console.log("response from authedFetch:", response);
       if (response.data.venueManager) {
         setVenueManager(response.data.venueManager);
       }
       return { success: true, data: response.data };
     } catch (err) {
-      console.log("error catched in fetch user func", err.data);
+      setError(err.data);
       return { success: false, error: err.data };
     } finally {
       setLoading(false);
