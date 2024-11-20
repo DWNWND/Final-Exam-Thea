@@ -1,14 +1,20 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainSearchForm from "../../components/Forms/SearchTravel/MainSearchForm";
 import SelectCategoryBtns from "../../components/ButtonGroupes/SelectCategoryBtns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement";
+import { useSearchStore } from "../../stores";
 
 export default function Home() {
   const [filters, setFilters] = useState("unique");
+  const { clearTravelSearchStore } = useSearchStore();
+
+  useEffect(() => {
+    clearTravelSearchStore();
+  }, []);
 
   return (
     <HelmetProvider>
@@ -18,7 +24,7 @@ export default function Home() {
       </Helmet>
       <MainElement noPadding={true}>
         <DataProvider>
-        <section id="searchHeader" className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
+          <section id="searchHeader" className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
             <MainSearchForm />
           </section>
           <section id="categorizedListings" className="p-4 pb-12 md:my-10">
@@ -29,7 +35,7 @@ export default function Home() {
             <ListNewest />
           </section>
         </DataProvider>
-      </MainElement >
+      </MainElement>
     </HelmetProvider>
   );
 }
