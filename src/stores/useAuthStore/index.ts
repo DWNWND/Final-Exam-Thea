@@ -1,7 +1,17 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-const useAuthStore = create(
+interface AuthStoreState {
+  accessToken: string | null;
+  userName: string | null;
+  venueManager: boolean | null;
+  setUserName: (name: string) => void;
+  setAccessToken: (token: string | null) => void;
+  setVenueManager: (bool: boolean | null) => void;
+  logOut: () => void;
+}
+
+export const useAuthStore = create<AuthStoreState>()(
   persist(
     (set) => ({
       accessToken: null,
@@ -16,9 +26,9 @@ const useAuthStore = create(
     }),
     {
       name: "auth-storage",
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
       version: 1, // Add a version number
-      migrate: (persistedState, version) => {
+      migrate: (persistedState: any, version: number) => {
         // Handle old state migration logic here
         if (version === 0) {
           // Clear old keys
@@ -28,10 +38,8 @@ const useAuthStore = create(
             venueManager: null,
           };
         }
-        return persistedState; // Return existing state if no migration needed
+        return persistedState; // Return existing state if no migration is needed
       },
     }
   )
 );
-
-export default useAuthStore;

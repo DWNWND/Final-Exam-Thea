@@ -1,7 +1,16 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-export const useNavigationStore = create(
+interface NavigationStoreState {
+  history: string[];
+  addRoute: (route: string) => void;
+  goBack: () => void;
+  hasPreviousRoute: () => boolean;
+  getLastPreviousRoute: () => string | null;
+  setPreviousRoute: (route: string) => void;
+}
+
+export const useNavigationStore = create<NavigationStoreState>()(
   persist(
     (set, get) => ({
       history: [],
@@ -21,18 +30,16 @@ export const useNavigationStore = create(
           return { history: newHistory };
         }),
 
-      // Selector that returns a boolean indicating if there’s a previous route
       hasPreviousRoute: () => {
         const history = get().history;
         return history.length > 1 && history[history.length - 1] !== "/";
       },
 
-      // Selector to get the last previous route
       getLastPreviousRoute: () => {
         const history = get().history;
         return history.length > 1 ? history[history.length - 2] : null;
       },
-      // Action to manually set the previous route
+
       setPreviousRoute: (route) =>
         set((state) => {
           const newHistory = [...state.history];
@@ -45,8 +52,9 @@ export const useNavigationStore = create(
         }),
     }),
     {
-      name: "navigation-store", // Storage key
+      name: "navigation-store",
       storage: createJSONStorage(() => localStorage),
     }
   )
 );
+
