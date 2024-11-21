@@ -20,29 +20,26 @@ export default function VenueCard({ venue, bookingId, bookingDates = null, loadi
   useEffect(() => {
     if (bookingDates) {
       const checkIfBookingIsInThePast = () => {
-        const todayString = formatDateForDisplay(new Date());
+        const today = new Date();
         const { startDate, endDate } = bookingDates;
+
         // Determine if dates are in the past or if endDate is today
-        const startDateInPast = startDate && new Date(startDate) < new Date(todayString);
-        const endDateInPast = endDate && new Date(endDate) < new Date(todayString);
-        const endDateIsToday = endDate && new Date(endDate).toDateString() === new Date(todayString).toDateString();
-        if (startDateInPast && endDateInPast) {
-          // Both startDate and endDate are in the past
+        const startDateInPast = startDate && new Date(startDate) < today;
+        const endDateInPast = endDate && new Date(endDate) < today;
+        const endDateIsToday = endDate && new Date(endDate).toDateString() === today.toDateString();
+
+        if (startDateInPast && endDateInPast && !endDateIsToday) {
           setInactiveBooking(true);
-          console.log("booking in the past");
         }
-        if (startDateInPast) {
-          // Only startDate is in the past
+        if (startDateInPast && !endDateInPast) {
           setCurrentBooking(true);
-          console.log("Only startDate in the past");
         }
-        if (endDateIsToday) {
-          // EndDate is today
+        if (startDateInPast && endDateIsToday) {
           setCheckOutToday(true);
-          console.log("endDate is today");
-        } else {
-          console.log("bookings are active");
-          // No dates are in the past
+        } else if (!startDateInPast && !endDateInPast && !endDateIsToday) {
+          setInactiveBooking(false);
+          setCurrentBooking(false);
+          setCheckOutToday(false);
         }
       };
       checkIfBookingIsInThePast();
@@ -59,10 +56,16 @@ export default function VenueCard({ venue, bookingId, bookingDates = null, loadi
           <div className="relative">
             <ArrowRightBtn href={"/venue/" + venue.id} myVenues={myVenues} myBookings={myBookings} tailw="z-30" />
             <img src={venue.media.length > 0 ? venue.media[0].url : null} alt={venue.media.length > 0 ? venue.media[0].alt : null} className={`w-full h-48 object-cover rounded-t-lg`} />
-            {bookingDates && (
-              <p className="absolute w-full text-center bottom-20 text-4xl font-bold text-white z-20">
-                {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
-              </p>
+            {checkOutToday ? (
+              <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-danger z-20 uppercase">Check out today</p>
+            ) : (
+              <>
+                {bookingDates && (
+                  <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-white z-20">
+                    {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
+                  </p>
+                )}
+              </>
             )}
             <p className="absolute font-bold text-2xl text-white bottom-2 right-2 z-30">kr {venue.price}/night</p>
           </div>
@@ -93,8 +96,7 @@ export default function VenueCard({ venue, bookingId, bookingDates = null, loadi
                 <>
                   {inactiveBooking && <p>This booking is inactive</p>}
                   {currentBooking && <p>Your current stay</p>}
-                  {checkOutToday && <p>Check out today</p>}
-                  {!inactiveBooking && !currentBooking && !checkOutToday && <SquareBtn clickFunc={cancelBookingPrompt} innerText="Cancel booking" width="full" tailw="lowercase z-40" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />}
+                  {!inactiveBooking && !currentBooking && !checkOutToday && <SquareBtn clickFunc={cancelBookingPrompt} innerText="Cancel booking" width="full" tailw="lowercase z-40" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />}
                 </>
               )}
             </div>
