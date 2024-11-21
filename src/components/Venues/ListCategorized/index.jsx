@@ -5,7 +5,7 @@ import { DataContext } from "../../../contexts";
 import { BigSpinnerLoader } from "../../../components/Loaders";
 
 export default function ListCategorized({ filters }) {
-  const { venues, loading, error } = useContext(DataContext);
+  const { displayedListings, loading, error } = useContext(DataContext);
 
   return (
     // <>
@@ -15,23 +15,23 @@ export default function ListCategorized({ filters }) {
     <>
       <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">{filters}</h2>
 
-      {venues && venues.length >= 2 && (
+      {displayedListings && displayedListings.length >= 2 && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
-          {venues
-            .filter((venue) => {
+          {displayedListings
+            .filter((listing) => {
               if (filters.toLowerCase().includes("unique")) {
-                return venue.name.toLowerCase().includes("unique") || venue.description.toLowerCase().includes("unique");
+                return listing.name.toLowerCase().includes("unique") || listing.description.toLowerCase().includes("unique");
               } else if (filters.toLowerCase().includes("luxury")) {
-                return venue.name.toLowerCase().includes("luxury") || venue.description.toLowerCase().includes("luxury");
+                return listing.name.toLowerCase().includes("luxury") || listing.description.toLowerCase().includes("luxury");
               } else if (filters.toLowerCase().includes("rating")) {
-                return venue.rating > 4;
+                return listing.rating > 4;
               } else {
-                return venue;
+                return listing;
               }
             })
             .slice(0, 4)
-            .map((venue) => (
-              <VenueCard venue={venue} key={venue.id} loading={loading} />
+            .map((listing) => (
+              <VenueCard venue={listing} key={listing.id} loading={loading} />
             ))}
         </div>
       )}
