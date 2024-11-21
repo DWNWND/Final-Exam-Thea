@@ -1,4 +1,4 @@
-import {BigSpinnerLoader} from "../../Loaders";
+import { BigSpinnerLoader } from "../../Loaders";
 import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
@@ -7,7 +7,7 @@ import { useSearchStore } from "../../../stores";
 
 //fix loadmore btn!!
 export default function ListSearch() {
-  const { venues, loading } = useContext(DataContext);
+  const { displayedListings, loading } = useContext(DataContext);
   const [filteredVenues, setFilteredVenues] = useState([]);
   const [displayedVenues, setDisplayedVenues] = useState([]);
   const initialDisplayCount = 10;
@@ -15,22 +15,22 @@ export default function ListSearch() {
   const searchQuery = travelSearchData;
 
   useEffect(() => {
-    const matches = venues.filter((venue) => {
+    const matches = displayedListings.filter((listing) => {
       // Location filter
-      if (searchQuery.location.toLowerCase() && searchQuery.location.toLowerCase() !== venue.location.city.toLowerCase()) return false;
+      if (searchQuery.location.toLowerCase() && searchQuery.location.toLowerCase() !== listing.location.city.toLowerCase()) return false;
 
       // Amenities filter
       const amenities = [
-        { key: "freeWifi", value: venue.meta.wifi },
-        { key: "petsAllowed", value: venue.meta.pets },
-        { key: "freeParking", value: venue.meta.parking },
-        { key: "freeBreakfast", value: venue.meta.breakfast },
+        { key: "freeWifi", value: listing.meta.wifi },
+        { key: "petsAllowed", value: listing.meta.pets },
+        { key: "freeParking", value: listing.meta.parking },
+        { key: "freeBreakfast", value: listing.meta.breakfast },
       ];
       const amenitiesMatch = amenities.every((amenity) => !searchQuery[amenity.key] || searchQuery[amenity.key] === amenity.value);
       if (!amenitiesMatch) return false;
 
       // Guest capacity filter
-      if (venue.maxGuests < searchQuery.numberOfGuests) return false;
+      if (listing.maxGuests < searchQuery.numberOfGuests) return false;
 
       // Price filter
       const priceFilters = [
@@ -41,16 +41,16 @@ export default function ListSearch() {
         { key: "price400to500", min: 400, max: 500 },
         { key: "price500", min: 500, max: Infinity },
       ];
-      const priceMatch = priceFilters.some((filter) => searchQuery[filter.key] && venue.price >= filter.min && venue.price < filter.max);
+      const priceMatch = priceFilters.some((filter) => searchQuery[filter.key] && listing.price >= filter.min && listing.price < filter.max);
       if (!priceFilters.some((filter) => searchQuery[filter.key]) || priceMatch) return true;
 
       return false;
     });
 
     setFilteredVenues(matches);
-    setDisplayedVenues(matches.slice(0, initialDisplayCount)); // Set initial displayed venues
+    setDisplayedVenues(matches.slice(0, initialDisplayCount)); // Set initial displayed listings
     // setIsLoading(false);
-  }, [venues, searchQuery]);
+  }, [displayedListings, searchQuery]);
 
   const handleLoadMore = () => {
     const newCount = displayedVenues.length + 10;
@@ -65,10 +65,10 @@ export default function ListSearch() {
         <> */}
       {/* {filteredVenues.length > 0 ? ( */}
       <>
-        <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} venues (matching your search)`}</p>
+        <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} listings (matching your search)`}</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {displayedVenues.map((venue) => (
-            <VenueCard venue={venue} key={venue.id} loading={loading} />
+          {displayedVenues.map((listing) => (
+            <VenueCard venue={listing} key={listing.id} loading={loading} />
           ))}
         </div>
         {filteredVenues.length > displayedVenues.length && (
