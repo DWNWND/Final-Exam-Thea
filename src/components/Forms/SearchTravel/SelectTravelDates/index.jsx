@@ -46,7 +46,8 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
       // Determine if dates are in the past or if endDate is same as startDate
       const startDateInPast = savedDates.startDateObj && new Date(savedDates.startDateObj) < new Date(today); //do these have to be Date objects to find the difference?
       const endDateInPast = savedDates.endDateObj && new Date(savedDates.endDateObj) < new Date(savedDates.startDateObj); //do these have to be Date objects to find the difference?
-      const endDateIsSameAsStartDate = savedDates.endDateObj && savedDates.endDateObj === savedDates.startDateObj; //do these have to be Date objects to find the difference?
+      const endDateIsSameAsStartDate = savedDates.endDateObj && new Date(savedDates.endDateObj).toDateString() === new Date(savedDates.startDateObj).toDateString();
+
       if (endDateInPast) {
         // endDate is in the past (all dates must be invalid)
         initializeDates();
