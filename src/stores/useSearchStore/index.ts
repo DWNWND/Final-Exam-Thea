@@ -2,8 +2,6 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 interface TravelSearchData {
-  travelDates: Record<string, string>;
-  allDatesArr: string[];
   location: string;
   numberOfGuests: number;
   freeWifi: boolean;
@@ -20,9 +18,6 @@ interface TravelSearchData {
 
 interface SearchStoreState {
   travelSearchData: TravelSearchData;
-  selectedVenue: Record<string, any>;
-  setTravelDates: (travelDates: TravelSearchData["travelDates"]) => void;
-  setAllDatesArr: (allDatesArr: TravelSearchData["allDatesArr"]) => void;
   setLocation: (location: string) => void;
   setNumberOfGuests: (numberOfGuests: number) => void;
   setFreeWifi: (freeWifi: boolean) => void;
@@ -35,7 +30,6 @@ interface SearchStoreState {
   setPrice300to400: (price300to400: boolean) => void;
   setPrice400to500: (price400to500: boolean) => void;
   setPrice500: (price500: boolean) => void;
-  setSelectedVenue: (venue: Record<string, any>) => void;
   clearTravelSearchStore: () => void;
 }
 
@@ -43,8 +37,6 @@ export const useSearchStore = create<SearchStoreState>()(
   persist(
     (set) => ({
       travelSearchData: {
-        travelDates: {},
-        allDatesArr: [],
         location: "",
         numberOfGuests: 2,
         freeWifi: false,
@@ -58,15 +50,6 @@ export const useSearchStore = create<SearchStoreState>()(
         price400to500: false,
         price500: false,
       },
-      selectedVenue: {},
-      setTravelDates: (travelDates) =>
-        set((state) => ({
-          travelSearchData: { ...state.travelSearchData, travelDates },
-        })),
-      setAllDatesArr: (allDatesArr) =>
-        set((state) => ({
-          travelSearchData: { ...state.travelSearchData, allDatesArr },
-        })),
       setLocation: (location) =>
         set((state) => ({
           travelSearchData: { ...state.travelSearchData, location },
@@ -115,12 +98,9 @@ export const useSearchStore = create<SearchStoreState>()(
         set((state) => ({
           travelSearchData: { ...state.travelSearchData, price500 },
         })),
-      setSelectedVenue: (venue) => set({ selectedVenue: venue }),
       clearTravelSearchStore: () =>
         set({
           travelSearchData: {
-            travelDates: {},
-            allDatesArr: [],
             location: "",
             numberOfGuests: 2,
             freeWifi: false,
@@ -134,7 +114,6 @@ export const useSearchStore = create<SearchStoreState>()(
             price400to500: false,
             price500: false,
           },
-          selectedVenue: {},
         }),
     }),
     {
