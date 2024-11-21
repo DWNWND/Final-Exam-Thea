@@ -10,7 +10,7 @@ export default function OccupancyOverview() {
   const { fetchFromApi } = useFetch();
   const [listing, setListing] = useState(null);
   const [listingReserved, setListingReserved] = useState([]);
-  const [mainErrorMessage, setMainErrorMessage] = useState("");
+  const [mainErrorMessage, setMainErrorMessage] = useState(""); // the errormessage is not added anywhere
 
   const fetchOccupancyData = async () => {
     const response = await fetchFromApi(`/holidaze/venues/${id}?_bookings=true`);
@@ -23,7 +23,7 @@ export default function OccupancyOverview() {
       }));
       setListingReserved(reserved);
     } else {
-      console.log("error", response.error);
+      console.log("this is the error that havent been checked in OccupancyOverview:", response.error);
       setMainErrorMessage(response.error); // this errormessage have not been checked
     }
   };
