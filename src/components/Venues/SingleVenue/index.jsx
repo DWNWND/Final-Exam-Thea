@@ -21,7 +21,7 @@ export default function SingleVenue() {
   const { id } = useParams();
   const { fetchFromApi } = useFetch();
   const { setBookingData, setSelectedVenue, clearBookingData } = useBookingDataStore();
-  const { savedDates, setSavedDates, setInitialDates, setDefaultFlatpickrDates } = useTravelDatesStore();
+  const { savedDates } = useTravelDatesStore();
   const { accessToken, userName, logOut } = useAuthStore();
   const { travelSearchData } = useSearchStore();
 
