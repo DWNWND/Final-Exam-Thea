@@ -9,6 +9,7 @@ import useApiCall from "../../../hooks/useApiCall.jsx";
 import { IoIosClose } from "react-icons/io";
 import VenueCard from "../../Venues/VenueCard";
 import ErrorFallback from "../../ErrorFallback/index.jsx";
+import RoundBtn from "../../Buttons/RoundBtn/index.jsx";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -27,8 +28,8 @@ export default function ProfileOverview() {
   const [userBookings, setUserBookings] = useState([]);
   const [userListings, setUserListings] = useState([]);
 
-  const maxBookingsShown = 6;
-  const maxListingsShown = 3;
+  const maxBookingsShown = 4;
+  const maxListingsShown = 4;
 
   const fetchUser = async () => {
     const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}`);
@@ -40,7 +41,7 @@ export default function ProfileOverview() {
   };
 
   const fetchBookings = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true`);
+    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
     if (response.success) {
       setUserBookings(response.data);
     } else {
@@ -150,15 +151,15 @@ export default function ProfileOverview() {
                   <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>
                   <p className="text-black">{`Showing ${userBookings.length < maxBookingsShown ? userBookings.length : maxBookingsShown} of ${userBookings.length} ${userBookings.length > 1 ? "bookings" : "booking"}`}</p>
                   {userBookings && userBookings.length >= 1 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3  gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                       {userBookings.slice(0, maxBookingsShown).map((booking) => (
                         <VenueCard venue={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} myBookings={true} loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                       ))}
                     </div>
                   )}
                   {userBookings && userBookings.length > maxBookingsShown && (
-                    <Link to={`/user/${userName}/mybookings`} className="md:text-center  block mt-4 underline text-black">
-                      View all my active listings
+                    <Link to={`/user/${userName}/mybookings`} className="mt-3">
+                      <RoundBtn innerText="all bookings" width="full" tailw="lowercase" bgColor="primary-blue" textColor="white" />
                     </Link>
                   )}
                 </div>
@@ -171,19 +172,19 @@ export default function ProfileOverview() {
                 </div>
               )}
               {userListings.length > 1 && (
-                <div className="flex flex-col gap-2 bg-comp-green shadow-md p-8 rounded-lg">
+                <div className="flex flex-col gap-2">
                   <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My active listings</h2>
                   <p className="text-black">{`Showing ${userListings.length < maxListingsShown ? userListings.length : maxListingsShown} of ${userListings.length} ${userListings.length > 1 ? "listing" : "listings"}`}</p>
                   {userListings && userListings.length >= 2 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-4 ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                       {userListings.slice(0, maxListingsShown).map((listing) => (
                         <VenueCard key={listing.id} venue={listing} myVenues={true} loading={loadingInFetch} />
                       ))}
                     </div>
                   )}
                   {userListings && userListings.length > maxListingsShown && (
-                    <Link to={`/user/${userName}/mylistings`} className="md:text-center block mt-4 underline text-black">
-                      View all my active listings
+                    <Link to={`/user/${userName}/mylistings`} className="mt-3">
+                      <RoundBtn innerText="all listings" width="full" tailw="lowercase" bgColor="primary-green" textColor="white" />
                     </Link>
                   )}
                 </div>
