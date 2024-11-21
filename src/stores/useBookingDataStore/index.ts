@@ -16,7 +16,7 @@ interface BookingDataStoreState {
   setBookingData: (bookingData: BookingData) => void;
   setSuccessfulBookingId: (successfulBookingId: string) => void;
   setBookingEmail: (bookingEmail: string) => void;
-  clearBookingData: () => void;
+  clearBookingDataStore: () => void;
   setSelectedVenue: (venue: Record<string, any>) => void;
 }
 
@@ -36,7 +36,7 @@ export const useBookingDataStore = create<BookingDataStoreState>()(
       setSuccessfulBookingId: (successfulBookingId) => set({ successfulBookingId }),
       setBookingEmail: (bookingEmail) => set({ bookingEmail }),
       setSelectedVenue: (venue) => set({ selectedVenue: venue }),
-      clearBookingData: () =>
+      clearBookingDataStore: () =>
         set({
           bookingData: {
             dateFrom: "",
