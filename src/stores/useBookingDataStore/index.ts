@@ -12,10 +12,12 @@ interface BookingDataStoreState {
   bookingData: BookingData;
   successfulBookingId: string;
   bookingEmail: string;
+  selectedVenue: Record<string, any>;
   setBookingData: (bookingData: BookingData) => void;
   setSuccessfulBookingId: (successfulBookingId: string) => void;
   setBookingEmail: (bookingEmail: string) => void;
   clearBookingData: () => void;
+  setSelectedVenue: (venue: Record<string, any>) => void;
 }
 
 export const useBookingDataStore = create<BookingDataStoreState>()(
@@ -29,9 +31,11 @@ export const useBookingDataStore = create<BookingDataStoreState>()(
       },
       successfulBookingId: "",
       bookingEmail: "",
+      selectedVenue: {},
       setBookingData: (bookingData) => set({ bookingData }),
       setSuccessfulBookingId: (successfulBookingId) => set({ successfulBookingId }),
       setBookingEmail: (bookingEmail) => set({ bookingEmail }),
+      setSelectedVenue: (venue) => set({ selectedVenue: venue }),
       clearBookingData: () =>
         set({
           bookingData: {
@@ -40,6 +44,7 @@ export const useBookingDataStore = create<BookingDataStoreState>()(
             guests: 0,
             venueId: "",
           },
+          selectedVenue: {},
         }),
     }),
     {
