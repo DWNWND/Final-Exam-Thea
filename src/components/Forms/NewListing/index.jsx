@@ -11,7 +11,7 @@ import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaRegHeart, FaShare } from "react-icons/fa";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
-import getFormattedDate from "../../../utils/dateUtils/formayDateForFlatpickr.js";
+import formatDateForFlatpickr from "../../../utils/dateUtils/formatDateForFlatpickr.js";
 
 const url = import.meta.env.VITE_API_VENUES_URL;
 
@@ -80,8 +80,8 @@ export default function NewListingForm() {
     setHostDetailsOpen(!hostDetailsOpen);
   }
 
-  const todayString = getFormattedDate(new Date());
-  const tomorrowString = getFormattedDate(new Date(new Date().setDate(new Date().getDate() + 1)));
+  const todayString = formatDateForFlatpickr(new Date());
+  const tomorrowString = formatDateForFlatpickr(new Date(new Date().setDate(new Date().getDate() + 1)));
 
   const startDate = new Date(todayString);
   const formattedStartDate = formatDateForDisplay(startDate);
