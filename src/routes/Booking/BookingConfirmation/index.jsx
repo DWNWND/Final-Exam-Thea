@@ -4,7 +4,7 @@ import {useAuthStore, useSearchStore, useBookingDataStore} from "../../../stores
 import MainElement from "../../../components/MainElement/index.jsx";
 import { useParams } from "react-router-dom";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
-import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
+import calculateNightsBetween from "../../../utils/calcNights/calculateNightsBetween.js";
 import RoundBtn from "../../../components/Buttons/RoundBtn/index.jsx";
 import { Link } from "react-router-dom";
 
@@ -22,7 +22,7 @@ export default function BookingConfirmation() {
   const endDate = new Date(bookingData.dateTo);
   const formattedEndDate = formatDateForDisplay(endDate);
 
-  const nights = claculateNightsBetween(bookingData.dateFrom, bookingData.dateTo);
+  const nights = calculateNightsBetween(bookingData.dateFrom, bookingData.dateTo);
   const price = nights * selectedVenue.price;
   // const { accessToken, userName } = useAuthStore();
 

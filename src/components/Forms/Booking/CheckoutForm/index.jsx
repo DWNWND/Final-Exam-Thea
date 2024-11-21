@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
 import { useSearchStore, useBookingDataStore, useAuthStore } from "../../../../stores";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
-import claculateNightsBetween from "../../../../utils/calcNights/claculateNightsBetween.js";
+import claculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
 import useApiCall from "../../../../hooks/useApiCall.jsx";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function CheckoutForm() {
   const { accessToken } = useAuthStore();
   const { travelSearchData, selectedVenue } = useSearchStore();
   const { callApiWith, loading, error } = useApiCall(accessToken);
-  const { bookingData, successfulBookingId, setSuccessfulBookingId } = useBookingDataStore();
+  const { bookingData, setSuccessfulBookingId } = useBookingDataStore();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");

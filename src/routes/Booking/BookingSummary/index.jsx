@@ -1,7 +1,7 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useSearchStore, useAuthStore } from "../../../stores";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
-import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
+import calculateNightsBetween from "../../../utils/calcNights/calculateNightsBetween.js";
 import { Link } from "react-router-dom";
 import RoundBtn from "../../../components/Buttons/RoundBtn/index.jsx";
 import MainElement from "../../../components/MainElement/index.jsx";
@@ -16,7 +16,7 @@ export default function BookingSummary() {
   const endDate = new Date(travelSearchData.travelDates.endDate);
   const formattedEndDate = formatDateForDisplay(endDate);
 
-  const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
+  const nights = calculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
   const price = nights * selectedVenue.price;
 
   return (
