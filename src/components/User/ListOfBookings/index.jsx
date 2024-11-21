@@ -27,7 +27,7 @@ export default function ListOfBookings() {
   const initialDisplayCount = 10;
 
   const fetchBookings = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true`);
+    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
     if (response.success) {
       setAllBookings(response.data);
     } else {
