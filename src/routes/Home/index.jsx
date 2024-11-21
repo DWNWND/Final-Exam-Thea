@@ -6,14 +6,16 @@ import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement";
-import { useSearchStore } from "../../stores";
+import { useBookingDataStore, useSearchStore } from "../../stores";
 
 export default function Home() {
   const [filters, setFilters] = useState("unique");
   const { clearTravelSearchStore } = useSearchStore();
+  const { clearBookingDataStore } = useBookingDataStore();
 
   useEffect(() => {
     clearTravelSearchStore();
+    clearBookingDataStore();
   }, []);
 
   return (
