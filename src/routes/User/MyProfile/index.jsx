@@ -19,7 +19,7 @@ export default function MyProfile() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>My Profile | {userName} | Holidaze</title>
+        <title>{`My Profile | ${userName} | Holidaze`}</title>
       </Helmet>
       <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
         <ProfileOverview />
