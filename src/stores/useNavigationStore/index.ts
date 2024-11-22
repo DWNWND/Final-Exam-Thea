@@ -8,6 +8,7 @@ interface NavigationStoreState {
   hasPreviousRoute: () => boolean;
   getLastPreviousRoute: () => string | null;
   setPreviousRoute: (route: string) => void;
+  clearNavigationHistory: () => void;
 }
 
 export const useNavigationStore = create<NavigationStoreState>()(
@@ -50,6 +51,11 @@ export const useNavigationStore = create<NavigationStoreState>()(
           }
           return { history: newHistory };
         }),
+
+      clearNavigationHistory: () =>
+        set(() => ({
+          history: [],
+        })),
     }),
     {
       name: "navigation-store",
@@ -57,4 +63,3 @@ export const useNavigationStore = create<NavigationStoreState>()(
     }
   )
 );
-
