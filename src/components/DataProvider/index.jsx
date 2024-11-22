@@ -21,6 +21,7 @@ export function DataProvider({ children }) {
   };
 
   useEffect(() => {
+    setMainErrorMessage("");
     fetchAllListings();
   }, []);
 
