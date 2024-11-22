@@ -15,12 +15,15 @@ export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useCheckScreenSize();
   const location = useLocation();
-  const addRoute = useNavigationStore((state) => state.addRoute);
+  const { addRoute } = useNavigationStore();
 
   useEffect(() => {
+    console.log("location changes", location.pathname);
     addRoute(location.pathname); // Add the current path to the history
-  }, [location.pathname, addRoute]);
+    
+  }, [location.pathname]);
 
+  
   return (
     <>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
