@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import MainElement from "../../../components/MainElement/index.jsx";
@@ -8,6 +8,7 @@ import OccupancyOverview from "../../../components/User/OccupancyOverview/index.
 export default function Occupancy() {
   const { accessToken } = useAuthStore();
   const navigate = useNavigate();
+  const [listingName, setListingName] = useState("");
 
   useEffect(() => {
     if (!accessToken) {
@@ -19,10 +20,10 @@ export default function Occupancy() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>My Bookings | Holidayz</title>
+        <title>{`Occupancy | ${listingName && listingName} | Holidaze`}</title>
       </Helmet>
       <MainElement>
-        <OccupancyOverview />
+        <OccupancyOverview setListingName={setListingName} />
       </MainElement>
     </HelmetProvider>
   );
