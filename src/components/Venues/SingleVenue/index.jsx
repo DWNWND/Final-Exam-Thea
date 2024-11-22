@@ -60,7 +60,7 @@ export default function SingleVenue() {
   };
 
   useEffect(() => {
-    clearBookingData();
+    // clearBookingData(); //call this on the routes instead
     fetchSingleListing();
   }, []);
 
