@@ -52,7 +52,7 @@ export default function useFetch(url, headers) {
       console.log("error catched  hook:", error);
       setError(error.message || "An unexpected error occurred");
       // setError(true);
-      return { success: false, error: error };
+      return { success: false, error: error.message };
     } finally {
       setLoading(false);
     }
