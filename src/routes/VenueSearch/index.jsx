@@ -4,9 +4,13 @@ import ListSearch from "../../components/Venues/ListSearch";
 import { useSearchStore } from "../../stores";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement/index.jsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function VenueSearch() {
   const { travelSearchData } = useSearchStore();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (!travelSearchData.location) {
