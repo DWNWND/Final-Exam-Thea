@@ -19,7 +19,7 @@ export default function Login() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>Login | Holidayz</title>
+        <title>Login | Holidaze</title>
       </Helmet>
       <MainElement noPadding={true} tailw="flex items-center justify-center">
         <section className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
