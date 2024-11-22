@@ -3,9 +3,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
-import { useSearchStore, useBookingDataStore, useAuthStore } from "../../../../stores";
+import { useSearchStore, useBookingDataStore, useAuthStore, useTravelDatesStore } from "../../../../stores";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
-import claculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
+import calculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
 import useApiCall from "../../../../hooks/useApiCall.jsx";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 import { useState } from "react";
@@ -31,9 +31,11 @@ const checkoutSchema = yup.object().shape({
 
 export default function CheckoutForm() {
   const { accessToken } = useAuthStore();
-  const { travelSearchData, selectedVenue } = useSearchStore();
+  const { travelSearchData } = useSearchStore();
   const { callApiWith, loading, error } = useApiCall(accessToken);
-  const { bookingData, setSuccessfulBookingId } = useBookingDataStore();
+  const { bookingData, selectedVenue, setSuccessfulBookingId } = useBookingDataStore();
+  const { savedDates } = useTravelDatesStore();
+
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
@@ -73,13 +75,7 @@ export default function CheckoutForm() {
     }
   };
 
-  const startDate = new Date(travelSearchData.travelDates.startDate);
-  const formattedStartDate = formatDateForDisplay(startDate);
-
-  const endDate = new Date(travelSearchData.travelDates.endDate);
-  const formattedEndDate = formatDateForDisplay(endDate);
-
-  const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
+  const nights = calculateNightsBetween(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
   const price = nights * selectedVenue.price;
 
   return (
@@ -87,7 +83,7 @@ export default function CheckoutForm() {
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
         <p className="font-semibold">{selectedVenue.name}</p>
         <p>
-          {formattedStartDate} - {formattedEndDate}
+          {savedDates.startDisplay} - {savedDates.endDisplay}
         </p>
         <p>{travelSearchData.numberOfGuests} guests</p>
         <div className="rounded-full font-bold  text-primary-blue">
