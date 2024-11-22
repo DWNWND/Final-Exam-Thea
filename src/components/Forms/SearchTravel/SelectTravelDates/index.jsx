@@ -9,7 +9,7 @@ import { useTravelDatesStore } from "../../../../stores";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
 
 export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }) {
-  const { savedDates, setSavedDates, setInitialDates, defaultFlatpickrDates, setDefaultFlatpickrDates } = useTravelDatesStore();
+  const { savedDates, setSavedDates, initialDates, setInitialDates, defaultFlatpickrDates, setDefaultFlatpickrDates } = useTravelDatesStore();
 
   const today = new Date();
   const todayString = formatDateForFlatpickr(today);
@@ -18,11 +18,6 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
     // const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
-
-    setInitialDates({
-      todayDateObj: today,
-      tomorrowDateObj: tomorrow,
-    });
 
     const initializeDates = () => {
       // Set date store if its not set yet
@@ -101,7 +96,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
     const interval = setInterval(updateDatesIfPast, 10 * 60 * 1000);
     // Clear the interval on component unmount
     return () => clearInterval(interval);
-  }, []); // Dependency array left empty for initial mount/reload behavior
+  }, [initialDates]); // Dependency array left empty for initial mount/reload behavior
 
   return (
     <div className={`flex justify-between items-center rounded-full border-${color} border bg-white w-full transition-max-height duration-500 ease-in-out overflow-hidden  ${editDates ? "px-3 max-w-full opacity-100" : "px-0 max-w-0 opacity-0"}`}>
