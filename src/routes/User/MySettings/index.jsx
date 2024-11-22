@@ -6,7 +6,7 @@ import SettingsForm from "../../../components/Forms/UserSettings/index.jsx";
 import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function MySettings() {
-  const { accessToken } = useAuthStore();
+  const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function MySettings() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>My Settings | Holidayz</title>
+        <title>{`My Settings | ${userName} | Holidaze`}</title>
       </Helmet>
       <MainElement tailw="flex flex-col items-center">
         <SettingsForm />

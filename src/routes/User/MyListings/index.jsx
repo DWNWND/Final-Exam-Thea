@@ -6,7 +6,7 @@ import MainElement from "../../../components/MainElement/index.jsx";
 import ListOfListings from "../../../components/User/ListOfListings/index.jsx";
 
 export default function MyListings() {
-  const { accessToken } = useAuthStore();
+  const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function MyListings() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>My listings | Holidayz</title>
+        <title>{`My Listings | ${userName} | Holidaze`}</title>
       </Helmet>
       <MainElement>
         <ListOfListings />

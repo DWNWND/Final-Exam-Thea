@@ -19,7 +19,7 @@ export default function MyBookings() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>My Bookings | {userName} | Holidayz</title>
+        <title>{`My Bookings | ${userName} | Holidaze`}</title>
       </Helmet>
       <MainElement>
         <ListOfBookings />

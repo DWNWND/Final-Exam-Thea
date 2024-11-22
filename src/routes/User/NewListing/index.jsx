@@ -6,7 +6,7 @@ import NewListingForm from "../../../components/Forms/NewListing";
 import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function NewListing() {
-  const { accessToken } = useAuthStore();
+  const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function NewListing() {
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>New Listing | Holidayz</title>
+        <title>{`New Listing | ${userName} | Holidaze`}</title>
       </Helmet>
       <MainElement tailw="bg-comp">
         <h1 className="hidden uppercase text-2xl text-primary-green text-center mb-6">New Listing</h1>
