@@ -1,18 +1,24 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import ListSearchForm from "../../components/Forms/SearchTravel/ListSearchForm/index.jsx";
 import ListSearch from "../../components/Venues/ListSearch";
-import {useSearchStore} from "../../stores";
+import { useSearchStore } from "../../stores";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement/index.jsx";
 
 export default function VenueSearch() {
   const { travelSearchData } = useSearchStore();
 
+  useEffect(() => {
+    if (!travelSearchData.location) {
+      navigate("/");
+    }
+  }, [travelSearchData.location]);
+
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>Stays in {travelSearchData.location} | Holidayz</title>
+        <title>{`Stays in ${travelSearchData.location} | Holidaze`}</title>
         {/* add description as well */}
         {/* add search details */}
       </Helmet>
