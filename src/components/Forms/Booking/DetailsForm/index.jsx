@@ -26,7 +26,7 @@ export default function DetailsForm() {
   const { selectedVenue, bookingData, setBookingEmail } = useBookingDataStore();
 
   const { loading, error, fetchWithAuthentication } = useAuthedFetch(accessToken);
-  const setPreviousRoute = useNavigationStore((state) => state.setPreviousRoute);
+  const { setPreviousRoute, getLastPreviousRoute } = useNavigationStore();
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [mainErrorMessage, setMainErrorMessage] = useState(""); // the errormessage is not added anywhere
@@ -43,8 +43,15 @@ export default function DetailsForm() {
 
   useEffect(() => {
     fetchUserData();
-    setPreviousRoute(`/venue/${selectedVenue.id}`);
   }, [accessToken]);
+
+  useEffect(() => {
+    const previousRoute = getLastPreviousRoute();
+
+    if (previousRoute.includes("login") || previousRoute.includes("register")) {
+      setPreviousRoute(`/venue/${selectedVenue.id}`);
+    }
+  }, []);
 
   const {
     register,
