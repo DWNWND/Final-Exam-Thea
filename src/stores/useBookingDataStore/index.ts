@@ -45,6 +45,8 @@ export const useBookingDataStore = create<BookingDataStoreState>()(
             venueId: "",
           },
           selectedVenue: {},
+          bookingEmail: "",
+          successfulBookingId: "",
         }),
     }),
     {
