@@ -6,23 +6,37 @@ import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement";
-import { useBookingDataStore, useSearchStore } from "../../stores";
+import { useBookingDataStore, useSearchStore, useTravelDatesStore, useNavigationStore } from "../../stores";
 
 export default function Home() {
   const [filters, setFilters] = useState("unique");
   const { clearTravelSearchStore } = useSearchStore();
   const { clearBookingDataStore } = useBookingDataStore();
+  const { clearTravelDatesStore, setInitialDates } = useTravelDatesStore();
+  const { clearNavigationHistory } = useNavigationStore();
 
+  //think about adding this on more routes
   useEffect(() => {
     clearTravelSearchStore();
     clearBookingDataStore();
+    clearTravelDatesStore();
+    clearNavigationHistory();
+
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    setInitialDates({
+      todayDateObj: today,
+      tomorrowDateObj: tomorrow,
+    });
   }, []);
 
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
-        <title>Home | Holidayz</title>
+        <title>Home | Holidaze</title>
       </Helmet>
       <MainElement noPadding={true}>
         <DataProvider>
