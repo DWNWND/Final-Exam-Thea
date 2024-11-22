@@ -16,4 +16,3 @@ export { default as Occupancy } from "./User/Occupancy";
 export { default as BookingCheckout } from "./Booking/BookingCheckout";
 export { default as BookingConfirmation } from "./Booking/BookingConfirmation";
 export { default as BookingDetails } from "./Booking/BookingDetails";
-export { default as BookingSummary } from "./Booking/BookingSummary";
