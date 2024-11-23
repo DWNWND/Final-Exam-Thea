@@ -4,9 +4,9 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
 import { useTravelSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
-import {calculateNights, formatDateForDisplay} from "../../../../utils/";
+import { calculateNights, formatDateForDisplay } from "../../../../utils/";
 import RoundBtn from "../../../Buttons/RoundBtn";
-import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
+import { useApiCall } from "../../../../hooks";
 import { useEffect, useState } from "react";
 import { DetailsFormSkeletonLoader } from "../../../Loaders";
 
@@ -24,30 +24,25 @@ export default function DetailsForm() {
   const { clearTravelSearchStore } = useTravelSearchStore();
   const { selectedVenue, bookingData, setBookingEmail } = useBookingDataStore();
 
-  const { loading, error, fetchWithAuthentication } = useAuthedFetch(accessToken);
+  const { loading, scopedLoader, error, callApi } = useApiCall();
+
   const { setPreviousRoute, getLastPreviousRoute } = useNavigationStore();
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const [mainErrorMessage, setMainErrorMessage] = useState(""); // the errormessage is not added anywhere
-
-  const fetchUserData = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}`);
-    if (response.success) {
-      setUser(response.data);
-    } else {
-      console.log("this is the error that havent been checked in DetailsForm:", response.error);
-      setMainErrorMessage(response.error); // this errormessage have not been checked
-    }
-  };
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      const result = await callApi(`/holidaze/profiles/${userName}`);
+      setUser(result.data);
+    };
+
     fetchUserData();
   }, [accessToken]);
 
   useEffect(() => {
     const previousRoute = getLastPreviousRoute();
 
-    if (previousRoute.includes("login") || previousRoute.includes("register")) {
+    if (previousRoute && (previousRoute.includes("login") || previousRoute.includes("register"))) {
       setPreviousRoute(`/venue/${selectedVenue.id}`);
     }
   }, []);
