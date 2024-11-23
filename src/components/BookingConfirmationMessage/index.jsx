@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useBookingDataStore, useTravelSearchStore } from "../../stores";
 import {calculateNights, formatDateForDisplay} from "../../utils/";
-import RoundBtn from "../Buttons/RoundBtn";
+import {RoundBtn} from "../Buttons";
 
 export default function BookingConfirmationMessage() {
   const { id } = useParams();
