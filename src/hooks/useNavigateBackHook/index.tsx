@@ -1,9 +1,9 @@
-import { useNavigationStore } from "../stores";
+import { useNavigationStore } from "../../stores";
 import { useNavigate } from "react-router-dom";
 
-export const useBackButton = () => {
+export function useNavigateBackHook(): () => void {
   const navigate = useNavigate();
-  const goBack = useNavigationStore((state) => state.goBack);
+  const { goBack } = useNavigationStore();
 
   const handleBack = () => {
     const previousRoute = useNavigationStore.getState().history.slice(-2, -1)[0];
@@ -16,4 +16,4 @@ export const useBackButton = () => {
   };
 
   return handleBack;
-};
+}

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
-import { useTravelSearchStore, useAuthStore } from "../stores";
+import { useTravelSearchStore, useAuthStore } from "../../stores";
 
 const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
 
-export default function useInactivityTimer() {
-  const logOut = useAuthStore((state) => state.logOut);
-  const clearTravelSearchStore = useTravelSearchStore((state) => state.clearTravelSearchStore);
-  const timer = useRef(null);
+export function useInactivityCheckHook(): void {
+  const { logOut } = useAuthStore();
+  const { clearTravelSearchStore } = useTravelSearchStore();
+  const timer = useRef<NodeJS.Timeout | null>(null);
 
-  const resetTimer = () => {
+  const resetTimer = (): void => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       logOut(); // Clear store after inactivity limit
@@ -21,7 +21,7 @@ export default function useInactivityTimer() {
     resetTimer(); // Start timer on mount
 
     // Event listeners to reset timer on user activity
-    const events = ["mousemove", "keydown", "scroll", "click"];
+    const events: string[] = ["mousemove", "keydown", "scroll", "click"];
     events.forEach((event) => window.addEventListener(event, resetTimer));
 
     return () => {
@@ -31,5 +31,5 @@ export default function useInactivityTimer() {
     };
   }, []);
 
-  return null;
+  return;
 }

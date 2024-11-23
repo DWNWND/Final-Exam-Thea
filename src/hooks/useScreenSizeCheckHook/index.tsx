@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-export default function useCheckScreenSize() {
-  const [width, setWidth] = useState(window.innerWidth);
-  const handleWindowSizeChange = () => {
+export function useScreenSizeCheckHook(): boolean {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const handleWindowSizeChange = (): void => {
     setWidth(window.innerWidth);
   };
 
@@ -13,5 +13,7 @@ export default function useCheckScreenSize() {
     };
   }, []);
 
-  return width <= 768;
+  const mobileScreen = width <= 768;
+
+  return mobileScreen;
 }
