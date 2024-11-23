@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import { useAuthStore } from "../../../stores";
-import useApiCall from "../../../hooks/useApiCall.jsx";
 import SquareBtn from "../../Buttons/SquareBtn";
 import { SmallSpinnerLoader, EditListingFormSkeletonLoader } from "../../Loaders";
-import usePut from "../../../hooks/usePut";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
 import ErrorFallback from "../../ErrorFallback";
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+import { useApiCall } from "../../../hooks";
 
 //think about adding possibility to edit email, username and password??
 const editListingSchema = yup.object().shape({
@@ -43,21 +39,16 @@ const editListingSchema = yup.object().shape({
   ),
 });
 
-export default function EditListingForm({setListingName}) {
-  const { userName, accessToken } = useAuthStore();
-  const { loading: loadingFetch, fetchFromApi } = useFetch();
-  const { loading: loadingUpdate, error: errorUpdate, updateListing } = usePut();
-  const { loading: loadingDeletion, error: errorDeletion, callApiWith } = useApiCall(accessToken);
+export default function EditListingForm({ setListingName }) {
+  const { userName } = useAuthStore();
+  const { loading, scopedLoader, error, callApi } = useApiCall();
   const { id } = useParams();
-
-  const [mainErrorMessage, setMainErrorMessage] = useState("");
   const [errorUpdateMessage, setErrorUpdateMessage] = useState("");
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState("");
   const [errorDeletionMessage, setErrorDeletionMessage] = useState("");
   const [userFeedbackDeletionMessage, setUserFeedbackDeletionMessage] = useState("");
   const [deletionModal, setDeletionModal] = useState(false);
   const [listing, setListing] = useState(null);
-
   const navigate = useNavigate();
 
   const {
@@ -68,18 +59,12 @@ export default function EditListingForm({setListingName}) {
     watch,
   } = useForm({ mode: "onChange", resolver: yupResolver(editListingSchema) });
 
-  const fetchListing = async () => {
-    const response = await fetchFromApi(`/holidaze/venues/${id}`);
-    if (response.success) {
-      setListing(response.data);
-      setListingName(response.data.name);
-    } else {
-      setMainErrorMessage(response.error); // this errormessage have been checked
-    }
-  };
-
   useEffect(() => {
-    setMainErrorMessage("");
+    const fetchListing = async () => {
+      const result = await callApi(`/holidaze/venues/${id}`);
+      setListing(result.data);
+      setListingName(result.data.name);
+    };
     fetchListing();
   }, []);
 
@@ -89,44 +74,65 @@ export default function EditListingForm({setListingName}) {
 
   const handleDelete = async () => {
     try {
-      await callApiWith(`${apiBaseUrl}/holidaze/venues/${id}`, {
+      setErrorDeletionMessage("");
+      await callApi(`/holidaze/venues/${id}`, {
         method: "DELETE",
       });
-      if (!loadingDeletion && !errorDeletion) {
-        setUserFeedbackDeletionMessage("listing deleted successfully.");
-        setErrorDeletionMessage("");
-        navigate(`/user/${userName}`);
-        handleExitDeletion();
-      }
+
+      let countdown = 3;
+      setUserFeedbackDeletionMessage(`Listing deleted successfully. Redirecting in ${countdown} seconds...`);
+
+      const countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown > 0) {
+          setUserFeedbackDeletionMessage(`Listing deleted successfully. Redirecting in ${countdown} seconds...`);
+        } else {
+          clearInterval(countdownInterval);
+          handleExitDeletion();
+          navigate(`/user/${userName}`);
+        }
+      }, 1000);
     } catch (err) {
       console.log("error:", err);
       setErrorDeletionMessage("Failed to delete listing.");
+      setUserFeedbackDeletionMessage("");
     }
   };
 
   const onSubmit = async (data) => {
-    const result = await updateListing(data, `/holidaze/venues/${id}`);
-
-    if (!loadingUpdate && !errorUpdate && result.success) {
-      navigate(`/user/${userName}`);
-      setUserFeedbackUpdateMessage("Listing successfully updated");
+    try {
       setErrorUpdateMessage("");
-    } else if (!result.success) {
-      setErrorUpdateMessage(result.error.errors[0].message);
-      setUserFeedbackUpdateMessage("");
+      await callApi(`/holidaze/venues/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
 
-      console.log("update listing failed:", result.error || errorUpdate); // Log error for debugging
-      console.log("error message", result.error.errors[0].message);
+      let countdown = 3;
+      setUserFeedbackUpdateMessage(`Listing successfully updated. Redirecting back to profile in ${countdown} seconds...`);
+
+      const countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown > 0) {
+          setUserFeedbackUpdateMessage(`Listing successfully updated. Redirecting back to profile in ${countdown} seconds...`);
+        } else {
+          clearInterval(countdownInterval);
+          navigate(`/user/${userName}`);
+        }
+      }, 1000);
+    } catch (err) {
+      console.log("error:", err);
+      setErrorUpdateMessage(err.message);
+      setUserFeedbackUpdateMessage("");
     }
   };
 
   return (
     <>
-      {loadingFetch && loadingFetch ? (
+      {loading ? (
         <EditListingFormSkeletonLoader />
       ) : (
         <>
-          {mainErrorMessage && <ErrorFallback errorMessage={mainErrorMessage} />}
+          {error && error && <ErrorFallback errorMessage={error} />}
           {listing && (
             <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
               <div className="flex justify-between items-center w-full mb-6">
@@ -159,7 +165,7 @@ export default function EditListingForm({setListingName}) {
 
                 <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" width="full" innerText="Save changes" tailw="hover:bg-white bg-opacity-50 mt-5" bgColor="white" textColor="primary-green" borderColor="primary-green" />
 
-                {loadingUpdate ? <SmallSpinnerLoader /> : <p className={`${errorUpdateMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorUpdateMessage ? errorUpdateMessage : userFeedbackUpdateMessage}</p>}
+                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorUpdateMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorUpdateMessage ? errorUpdateMessage : userFeedbackUpdateMessage}</p>}
               </form>
             </div>
           )}
@@ -173,7 +179,7 @@ export default function EditListingForm({setListingName}) {
                   <SquareBtn clickFunc={() => handleExitDeletion()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
                   <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
                 </div>
-                {loadingDeletion ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
+                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
               </div>
             </div>
           )}
