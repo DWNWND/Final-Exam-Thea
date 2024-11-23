@@ -38,7 +38,7 @@ export const useNavigationStore = create<NavigationStoreState>()(
 
       getLastPreviousRoute: () => {
         const history = get().history;
-        return history.length > 1 ? history[history.length - 2] : null;
+        return history.length > 1 ? history[history.length - 1] : null;
       },
 
       setPreviousRoute: (route) =>
