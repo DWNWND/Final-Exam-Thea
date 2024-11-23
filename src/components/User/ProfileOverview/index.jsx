@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
-import { Link } from "react-router-dom";
-import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
 import { SmallSpinnerLoader } from "../../../components/Loaders";
-import useApiCall from "../../../hooks/useApiCall.jsx";
+import { useApiCall } from "../../../hooks";
 import { IoIosClose } from "react-icons/io";
 import VenueCard from "../../Venues/VenueCard";
 import ErrorFallback from "../../ErrorFallback/index.jsx";
 import RoundBtn from "../../Buttons/RoundBtn/index.jsx";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-
 export default function ProfileOverview() {
-  const { userName, accessToken, logOut } = useAuthStore();
-  const { loading: loadingInFetch, error: errorInFetch, fetchWithAuthentication } = useAuthedFetch(accessToken);
-  const { loading: loadingCancellation, error: errorCancellation, callApiWith } = useApiCall(accessToken);
+  const { userName, logOut } = useAuthStore();
+  const { loading, scopedLoader, error, callApi } = useApiCall();
 
   const [user, setUser] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [cancellationModal, setCancellationModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [mainErrorMessage, setMainErrorMessage] = useState("");
-  const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
+
+  const [userFeedbackCancellationMessage, setUserFeedbackCancellationMessage] = useState("");
+  const [errorCancellationMessage, setErrorCancellationMessage] = useState("");
+
   const navigate = useNavigate();
   const [userBookings, setUserBookings] = useState([]);
   const [userListings, setUserListings] = useState([]);
@@ -32,35 +28,23 @@ export default function ProfileOverview() {
   const maxListingsShown = 4;
 
   const fetchUser = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}`);
-    if (response.success) {
-      setUser(response.data);
-    } else {
-      setMainErrorMessage(response.error.errors[0].message);
-    }
+    const result = await callApi(`/holidaze/profiles/${userName}`);
+    setUser(result.data);
   };
 
   const fetchBookings = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
-    if (response.success) {
-      setUserBookings(response.data);
-    } else {
-      setMainErrorMessage(response.error.errors[0].message);
-    }
+    const result = await callApi(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
+    setUserBookings(result.data);
   };
 
   const fetchVenues = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/venues?_bookings=true`);
-    if (response.success) {
-      setUserListings(response.data);
-    } else {
-      setMainErrorMessage(response.error.errors[0].message);
-    }
+    const result = await callApi(`/holidaze/profiles/${userName}/venues?_bookings=true`);
+    setUserListings(result.data);
   };
 
   useEffect(() => {
-    setUserFeedbackMessage("");
-    setErrorMessage("");
+    setErrorCancellationMessage("");
+    setUserFeedbackCancellationMessage("");
   }, [cancellationModal]);
 
   useEffect(() => {
@@ -72,22 +56,33 @@ export default function ProfileOverview() {
   function handleExitCancellation() {
     setCancellationModal(false);
     setSelectedBooking(null);
+    fetchBookings();
   }
 
   const handleCancellation = async () => {
+    setErrorCancellationMessage("");
+    setUserFeedbackCancellationMessage("");
+
     try {
-      await callApiWith(`${apiBaseUrl}/holidaze/bookings/${selectedBooking.id}`, {
+      await callApi(`/holidaze/bookings/${selectedBooking.id}`, {
         method: "DELETE",
       });
 
-      if (!loadingCancellation && !errorCancellation) {
-        setErrorMessage("");
-        setUserFeedbackMessage("Cancellation successful");
-        handleExitCancellation();
-      }
+      let countdown = 3;
+      setUserFeedbackCancellationMessage(`Booking successfully cancelled. Redirecting in ${countdown} seconds...`);
+
+      const countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown > 0) {
+          setUserFeedbackCancellationMessage(`Booking successfully cancelled. Redirecting in ${countdown} seconds...`);
+        } else {
+          clearInterval(countdownInterval);
+          handleExitCancellation();
+        }
+      }, 1000);
     } catch (error) {
-      setErrorMessage("Cancellation failed: " + error);
-      setUserFeedbackMessage("");
+      console.log("error:", err);
+      setErrorCancellationMessage("Cancellation failed: " + error);
     }
   };
 
@@ -98,7 +93,7 @@ export default function ProfileOverview() {
 
   return (
     <>
-      {errorInFetch && <ErrorFallback errorMessage={mainErrorMessage} />}
+      {error && <ErrorFallback errorMessage={error} />}
       {user && (
         <>
           <section className="flex flex-col gap-2 lg:max-w-md">
@@ -153,7 +148,7 @@ export default function ProfileOverview() {
                   {userBookings && userBookings.length >= 1 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                       {userBookings.slice(0, maxBookingsShown).map((booking) => (
-                        <VenueCard venue={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} myBookings={true} loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                        <VenueCard venue={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} myBookings={true} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                       ))}
                     </div>
                   )}
@@ -178,7 +173,7 @@ export default function ProfileOverview() {
                   {userListings && userListings.length >= 2 && (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                       {userListings.slice(0, maxListingsShown).map((listing) => (
-                        <VenueCard key={listing.id} venue={listing} myVenues={true} loading={loadingInFetch} />
+                        <VenueCard key={listing.id} venue={listing} myVenues={true} loading={loading} />
                       ))}
                     </div>
                   )}
@@ -192,7 +187,7 @@ export default function ProfileOverview() {
             </div>
           </section>
           {cancellationModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => handleExitCancellation()}>
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
               <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10 relative">
                 <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={() => handleExitCancellation()}>
                   <IoIosClose />
@@ -203,7 +198,7 @@ export default function ProfileOverview() {
                   <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-primary-blue hover:text-white" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
                   <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white" bgColor="white" textColor="danger" borderColor="danger" />
                 </div>
-                {loadingCancellation ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorCancellationMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorCancellationMessage ? errorCancellationMessage : userFeedbackCancellationMessage}</p>}
               </div>
             </div>
           )}
