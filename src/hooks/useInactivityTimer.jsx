@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
-import { useSearchStore, useAuthStore } from "../stores";
+import { useTravelSearchStore, useAuthStore } from "../stores";
 
 const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes
 
 export default function useInactivityTimer() {
   const logOut = useAuthStore((state) => state.logOut);
-  const clearTravelSearchStore = useSearchStore((state) => state.clearTravelSearchStore);
+  const clearTravelSearchStore = useTravelSearchStore((state) => state.clearTravelSearchStore);
   const timer = useRef(null);
 
   const resetTimer = () => {

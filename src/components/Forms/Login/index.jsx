@@ -8,7 +8,7 @@ import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
 import {SmallSpinnerLoader} from "../../Loaders";
-import { useSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
+import { useTravelSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
 
 const loginSchema = yup.object().shape({
   email: yup.string().required("Email is required"),
@@ -19,7 +19,7 @@ export default function LoginForm() {
   const { login, loading, error } = useAuth();
   const { userName } = useAuthStore();
   const navigate = useNavigate();
-  const { selectedVenue } = useSearchStore();
+  const { selectedVenue } = useTravelSearchStore();
   const getLastPreviousRoute = useNavigationStore((state) => state.getLastPreviousRoute);
   const lastPreviousRoute = getLastPreviousRoute();
   const [errorMessage, setErrorMessage] = useState("");

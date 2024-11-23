@@ -1,5 +1,5 @@
 export { useAuthStore } from "./useAuthStore/";
 export { useBookingDataStore } from "./useBookingDataStore/";
 export { useNavigationStore } from "./useNavigationStore/";
-export { useSearchStore } from "./useSearchStore/";
+export { useTravelSearchStore } from "./useTravelSearchStore";
 export { useTravelDatesStore } from "./useTravelDatesStore/";

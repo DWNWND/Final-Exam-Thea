@@ -1,19 +1,16 @@
 import LocationLookAhead from "../LocationLookAhead/index.jsx";
 import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
-import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
-import { useSearchStore } from "../../../../stores";
+import { useTravelSearchStore } from "../../../../stores";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
 import ArrowDownBtn from "../../../Buttons/ArrowDownBtn";
 import { useTravelDatesStore } from "../../../../stores";
 
 export default function ListSearchForm() {
   const [openEditSearch, setOpenEditSearch] = useState(false);
   const { savedDates } = useTravelDatesStore();
-  const { travelSearchData } = useSearchStore();
+  const { travelSearchData } = useTravelSearchStore();
 
   function toggleOpenEditSearch() {
     setOpenEditSearch(!openEditSearch);

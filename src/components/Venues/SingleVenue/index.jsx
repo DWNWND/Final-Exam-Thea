@@ -2,14 +2,11 @@ import { useState, useEffect } from "react";
 import { MdOutlinePets, MdEmojiFoodBeverage } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import SelectTravelDates from "../../Forms/SearchTravel/SelectTravelDates/index.jsx";
-import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 import calculateNightsBetween from "../../../utils/calcNights/calculateNightsBetween.js";
 import BookingCalendar from "../../BookingCalendar/index";
-import { useSearchStore, useAuthStore, useBookingDataStore, useTravelDatesStore } from "../../../stores";
+import { useTravelSearchStore, useAuthStore, useBookingDataStore, useTravelDatesStore } from "../../../stores";
 import { IoIosClose } from "react-icons/io";
 import { FaShare, FaRegHeart } from "react-icons/fa";
-import formatDateForFlatpickr from "../../../utils/dateUtils/formatDateForFlatpickr.js";
-import generateAllTravelDates from "../../../utils/dateUtils/generateAllDatesArr.js";
 import { useNavigate } from "react-router-dom";
 import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
 import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
@@ -20,10 +17,10 @@ import useFetch from "../../../hooks/useFetch.jsx";
 export default function SingleVenue() {
   const { id } = useParams();
   const { fetchFromApi } = useFetch();
-  const { setBookingData, setSelectedVenue, clearBookingData } = useBookingDataStore();
+  const { setBookingData, setSelectedVenue } = useBookingDataStore();
   const { savedDates } = useTravelDatesStore();
   const { accessToken, userName, logOut } = useAuthStore();
-  const { travelSearchData } = useSearchStore();
+  const { travelSearchData } = useTravelSearchStore();
 
   const [listing, setListing] = useState(null);
   const [yourListing, setYourListing] = useState(false);

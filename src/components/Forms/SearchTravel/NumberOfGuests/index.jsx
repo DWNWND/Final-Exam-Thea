@@ -2,7 +2,7 @@ import { useReducer, useEffect } from "react";
 // https://react-icons.github.io/react-icons/
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { HiOutlineMinusSm } from "react-icons/hi";
-import { useSearchStore } from "../../../../stores";
+import { useTravelSearchStore } from "../../../../stores";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -17,8 +17,8 @@ function reducer(state, action) {
   }
 }
 
-export default function NumberOfGuests({ color, mainSearch, tailw }) {
-  const { setNumberOfGuests, travelSearchData } = useSearchStore();
+export default function NumberOfGuests({ color, mainSearch }) {
+  const { setNumberOfGuests, travelSearchData } = useTravelSearchStore();
   const initialState = travelSearchData.numberOfGuests;
 
   const [state, dispatch] = useReducer(reducer, { guests: initialState });

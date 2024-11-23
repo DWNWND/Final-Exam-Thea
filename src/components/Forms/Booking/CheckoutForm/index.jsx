@@ -3,8 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
-import { useSearchStore, useBookingDataStore, useAuthStore, useTravelDatesStore } from "../../../../stores";
-import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
+import { useTravelSearchStore, useBookingDataStore, useAuthStore, useTravelDatesStore } from "../../../../stores";
 import calculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
 import useApiCall from "../../../../hooks/useApiCall.jsx";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
@@ -31,7 +30,7 @@ const checkoutSchema = yup.object().shape({
 
 export default function CheckoutForm() {
   const { accessToken } = useAuthStore();
-  const { travelSearchData } = useSearchStore();
+  const { travelSearchData } = useTravelSearchStore();
   const { callApiWith, loading, error } = useApiCall(accessToken);
   const { bookingData, selectedVenue, setSuccessfulBookingId } = useBookingDataStore();
   const { savedDates } = useTravelDatesStore();

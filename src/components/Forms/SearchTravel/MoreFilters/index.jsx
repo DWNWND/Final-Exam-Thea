@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useSearchStore } from "../../../../stores";
+import { useTravelSearchStore } from "../../../../stores";
 import Checkbox from "../../../Inputs/Checkbox/index.jsx";
 import ArrowDownBtn from "../../../Buttons/ArrowDownBtn/index.jsx";
 
 export default function MoreFilters({ color, mainSearch = true }) {
   const [openMoreFilters, setOpenMoreFilters] = useState(false);
-  const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useSearchStore();
+  const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useTravelSearchStore();
 
   function toggleOpenMoreFilters() {
     setOpenMoreFilters(!openMoreFilters);

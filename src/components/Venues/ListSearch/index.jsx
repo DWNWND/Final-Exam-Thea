@@ -1,9 +1,8 @@
-import { BigSpinnerLoader } from "../../Loaders";
 import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
-import { useSearchStore } from "../../../stores";
+import { useTravelSearchStore } from "../../../stores";
 
 //fix loadmore btn!!
 export default function ListSearch() {
@@ -11,7 +10,7 @@ export default function ListSearch() {
   const [filteredVenues, setFilteredVenues] = useState([]);
   const [displayedVenues, setDisplayedVenues] = useState([]);
   const initialDisplayCount = 10;
-  const { travelSearchData } = useSearchStore();
+  const { travelSearchData } = useTravelSearchStore();
   const searchQuery = travelSearchData;
 
   useEffect(() => {

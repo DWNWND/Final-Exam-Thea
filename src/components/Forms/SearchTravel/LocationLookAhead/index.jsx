@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { useSearchStore } from "../../../../stores";
+import { useTravelSearchStore } from "../../../../stores";
 import { searchableLocations } from "../../../../assets/locations/searchableLocations.js";
 
 export default function LocationLookAhead({ color }) {
-  const { setLocation, travelSearchData } = useSearchStore();
+  const { setLocation, travelSearchData } = useTravelSearchStore();
   const [searchQuery, setSearchQuery] = useState(travelSearchData.location || "");
 
   useEffect(() => {

@@ -6,11 +6,11 @@ import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement";
-import { useBookingDataStore, useSearchStore, useTravelDatesStore, useNavigationStore } from "../../stores";
+import { useBookingDataStore, useTravelSearchStore, useTravelDatesStore, useNavigationStore } from "../../stores";
 
 export default function Home() {
   const [filters, setFilters] = useState("unique");
-  const { clearTravelSearchStore } = useSearchStore();
+  const { clearTravelSearchStore } = useTravelSearchStore();
   const { clearBookingDataStore } = useBookingDataStore();
   const { clearTravelDatesStore, setInitialDates } = useTravelDatesStore();
   const { clearNavigationHistory } = useNavigationStore();

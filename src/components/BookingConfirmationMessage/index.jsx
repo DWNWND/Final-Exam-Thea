@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { useBookingDataStore, useSearchStore } from "../../stores";
+import { useBookingDataStore, useTravelSearchStore } from "../../stores";
 import formatDateForDisplay from "../../utils/dateUtils/formatDateForDisplay";
 import calculateNightsBetween from "../../utils/calcNights/calculateNightsBetween";
 import RoundBtn from "../Buttons/RoundBtn";
 
 export default function BookingConfirmationMessage() {
   const { id } = useParams();
-  const { travelSearchData } = useSearchStore();
+  const { travelSearchData } = useTravelSearchStore();
   const { bookingData, bookingEmail, selectedVenue } = useBookingDataStore();
 
   const startDate = new Date(bookingData.dateFrom);

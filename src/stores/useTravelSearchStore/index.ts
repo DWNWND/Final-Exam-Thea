@@ -16,7 +16,7 @@ interface TravelSearchData {
   price500: boolean;
 }
 
-interface SearchStoreState {
+interface TravelSearchStoreState {
   travelSearchData: TravelSearchData;
   setLocation: (location: string) => void;
   setNumberOfGuests: (numberOfGuests: number) => void;
@@ -33,7 +33,7 @@ interface SearchStoreState {
   clearTravelSearchStore: () => void;
 }
 
-export const useSearchStore = create<SearchStoreState>()(
+export const useTravelSearchStore = create<TravelSearchStoreState>()(
   persist(
     (set) => ({
       travelSearchData: {

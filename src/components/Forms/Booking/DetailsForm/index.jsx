@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
-import { useSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
+import { useTravelSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
 import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
 import RoundBtn from "../../../Buttons/RoundBtn";
@@ -22,7 +22,7 @@ const detailsSchema = yup.object().shape({
 
 export default function DetailsForm() {
   const { accessToken, userName } = useAuthStore();
-  const { clearTravelSearchStore } = useSearchStore();
+  const { clearTravelSearchStore } = useTravelSearchStore();
   const { selectedVenue, bookingData, setBookingEmail } = useBookingDataStore();
 
   const { loading, error, fetchWithAuthentication } = useAuthedFetch(accessToken);

@@ -8,7 +8,7 @@ import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
 import {SmallSpinnerLoader} from "../../Loaders";
-import { useSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
+import { useTravelSearchStore, useNavigationStore } from "../../../stores";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -24,10 +24,9 @@ const registerSchema = yup.object().shape({
 
 export default function RegisterForm() {
   const { registerNewUser, loading, error } = useAuth();
-  const { setIsLoggedIn } = useAuthStore();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  const { selectedVenue } = useSearchStore();
+  const { selectedVenue } = useTravelSearchStore();
   const getLastPreviousRoute = useNavigationStore((state) => state.getLastPreviousRoute);
   const lastPreviousRoute = getLastPreviousRoute();
 
