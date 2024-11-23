@@ -7,7 +7,7 @@ import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
-import SquareBtn from "../../Buttons/SquareBtn";
+import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
 
 //ADD SKELETONLOADER AND ERRORHANDLING

@@ -1,10 +1,9 @@
-import {useScreenSizeCheckHook} from "../../../hooks/";
+import { useScreenSizeCheckHook } from "../../../hooks/";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { OpenMenuContext } from "../../../contexts";
 import { useAuthStore } from "../../../stores";
-import SquareBtn from "../../Buttons/SquareBtn";
-import RoundBtn from "../../Buttons/RoundBtn";
+import { RoundBtn, SquareBtn } from "../../Buttons";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 

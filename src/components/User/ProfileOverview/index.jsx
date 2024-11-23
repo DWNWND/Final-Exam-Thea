@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
-import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
 import { SmallSpinnerLoader } from "../../../components/Loaders";
 import { useApiCall } from "../../../hooks";
 import { IoIosClose } from "react-icons/io";
 import VenueCard from "../../Venues/VenueCard";
 import ErrorFallback from "../../ErrorFallback/index.jsx";
-import RoundBtn from "../../Buttons/RoundBtn/index.jsx";
+import { RoundBtn, SquareBtn } from "../../Buttons";
 
 export default function ProfileOverview() {
   const { userName, logOut } = useAuthStore();

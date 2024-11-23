@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTravelSearchStore } from "../../../../stores";
 import Checkbox from "../../../Inputs/Checkbox/index.jsx";
-import ArrowDownBtn from "../../../Buttons/ArrowDownBtn/index.jsx";
+import { ArrowDownBtn } from "../../../Buttons";
 
 export default function MoreFilters({ color, mainSearch = true }) {
   const [openMoreFilters, setOpenMoreFilters] = useState(false);

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useApiCall } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
-import RoundBtn from "../../Buttons/RoundBtn";
+import { RoundBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
 import { useTravelSearchStore, useNavigationStore } from "../../../stores";
 

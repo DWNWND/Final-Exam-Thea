@@ -3,8 +3,8 @@ import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 
 import { IoIosClose } from "react-icons/io";
-import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
-import ErrorFallback from "../../../components/ErrorFallback/index.jsx";
+import { SquareBtn } from "../../Buttons";
+import ErrorFallback from "../../ErrorFallback/index.jsx";
 import VenueCard from "../../Venues/VenueCard";
 import { BigSpinnerLoader, SmallSpinnerLoader } from "../../Loaders";
 

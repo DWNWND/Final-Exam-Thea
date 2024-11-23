@@ -1,9 +1,8 @@
-import ArrowRightBtn from "../../Buttons/ArrowRightBtn";
-import SquareBtn from "../../Buttons/SquareBtn";
+import { ArrowRightBtn, SquareBtn } from "../../Buttons";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { useEffect, useState } from "react";
-import {formatDateForDisplay} from "../../../utils/";
+import { formatDateForDisplay } from "../../../utils/";
 import { VenueCardSkeletonLoader } from "../../Loaders";
 
 export default function VenueCard({ venue, bookingId, bookingDates = null, loading, myVenues = false, myBookings = false, setSelectedBooking = () => {}, setCancellationModal = () => {} }) {

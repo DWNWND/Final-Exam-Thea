@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import LogoIcon from "../../../assets/logos/holidaize-logo.svg";
 import { useState, useEffect } from "react";
 import HamburgerBtn from "./HamburgerBtn";
-import {useScreenSizeCheckHook} from "../../../hooks/";
+import { useScreenSizeCheckHook } from "../../../hooks/";
 import FixedBtnDisplay from "../FixedBtnDisplay";
 import { useContext } from "react";
 import { OpenMenuContext } from "../../../contexts";
-import ArrowLeftBtn from "../../Buttons/ArrowLeftBtn";
+import { ArrowLeftBtn } from "../../Buttons";
 import { useNavigationStore } from "../../../stores";
 import OpenMenu from "./OpenMenu";
 

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { OpenMenuContext } from "../../../../contexts";
 import { useAuthStore } from "../../../../stores";
-import SquareBtn from "../../../Buttons/SquareBtn";
+import { SquareBtn } from "../../../Buttons";
 
 export default function OpenMenu() {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);

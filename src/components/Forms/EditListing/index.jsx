@@ -6,7 +6,7 @@ import * as yup from "yup";
 import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import { useAuthStore } from "../../../stores";
-import SquareBtn from "../../Buttons/SquareBtn";
+import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader, EditListingFormSkeletonLoader } from "../../Loaders";
 import { useParams } from "react-router-dom";
 import ErrorFallback from "../../ErrorFallback";

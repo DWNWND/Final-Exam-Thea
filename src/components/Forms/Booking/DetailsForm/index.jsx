@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
 import { useTravelSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
 import { calculateNights, formatDateForDisplay } from "../../../../utils/";
-import RoundBtn from "../../../Buttons/RoundBtn";
+import { RoundBtn } from "../../../Buttons";
 import { useApiCall } from "../../../../hooks";
 import { useEffect, useState } from "react";
 import { DetailsFormSkeletonLoader } from "../../../Loaders";

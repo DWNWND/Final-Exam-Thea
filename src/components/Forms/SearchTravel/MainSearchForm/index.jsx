@@ -3,7 +3,7 @@ import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
 import { useNavigate } from "react-router-dom";
-import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
+import { RoundBtn } from "../../../Buttons";
 
 export default function MainSearchForm() {
   const navigate = useNavigate();

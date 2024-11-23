@@ -3,7 +3,7 @@ import VenueCard from "../VenueCard";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
 import ErrorFallback from "../../ErrorFallback";
-import SelectCategoryBtns from "../../ButtonGroupes/SelectCategoryBtns";
+import { SelectCategoryBtns } from "../../Buttons";
 import { useState } from "react";
 
 export default function ListCategorized() {

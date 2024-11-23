@@ -4,7 +4,7 @@ import NumberOfGuests from "../NumberOfGuests/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
 import { useTravelSearchStore } from "../../../../stores";
 import { useState } from "react";
-import ArrowDownBtn from "../../../Buttons/ArrowDownBtn";
+import { ArrowDownBtn } from "../../../Buttons";
 import { useTravelDatesStore } from "../../../../stores";
 
 export default function ListSearchForm() {
