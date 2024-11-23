@@ -8,7 +8,7 @@ interface RoundBtnProps {
   bgColor?: string;
   textColor?: string;
   borderColor?: string;
-  disabled?: boolean; 
+  disabled?: boolean;
   width?: string;
 }
 
