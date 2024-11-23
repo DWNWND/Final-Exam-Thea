@@ -35,8 +35,8 @@ export default function Home() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>Home | Holidaze</title>
+        <meta name="description" content="Discover your next stay with ease at Holidaze! Search and book accommodations tailored to your needs. Explore top listings and start planning your perfect getaway today." />
       </Helmet>
       <MainElement noPadding={true}>
         <DataProvider>

@@ -18,8 +18,8 @@ export default function MyProfile() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`My Profile | ${userName} | Holidaze`}</title>
+        <meta name="description" content="View your Holidaze account details, manage your listings, track bookings, and stay updated with your activity." />
       </Helmet>
       <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
         <ProfileOverview />

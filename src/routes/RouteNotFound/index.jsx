@@ -7,8 +7,8 @@ export default function RouteNotFound() {
 
   <HelmetProvider>
     <Helmet prioritizeSeoTags>
-      <meta name="description" content="" />
       <title>Route Not Found | Holidaze</title>
+      <meta name="description" content="Route not found" />
     </Helmet>
     <MainElement>
       <ErrorFallback errorMessage="Page not found" />

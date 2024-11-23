@@ -19,8 +19,8 @@ export default function Occupancy() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`Occupancy | ${listingName && listingName} | Holidaze`}</title>
+        <meta name="description" content="Manage your property effortlessly. Check the occupancy of your listing, view booking details, and stay updated on your property's availability." />
       </Helmet>
       <MainElement>
         <OccupancyOverview setListingName={setListingName} />

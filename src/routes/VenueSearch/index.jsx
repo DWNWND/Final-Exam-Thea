@@ -11,7 +11,6 @@ export default function VenueSearch() {
   const { travelSearchData } = useTravelSearchStore();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     if (!travelSearchData.location) {
       navigate("/");
@@ -21,10 +20,8 @@ export default function VenueSearch() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`Stays in ${travelSearchData.location} | Holidaze`}</title>
-        {/* add description as well */}
-        {/* add search details */}
+        <meta name="description" content="Find your next accommodation with ease. Search from a wide range of hotels to suit every budget and preferences. Start your journey to your dream vacation today!" />
       </Helmet>
       <MainElement tailw="flex flex-col lg:flex-row gap-8">
         <DataProvider>

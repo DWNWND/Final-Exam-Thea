@@ -21,8 +21,8 @@ export default function BookingDetails() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`Booking Details | ${selectedVenue.name && selectedVenue.name} | Holidaze`}</title>
+        <meta name="description" content="Book your next stay with Holidaze." />
       </Helmet>
       <MainElement tailw="flex justify-center">
         <DetailsForm />

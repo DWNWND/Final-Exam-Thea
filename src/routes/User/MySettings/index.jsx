@@ -18,8 +18,8 @@ export default function MySettings() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`My Settings | ${userName} | Holidaze`}</title>
+        <meta name="description" content="Update your Holidaze profile information, adjust preferences, register as a venue manager and customize your avatar and banner to reflect your style." />
       </Helmet>
       <MainElement tailw="flex flex-col items-center">
         <SettingsForm />

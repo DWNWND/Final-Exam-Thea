@@ -19,11 +19,11 @@ export default function EditListing() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`Edit Listing | ${listingName && listingName} | Holidaze`}</title>
+        <meta name="description" content="Update and refine your Holidaze property listing details. Ensure your accommodation stands out to potential guests." />
       </Helmet>
       <MainElement>
-        <EditListingForm setListingName={setListingName}/>
+        <EditListingForm setListingName={setListingName} />
       </MainElement>
     </HelmetProvider>
   );

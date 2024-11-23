@@ -20,8 +20,8 @@ export default function BookingCheckout() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`Booking Checkout | ${selectedVenue.name && selectedVenue.name} | Holidaze`}</title>
+        <meta name="description" content="Checkout to secure your room." />
       </Helmet>
       <MainElement tailw="flex justify-center">
         <CheckoutForm />

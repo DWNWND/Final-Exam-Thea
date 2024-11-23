@@ -22,8 +22,8 @@ export default function BookingConfirmation() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`Booking Confirmation | ${selectedVenue.name && selectedVenue.name} | Holidaze`}</title>
+        <meta name="description" content="Booking successful! Thank you for booking with Holidaze." />
       </Helmet>
       <MainElement>
         <BookingConfirmationMessage />

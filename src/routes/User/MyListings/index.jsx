@@ -18,8 +18,8 @@ export default function MyListings() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title>{`My Listings | ${userName} | Holidaze`}</title>
+        <meta name="description" content="View all your pubilshed Holidaze listings." />
       </Helmet>
       <MainElement>
         <ListOfListings />

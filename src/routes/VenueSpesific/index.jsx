@@ -22,9 +22,8 @@ export default function VenueSpesific() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <meta name="description" content="" />
         <title> {`${selectedVenue && selectedVenue.name} | Holidaze`}</title>
-        {/* add decription too */}
+        <meta name="description" content={`${selectedVenue && selectedVenue.description}`} />
       </Helmet>
       <MainElement>
         <SingleVenue />
