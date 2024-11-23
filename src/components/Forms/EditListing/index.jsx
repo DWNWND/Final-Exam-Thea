@@ -103,7 +103,7 @@ export default function EditListingForm({ setListingName }) {
   const onSubmit = async (data) => {
     setErrorUpdateMessage("");
     setUserFeedbackUpdateMessage("");
-    
+
     try {
       await callApi(`/holidaze/venues/${id}`, {
         method: "PUT",
@@ -181,7 +181,7 @@ export default function EditListingForm({ setListingName }) {
                   <SquareBtn clickFunc={() => handleExitDeletion()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
                   <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
                 </div>
-                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
+                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center mt-3`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
               </div>
             </div>
           )}
