@@ -2,9 +2,6 @@ import { Layout } from "./components";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ScrollToTop } from "./utils/";
-import "./App.css";
-import { useEffect } from "react";
-import { useInactivityCheckHook } from "./hooks/";
 import { useAuthStore } from "./stores";
 
 const router = createBrowserRouter([
