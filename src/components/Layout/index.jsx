@@ -4,7 +4,7 @@ import { ErrorFallback } from "../";
 import Header from "./Header";
 import Footer from "./Footer";
 import FixedBtnDisplay from "./FixedBtnDisplay";
-import {useScreenSizeCheckHook} from "../../hooks/";
+import { useScreenSizeCheckHook } from "../../hooks/";
 import { OpenMenuContext } from "../../contexts";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -18,8 +18,7 @@ export default function Layout() {
   const { addRoute } = useNavigationStore();
 
   useEffect(() => {
-    console.log("location changes", location.pathname);
-    addRoute(location.pathname); // Add the current path to the history
+    addRoute(location.pathname);
   }, [location.pathname]);
 
   return (
