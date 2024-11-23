@@ -2,12 +2,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth.jsx";
+import { useApiCall } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
-import { useState } from "react";
-import {SmallSpinnerLoader} from "../../Loaders";
+import { SmallSpinnerLoader } from "../../Loaders";
 import { useTravelSearchStore, useNavigationStore } from "../../../stores";
 
 // Validation schema for registration
@@ -23,9 +22,8 @@ const registerSchema = yup.object().shape({
 });
 
 export default function RegisterForm() {
-  const { registerNewUser, loading, error } = useAuth();
+  const { scopedLoader, error, setError, callApi } = useApiCall();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
   const { selectedVenue } = useTravelSearchStore();
   const getLastPreviousRoute = useNavigationStore((state) => state.getLastPreviousRoute);
   const lastPreviousRoute = getLastPreviousRoute();
@@ -37,31 +35,36 @@ export default function RegisterForm() {
     trigger,
     watch,
   } = useForm({ mode: "onChange", resolver: yupResolver(registerSchema) });
-  // const login = useAuthStore((state) => state.login);
+
+  const userNameField = watch("userName");
+  const emailField = watch("email");
+  const passwordField = watch("password");
+  const confirmPasswordField = watch("confirmPassword");
+
+  useEffect(() => {
+    if (error) {
+      setError("");
+    }
+  }, [userNameField, emailField, passwordField, confirmPasswordField]);
 
   const onSubmit = async (data) => {
-    console.log("username:", data.userName);
-    const result = await registerNewUser(data.userName, data.email, data.password);
+    setError("");
+    const { userName: name, email, password } = data;
 
-    // Check if there was an error
-    if (!loading && !error && result.success) {
-      // Assume login returns an object with a success property
-      if (selectedVenue && lastPreviousRoute === `/venue/${selectedVenue.id}`) {
-        navigate("/booking/details");
-      } else {
-        navigate("/user/" + data.userName);
-      }
-    } else if (!result.success) {
-      setErrorMessage(result.error.errors[0].message);
+    const result = await callApi(`/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
 
-      // Handle error feedback if necessary (optional)
-      console.log("Register failed:", result.error || error); // Log error for debugging
-      console.log("error message", result.error.errors[0].message);
+    setAccessToken(result.data.accessToken);
+    setUserName(result.data.name);
+
+    if (selectedVenue && lastPreviousRoute === `/venue/${selectedVenue.id}`) {
+      navigate("/booking/details");
+    } else {
+      navigate("/user/" + data.userName);
     }
   };
-
-  //add more levels of userFeedback for the different errorcodes
-  console.log("errors", error);
 
   return (
     <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
@@ -73,18 +76,12 @@ export default function RegisterForm() {
         <StringInput type="password" id="confirmPassword" label="Confirm Password" placeholder="• • • • • • •" register={register} errorMessage={errors.confirmPassword && errors.confirmPassword.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between">
           <RoundBtn type="submit" innerText="Register" bgColor="primary-green" textColor="white" />
-
-          {/* <CtaBtn type="submit" innerText="Register" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} /> */}
         </div>
       </form>
-      {loading ? <SmallSpinnerLoader /> : <p className="text-danger text-xs mt-3">{errorMessage && errorMessage} </p>}
+      {scopedLoader ? <SmallSpinnerLoader /> : <p className="text-danger text-xs text-center mt-3">{error && error}</p>}
       <Link to="/login" className="w-full block underline mt-4 text-primary-green hover:text-primary-blue">
         Already have an account?
       </Link>
     </div>
   );
-}
-
-{
-  /* <StringInput type="password" id="password" label="Password" placeholder="• • • • • • •" register={register} setErrorCode={setErrorCode} errorMessage={errors.password && errors.password.message} trigger={trigger} watch={watch} /> */
 }
