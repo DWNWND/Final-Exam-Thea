@@ -73,8 +73,10 @@ export default function EditListingForm({ setListingName }) {
   }
 
   const handleDelete = async () => {
+    setErrorDeletionMessage("");
+    setUserFeedbackDeletionMessage("");
+
     try {
-      setErrorDeletionMessage("");
       await callApi(`/holidaze/venues/${id}`, {
         method: "DELETE",
       });
@@ -95,13 +97,14 @@ export default function EditListingForm({ setListingName }) {
     } catch (err) {
       console.log("error:", err);
       setErrorDeletionMessage("Failed to delete listing.");
-      setUserFeedbackDeletionMessage("");
     }
   };
 
   const onSubmit = async (data) => {
+    setErrorUpdateMessage("");
+    setUserFeedbackUpdateMessage("");
+    
     try {
-      setErrorUpdateMessage("");
       await callApi(`/holidaze/venues/${id}`, {
         method: "PUT",
         body: JSON.stringify(data),
@@ -122,7 +125,6 @@ export default function EditListingForm({ setListingName }) {
     } catch (err) {
       console.log("error:", err);
       setErrorUpdateMessage(err.message);
-      setUserFeedbackUpdateMessage("");
     }
   };
 
