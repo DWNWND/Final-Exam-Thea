@@ -8,15 +8,15 @@ interface ApiResponse<T> {
   success: boolean;
   data?: T;
   error?: any;
+  statusCode?: number;
 }
 
 export function useApiCall() {
-  const { accessToken, setVenueManager } = useAuthStore();
+  const { accessToken } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [scopedLoader, setScopedLoader] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Function to create headers dynamically
   const createHeaders = (hasBody: boolean = false): Headers => {
     const headers = new Headers();
 
@@ -33,7 +33,6 @@ export function useApiCall() {
     return headers;
   };
 
-  // Generic API call function
   const callApi = async <T = any,>(url: string, options: RequestInit = {}): Promise<ApiResponse<T>> => {
     setError(null);
 
@@ -62,6 +61,7 @@ export function useApiCall() {
         return { success: true, data: data.data };
       }
     } catch (err: any) {
+      console.log("error", err);
       console.error("API Error:", err.message || "Unknown error");
       setError(err.message || "An unexpected error occurred");
       return { success: false, error: err.message };
@@ -71,21 +71,12 @@ export function useApiCall() {
     }
   };
 
-  // // Function for authenticated fetch
-  // const fetchWithAuthentication = async (endpoint: string): Promise<ApiResponse<any>> => {
-  //   const response = await callApi(endpoint, { method: "GET" });
-  //   if (response.success && response.data?.venueManager) {
-  //     setVenueManager(response.data.venueManager);
-  //   }
-  //   return response;
-  // };
-
   return {
     loading,
     setLoading,
     scopedLoader,
     error,
+    setError,
     callApi,
-    // fetchWithAuthentication,
   };
 }
