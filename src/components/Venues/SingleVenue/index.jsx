@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { MdOutlinePets, MdEmojiFoodBeverage } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import SelectTravelDates from "../../Forms/SearchTravel/SelectTravelDates/index.jsx";
-import {calculateNights} from "../../../utils/";
+import { calculateNights } from "../../../utils/";
 import BookingCalendar from "../../BookingCalendar/index";
 import { useTravelSearchStore, useAuthStore, useBookingDataStore, useTravelDatesStore } from "../../../stores";
 import { IoIosClose } from "react-icons/io";
@@ -12,11 +12,12 @@ import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
 import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
 import ArrowDownBtn from "../../Buttons/ArrowDownBtn/index.jsx";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch.jsx";
+import { useApiCall } from "../../../hooks";
 
 export default function SingleVenue() {
   const { id } = useParams();
-  const { fetchFromApi } = useFetch();
+  const { loading, error, callApi } = useApiCall(); //this is the error and loading states to use
+
   const { setBookingData, setSelectedVenue } = useBookingDataStore();
   const { savedDates } = useTravelDatesStore();
   const { accessToken, userName, logOut } = useAuthStore();
@@ -45,19 +46,12 @@ export default function SingleVenue() {
 
   const navigate = useNavigate();
 
-  const fetchSingleListing = async () => {
-    const response = await fetchFromApi(`/holidaze/venues/${id}?_bookings=true&_owner=true`);
-    if (response.success) {
-      setListing(response.data);
-      // console.log("response", response.data);
-    } else {
-      console.log("this is the error that havent been checked in singleVenue:", response.error);
-      setMainErrorMessage(response.error); // this errormessage have not been checked
-    }
-  };
-
   useEffect(() => {
-    // clearBookingData(); //call this on the routes instead
+    const fetchSingleListing = async () => {
+      const result = await callApi(`/holidaze/venues/${id}?_bookings=true&_owner=true`);
+      setListing(result.data);
+    };
+
     fetchSingleListing();
   }, []);
 
@@ -147,6 +141,7 @@ export default function SingleVenue() {
     }
   }
 
+  //ADD LOADER AND ERRORFALLBACK
   return (
     <>
       {listing && (

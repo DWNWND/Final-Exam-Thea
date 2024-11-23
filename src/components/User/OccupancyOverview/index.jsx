@@ -1,47 +1,41 @@
 import { Link } from "react-router-dom";
-import {formatDateForDisplay} from "../../../utils/";
+import { formatDateForDisplay } from "../../../utils/";
 import { useEffect, useState } from "react";
 import BookingCalendar from "../../BookingCalendar";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch.jsx";
 import { OccupancyOverviewSkeletonLoader } from "../../Loaders";
 import ErrorFallback from "../../ErrorFallback";
+import { useApiCall } from "../../../hooks";
 
 export default function OccupancyOverview({ setListingName }) {
   const { id } = useParams();
-  const { loading: loadingFetch, fetchFromApi } = useFetch();
+  const { loading, error, callApi } = useApiCall();
   const [listing, setListing] = useState(null);
   const [listingReserved, setListingReserved] = useState([]);
-  const [mainErrorMessage, setMainErrorMessage] = useState(""); // the errormessage is not added anywhere
 
-  const fetchOccupancyData = async () => {
-    const response = await fetchFromApi(`/holidaze/venues/${id}?_bookings=true`);
-    if (response.success) {
-      setListing(response.data);
-      setListingName(response.data.name);
+  useEffect(() => {
+    const fetchOccupancyData = async () => {
+      const result = await callApi(`/holidaze/venues/${id}?_bookings=true`);
+      setListing(result.data);
+      setListingName(result.data.name);
 
-      const reserved = response.data.bookings.map((booking) => ({
+      const reserved = result.data.bookings.map((booking) => ({
         startDate: new Date(booking.dateFrom),
         endDate: new Date(booking.dateTo),
       }));
       setListingReserved(reserved);
-    } else {
-      setMainErrorMessage(response.error); // this errormessage have not been checked
-    }
-  };
+    };
 
-  useEffect(() => {
-    setMainErrorMessage("");
     fetchOccupancyData();
   }, []);
 
   return (
     <>
-      {loadingFetch && loadingFetch ? (
+      {loading && loading ? (
         <OccupancyOverviewSkeletonLoader />
       ) : (
         <>
-          {mainErrorMessage && <ErrorFallback errorMessage={mainErrorMessage} />}
+          {error && <ErrorFallback errorMessage={error} />}
           {listing && (
             <div className="flex flex-col md:flex-row w-full gap-8">
               <div className="w-full xl:sticky xl:top-6 flex flex-col gap-8">
@@ -81,7 +75,6 @@ export default function OccupancyOverview({ setListingName }) {
                         <p className="mb-4 text-center text-2xl font-bold  text-white">
                           {formatDateForDisplay(booking.dateFrom)} - {formatDateForDisplay(booking.dateTo)}
                         </p>
-                        {/* <SquareBtn clickFunc={cancelBookingPrompt} funcProp={booking} innerText="Cancel booking" width="full" tailw="lowercase z-40" bgColor="comp-green" textColor="primary-green" borderColor="primary-green" /> */}
                       </div>
                       <div className="p-6 flex flex-col gap-3">
                         <div>
