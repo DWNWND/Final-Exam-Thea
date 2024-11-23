@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../../stores";
-import useAuthedFetch from "../../../hooks/useAuthedFetch.jsx";
-import useApiCall from "../../../hooks/useApiCall.jsx";
+import { useApiCall } from "../../../hooks";
+
 import { IoIosClose } from "react-icons/io";
 import SquareBtn from "../../../components/Buttons/SquareBtn/index.jsx";
 import ErrorFallback from "../../../components/ErrorFallback/index.jsx";
 import VenueCard from "../../Venues/VenueCard";
 import { BigSpinnerLoader, SmallSpinnerLoader } from "../../Loaders";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+// ADD SKELETONLOADER AND ERRORHANDLING + DISBALE CANCELALTION BTN WHEN WAITING FOR RESPONSE + WHEN REDIRECTING TO PROFILE, ADD A LOADER
 
 export default function ListOfBookings() {
-  const { accessToken, userName } = useAuthStore();
-  const { loading: loadingCancellation, error: errorCancellation, callApiWith } = useApiCall(accessToken);
-  const { loading: loadingInFetch, error: errorInFetch, fetchWithAuthentication } = useAuthedFetch(accessToken);
+  const { userName } = useAuthStore();
+  const { loading, scopedLoader, error, callApi } = useApiCall();
+
+  const [userFeedbackCancellationMessage, setUserFeedbackCancellationMessage] = useState("");
+  const [errorCancellationMessage, setErrorCancellationMessage] = useState("");
 
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [cancellationModal, setCancellationModal] = useState(false);
-  const [mainErrorMessage, setMainErrorMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
   const [allBookings, setAllBookings] = useState([]);
   const [displayedBookings, setDisplayedBookings] = useState([]);
   const [loadMoreLoader, setLoadMoreLoader] = useState(false);
@@ -27,12 +26,8 @@ export default function ListOfBookings() {
   const initialDisplayCount = 10;
 
   const fetchBookings = async () => {
-    const response = await fetchWithAuthentication(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
-    if (response.success) {
-      setAllBookings(response.data);
-    } else {
-      setMainErrorMessage(response.error.errors[0].message);
-    }
+    const result = await callApi(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
+    setAllBookings(result.data);
   };
 
   useEffect(() => {
@@ -51,8 +46,8 @@ export default function ListOfBookings() {
   };
 
   useEffect(() => {
-    setUserFeedbackMessage("");
-    setErrorMessage("");
+    setErrorCancellationMessage("");
+    setUserFeedbackCancellationMessage("");
   }, [cancellationModal]);
 
   function handleExitCancellation() {
@@ -62,25 +57,35 @@ export default function ListOfBookings() {
   }
 
   const handleCancellation = async () => {
+    setErrorCancellationMessage("");
+    setUserFeedbackCancellationMessage("");
+
     try {
-      await callApiWith(`${apiBaseUrl}/holidaze/bookings/${selectedBooking.id}`, {
+      await callApi(`/holidaze/bookings/${selectedBooking.id}`, {
         method: "DELETE",
       });
 
-      if (!loadingCancellation && !errorCancellation) {
-        setErrorMessage("");
-        setUserFeedbackMessage("Cancellation successful");
-        handleExitCancellation();
-      }
+      let countdown = 3;
+      setUserFeedbackCancellationMessage(`Booking successfully cancelled. Redirecting in ${countdown} seconds...`);
+
+      const countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown > 0) {
+          setUserFeedbackCancellationMessage(`Booking successfully cancelled. Redirecting in ${countdown} seconds...`);
+        } else {
+          clearInterval(countdownInterval);
+          handleExitCancellation();
+        }
+      }, 1000);
     } catch (error) {
-      setErrorMessage("Cancellation failed: " + error);
-      setUserFeedbackMessage("");
+      console.log("error:", err);
+      setErrorCancellationMessage("Cancellation failed: " + error);
     }
   };
 
   return (
     <>
-      {errorInFetch && <ErrorFallback errorMessage={mainErrorMessage} />}
+      {error && error && <ErrorFallback errorMessage={error} />}
       {allBookings && allBookings.length > 1 && (
         <>
           <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-8 rounded-lg">
@@ -89,7 +94,7 @@ export default function ListOfBookings() {
             {displayedBookings && displayedBookings.length >= 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-4 ">
                 {displayedBookings.map((booking) => (
-                  <VenueCard venue={booking.venue} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} key={booking.id} bookingId={booking.id} myBookings={true} loading={loadingInFetch} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                  <VenueCard venue={booking.venue} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} key={booking.id} bookingId={booking.id} myBookings={true} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                 ))}
               </div>
             )}
@@ -116,7 +121,7 @@ export default function ListOfBookings() {
               <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-primary-blue hover:text-white" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
               <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white" bgColor="white" textColor="danger" borderColor="danger" />
             </div>
-            {loadingCancellation ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorCancellationMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorCancellationMessage ? errorCancellationMessage : userFeedbackCancellationMessage}</p>}
           </div>
         </div>
       )}
