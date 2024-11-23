@@ -9,8 +9,7 @@ import { IoIosClose } from "react-icons/io";
 import { FaShare, FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import NumberOfGuests from "../../Forms/SearchTravel/NumberOfGuests/index.jsx";
-import SquareBtn from "../../Buttons/SquareBtn/index.jsx";
-import ArrowDownBtn from "../../Buttons/ArrowDownBtn/index.jsx";
+import { ArrowDownBtn, SquareBtn } from "../../Buttons";
 import { useParams } from "react-router-dom";
 import { useApiCall } from "../../../hooks";
 
