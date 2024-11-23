@@ -6,12 +6,11 @@ import * as yup from "yup";
 import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import { useAuthStore } from "../../../stores";
-import useApiCall from "../../../hooks/useApiCall.jsx";
+import { useApiCall } from "../../../hooks";
 import SquareBtn from "../../Buttons/SquareBtn";
-import {SmallSpinnerLoader} from "../../Loaders";
-import usePut from "../../../hooks/usePut";
+import { SmallSpinnerLoader } from "../../Loaders";
 
-const url = import.meta.env.VITE_API_BASE_URL;
+//ADD SKELETONLOADER AND ERRORHANDLING
 
 //think about adding possibility to edit email, username and password??
 const updateSettingsSchema = yup.object().shape({
@@ -27,17 +26,13 @@ const updateSettingsSchema = yup.object().shape({
   venueManager: yup.boolean(),
 });
 
-//the api does not open for deleting users, so this is just a mockup
-
 export default function SettingsForm() {
-  const { updateProfile, loading, error } = usePut();
   const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const { userName, accessToken, setVenueManager } = useAuthStore();
-  const { callApiWith } = useApiCall(accessToken);
-  const navigate = useNavigate();
+  const { userName, setVenueManager } = useAuthStore();
+  const { loading, scopedLoader, error, callApi } = useApiCall();
+  const [errorUpdateMessage, setErrorUpdateMessage] = useState("");
+  const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState("");
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const {
     register,
@@ -47,55 +42,30 @@ export default function SettingsForm() {
     watch,
   } = useForm({ mode: "onChange", resolver: yupResolver(updateSettingsSchema) });
 
-  const fetchData = async () => {
-    const response = await callApiWith(`${url}/holidaze/profiles/${userName}?_venues=true&_bookings=true`, {
-      method: "GET",
-    });
-    setUser(response.data);
-    console.log("response:", response);
-    // setVenueManager(response.data.venueManager);
-  };
-
   useEffect(() => {
-    fetchData();
+    if (!updateSuccess) {
+      const fetchUserData = async () => {
+        const result = await callApi(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+        setUser(result.data);
+      };
+      fetchUserData();
+    }
   }, []);
 
-  //right now there is no functionality to delete a profile from the api, so this is just a mockup
-  const handleDelete = async () => {
-    // setLoading(true);
-    try {
-      // Simulate API call to delete user
-      console.log("Deleting user...");
-      // Add your API call here
-      setUserFeedbackMessage("User deleted successfully.");
-      setErrorMessage("");
-    } catch (err) {
-      setErrorMessage("Failed to delete user.");
-    } finally {
-      // setLoading(false);
-      setShowModal(false); // Close modal after action
-    }
-  };
-
   const onSubmit = async (data) => {
-    console.log("username:", data.userName);
-    const result = await updateProfile(data, `/holidaze/profiles/${userName}`);
-
-    // Check if there was an error
-    if (!loading && !error && result.success) {
-      // Assume login returns an object with a success property
-      console.log("profile updated");
+    setErrorUpdateMessage("");
+    setUserFeedbackUpdateMessage("");
+    try {
+      await callApi(`/holidaze/profiles/${userName}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
+      setUpdateSuccess(true);
       setVenueManager(data.venueManager);
-      setErrorMessage("");
-      setUserFeedbackMessage("Profile successfully updated");
-      navigate(`/user/${userName}`);
-    } else if (!result.success) {
-      setErrorMessage(result.error.errors[0].message);
-      setUserFeedbackMessage("");
-
-      // Handle error feedback if necessary (optional)
-      console.log("update profile failed:", result.error || error); // Log error for debugging
-      console.log("error message", result.error.errors[0].message);
+      setUserFeedbackUpdateMessage("Profile successfully updated.");
+    } catch (err) {
+      console.log("error:", err);
+      setErrorUpdateMessage("Profile update failed: " + error);
     }
   };
 
@@ -105,11 +75,8 @@ export default function SettingsForm() {
         <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
           <div className="flex justify-between items-center w-full mb-6">
             <h1 className="text-2xl  uppercase text-primary-green">My settings</h1>
-            <div className="underline hover:text-danger text-primary-light cursor-pointer" onClick={() => setShowModal(true)}>
-              delete user
-            </div>
           </div>
-          <form className="flex flex-col gap-6 w-full">
+          <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit(onSubmit)}>
             <Checkbox id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></Checkbox>
             <StringInput type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} errorMessage={errors.bio && errors.bio.message} register={register} trigger={trigger} watch={watch}></StringInput>
             <div>
@@ -126,22 +93,9 @@ export default function SettingsForm() {
                 <StringInput type="text" id="banner.alt" label="Image description" placeholder="Something about the banner image" defaultValue={user.banner.alt} errorMessage={errors.banner && errors.banner.message} register={register} trigger={trigger} watch={watch}></StringInput>
               </div>
             </div>
-            <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-            {loading ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+            <SquareBtn type="submit" innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorUpdateMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorUpdateMessage ? errorUpdateMessage : userFeedbackUpdateMessage}</p>}
           </form>
-        </div>
-      )}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
-            <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to delete your profile?</h2>
-            <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
-            <div className="flex justify-end gap-4">
-              <SquareBtn clickFunc={() => setShowModal(false)} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-              <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
-            </div>
-            {/* {loadingCancellation ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>} */}
-          </div>
         </div>
       )}
     </>
