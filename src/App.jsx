@@ -1,10 +1,10 @@
 import { Layout } from "./components";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {ScrollToTop} from "./utils/";
+import { ScrollToTop } from "./utils/";
 import "./App.css";
 import { useEffect } from "react";
-import useInactivityTimer from "./hooks/useInactivityTimer";
+import {useInactivityCheckHook} from "./hooks/";
 import { useAuthStore } from "./stores";
 
 const router = createBrowserRouter([
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 export default function App() {
   const { logOut } = useAuthStore();
   //fix the inactivity timer to redirect to homepage when logging out and to alert inactivity before logging out
-  // useInactivityTimer();
+  // useInactivityCheckHook();
 
   //logout when the user closes the tab
   useEffect(() => {

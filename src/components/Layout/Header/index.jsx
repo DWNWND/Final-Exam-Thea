@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import LogoIcon from "../../../assets/logos/holidaize-logo.svg";
 import { useState, useEffect } from "react";
 import HamburgerBtn from "./HamburgerBtn";
-import useCheckScreenSize from "../../../hooks/useCheckScreenSize";
+import {useScreenSizeCheckHook} from "../../../hooks/";
 import FixedBtnDisplay from "../FixedBtnDisplay";
 import { useContext } from "react";
 import { OpenMenuContext } from "../../../contexts";
@@ -12,7 +12,7 @@ import OpenMenu from "./OpenMenu";
 
 export default function Header() {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
-  const isMobile = useCheckScreenSize();
+  const isMobile = useScreenSizeCheckHook();
   const hasPreviousRoute = useNavigationStore((state) => state.hasPreviousRoute());
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);

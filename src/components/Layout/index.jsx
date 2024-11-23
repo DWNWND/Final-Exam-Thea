@@ -4,7 +4,7 @@ import { ErrorFallback } from "../";
 import Header from "./Header";
 import Footer from "./Footer";
 import FixedBtnDisplay from "./FixedBtnDisplay";
-import useCheckScreenSize from "../../hooks/useCheckScreenSize";
+import {useScreenSizeCheckHook} from "../../hooks/";
 import { OpenMenuContext } from "../../contexts";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -13,17 +13,15 @@ import { useEffect } from "react";
 
 export default function Layout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMobile = useCheckScreenSize();
+  const isMobile = useScreenSizeCheckHook();
   const location = useLocation();
   const { addRoute } = useNavigationStore();
 
   useEffect(() => {
     console.log("location changes", location.pathname);
     addRoute(location.pathname); // Add the current path to the history
-    
   }, [location.pathname]);
 
-  
   return (
     <>
       <ErrorBoundary FallbackComponent={ErrorFallback}>

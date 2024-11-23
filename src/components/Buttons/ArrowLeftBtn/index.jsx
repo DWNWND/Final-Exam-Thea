@@ -1,10 +1,10 @@
 import { FaArrowCircleLeft } from "react-icons/fa";
-import { useBackButton } from "../../../hooks/useBackBtn";
+import { useNavigateBackHook } from "../../../hooks";
 import { useNavigationStore } from "../../../stores";
 import { FaArrowLeft } from "react-icons/fa6";
 
 export default function ArrowLeftBtn() {
-  const handleBack = useBackButton();
+  const handleBack = useNavigateBackHook();
   const hasPreviousRoute = useNavigationStore((state) => state.hasPreviousRoute());
 
   if (!hasPreviousRoute) {

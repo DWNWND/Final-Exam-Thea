@@ -1,4 +1,4 @@
-import useCheckScreenSize from "../../../hooks/useCheckScreenSize";
+import {useScreenSizeCheckHook} from "../../../hooks/";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { OpenMenuContext } from "../../../contexts";
@@ -48,7 +48,7 @@ export default function FixedBtnDisplay() {
     };
   }, [lastScrollY]);
 
-  const isMobile = useCheckScreenSize();
+  const isMobile = useScreenSizeCheckHook();
 
   // if (location.pathname.toLowerCase().includes("login") || location.pathname.toLowerCase().includes("register")) {
   //   return null;
