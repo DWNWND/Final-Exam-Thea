@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ScrollToTop } from "./utils/";
 import "./App.css";
 import { useEffect } from "react";
-import {useInactivityCheckHook} from "./hooks/";
+import { useInactivityCheckHook } from "./hooks/";
 import { useAuthStore } from "./stores";
 
 const router = createBrowserRouter([
@@ -39,15 +39,15 @@ export default function App() {
   // useInactivityCheckHook();
 
   //logout when the user closes the tab
-  useEffect(() => {
-    const handleUnload = () => {
-      logOut();
-    };
-    window.addEventListener("unload", handleUnload);
-    return () => {
-      window.removeEventListener("unload", handleUnload);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleUnload = () => {
+  //     logOut();
+  //   };
+  //   window.addEventListener("unload", handleUnload);
+  //   return () => {
+  //     window.removeEventListener("unload", handleUnload);
+  //   };
+  // }, []);
 
   return (
     <RouterProvider router={router}>
