@@ -13,6 +13,7 @@ interface ApiResponse<T> {
 export function useApiCall() {
   const { accessToken, setVenueManager } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const [scopedLoader, setScopedLoader] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Function to create headers dynamically
@@ -34,8 +35,13 @@ export function useApiCall() {
 
   // Generic API call function
   const callApi = async <T = any,>(url: string, options: RequestInit = {}): Promise<ApiResponse<T>> => {
-    setLoading(true);
     setError(null);
+
+    if (!options.method) {
+      setLoading(true);
+    } else {
+      setScopedLoader(true);
+    }
 
     try {
       const response = await fetch(`${apiBaseUrl}${url}`, {
@@ -49,13 +55,19 @@ export function useApiCall() {
         throw new Error(errorData.errors?.[0]?.message || "An error occurred");
       }
 
-      const data = response.status === 204 ? null : await response.json();
-      return { success: true, data: data.data };
+      if (response.status === 204) {
+        return { success: true };
+      } else {
+        const data = await response.json();
+        return { success: true, data: data.data };
+      }
     } catch (err: any) {
+      console.error("API Error:", err.message || "Unknown error");
       setError(err.message || "An unexpected error occurred");
       return { success: false, error: err.message };
     } finally {
       setLoading(false);
+      setScopedLoader(false);
     }
   };
 
@@ -71,6 +83,7 @@ export function useApiCall() {
   return {
     loading,
     setLoading,
+    scopedLoader,
     error,
     callApi,
     // fetchWithAuthentication,
