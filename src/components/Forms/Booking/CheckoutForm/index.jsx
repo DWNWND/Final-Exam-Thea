@@ -3,14 +3,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
-import { useTravelSearchStore, useBookingDataStore, useAuthStore, useTravelDatesStore } from "../../../../stores";
-import {calculateNights} from "../../../../utils/";
-import useApiCall from "../../../../hooks/useApiCall.jsx";
+import { useTravelSearchStore, useBookingDataStore, useTravelDatesStore } from "../../../../stores";
+import { calculateNights } from "../../../../utils/";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 import { useState } from "react";
 import { SmallSpinnerLoader } from "../../../Loaders";
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+import { useApiCall } from "../../../../hooks";
 
 // remeber to implement noroff validation on email etc.
 const checkoutSchema = yup.object().shape({
@@ -29,9 +27,8 @@ const checkoutSchema = yup.object().shape({
 });
 
 export default function CheckoutForm() {
-  const { accessToken } = useAuthStore();
   const { travelSearchData } = useTravelSearchStore();
-  const { callApiWith, loading, error } = useApiCall(accessToken);
+  const { loading, error, callApi } = useApiCall();
   const { bookingData, selectedVenue, setSuccessfulBookingId } = useBookingDataStore();
   const { savedDates } = useTravelDatesStore();
 
@@ -51,26 +48,32 @@ export default function CheckoutForm() {
   });
 
   const onSubmit = async () => {
+    setErrorMessage("");
+    setUserFeedbackMessage("");
+
     try {
-      const sendData = async () => {
-        const response = await callApiWith(`${apiBaseUrl}/holidaze/bookings`, {
-          method: "POST",
-          body: JSON.stringify(bookingData),
-        });
-        setSuccessfulBookingId(response.data.id);
-        return response.data.id;
-      };
+      const result = await callApi(`/holidaze/bookings`, {
+        method: "POST",
+        body: JSON.stringify(bookingData),
+      });
 
-      const bookingId = await sendData();
+      setSuccessfulBookingId(result.data.id);
 
-      if (!loading && !error && bookingId) {
-        setErrorMessage("");
-        setUserFeedbackMessage("Payment successful");
-        navigate(`/booking/confirmation/${bookingId}`);
-      }
-    } catch (error) {
-      setErrorMessage("Booking failed: " + error);
-      setUserFeedbackMessage("");
+      let countdown = 3;
+      setUserFeedbackMessage(`Payment successful. Redirecting in ${countdown} seconds...`);
+
+      const countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown > 0) {
+          setUserFeedbackMessage(`Payment successful. Redirecting in ${countdown} seconds...`);
+        } else {
+          clearInterval(countdownInterval);
+          navigate(`/booking/confirmation/${result.data.id}`);
+        }
+      }, 1000);
+    } catch (err) {
+      console.log("error:", err);
+      setErrorMessage("Payment failed: " + error);
     }
   };
 
