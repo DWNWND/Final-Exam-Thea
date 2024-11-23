@@ -1,20 +1,19 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuthStore } from "../../../stores";
-import useApiCall from "../../../hooks/useApiCall.jsx";
+import { useApiCall } from "../../../hooks";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SquareBtn from "../../Buttons/SquareBtn";
-import { FaParking, FaWifi } from "react-icons/fa";
 import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { FaRegHeart, FaShare } from "react-icons/fa";
-import {formatDateForDisplay, formatDateForFlatpickr} from "../../../utils/";
+import { FaParking, FaWifi } from "react-icons/fa";
+import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils/";
+import { SmallSpinnerLoader } from "../../Loaders";
 
-const url = import.meta.env.VITE_API_VENUES_URL;
+//FIX THE LISTING PREVIEW TO BE THE SAME STYLING AND INFORMATION AS IN THE SINGLE VENUE PAGE + ALSO ADD USER/OWNER INFO // ALSO DISABLE AND STYLE DISABLED SUBMIT BUTTON WHEN LOADING
 
-const schemas = [
+const newListingSchema = [
   yup.object().shape({
     name: yup.string().min(4, "Please enter a valid property name. Minimum 4 characters.").required("Property name is required"),
   }),
@@ -57,8 +56,10 @@ const schemas = [
 ];
 
 export default function NewListingForm() {
-  const { accessToken } = useAuthStore();
-  const { callApiWith, loading, error } = useApiCall(accessToken);
+  const { scopedLoader, error, callApi } = useApiCall();
+  const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [formStep, setFormStep] = useState(0);
   const navigate = useNavigate();
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
@@ -88,8 +89,8 @@ export default function NewListingForm() {
   const endDate = new Date(tomorrowString);
   const formattedEndDate = formatDateForDisplay(endDate);
 
-  const validFormStep = Math.min(formStep, schemas.length - 1);
-  const currentSchema = schemas[validFormStep];
+  const validFormStep = Math.min(formStep, newListingSchema.length - 1);
+  const currentSchema = newListingSchema[validFormStep];
 
   const {
     register,
@@ -99,41 +100,49 @@ export default function NewListingForm() {
   } = useForm({ mode: "onChange", resolver: yupResolver(currentSchema) });
 
   const nextStep = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (isValid) {
       setFormStep((cur) => cur + 1);
     }
   };
 
   const prevStep = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (formStep > 0) {
       setFormStep((cur) => cur - 1);
     }
   };
 
   const onSubmit = async (data) => {
-    console.log("data:", data);
 
-    // Convert specific fields to numbers
     const processedData = {
       ...data,
       price: parseFloat(data.price),
       maxGuests: parseInt(data.maxGuests, 10),
       rating: parseFloat(data.rating),
-      // Add other fields that need to be numbers here
     };
 
-    console.log("processedData:", processedData);
+    try {
+      const result = await callApi(`/holidaze/venues`, {
+        method: "POST",
+        body: JSON.stringify(processedData),
+      });
 
-    const response = await callApiWith(url, {
-      method: "POST",
-      body: JSON.stringify(processedData),
-    });
+      let countdown = 3;
+      setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
 
-    if (!loading && !error) {
-      console.log("response:", response);
-      navigate(`/venue/${response.data.id}`);
+      const countdownInterval = setInterval(() => {
+        countdown -= 1;
+        if (countdown > 0) {
+          setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
+        } else {
+          clearInterval(countdownInterval);
+          navigate(`/venue/${result.data.id}`);
+        }
+      }, 1000);
+    } catch (error) {
+      console.log("error:", error);
+      setErrorMessage("Failed to publish listing: " + error);
     }
   };
 
@@ -283,7 +292,7 @@ export default function NewListingForm() {
         <div className="flex justify-between items-center">
           <SquareBtn innerText="Back" type="button" clickFunc={prevStep} disabled={formStep === 0} tailw={`${formStep === 0 ? "opacity-0" : "opacity-100"} hover:bg-white bg-opacity-50`} bgColor="white" textColor="primary-green" borderColor="comp-primary-green" />
           <div className="flex justify-center gap-2 ">
-            {schemas.map((_, index) => (
+            {newListingSchema.map((_, index) => (
               <div key={index} className={`w-2 h-2 rounded-full ${index <= formStep ? "bg-primary-green" : "bg-comp-green"} ${index <= formStep ? "cursor-pointer" : "cursor-not-allowed"}`} aria-label={`Go to step ${index + 1}`}></div>
             ))}
           </div>
@@ -291,85 +300,78 @@ export default function NewListingForm() {
         </div>
         {formStep === 8 && (
           <>
-            {error && <p className="text-danger text-md mt-2 text-center">Error when submitting: {error}</p>}
-
-            <button type="submit" className={`bg-primary-green text-white rounded-full uppercase p-2 mt-5 ${error ? "opacity-50" : "opacity-100"}`}>
-              Publish listing
-            </button>
-          </>
-        )}
-        <div className="pt-10">
-          <h2 className="mb-1 mt-3 font-bold uppercase text-lg text-center text-primary-blue">Listing preview</h2>
-          <div className={`mt-4 ${formStep === 8 ? "opacity-100" : "opacity-45"}`}>
-            <div className="relative">
-              <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer">
-                <h1 className="text-center text-2xl font-bold text-white">
-                  {formattedStartDate} - {formattedEndDate}
-                </h1>
-                <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">kr {watch("price")} /night</div>
-              </div>
-              <div>
-                <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-lg"></div>
-                <img src={watch("media[0].url")} alt={watch("media[0].alt")} className="w-full h-96 md:h-[20rem] object-cover rounded-lg" />
-              </div>
-            </div>
-            <div className="p-4 flex justify-between">
-              <div>
-                <h3 className="text-xl font-bold text-black">{watch("name")}</h3>
-                <p className="text-black">
-                  {watch("location.city")}, {watch("location.country")}
-                </p>
-                <p className="text-black font-semibold mt-4">kr {watch("price")}/night</p>
-              </div>
-              <div>
-                <p>★ {watch("rating")}</p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <Details title="Amenities" toggleState={amenitiesOpen} toggleFunc={toggleAmenities}>
-                <div className="flex flex-col mt-3 gap-2 p-4">
-                  <p className="flex items-center gap-4">
-                    {watch("meta.breakfast") && (
-                      <>
-                        <MdEmojiFoodBeverage />
-                        Breakfast included
-                      </>
-                    )}
-                  </p>
-                  <p className="flex items-center gap-4">
-                    {watch("meta.parking") && (
-                      <>
-                        <FaParking />
-                        Free parking
-                      </>
-                    )}
-                  </p>
-                  <p className="flex items-center gap-4">
-                    {watch("meta.pets") && (
-                      <>
-                        <MdOutlinePets />
-                        Pets allowed
-                      </>
-                    )}
-                  </p>
-                  <p className="flex items-center gap-4">
-                    {watch("meta.wifi") && (
-                      <>
-                        <FaWifi />
-                        Free WiFi
-                      </>
-                    )}
-                  </p>
+            <div>
+              <h2 className="mb-1 mt-3 font-bold uppercase text-lg text-center text-primary-blue">Listing preview</h2>
+              <div className={`mt-4 ${formStep === 8 ? "opacity-100" : "opacity-45"}`}>
+                <div className="relative">
+                  <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer">
+                    <h1 className="text-center text-2xl font-bold text-white">
+                      {formattedStartDate} - {formattedEndDate}
+                    </h1>
+                    <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">kr {watch("price")} /night</div>
+                  </div>
+                  <div>
+                    <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-lg"></div>
+                    <img src={watch("media[0].url")} alt={watch("media[0].alt")} className="w-full h-96 md:h-[20rem] object-cover rounded-lg" />
+                  </div>
                 </div>
-              </Details>
-              <Details title="Description" toggleState={descriptionOpen} toggleFunc={toggleDescription}>
-                <div className="flex flex-col mt-3  p-4">
-                  <p className="">{watch("description")}</p>
+                <div className="p-4 flex justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-black">{watch("name")}</h3>
+                    <p className="text-black">
+                      {watch("location.city")}, {watch("location.country")}
+                    </p>
+                    <p className="text-black font-semibold mt-4">kr {watch("price")}/night</p>
+                  </div>
+                  <div>
+                    <p>★ {watch("rating")}</p>
+                  </div>
                 </div>
-              </Details>
-              <Details title="Host details" toggleState={hostDetailsOpen} toggleFunc={toggleHostDetails}>
-                <div className="flex mt-3 gap-4 items-center p-4">
-                  {/* <div>
+                <div className="flex flex-col gap-2">
+                  <Details title="Amenities" toggleState={amenitiesOpen} toggleFunc={toggleAmenities}>
+                    <div className="flex flex-col mt-3 gap-2 p-4">
+                      <p className="flex items-center gap-4">
+                        {watch("meta.breakfast") && (
+                          <>
+                            <MdEmojiFoodBeverage />
+                            Breakfast included
+                          </>
+                        )}
+                      </p>
+                      <p className="flex items-center gap-4">
+                        {watch("meta.parking") && (
+                          <>
+                            <FaParking />
+                            Free parking
+                          </>
+                        )}
+                      </p>
+                      <p className="flex items-center gap-4">
+                        {watch("meta.pets") && (
+                          <>
+                            <MdOutlinePets />
+                            Pets allowed
+                          </>
+                        )}
+                      </p>
+                      <p className="flex items-center gap-4">
+                        {watch("meta.wifi") && (
+                          <>
+                            <FaWifi />
+                            Free WiFi
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </Details>
+                  <Details title="Description" toggleState={descriptionOpen} toggleFunc={toggleDescription}>
+                    <div className="flex flex-col mt-3  p-4">
+                      <p className="">{watch("description")}</p>
+                    </div>
+                  </Details>
+                  <Details title="Host details" toggleState={hostDetailsOpen} toggleFunc={toggleHostDetails}>
+                    <div className="flex mt-3 gap-4 items-center p-4">
+                      {/* <div>
                   <img src={venue.owner.avatar.url} className="max-w-20 max-h-20 rounded-full"></img>
                 </div>
                 <div className="flex flex-col gap-1">
@@ -377,18 +379,20 @@ export default function NewListingForm() {
                   <p className="">{venue.owner.bio}</p>
                   <p className="">Contact host via: {venue.owner.email}</p>
                 </div> */}
+                    </div>
+                  </Details>
+                  <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
+                    <div className="flex mt-3 gap-4 p-4 py-10 bg-comp rounded-lg justify-center">{/* <div className="flex flex-col gap-1 w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div> */}</div>
+                  </Details>
                 </div>
-              </Details>
-              <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
-                <div className="flex mt-3 gap-4 p-4 py-10 bg-comp rounded-lg justify-center">{/* <div className="flex flex-col gap-1 w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div> */}</div>
-              </Details>
-              <div className="flex gap-8 justify-center pt-10 text-2xl text-primary-blue">
-                <FaRegHeart />
-                <FaShare />
               </div>
             </div>
-          </div>
-        </div>
+            <button type="submit" className={`bg-primary-green text-white rounded-full uppercase p-2 mt-5 ${error ? "opacity-50" : "opacity-100"}`}>
+              Publish listing
+            </button>
+            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+          </>
+        )}
       </form>
     </div>
   );
