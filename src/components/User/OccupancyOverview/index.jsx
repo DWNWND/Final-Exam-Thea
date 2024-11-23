@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay";
+import {formatDateForDisplay} from "../../../utils/";
 import { useEffect, useState } from "react";
 import BookingCalendar from "../../BookingCalendar";
 import { useParams } from "react-router-dom";

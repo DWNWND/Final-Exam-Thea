@@ -3,10 +3,8 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
 import "flatpickr/dist/themes/material_green.css";
-import formatDateForFlatpickr from "../../../../utils/dateUtils/formatDateForFlatpickr.js";
-import generateAllTravelDates from "../../../../utils/dateUtils/generateAllDatesArr.js";
 import { useTravelDatesStore } from "../../../../stores";
-import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
+import {formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr} from "../../../../utils/";
 
 export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }) {
   const { savedDates, setSavedDates, initialDates, setInitialDates, defaultFlatpickrDates, setDefaultFlatpickrDates } = useTravelDatesStore();
@@ -23,7 +21,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
       // Set date store if its not set yet
       const startYYYYMMDD = formatDateForFlatpickr(today);
       const endYYYYMMDD = formatDateForFlatpickr(tomorrow);
-      const dateRangeArrYYYYMMDD = generateAllTravelDates(startYYYYMMDD, endYYYYMMDD);
+      const dateRangeArrYYYYMMDD = generateAllDatesArr(startYYYYMMDD, endYYYYMMDD);
       const startDisplay = formatDateForDisplay(today); //for display
       const endDisplay = formatDateForDisplay(tomorrow); //for display
       setSavedDates({
@@ -56,7 +54,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
         const startYYYYMMDD = formatDateForFlatpickr(newStartDate);
         const endDisplay = formatDateForDisplay(newEndDate); //for display
         const startDisplay = formatDateForDisplay(newStartDate); //for display
-        const dateRangeArrYYYYMMDD = generateAllTravelDates(startYYYYMMDD, endYYYYMMDD);
+        const dateRangeArrYYYYMMDD = generateAllDatesArr(startYYYYMMDD, endYYYYMMDD);
         setSavedDates({
           endYYYYMMDD: endYYYYMMDD,
           startYYYYMMDD: startYYYYMMDD,
@@ -72,7 +70,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
         // endDate and startDate is the same (if there has been a glitch and the dates are the same, update endDate to the next day)
         const newEndDate = new Date(savedDates.startDateObj.setDate(savedDates.startDateObj.getDate() + 1));
         const endYYYYMMDD = formatDateForFlatpickr(newEndDate);
-        const dateRangeArrYYYYMMDD = generateAllTravelDates(savedDates.startYYYYMMDD, endYYYYMMDD);
+        const dateRangeArrYYYYMMDD = generateAllDatesArr(savedDates.startYYYYMMDD, endYYYYMMDD);
         const endDisplay = formatDateForDisplay(newEndDate); //for display
         setSavedDates({
           endYYYYMMDD: endYYYYMMDD,
@@ -122,7 +120,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
                   endYYYYMMDD: selectedEndDate,
                   startDisplay: formatDateForDisplay(selectedDates[0]),
                   endDisplay: formatDateForDisplay(selectedDates[1]),
-                  dateRangeArrYYYYMMDD: generateAllTravelDates(selectedStartDate, selectedEndDate),
+                  dateRangeArrYYYYMMDD: generateAllDatesArr(selectedStartDate, selectedEndDate),
                 });
 
                 if (toggleDatesFunc) {

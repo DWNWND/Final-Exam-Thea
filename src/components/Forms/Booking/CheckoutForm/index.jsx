@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String/index.jsx";
 import { useTravelSearchStore, useBookingDataStore, useAuthStore, useTravelDatesStore } from "../../../../stores";
-import calculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
+import {calculateNights} from "../../../../utils/";
 import useApiCall from "../../../../hooks/useApiCall.jsx";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 import { useState } from "react";
@@ -74,7 +74,7 @@ export default function CheckoutForm() {
     }
   };
 
-  const nights = calculateNightsBetween(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
+  const nights = calculateNights(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
   const price = nights * selectedVenue.price;
 
   return (

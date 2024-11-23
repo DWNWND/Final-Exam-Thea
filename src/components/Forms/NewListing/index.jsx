@@ -10,8 +10,7 @@ import { FaParking, FaWifi } from "react-icons/fa";
 import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaRegHeart, FaShare } from "react-icons/fa";
-import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
-import formatDateForFlatpickr from "../../../utils/dateUtils/formatDateForFlatpickr.js";
+import {formatDateForDisplay, formatDateForFlatpickr} from "../../../utils/";
 
 const url = import.meta.env.VITE_API_VENUES_URL;
 

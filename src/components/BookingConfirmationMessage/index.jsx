@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useBookingDataStore, useTravelSearchStore } from "../../stores";
-import formatDateForDisplay from "../../utils/dateUtils/formatDateForDisplay";
-import calculateNightsBetween from "../../utils/calcNights/calculateNightsBetween";
+import {calculateNights, formatDateForDisplay} from "../../utils/";
 import RoundBtn from "../Buttons/RoundBtn";
 
 export default function BookingConfirmationMessage() {
@@ -15,7 +14,7 @@ export default function BookingConfirmationMessage() {
   const endDate = new Date(bookingData.dateTo);
   const formattedEndDate = formatDateForDisplay(endDate);
 
-  const nights = calculateNightsBetween(bookingData.dateFrom, bookingData.dateTo);
+  const nights = calculateNights(bookingData.dateFrom, bookingData.dateTo);
   const price = nights * selectedVenue.price;
 
   return (

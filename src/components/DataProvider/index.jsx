@@ -2,7 +2,7 @@ import useFetch from "../../hooks/useFetch.jsx";
 import { useState, useEffect } from "react";
 import { DataContext } from "../../contexts/index.jsx";
 import { searchableLocations } from "../../assets/locations/searchableLocations.js";
-import { capitalizeWords } from "../../utils/capWords/capitalizeWords.js";
+import { capitalizeWords } from "../../utils/";
 
 export function DataProvider({ children }) {
   const { data, loading, setLoading, error, fetchFromApi } = useFetch();

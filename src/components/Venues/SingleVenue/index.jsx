@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { MdOutlinePets, MdEmojiFoodBeverage } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import SelectTravelDates from "../../Forms/SearchTravel/SelectTravelDates/index.jsx";
-import calculateNightsBetween from "../../../utils/calcNights/calculateNightsBetween.js";
+import {calculateNights} from "../../../utils/";
 import BookingCalendar from "../../BookingCalendar/index";
 import { useTravelSearchStore, useAuthStore, useBookingDataStore, useTravelDatesStore } from "../../../stores";
 import { IoIosClose } from "react-icons/io";
@@ -61,7 +61,6 @@ export default function SingleVenue() {
     fetchSingleListing();
   }, []);
 
-
   useEffect(() => {
     if (listing) {
       setSelectedVenue(listing);
@@ -74,7 +73,7 @@ export default function SingleVenue() {
 
       setListingReserved(reserved);
 
-      const nights = calculateNightsBetween(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
+      const nights = calculateNights(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
       const price = nights * listing.price;
       setTotalPrice(price);
       setNights(nights);

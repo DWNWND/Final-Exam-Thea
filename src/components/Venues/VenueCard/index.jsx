@@ -3,7 +3,7 @@ import SquareBtn from "../../Buttons/SquareBtn";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { useEffect, useState } from "react";
-import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
+import {formatDateForDisplay} from "../../../utils/";
 import { VenueCardSkeletonLoader } from "../../Loaders";
 
 export default function VenueCard({ venue, bookingId, bookingDates = null, loading, myVenues = false, myBookings = false, setSelectedBooking = () => {}, setCancellationModal = () => {} }) {

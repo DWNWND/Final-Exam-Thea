@@ -4,8 +4,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
 import { useTravelSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
-import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDisplay.js";
-import claculateNightsBetween from "../../../../utils/calcNights/calculateNightsBetween.js";
+import {calculateNights, formatDateForDisplay} from "../../../../utils/";
 import RoundBtn from "../../../Buttons/RoundBtn";
 import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
 import { useEffect, useState } from "react";
@@ -97,7 +96,7 @@ export default function DetailsForm() {
   const endDate = new Date(bookingData.dateTo);
   const formattedEndDate = formatDateForDisplay(endDate);
 
-  const nights = claculateNightsBetween(bookingData.dateFrom, bookingData.dateTo);
+  const nights = calculateNights(bookingData.dateFrom, bookingData.dateTo);
   const price = nights * selectedVenue.price;
 
   return (
