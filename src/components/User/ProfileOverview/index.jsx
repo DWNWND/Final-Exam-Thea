@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
-import { SmallSpinnerLoader } from "../../../components/Loaders";
 import { useApiCall } from "../../../hooks";
-import { IoIosClose } from "react-icons/io";
 import VenueCard from "../../Venues/VenueCard";
 import ErrorFallback from "../../ErrorFallback/index.jsx";
 import { RoundBtn, SquareBtn } from "../../Buttons";
+import { CancellationModal } from "../../Modals";
 
 export default function ProfileOverview() {
-  const { userName, logOut } = useAuthStore();
+  const { userName, logOut, setVenueManager } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
 
   const [user, setUser] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [cancellationModal, setCancellationModal] = useState(false);
-
-  const [userFeedbackCancellationMessage, setUserFeedbackCancellationMessage] = useState("");
-  const [errorCancellationMessage, setErrorCancellationMessage] = useState("");
-
-  const navigate = useNavigate();
   const [userBookings, setUserBookings] = useState([]);
   const [userListings, setUserListings] = useState([]);
+
+  const navigate = useNavigate();
 
   const maxBookingsShown = 4;
   const maxListingsShown = 4;
@@ -29,6 +25,7 @@ export default function ProfileOverview() {
   const fetchUser = async () => {
     const result = await callApi(`/holidaze/profiles/${userName}`);
     setUser(result.data);
+    setVenueManager(result.data.venueManager);
   };
 
   const fetchBookings = async () => {
@@ -42,53 +39,21 @@ export default function ProfileOverview() {
   };
 
   useEffect(() => {
-    setErrorCancellationMessage("");
-    setUserFeedbackCancellationMessage("");
-  }, [cancellationModal]);
-
-  useEffect(() => {
     fetchUser();
     fetchBookings();
     fetchVenues();
   }, []);
 
-  function handleExitCancellation() {
+  const handleLogOut = () => {
+    logOut();
+    navigate("/");
+  };
+
+  const handleExitCancellation = () => {
     setCancellationModal(false);
     setSelectedBooking(null);
     fetchBookings();
-  }
-
-  const handleCancellation = async () => {
-    setErrorCancellationMessage("");
-    setUserFeedbackCancellationMessage("");
-
-    try {
-      await callApi(`/holidaze/bookings/${selectedBooking.id}`, {
-        method: "DELETE",
-      });
-
-      let countdown = 3;
-      setUserFeedbackCancellationMessage(`Booking successfully cancelled. Redirecting in ${countdown} seconds...`);
-
-      const countdownInterval = setInterval(() => {
-        countdown -= 1;
-        if (countdown > 0) {
-          setUserFeedbackCancellationMessage(`Booking successfully cancelled. Redirecting in ${countdown} seconds...`);
-        } else {
-          clearInterval(countdownInterval);
-          handleExitCancellation();
-        }
-      }, 1000);
-    } catch (error) {
-      console.log("error:", err);
-      setErrorCancellationMessage("Cancellation failed: " + error);
-    }
   };
-
-  function handleLogOut() {
-    logOut();
-    navigate("/");
-  }
 
   return (
     <>
@@ -185,22 +150,7 @@ export default function ProfileOverview() {
               )}
             </div>
           </section>
-          {cancellationModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10 relative">
-                <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={() => handleExitCancellation()}>
-                  <IoIosClose />
-                </button>
-                <h2 className="text-xl font-bold mb-4 text-primary-blue">Are you sure you want to cancel your booking at {selectedBooking.name}?</h2>
-                <p className="text-sm mb-6 text-primary-blue">This action cannot be undone.</p>
-                <div className="flex justify-end gap-4 mb-5">
-                  <SquareBtn clickFunc={() => handleExitCancellation()} type="button" width="full" innerText="No" tailw="hover:bg-primary-blue hover:text-white" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
-                  <SquareBtn clickFunc={() => handleCancellation()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white" bgColor="white" textColor="danger" borderColor="danger" />
-                </div>
-                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorCancellationMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorCancellationMessage ? errorCancellationMessage : userFeedbackCancellationMessage}</p>}
-              </div>
-            </div>
-          )}
+          {cancellationModal && <CancellationModal booking={selectedBooking} toggle={handleExitCancellation} loading={scopedLoader} />}
         </>
       )}
     </>
