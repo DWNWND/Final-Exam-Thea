@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export function BookingModal({ toggle, listingIsAvailable }) {
-  const { accessToken, userName } = useAuthStore();
+  const { accessToken, userName, logOut } = useAuthStore();
   const { setBookingData, selectedVenue } = useBookingDataStore();
   const { travelSearchData } = useTravelSearchStore();
   const { savedDates } = useTravelDatesStore();
@@ -25,6 +25,7 @@ export function BookingModal({ toggle, listingIsAvailable }) {
       toggle();
 
       if (continueAs === userName) {
+        console.log("executed");
         setBookingData(booking);
         navigate("/booking/details");
       }

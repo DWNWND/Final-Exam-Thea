@@ -39,7 +39,7 @@ export function CancellationModal({ booking, toggle }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10 relative">
-        <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={() => handleExitCancellation()}>
+        <button className="absolute top-2 right-2 text-primary-blue text-3xl" onClick={() => toggle()}>
           <IoIosClose />
         </button>
         <h2 className="text-xl font-bold mb-4 text-primary-blue">Are you sure you want to cancel your booking at {booking.name}?</h2>

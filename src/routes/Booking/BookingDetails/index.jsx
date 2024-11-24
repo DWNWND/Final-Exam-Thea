@@ -13,6 +13,7 @@ export default function BookingDetails() {
   const { bookingData, selectedVenue } = useBookingDataStore();
 
   useEffect(() => {
+    console.log("executed booking details");
     if (!accessToken || !bookingData.venueId) {
       navigate("/");
     }
