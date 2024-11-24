@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import VenueCard from "../VenueCard";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
 import ErrorFallback from "../../ErrorFallback";
 import { SelectCategoryBtns } from "../../Buttons";
 import { useState } from "react";
+import ListingCard from "../../Cards/ListingCard";
 
 export default function ListCategorized() {
   const { displayedListings, loading, error } = useContext(DataContext);
@@ -35,7 +35,7 @@ export default function ListCategorized() {
                   })
                   .slice(0, 4)
                   .map((listing) => (
-                    <VenueCard venue={listing} key={listing.id} loading={loading} />
+                    <ListingCard listing={listing} key={listing.id} loading={loading} />
                   ))}
               </div>
               <Link className="lg:ml-4 text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>

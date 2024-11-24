@@ -1,8 +1,8 @@
-import VenueCard from "../VenueCard";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
 import { useTravelSearchStore } from "../../../stores";
+import ListingCard from "../../Cards/ListingCard";
 
 //fix loadmore btn!!
 export default function ListSearch() {
@@ -67,7 +67,7 @@ export default function ListSearch() {
         <p className="text-black my-4">{`Showing ${displayedVenues.length} of ${filteredVenues.length} listings (matching your search)`}</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {displayedVenues.map((listing) => (
-            <VenueCard venue={listing} key={listing.id} loading={loading} />
+            <ListingCard listing={listing} key={listing.id} loading={loading} />
           ))}
         </div>
         {filteredVenues.length > displayedVenues.length && (

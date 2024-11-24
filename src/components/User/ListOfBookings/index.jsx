@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 import ErrorFallback from "../../ErrorFallback/index.jsx";
-import VenueCard from "../../Venues/VenueCard";
 import { BigSpinnerLoader } from "../../Loaders";
 import { CancellationModal } from "../../Modals";
+import BookingCard from "../../Cards/BookingCard";
 
 // ADD SKELETONLOADER AND ERRORHANDLING + DISBALE CANCELALTION BTN WHEN WAITING FOR RESPONSE + WHEN REDIRECTING TO PROFILE, ADD A LOADER
 
@@ -17,11 +17,19 @@ export default function ListOfBookings() {
   const [allBookings, setAllBookings] = useState([]);
   const [displayedBookings, setDisplayedBookings] = useState([]);
   const [loadMoreLoader, setLoadMoreLoader] = useState(false);
+  const [activeBookingsFilter, setActiveBookingsFilter] = useState(true);
+  const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState(false);
+  const [activeBookingsArray, setActiveBookingsArray] = useState([]);
+  const [inactiveBookingsArray, setInactiveBookingsArray] = useState([]);
 
   const initialDisplayCount = 10;
 
   const fetchBookings = async () => {
     const result = await callApi(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
+    const activeBookings = result.data.filter((booking) => new Date(booking.dateTo) > new Date());
+    setActiveBookingsArray(activeBookings);
+    const inactiveBookings = result.data.filter((booking) => new Date(booking.dateTo) < new Date());
+    setInactiveBookingsArray(inactiveBookings);
     setAllBookings(result.data);
   };
 
@@ -29,9 +37,13 @@ export default function ListOfBookings() {
     fetchBookings();
   }, []);
 
+  // useEffect(() => {
+  //   setDisplayedBookings(allBookings.slice(0, initialDisplayCount));
+  // }, [allBookings]);
+
   useEffect(() => {
-    setDisplayedBookings(allBookings.slice(0, initialDisplayCount));
-  }, [allBookings]);
+    setDisplayedBookings(activeBookingsArray.slice(0, initialDisplayCount));
+  }, [activeBookingsFilter]);
 
   const handleLoadMore = () => {
     setLoadMoreLoader(true);
@@ -46,6 +58,15 @@ export default function ListOfBookings() {
     fetchBookings();
   };
 
+  const toggleInactiveBookings = () => {
+    setActiveBookingsFilter(false);
+    setInactiveBookingsFilter(true);
+  };
+
+  const toggleActiveBookings = () => {
+    setActiveBookingsFilter(true);
+    setInactiveBookingsFilter(false);
+  };
   return (
     <>
       {error && error && <ErrorFallback errorMessage={error} />}
@@ -53,11 +74,31 @@ export default function ListOfBookings() {
         <>
           <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-8 rounded-lg">
             <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>
-            <p className="text-black">{`Showing ${displayedBookings.length < allBookings.length ? displayedBookings.length : allBookings.length} of ${allBookings.length} ${allBookings.length > 1 ? "booking" : "bookings"}`}</p>
+            {/* <p className="text-black">{`Showing ${displayedBookings.length < allBookings.length ? displayedBookings.length : allBookings.length} of ${allBookings.length} ${allBookings.length > 1 ? "booking" : "bookings"}`}</p>
             {displayedBookings && displayedBookings.length >= 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-4 ">
                 {displayedBookings.map((booking) => (
-                  <VenueCard venue={booking.venue} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} key={booking.id} bookingId={booking.id} myBookings={true} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                  <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                ))}
+              </div>
+            )} */}
+            {activeBookingsFilter && <p className="text-black">{`Showing ${activeBookingsArray.length < maxBookingsShown ? activeBookingsArray.length : maxBookingsShown} of ${activeBookingsArray.length} ${activeBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
+            {inactiveBookingsFilter && <p className="text-black">{`Showing ${inactiveBookingsArray.length < maxBookingsShown ? inactiveBookingsArray.length : maxBookingsShown} of ${inactiveBookingsArray.length} ${inactiveBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
+            <div className="flex gap-6 my-4">
+              <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" width="full" tailw="lowercase" bgColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} textColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} />
+              <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tailw="lowercase" bgColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} textColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} />
+            </div>
+            {activeBookingsFilter && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                {activeBookingsArray.slice(0, maxBookingsShown).map((booking) => (
+                  <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                ))}
+              </div>
+            )}
+            {inactiveBookingsFilter && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                {inactiveBookingsArray.slice(0, maxBookingsShown).map((booking) => (
+                  <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                 ))}
               </div>
             )}
