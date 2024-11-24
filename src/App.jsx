@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <routes.Home /> },
       { path: "search", element: <routes.VenueSearch /> },
-      { path: "venue/:id", element: <routes.VenueSpesific /> },
+      { path: "listing/:id", element: <routes.VenueSpesific /> },
       { path: "booking/details", element: <routes.BookingDetails /> },
       { path: "booking/checkout", element: <routes.BookingCheckout /> },
       { path: "booking/confirmation/:id", element: <routes.BookingConfirmation /> },
