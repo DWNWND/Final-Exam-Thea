@@ -18,11 +18,6 @@ const loginSchema = yup.object().shape({
 export default function LoginForm() {
   const { scopedLoader, error, setError, callApi } = useApiCall();
   const { setAccessToken, setUserName } = useAuthStore();
-  const { userName } = useAuthStore();
-  const navigate = useNavigate();
-  const { selectedVenue } = useTravelSearchStore();
-  const getLastPreviousRoute = useNavigationStore((state) => state.getLastPreviousRoute);
-  const lastPreviousRoute = getLastPreviousRoute();
 
   const {
     register,
@@ -48,15 +43,8 @@ export default function LoginForm() {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
-
     setAccessToken(result.data.accessToken);
     setUserName(result.data.name);
-
-    if (selectedVenue && lastPreviousRoute === `/venue/${selectedVenue.id}`) {
-      navigate("/booking/details");
-    } else {
-      navigate("/user/" + userName);
-    }
   };
 
   return (
