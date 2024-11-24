@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import StringInput from "../../../Inputs/String";
+import {StringInput} from "../../../Inputs";
 import { useTravelSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
 import { calculateNights, formatDateForDisplay } from "../../../../utils/";
 import { RoundBtn } from "../../../Buttons";

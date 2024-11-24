@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { useApiCall } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
-import StringInput from "../../Inputs/String";
+import {StringInput} from "../../Inputs";
 import { RoundBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
 import { useTravelSearchStore, useNavigationStore } from "../../../stores";

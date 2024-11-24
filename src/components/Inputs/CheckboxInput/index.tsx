@@ -1,4 +1,13 @@
-export default function Checkbox({ innerText, id, onChangeFunc, color, checked, register }) {
+interface CheckboxInputProps {
+  innerText: string;
+  id: string;
+  onChangeFunc?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  color: string;
+  checked?: boolean;
+  register?: (id: string) => any;
+}
+
+export function CheckboxInput({ innerText, id, onChangeFunc, color, checked = false, register }: CheckboxInputProps) {
   return (
     <div className="flex items-center">
       <input id={id} type="checkbox" className="h-6 w-6 cursor-pointer" onChange={onChangeFunc} defaultChecked={checked} {...(register && register(id))} />

@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Checkbox from "../../Inputs/Checkbox";
-import StringInput from "../../Inputs/String";
+import { CheckboxInput, StringInput } from "../../Inputs";
 import { useAuthStore } from "../../../stores";
 import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader, EditListingFormSkeletonLoader } from "../../Loaders";
@@ -127,36 +126,20 @@ export default function EditListingForm({ setListingName }) {
                 <div className="flex flex-col gap-3 mb-4">
                   <h3 className="text-primary-green text-lg">Amenities</h3>
                   <div className="flex gap-3 flex-col md:flex-row md:gap-8">
-                    <Checkbox id="meta.wifi" innerText="Free Wifi" checked={listing.meta.wifi && listing.meta.wifi} register={register} color="primary-green"></Checkbox>
-                    <Checkbox id="meta.parking" innerText="Free parking" checked={listing.meta.parking && listing.meta.parking} register={register} color="primary-green"></Checkbox>
-                    <Checkbox id="meta.breakfast" innerText="Breakfast included" checked={listing.meta.breakfast && listing.meta.breakfast} register={register} color="primary-green"></Checkbox>
-                    <Checkbox id="meta.pets" innerText="Pets allowed" checked={listing.meta.pets && listing.meta.pets} register={register} color="primary-green"></Checkbox>
+                    <CheckboxInput id="meta.wifi" innerText="Free Wifi" checked={listing.meta.wifi && listing.meta.wifi} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput id="meta.parking" innerText="Free parking" checked={listing.meta.parking && listing.meta.parking} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput id="meta.breakfast" innerText="Breakfast included" checked={listing.meta.breakfast && listing.meta.breakfast} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput id="meta.pets" innerText="Pets allowed" checked={listing.meta.pets && listing.meta.pets} register={register} color="primary-green"></CheckboxInput>
                   </div>
                 </div>
                 <StringInput type="text" id="media[0].url" label="Image url" placeholder="https://www.example.com/image.jpg" defaultValue={listing.media[0].url && listing.media[0].url} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
                 <StringInput type="text" id="media[0].alt" label="Description" placeholder="Our magical cabin" defaultValue={listing.media[0].alt && listing.media[0].alt} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
-
                 <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" width="full" innerText="Save changes" tailw="hover:bg-white bg-opacity-50 mt-5" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-
                 {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorUpdateMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorUpdateMessage ? errorUpdateMessage : userFeedbackUpdateMessage}</p>}
               </form>
             </div>
           )}
-
-          {deletionModal && (
-            <DeletionModal toggle={toggleDeletionModal} loading={scopedLoader} />
-            // <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            //   <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
-            //     <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to delete this listing?</h2>
-            //     <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
-            //     <div className="flex justify-end gap-4">
-            //       <SquareBtn clickFunc={() => handleExitDeletion()} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-            //       <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
-            //     </div>
-            //     {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center mt-3`}>{errorDeletionMessage ? errorDeletionMessage : userFeedbackDeletionMessage}</p>}
-            //   </div>
-            // </div>
-          )}
+          {deletionModal && <DeletionModal toggle={toggleDeletionModal} loading={scopedLoader} />}
         </>
       )}
     </>

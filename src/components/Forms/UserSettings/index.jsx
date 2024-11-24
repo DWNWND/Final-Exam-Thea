@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Checkbox from "../../Inputs/Checkbox";
-import StringInput from "../../Inputs/String";
+import { CheckboxInput, StringInput } from "../../Inputs";
 import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 import { SquareBtn } from "../../Buttons";
@@ -77,7 +75,7 @@ export default function SettingsForm() {
             <h1 className="text-2xl  uppercase text-primary-green">My settings</h1>
           </div>
           <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit(onSubmit)}>
-            <Checkbox id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></Checkbox>
+            <CheckboxInput id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></CheckboxInput>
             <StringInput type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} errorMessage={errors.bio && errors.bio.message} register={register} trigger={trigger} watch={watch}></StringInput>
             <div>
               <h2 className="mb-2 text-primary-green">Avatar</h2>

@@ -2,12 +2,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import StringInput from "../../Inputs/String";
+import {StringInput} from "../../Inputs";
 import { RoundBtn } from "../../Buttons";
 import { useEffect } from "react";
 import { SmallSpinnerLoader } from "../../Loaders";
-import { useTravelSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
+import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 
 const loginSchema = yup.object().shape({
