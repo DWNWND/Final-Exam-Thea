@@ -1,4 +1,4 @@
-import { Layout } from "./components";
+import Layout from "./components/Layout";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ScrollToTop } from "./utils/";

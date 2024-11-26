@@ -1,7 +1,7 @@
-import LocationLookAhead from "../Filters/LocationLookAhead/index.jsx";
-import SelectTravelDates from "../Filters/SelectTravelDates/index.jsx";
-import NumberOfGuests from "../Filters/NumberOfGuests/index.jsx";
-import MoreFilters from "../Filters/MoreFilters/index.jsx";
+import LocationLookAhead from "../Filters/LocationLookAhead/";
+import SelectTravelDates from "../Filters/SelectTravelDates/";
+import NumberOfGuests from "../Filters/NumberOfGuests/";
+import MoreFilters from "../Filters/MoreFilters/";
 import { useNavigate } from "react-router-dom";
 import { RoundBtn } from "../../../Buttons";
 

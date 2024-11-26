@@ -7,7 +7,7 @@ interface StringInputProps {
   id: string;
   label: string;
   placeholder: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   setErrorMessage?: (message: string) => void;
   errorMessage?: string;
   register: UseFormRegister<FieldValues>;
