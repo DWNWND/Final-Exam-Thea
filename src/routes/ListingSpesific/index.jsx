@@ -9,7 +9,7 @@ import { FaRegHeart, FaShare } from "react-icons/fa";
 import SelectTravelDates from "../../components/Forms/TravelSearch/Filters/SelectTravelDates/index.jsx";
 import NumberOfGuests from "../../components/Forms/TravelSearch/Filters/NumberOfGuests/index.jsx";
 
-import Accordion from "../../components/Accordion/ListingDetailsAccordion/index.jsx";
+import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion/index.jsx";
 import { calculateNights } from "../../utils/";
 
 //ADD LOADER AND ERRORFALLBACK
@@ -142,7 +142,7 @@ export default function ListingSpesific() {
                   <p className="text-nowrap">★ {listing.rating}</p>
                 </div>
               </div>
-              <Accordion listing={listing} listingReserved={listingReserved} listingIsAvailable={listingIsAvailable} />
+              <ListingDetailsAccordion listing={listing} listingReserved={listingReserved} listingIsAvailable={listingIsAvailable} />
               <div className="flex gap-8 justify-center pt-10 md:my-10 text-2xl text-primary-blue">
                 <FaRegHeart />
                 <FaShare />

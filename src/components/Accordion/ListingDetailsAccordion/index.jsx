@@ -6,7 +6,7 @@ import BookingCalendar from "../../BookingCalendar";
 import { ArrowDownBtn } from "../../Buttons";
 import SelectTravelDates from "../../Forms/TravelSearch/Filters/SelectTravelDates";
 
-export default function Accordion({ listing, listingReserved, listingIsAvailable }) {
+export default function ListingDetailsAccordion({ listing, listingReserved, listingIsAvailable }) {
   const { savedDates } = useTravelDatesStore();
 
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);

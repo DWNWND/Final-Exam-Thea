@@ -10,7 +10,6 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaParking, FaWifi } from "react-icons/fa";
 import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils";
 import { SmallSpinnerLoader } from "../../Loaders";
-import Accordion from "../../Accordion/ListingDetailsAccordion";
 
 //FIX THE LISTING PREVIEW TO BE THE SAME STYLING AND INFORMATION AS IN THE SINGLE VENUE PAGE + ALSO ADD USER/OWNER INFO // ALSO DISABLE AND STYLE DISABLED SUBMIT BUTTON WHEN LOADING
 
