@@ -2,7 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {useAuthStore} from "../../../stores";
-import NewListingForm from "../../../components/Forms/NewListing";
+import NewListingForm from "../../../components/Forms/NewListingForm";
 import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function NewListing() {

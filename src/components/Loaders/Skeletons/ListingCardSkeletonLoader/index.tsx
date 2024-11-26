@@ -1,4 +1,4 @@
-export function VenueCardSkeletonLoader(): JSX.Element {
+export function ListingCardSkeletonLoader(): JSX.Element {
   return (
     <div className="rounded-lg shadow-sm bg-white relative flex flex-col">
       <div className="animate-pulse">

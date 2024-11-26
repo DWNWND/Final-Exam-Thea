@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
 import ErrorFallback from "../../ErrorFallback";
-import ListingCard from "../../Cards/ListingCard";
+import { ListingCard } from "../../Cards";
 
 export default function ListNewest() {
   const { displayedListings, loading, error } = useContext(DataContext);

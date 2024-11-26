@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import MainSearchForm from "../../components/Forms/SearchTravel/MainSearchForm";
+import MainSearchForm from "../../components/Forms/TravelSearch/MainSearchForm";
 import { useEffect } from "react";
 import ListCategorized from "../../components/Venues/ListCategorized";
 import ListNewest from "../../components/Venues/ListNewest";

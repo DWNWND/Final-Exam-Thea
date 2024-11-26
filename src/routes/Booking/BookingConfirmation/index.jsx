@@ -2,11 +2,15 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useAuthStore, useBookingDataStore, useNavigationStore } from "../../../stores";
 import MainElement from "../../../components/MainElement/index.jsx";
 import { useEffect } from "react";
-import BookingConfirmationMessage from "../../../components/BookingConfirmationMessage/index.jsx";
+import { BookingConfirmationCard } from "../../../components/Cards";
+import { Link } from "react-router-dom";
+import { RoundBtn } from "../../../components/Buttons";
+
+//ADD LOADER AND ERROR HANDLING
 
 export default function BookingConfirmation() {
   const { accessToken } = useAuthStore();
-  const { successfulBookingId, selectedVenue } = useBookingDataStore();
+  const { successfulBookingId, selectedListing } = useBookingDataStore();
   const { clearNavigationHistory } = useNavigationStore();
 
   useEffect(() => {
@@ -22,11 +26,15 @@ export default function BookingConfirmation() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
-        <title>{`Booking Confirmation | ${selectedVenue.name && selectedVenue.name} | Holidaze`}</title>
+        <title>{`Booking Confirmation | ${selectedListing.name && selectedListing.name} | Holidaze`}</title>
         <meta name="description" content="Booking successful! Thank you for booking with Holidaze." />
       </Helmet>
       <MainElement>
-        <BookingConfirmationMessage />
+        <h1 className="uppercase text-3xl font-bold text-center text-primary-blue mb-5">Thank you for booking with us</h1>
+        <BookingConfirmationCard />
+        <Link to="/" className="block mt-5">
+          <RoundBtn innerText="Browse more stays" bgColor="primary-blue" textColor="white" />
+        </Link>
       </MainElement>
     </HelmetProvider>
   );

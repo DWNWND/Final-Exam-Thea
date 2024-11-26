@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export function BookingModal({ toggle, listingIsAvailable }) {
   const { accessToken, userName, logOut } = useAuthStore();
-  const { setBookingData, selectedVenue } = useBookingDataStore();
+  const { setBookingData, selectedListing } = useBookingDataStore();
   const { travelSearchData } = useTravelSearchStore();
   const { savedDates } = useTravelDatesStore();
 
@@ -15,17 +15,16 @@ export function BookingModal({ toggle, listingIsAvailable }) {
   const navigate = useNavigate();
 
   const bookPropertyFunc = (continueAs) => {
-    if (travelSearchData.numberOfGuests <= selectedVenue.maxGuests && listingIsAvailable) {
+    if (travelSearchData.numberOfGuests <= selectedListing.maxGuests && listingIsAvailable) {
       const booking = {
         dateFrom: savedDates.startYYYYMMDD,
         dateTo: savedDates.endYYYYMMDD,
         guests: travelSearchData.numberOfGuests,
-        venueId: selectedVenue.id,
+        venueId: selectedListing.id,
       };
       toggle();
 
       if (continueAs === userName) {
-        console.log("executed");
         setBookingData(booking);
         navigate("/booking/details");
       }

@@ -18,16 +18,16 @@ export function DataProvider({ children }) {
     fetchAllListings();
   }, []);
 
-  //fetched all venues from the API and filter out the ones with missing location data, so that the search results will be accurate. Would wish that this was already fixed by the api, so that i could fetch it by page ang with a page limit, and not fetch all.
+  //fetched all listings from the API and filter out the ones with missing location data, so that the search results will be accurate. Would wish that this was already fixed by the api, so that i could fetch it by page ang with a page limit, and not fetch all.
   useEffect(() => {
     if (allListingsArr && allListingsArr.length >= 0) {
-      const filteredOutMissingLocations = allListingsArr.filter((venue) => {
-        return venue.location.city && venue.location.country;
+      const filteredOutMissingLocations = allListingsArr.filter((listing) => {
+        return listing.location.city && listing.location.country;
       });
 
-      filteredOutMissingLocations.forEach((venue) => {
-        if (venue.location && venue.location.city) {
-          const capitalizedCity = capitalizeWords(venue.location.city); // Capitalize the city
+      filteredOutMissingLocations.forEach((listing) => {
+        if (listing.location && listing.location.city) {
+          const capitalizedCity = capitalizeWords(listing.location.city); // Capitalize the city
           if (!searchableLocations.includes(capitalizedCity)) {
             searchableLocations.push(capitalizedCity); // Add if not already in the array
           }

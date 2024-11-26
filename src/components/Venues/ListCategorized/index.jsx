@@ -4,7 +4,7 @@ import { DataContext } from "../../../contexts";
 import ErrorFallback from "../../ErrorFallback";
 import { SelectCategoryBtns } from "../../Buttons";
 import { useState } from "react";
-import ListingCard from "../../Cards/ListingCard";
+import { ListingCard } from "../../Cards";
 
 export default function ListCategorized() {
   const { displayedListings, loading, error } = useContext(DataContext);

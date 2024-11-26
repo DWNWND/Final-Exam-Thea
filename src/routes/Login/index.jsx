@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import LoginForm from "../../components/Forms/Login";
+import LoginForm from "../../components/Forms/LoginForm/index.jsx";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores";

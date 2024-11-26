@@ -4,7 +4,7 @@ import { FaParking, FaWifi } from "react-icons/fa";
 import { useTravelDatesStore } from "../../../stores";
 import BookingCalendar from "../../BookingCalendar";
 import { ArrowDownBtn } from "../../Buttons";
-import SelectTravelDates from "../../Forms/SearchTravel/SelectTravelDates";
+import SelectTravelDates from "../../Forms/TravelSearch/Filters/SelectTravelDates";
 
 export default function Accordion({ listing, listingReserved, listingIsAvailable }) {
   const { savedDates } = useTravelDatesStore();

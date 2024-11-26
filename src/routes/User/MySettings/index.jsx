@@ -2,7 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { useAuthStore } from "../../../stores";
 import { useNavigate } from "react-router-dom";
-import SettingsForm from "../../../components/Forms/UserSettings/index.jsx";
+import SettingsForm from "../../../components/Forms/UserSettingsForm/index.jsx";
 import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function MySettings() {
