@@ -9,7 +9,7 @@ import { FaRegHeart, FaShare } from "react-icons/fa";
 import SelectTravelDates from "../../components/Forms/TravelSearch/Filters/SelectTravelDates/index.jsx";
 import NumberOfGuests from "../../components/Forms/TravelSearch/Filters/NumberOfGuests/index.jsx";
 
-import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion/index.jsx";
+import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion";
 import { calculateNights } from "../../utils/";
 
 //ADD LOADER AND ERRORFALLBACK
