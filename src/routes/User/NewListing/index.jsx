@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import NewListingForm from "../../../components/Forms/NewListingForm";
-import MainElement from "../../../components/MainElement/index.jsx";
+import MainElement from "../../../components/MainElement";
 import { RoundBtn } from "../../../components/Buttons";
 
 export default function NewListing() {

@@ -1,6 +1,6 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useAuthStore, useBookingDataStore, useNavigationStore } from "../../../stores";
-import MainElement from "../../../components/MainElement/index.jsx";
+import MainElement from "../../../components/MainElement/";
 import { useEffect } from "react";
 import { BookingConfirmationCard } from "../../../components/Cards";
 import { Link } from "react-router-dom";

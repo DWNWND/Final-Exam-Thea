@@ -1,13 +1,13 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import MainElement from "../../components/MainElement/index.jsx";
+import MainElement from "../../components/MainElement/";
 import { useBookingDataStore, useAuthStore, useTravelDatesStore, useTravelSearchStore } from "../../stores";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useApiCall } from "../../hooks";
 import { ImageModal, BookingModal } from "../../components/Modals";
 import { FaRegHeart, FaShare } from "react-icons/fa";
-import SelectTravelDates from "../../components/Forms/TravelSearch/Filters/SelectTravelDates/index.jsx";
-import NumberOfGuests from "../../components/Forms/TravelSearch/Filters/NumberOfGuests/index.jsx";
+import SelectTravelDates from "../../components/Forms/TravelSearch/Filters/SelectTravelDates/";
+import NumberOfGuests from "../../components/Forms/TravelSearch/Filters/NumberOfGuests/";
 
 import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion";
 import { calculateNights } from "../../utils/";

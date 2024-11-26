@@ -2,7 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
-import MainElement from "../../../components/MainElement/index.jsx";
+import MainElement from "../../../components/MainElement";
 import ErrorFallback from "../../../components/ErrorFallback";
 import { useApiCall } from "../../../hooks";
 import { BigSpinnerLoader } from "../../../components/Loaders";

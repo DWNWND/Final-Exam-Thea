@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
-import MainElement from "../../../components/MainElement/index.jsx";
-import ErrorFallback from "../../../components/ErrorFallback/index.jsx";
+import MainElement from "../../../components/MainElement";
+import ErrorFallback from "../../../components/ErrorFallback";
 import { CancellationModal } from "../../../components/Modals";
 import { RoundBtn, SquareBtn } from "../../../components/Buttons";
 import { BookingCard, ListingCard, ProfileCard } from "../../../components/Cards";
@@ -154,11 +154,11 @@ export default function MyProfile() {
                 </Link>
               </div>
             )}
-            {userListings.length > 1 && (
+            {userListings.length >= 1 && (
               <div className="flex flex-col gap-2">
                 <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My listings</h2>
                 <p className="text-black">{`Showing ${userListings.length < maxListingsShown ? userListings.length : maxListingsShown} of ${userListings.length} ${userListings.length > 1 ? "listing" : "listings"}`}</p>
-                {userListings && userListings.length >= 2 && (
+                {userListings && userListings.length >= 1 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
                     {userListings.slice(0, maxListingsShown).map((listing) => (
                       <ListingCard key={listing.id} listing={listing} loading={loading} myListings={true} />

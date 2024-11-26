@@ -1,8 +1,8 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import ListSearchForm from "../../components/Forms/TravelSearch/ListSearchForm/index.jsx";
+import ListSearchForm from "../../components/Forms/TravelSearch/ListSearchForm/";
 import { useTravelSearchStore } from "../../stores";
-import { DataProvider } from "../../components/DataProvider/index.jsx";
-import MainElement from "../../components/MainElement/index.jsx";
+import { DataProvider } from "../../components/DataProvider/";
+import MainElement from "../../components/MainElement/";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ListingCard } from "../../components/Cards";

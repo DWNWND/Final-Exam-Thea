@@ -1,9 +1,9 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RegisterForm from "../../components/Forms/RegisterForm/index.jsx";
+import RegisterForm from "../../components/Forms/RegisterForm/";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores";
-import MainElement from "../../components/MainElement/index.jsx";
+import MainElement from "../../components/MainElement/";
 
 export default function Register() {
   const { accessToken, userName } = useAuthStore();

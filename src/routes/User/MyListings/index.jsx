@@ -5,8 +5,8 @@ import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks/";
 import { ListingCard } from "../../../components/Cards/";
 import { SmallSpinnerLoader } from "../../../components/Loaders/";
-import ErrorFallback from "../../../components/ErrorFallback/index.jsx";
-import MainElement from "../../../components/MainElement/index.jsx";
+import ErrorFallback from "../../../components/ErrorFallback";
+import MainElement from "../../../components/MainElement";
 
 export default function MyListings() {
   const { accessToken, userName } = useAuthStore();

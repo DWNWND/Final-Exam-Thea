@@ -1,8 +1,8 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
-import DetailsForm from "../../../components/Forms/TravelBooking/DetailsForm/index.jsx";
-import MainElement from "../../../components/MainElement/index.jsx";
+import DetailsForm from "../../../components/Forms/TravelBooking/DetailsForm/";
+import MainElement from "../../../components/MainElement/";
 import { useEffect } from "react";
 import { useBookingDataStore } from "../../../stores";
 
