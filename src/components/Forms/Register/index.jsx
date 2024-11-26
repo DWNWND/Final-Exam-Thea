@@ -4,10 +4,11 @@ import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { useApiCall } from "../../../hooks";
 import { useNavigate } from "react-router-dom";
-import {StringInput} from "../../Inputs";
+import { StringInput } from "../../Inputs";
 import { RoundBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
-import { useTravelSearchStore, useNavigationStore } from "../../../stores";
+import { useTravelSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
+import { useEffect } from "react";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -25,8 +26,8 @@ export default function RegisterForm() {
   const { scopedLoader, error, setError, callApi } = useApiCall();
   const navigate = useNavigate();
   const { selectedVenue } = useTravelSearchStore();
-  const getLastPreviousRoute = useNavigationStore((state) => state.getLastPreviousRoute);
-  const lastPreviousRoute = getLastPreviousRoute();
+  const { getLastPreviousRoute } = useNavigationStore();
+  const { setAccessToken, setUserName } = useAuthStore();
 
   const {
     register,
@@ -51,18 +52,25 @@ export default function RegisterForm() {
     setError("");
     const { userName: name, email, password } = data;
 
-    const result = await callApi(`/auth/register`, {
+    await callApi(`/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const resultLogin = await callApi(`/auth/login`, {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
 
-    setAccessToken(result.data.accessToken);
-    setUserName(result.data.name);
+    setAccessToken(resultLogin.data.accessToken);
+    setUserName(resultLogin.data.name);
 
-    if (selectedVenue && lastPreviousRoute === `/venue/${selectedVenue.id}`) {
+    const lastPreviousRoute = getLastPreviousRoute();
+
+    if (selectedVenue && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedVenue.id}`)) {
       navigate("/booking/details");
     } else {
-      navigate("/user/" + data.userName);
+      navigate("/user/" + resultLogin.data.name);
     }
   };
 

@@ -4,26 +4,16 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores";
 import MainElement from "../../components/MainElement/index.jsx";
-import { useNavigationStore, useBookingDataStore } from "../../stores";
 
 export default function Login() {
   const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
-  const { getLastPreviousRoute } = useNavigationStore();
-  const lastPreviousRoute = getLastPreviousRoute();
-  const { selectedVenue } = useBookingDataStore();
 
   useEffect(() => {
-    if (selectedVenue && lastPreviousRoute === `/venue/${selectedVenue.id}`) {
-      navigate("/booking/details");
-    } else {
-      if (accessToken) {
-        navigate("/user/" + userName);
-      } else {
-        navigate("/login");
-      }
+    if (accessToken) {
+      navigate("/user/" + userName);
     }
-  }, [accessToken]);
+  }, []);
 
   return (
     <HelmetProvider>
