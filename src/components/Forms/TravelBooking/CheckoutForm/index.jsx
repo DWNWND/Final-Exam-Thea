@@ -101,7 +101,7 @@ export default function CheckoutForm() {
         <StringInput disabled={scopedLoader} type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} watch={watch} trigger={trigger} />
         <StringInput disabled={scopedLoader} type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} watch={watch} trigger={trigger} />
         <div className="flex items-center justify-between my-6">
-          <RoundBtn disabled={scopedLoader} type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
+          <RoundBtn disabled={!isValid || scopedLoader} type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} />
         </div>
         {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${error ? "text-danger" : "text-primary-green"} text-xs text-center`}>{error ? error : userFeedbackMessage}</p>}
       </form>
