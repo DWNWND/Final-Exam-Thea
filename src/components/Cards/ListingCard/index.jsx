@@ -1,14 +1,14 @@
 import { ArrowRightBtn, SquareBtn } from "../../Buttons";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
-import { VenueCardSkeletonLoader } from "../../Loaders";
+import { ListingCardSkeletonLoader } from "../../Loaders";
 
-export default function ListingCard({ listing, loading, myListings = false }) {
+export function ListingCard({ listing, loading, myListings = false }) {
   const { userName, venueManager } = useAuthStore();
 
   return (
     <>
-      {loading && <VenueCardSkeletonLoader />}
+      {loading && <ListingCardSkeletonLoader />}
       {listing && (
         <div key={listing.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
           <Link to={"/listing/" + listing.id} className="h-48 w-full absolute z-30 rounded-lg"></Link>
@@ -34,10 +34,10 @@ export default function ListingCard({ listing, loading, myListings = false }) {
               {myListings && (
                 <>
                   <Link to={`${venueManager ? `/user/${userName}/occupancy/${listing.id}` : ""}`} className="z-40">
-                    <SquareBtn innerText={`${listing.bookings.length >= 1 ? "Check occupancy" : "this property has no bookings yet"}`} tailw={`${listing.bookings.length < 1 && "hover:shadow-none cursor-default"} lowercase`} borderColor={listing.bookings.length >= 1 ? "primary-green" : "none"} width="full" bgColor="white" textColor="primary-green" disabled={listing.bookings.length < 1} />
+                    <SquareBtn innerText={`${listing.bookings.length >= 1 ? "Check occupancy" : "this property has no bookings yet"}`} tailw={`${listing.bookings.length < 1 && "hover:shadow-none cursor-default"} lowercase`} borderColor={listing.bookings.length >= 1 ? "primary-green" : "none"} width="full" bgColor="" textColor="primary-green" disabled={listing.bookings.length < 1} />
                   </Link>
                   <Link to={`${venueManager ? `/user/${userName}/edit/${listing.id}` : ""}`} className="z-40">
-                    <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tailw={`${!venueManager && "hover:shadow-none cursor-default"} lowercase`} bgColor="white" textColor="primary-green" />
+                    <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tailw={`${!venueManager && "hover:shadow-none cursor-default"} lowercase`} bgColor="" textColor="primary-green" />
                   </Link>
                 </>
               )}
