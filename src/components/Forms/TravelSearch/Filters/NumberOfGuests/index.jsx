@@ -2,7 +2,7 @@ import { useReducer, useEffect } from "react";
 // https://react-icons.github.io/react-icons/
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { HiOutlineMinusSm } from "react-icons/hi";
-import { useTravelSearchStore } from "../../../../stores";
+import { useTravelSearchStore } from "../../../../../stores";
 
 function reducer(state, action) {
   switch (action.type) {

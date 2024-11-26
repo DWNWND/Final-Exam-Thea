@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { StringInput } from "../../../Inputs";
 import { useTravelSearchStore, useBookingDataStore, useAuthStore, useNavigationStore } from "../../../../stores";
-import { calculateNights, formatDateForDisplay } from "../../../../utils/";
+import { calculateNights, formatDateForDisplay } from "../../../../utils";
 import { RoundBtn } from "../../../Buttons";
 import { useApiCall } from "../../../../hooks";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ const detailsSchema = yup.object().shape({
 export default function DetailsForm() {
   const { accessToken, userName } = useAuthStore();
   const { clearTravelSearchStore } = useTravelSearchStore();
-  const { selectedVenue, bookingData, setBookingEmail } = useBookingDataStore();
+  const { selectedListing, bookingData, setBookingEmail } = useBookingDataStore();
 
   const { loading, scopedLoader, error, callApi } = useApiCall();
 
@@ -40,11 +40,11 @@ export default function DetailsForm() {
   }, [accessToken]);
 
   useEffect(() => {
-    console.log("executed booking details");
     const previousRoute = getLastPreviousRoute();
 
     if (previousRoute && (previousRoute.includes("login") || previousRoute.includes("register"))) {
-      setPreviousRoute(`/venue/${selectedVenue.id}`);
+      console.log("executed booking detailsform");
+      setPreviousRoute(`/listing/${selectedListing.id}`);
     }
   }, []);
 
@@ -93,7 +93,7 @@ export default function DetailsForm() {
   const formattedEndDate = formatDateForDisplay(endDate);
 
   const nights = calculateNights(bookingData.dateFrom, bookingData.dateTo);
-  const price = nights * selectedVenue.price;
+  const price = nights * selectedListing.price;
 
   return (
     <>
@@ -102,7 +102,7 @@ export default function DetailsForm() {
       ) : (
         <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
           <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
-            <p className="font-semibold">{selectedVenue.name}</p>
+            <p className="font-semibold">{selectedListing.name}</p>
             <p>
               {formattedStartDate} - {formattedEndDate}
             </p>

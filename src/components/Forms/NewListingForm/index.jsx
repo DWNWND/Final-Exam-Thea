@@ -8,7 +8,7 @@ import { SquareBtn } from "../../Buttons";
 import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaParking, FaWifi } from "react-icons/fa";
-import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils/";
+import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils";
 import { SmallSpinnerLoader } from "../../Loaders";
 
 //FIX THE LISTING PREVIEW TO BE THE SAME STYLING AND INFORMATION AS IN THE SINGLE VENUE PAGE + ALSO ADD USER/OWNER INFO // ALSO DISABLE AND STYLE DISABLED SUBMIT BUTTON WHEN LOADING
@@ -136,7 +136,7 @@ export default function NewListingForm() {
           setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
         } else {
           clearInterval(countdownInterval);
-          navigate(`/venue/${result.data.id}`);
+          navigate(`/listing/${result.data.id}`);
         }
       }, 1000);
     } catch (error) {

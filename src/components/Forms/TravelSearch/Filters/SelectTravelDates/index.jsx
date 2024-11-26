@@ -3,8 +3,8 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
 import "flatpickr/dist/themes/material_green.css";
-import { useTravelDatesStore } from "../../../../stores";
-import { formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr } from "../../../../utils/";
+import { useTravelDatesStore } from "../../../../../stores";
+import { formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr } from "../../../../../utils";
 
 export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }) {
   const { savedDates, setSavedDates, initialDates, setInitialDates, defaultFlatpickrDates, setDefaultFlatpickrDates } = useTravelDatesStore();

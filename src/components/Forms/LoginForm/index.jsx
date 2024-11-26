@@ -20,7 +20,7 @@ export default function LoginForm() {
   const { scopedLoader, error, setError, callApi } = useApiCall();
   const { setAccessToken, setUserName } = useAuthStore();
   const { getLastPreviousRoute } = useNavigationStore();
-  const { selectedVenue } = useBookingDataStore();
+  const { selectedListing } = useBookingDataStore();
   const navigate = useNavigate();
 
   const {
@@ -54,7 +54,7 @@ export default function LoginForm() {
 
       const lastPreviousRoute = getLastPreviousRoute();
 
-      if (selectedVenue && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedVenue.id}`)) {
+      if (selectedListing && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
         navigate("/booking/details");
       } else {
         navigate("/user/" + result.data.name);

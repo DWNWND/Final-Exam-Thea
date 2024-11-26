@@ -1,7 +1,7 @@
-import LocationLookAhead from "../LocationLookAhead/index.jsx";
-import SelectTravelDates from "../SelectTravelDates/index.jsx";
-import NumberOfGuests from "../NumberOfGuests/index.jsx";
-import MoreFilters from "../MoreFilters/index.jsx";
+import LocationLookAhead from "../Filters/LocationLookAhead/index.jsx";
+import SelectTravelDates from "../Filters/SelectTravelDates/index.jsx";
+import NumberOfGuests from "../Filters/NumberOfGuests/index.jsx";
+import MoreFilters from "../Filters/MoreFilters/index.jsx";
 import { useTravelSearchStore } from "../../../../stores";
 import { useState } from "react";
 import { ArrowDownBtn } from "../../../Buttons";

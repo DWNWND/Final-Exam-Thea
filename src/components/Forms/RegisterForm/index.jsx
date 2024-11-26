@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { StringInput } from "../../Inputs";
 import { RoundBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
-import { useTravelSearchStore, useNavigationStore, useAuthStore } from "../../../stores";
+import { useBookingDataStore, useNavigationStore, useAuthStore } from "../../../stores";
 import { useEffect } from "react";
 
 // Validation schema for registration
@@ -25,7 +25,7 @@ const registerSchema = yup.object().shape({
 export default function RegisterForm() {
   const { scopedLoader, error, setError, callApi } = useApiCall();
   const navigate = useNavigate();
-  const { selectedVenue } = useTravelSearchStore();
+  const { selectedListing } = useBookingDataStore();
   const { getLastPreviousRoute } = useNavigationStore();
   const { setAccessToken, setUserName } = useAuthStore();
 
@@ -67,7 +67,7 @@ export default function RegisterForm() {
 
     const lastPreviousRoute = getLastPreviousRoute();
 
-    if (selectedVenue && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedVenue.id}`)) {
+    if (selectedListing && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
       navigate("/booking/details");
     } else {
       navigate("/user/" + resultLogin.data.name);

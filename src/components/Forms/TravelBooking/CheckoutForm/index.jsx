@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import {StringInput} from "../../../Inputs";
+import { StringInput } from "../../../Inputs";
 import { useTravelSearchStore, useBookingDataStore, useTravelDatesStore } from "../../../../stores";
 import { calculateNights } from "../../../../utils/";
 import { RoundBtn } from "../../../Buttons";
@@ -28,8 +28,8 @@ const checkoutSchema = yup.object().shape({
 
 export default function CheckoutForm() {
   const { travelSearchData } = useTravelSearchStore();
-  const { loading, error, callApi } = useApiCall();
-  const { bookingData, selectedVenue, setSuccessfulBookingId } = useBookingDataStore();
+  const { scopedLoader, error, callApi } = useApiCall();
+  const { bookingData, selectedListing, setSuccessfulBookingId } = useBookingDataStore();
   const { savedDates } = useTravelDatesStore();
 
   const navigate = useNavigate();
@@ -78,12 +78,12 @@ export default function CheckoutForm() {
   };
 
   const nights = calculateNights(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
-  const price = nights * selectedVenue.price;
+  const price = nights * selectedListing.price;
 
   return (
     <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
-        <p className="font-semibold">{selectedVenue.name}</p>
+        <p className="font-semibold">{selectedListing.name}</p>
         <p>
           {savedDates.startDisplay} - {savedDates.endDisplay}
         </p>
@@ -103,7 +103,7 @@ export default function CheckoutForm() {
         <div className="flex items-center justify-between my-6">
           <RoundBtn type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
         </div>
-        {loading ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+        {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
       </form>
     </div>
   );
