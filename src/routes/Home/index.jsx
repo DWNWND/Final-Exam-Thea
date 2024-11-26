@@ -1,8 +1,8 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainSearchForm from "../../components/Forms/TravelSearch/MainSearchForm";
 import { useEffect } from "react";
-import ListCategorized from "../../components/Venues/ListCategorized";
-import ListNewest from "../../components/Venues/ListNewest";
+import ListCategorized from "../../components/Lists/ListCategorized";
+import ListNewest from "../../components/Lists/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement";
 import { useBookingDataStore, useTravelSearchStore, useTravelDatesStore, useNavigationStore } from "../../stores";
