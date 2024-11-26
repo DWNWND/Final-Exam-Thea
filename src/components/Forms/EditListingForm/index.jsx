@@ -44,7 +44,7 @@ export default function EditListingForm({ setListingName }) {
   const { userName } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
 
-  const [errorUpdateMessage, setErrorUpdateMessage] = useState("");
+  // const [errorUpdateMessage, setErrorUpdateMessage] = useState("");
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState("");
   const [deletionModal, setDeletionModal] = useState(false);
   const [listing, setListing] = useState(null);
@@ -69,7 +69,7 @@ export default function EditListingForm({ setListingName }) {
   }, []);
 
   const onSubmit = async (data) => {
-    setErrorUpdateMessage("");
+    // setErrorUpdateMessage("");
     setUserFeedbackUpdateMessage("");
 
     try {
@@ -92,7 +92,7 @@ export default function EditListingForm({ setListingName }) {
       }, 1000);
     } catch (err) {
       console.log("error:", err);
-      setErrorUpdateMessage(err.message);
+      // setErrorUpdateMessage(err.message);
     }
   };
 
@@ -114,28 +114,28 @@ export default function EditListingForm({ setListingName }) {
                 </div>
               </div>
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
-                <StringInput type="text" id="name" label="Listing title" placeholder="Our magical cabin" defaultValue={listing.name && listing.name} register={register} errorMessage={errors.name && errors.name.message} trigger={trigger} watch={watch} />
-                <StringInput type="text" id="description" label="Description" placeholder="Tucked away in the forest, our cabin is the perfect getaway..." defaultValue={listing.description && listing.description} register={register} errorMessage={errors.description && errors.description.message} trigger={trigger} watch={watch} />
-                <StringInput type="number" id="price" label="NOK/night" placeholder="200" defaultValue={listing.price} register={register} errorMessage={errors.price && errors.price.message} trigger={trigger} watch={watch} />
-                <StringInput type="number" id="maxGuests" label="Number of guests" placeholder="4" defaultValue={listing.maxGuests && listing.maxGuests} register={register} errorMessage={errors.maxGuests && errors.maxGuests.message} trigger={trigger} watch={watch} />
-                <StringInput type="number" id="rating" label="Rating number between 1-5" placeholder="5" defaultValue={listing.rating && listing.rating} register={register} errorMessage={errors.rating && errors.rating.message} trigger={trigger} watch={watch} />
-                <StringInput type="text" id="location.address" label="Address" placeholder="44 holland drive" defaultValue={listing.location.address && listing.location.address} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
-                <StringInput type="text" id="location.city" label="City" placeholder="New Amterdam" defaultValue={listing.location.city && listing.location.city} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
-                <StringInput type="text" id="location.zip" label="Zip code" placeholder="10683" defaultValue={listing.location.zip && listing.location.zip} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
-                <StringInput type="text" id="location.country" label="Country" placeholder="Holland" defaultValue={listing.location.country && listing.location.country} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="name" label="Listing title" placeholder="Our magical cabin" defaultValue={listing.name && listing.name} register={register} errorMessage={errors.name && errors.name.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="description" label="Description" placeholder="Tucked away in the forest, our cabin is the perfect getaway..." defaultValue={listing.description && listing.description} register={register} errorMessage={errors.description && errors.description.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="number" id="price" label="NOK/night" placeholder="200" defaultValue={listing.price} register={register} errorMessage={errors.price && errors.price.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="number" id="maxGuests" label="Number of guests" placeholder="4" defaultValue={listing.maxGuests && listing.maxGuests} register={register} errorMessage={errors.maxGuests && errors.maxGuests.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="number" id="rating" label="Rating number between 1-5" placeholder="5" defaultValue={listing.rating && listing.rating} register={register} errorMessage={errors.rating && errors.rating.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="location.address" label="Address" placeholder="44 holland drive" defaultValue={listing.location.address && listing.location.address} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="location.city" label="City" placeholder="New Amterdam" defaultValue={listing.location.city && listing.location.city} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="location.zip" label="Zip code" placeholder="10683" defaultValue={listing.location.zip && listing.location.zip} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="location.country" label="Country" placeholder="Holland" defaultValue={listing.location.country && listing.location.country} register={register} errorMessage={errors.location && errors.location.message} trigger={trigger} watch={watch} />
                 <div className="flex flex-col gap-3 mb-4">
                   <h3 className="text-primary-green text-lg">Amenities</h3>
                   <div className="flex gap-3 flex-col md:flex-row md:gap-8">
-                    <CheckboxInput id="meta.wifi" innerText="Free Wifi" checked={listing.meta.wifi && listing.meta.wifi} register={register} color="primary-green"></CheckboxInput>
-                    <CheckboxInput id="meta.parking" innerText="Free parking" checked={listing.meta.parking && listing.meta.parking} register={register} color="primary-green"></CheckboxInput>
-                    <CheckboxInput id="meta.breakfast" innerText="Breakfast included" checked={listing.meta.breakfast && listing.meta.breakfast} register={register} color="primary-green"></CheckboxInput>
-                    <CheckboxInput id="meta.pets" innerText="Pets allowed" checked={listing.meta.pets && listing.meta.pets} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput disabled={scopedLoader} id="meta.wifi" innerText="Free Wifi" checked={listing.meta.wifi && listing.meta.wifi} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput disabled={scopedLoader} id="meta.parking" innerText="Free parking" checked={listing.meta.parking && listing.meta.parking} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput disabled={scopedLoader} id="meta.breakfast" innerText="Breakfast included" checked={listing.meta.breakfast && listing.meta.breakfast} register={register} color="primary-green"></CheckboxInput>
+                    <CheckboxInput disabled={scopedLoader} id="meta.pets" innerText="Pets allowed" checked={listing.meta.pets && listing.meta.pets} register={register} color="primary-green"></CheckboxInput>
                   </div>
                 </div>
-                <StringInput type="text" id="media[0].url" label="Image url" placeholder="https://www.example.com/image.jpg" defaultValue={listing.media[0].url && listing.media[0].url} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
-                <StringInput type="text" id="media[0].alt" label="Description" placeholder="Our magical cabin" defaultValue={listing.media[0].alt && listing.media[0].alt} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
-                <SquareBtn clickFunc={handleSubmit(onSubmit)} type="submit" width="full" innerText="Save changes" tailw="hover:bg-white bg-opacity-50 mt-5" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorUpdateMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorUpdateMessage ? errorUpdateMessage : userFeedbackUpdateMessage}</p>}
+                <StringInput disabled={scopedLoader} type="text" id="media[0].url" label="Image url" placeholder="https://www.example.com/image.jpg" defaultValue={listing.media[0].url && listing.media[0].url} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
+                <StringInput disabled={scopedLoader} type="text" id="media[0].alt" label="Description" placeholder="Our magical cabin" defaultValue={listing.media[0].alt && listing.media[0].alt} register={register} errorMessage={errors.media && errors.media[0].message} trigger={trigger} watch={watch} />
+                <SquareBtn disabled={scopedLoader} clickFunc={handleSubmit(onSubmit)} type="submit" width="full" innerText="Save changes" tailw="hover:bg-white bg-opacity-50 mt-5" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${error ? "text-danger" : "text-primary-green"} text-xs text-center`}>{error ? error : userFeedbackUpdateMessage}</p>}
               </form>
             </div>
           )}

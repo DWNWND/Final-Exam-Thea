@@ -28,7 +28,7 @@ export default function SettingsForm() {
   const [user, setUser] = useState(null);
   const { userName, setVenueManager } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
-  const [errorUpdateMessage, setErrorUpdateMessage] = useState("");
+  // const [errorUpdateMessage, setErrorUpdateMessage] = useState("");
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState("");
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
@@ -51,7 +51,7 @@ export default function SettingsForm() {
   }, []);
 
   const onSubmit = async (data) => {
-    setErrorUpdateMessage("");
+    // setErrorUpdateMessage("");
     setUserFeedbackUpdateMessage("");
     try {
       await callApi(`/holidaze/profiles/${userName}`, {
@@ -63,7 +63,7 @@ export default function SettingsForm() {
       setUserFeedbackUpdateMessage("Profile successfully updated.");
     } catch (err) {
       console.log("error:", err);
-      setErrorUpdateMessage("Profile update failed: " + error);
+      // setErrorUpdateMessage("Profile update failed: " + error);
     }
   };
 
@@ -75,24 +75,24 @@ export default function SettingsForm() {
             <h1 className="text-2xl  uppercase text-primary-green">My settings</h1>
           </div>
           <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit(onSubmit)}>
-            <CheckboxInput id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></CheckboxInput>
-            <StringInput type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} errorMessage={errors.bio && errors.bio.message} register={register} trigger={trigger} watch={watch}></StringInput>
+            <CheckboxInput disabled={scopedLoader} id="venueManager" innerText="Register as a venue manager" checked={user.venueManager} error={errors.venueManager} register={register} color="primary-green"></CheckboxInput>
+            <StringInput disabled={scopedLoader} type="text" id="bio" label="Bio" placeholder="Something about you" defaultValue={user.bio} errorMessage={errors.bio && errors.bio.message} register={register} trigger={trigger} watch={watch}></StringInput>
             <div>
               <h2 className="mb-2 text-primary-green">Avatar</h2>
               <div className="flex flex-col gap-4 bg-comp-gray p-4 rounded-xl">
-                <StringInput type="url" id="avatar.url" label="Image url" placeholder="https://example.com/avatar.jpg" defaultValue={user.avatar.url} errorMessage={errors.avatar && errors.avatar.message} register={register} trigger={trigger} watch={watch}></StringInput>
-                <StringInput type="text" id="avatar.alt" label="Image description" placeholder="Something about the avatar image" defaultValue={user.avatar.alt} errorMessage={errors.avatar && errors.avatar.message} register={register} trigger={trigger} watch={watch}></StringInput>
+                <StringInput disabled={scopedLoader} type="url" id="avatar.url" label="Image url" placeholder="https://example.com/avatar.jpg" defaultValue={user.avatar.url} errorMessage={errors.avatar && errors.avatar.message} register={register} trigger={trigger} watch={watch}></StringInput>
+                <StringInput disabled={scopedLoader} type="text" id="avatar.alt" label="Image description" placeholder="Something about the avatar image" defaultValue={user.avatar.alt} errorMessage={errors.avatar && errors.avatar.message} register={register} trigger={trigger} watch={watch}></StringInput>
               </div>
             </div>
             <div>
               <h2 className="mb-2  text-primary-green">Banner</h2>
               <div className="flex flex-col gap-4 bg-comp-gray p-4 rounded-xl">
-                <StringInput type="url" id="banner.url" label="Image url" placeholder="https://example.com/banner.jpg" defaultValue={user.banner.url} errorMessage={errors.banner && errors.banner.message} register={register} trigger={trigger} watch={watch}></StringInput>
-                <StringInput type="text" id="banner.alt" label="Image description" placeholder="Something about the banner image" defaultValue={user.banner.alt} errorMessage={errors.banner && errors.banner.message} register={register} trigger={trigger} watch={watch}></StringInput>
+                <StringInput disabled={scopedLoader} type="url" id="banner.url" label="Image url" placeholder="https://example.com/banner.jpg" defaultValue={user.banner.url} errorMessage={errors.banner && errors.banner.message} register={register} trigger={trigger} watch={watch}></StringInput>
+                <StringInput disabled={scopedLoader} type="text" id="banner.alt" label="Image description" placeholder="Something about the banner image" defaultValue={user.banner.alt} errorMessage={errors.banner && errors.banner.message} register={register} trigger={trigger} watch={watch}></StringInput>
               </div>
             </div>
-            <SquareBtn type="submit" innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorUpdateMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorUpdateMessage ? errorUpdateMessage : userFeedbackUpdateMessage}</p>}
+            <SquareBtn disabled={scopedLoader} type="submit" innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${error ? "text-danger" : "text-primary-green"} text-xs text-center`}>{error ? error : userFeedbackUpdateMessage}</p>}
           </form>
         </div>
       )}

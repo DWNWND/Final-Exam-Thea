@@ -78,12 +78,12 @@ export default function RegisterForm() {
     <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
       <h1 className="text-2xl mb-6 uppercase text-primary-green w-full">Register new user</h1>
       <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="userName" label="Username" placeholder="Your username" register={register} errorMessage={errors.userName && errors.userName.message} trigger={trigger} watch={watch} />
-        <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
-        <StringInput type="password" id="password" label="Password" placeholder="• • • • • • •" register={register} errorMessage={errors.password && errors.password.message} trigger={trigger} watch={watch} />
-        <StringInput type="password" id="confirmPassword" label="Confirm Password" placeholder="• • • • • • •" register={register} errorMessage={errors.confirmPassword && errors.confirmPassword.message} trigger={trigger} watch={watch} />
+        <StringInput disabled={scopedLoader} type="text" id="userName" label="Username" placeholder="Your username" register={register} errorMessage={errors.userName && errors.userName.message} trigger={trigger} watch={watch} />
+        <StringInput disabled={scopedLoader} type="email" id="email" label="Email address" placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
+        <StringInput disabled={scopedLoader} type="password" id="password" label="Password" placeholder="• • • • • • •" register={register} errorMessage={errors.password && errors.password.message} trigger={trigger} watch={watch} />
+        <StringInput disabled={scopedLoader} type="password" id="confirmPassword" label="Confirm Password" placeholder="• • • • • • •" register={register} errorMessage={errors.confirmPassword && errors.confirmPassword.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between">
-          <RoundBtn type="submit" innerText="Register" bgColor="primary-green" textColor="white" />
+          <RoundBtn type="submit" innerText="Register" bgColor="primary-green" textColor="white" disabled={scopedLoader} />
         </div>
       </form>
       {scopedLoader ? <SmallSpinnerLoader /> : <p className="text-danger text-xs text-center mt-3">{error && error}</p>}

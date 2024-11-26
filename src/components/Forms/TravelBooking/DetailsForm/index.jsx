@@ -24,7 +24,7 @@ export default function DetailsForm() {
   const { clearTravelSearchStore } = useTravelSearchStore();
   const { selectedListing, bookingData, setBookingEmail } = useBookingDataStore();
 
-  const { loading, scopedLoader, error, callApi } = useApiCall();
+  const { loading, scopedLoader, callApi } = useApiCall();
 
   const { setPreviousRoute, getLastPreviousRoute } = useNavigationStore();
   const [user, setUser] = useState(null);

@@ -33,7 +33,7 @@ export default function CheckoutForm() {
   const { savedDates } = useTravelDatesStore();
 
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
 
   const {
@@ -48,7 +48,7 @@ export default function CheckoutForm() {
   });
 
   const onSubmit = async () => {
-    setErrorMessage("");
+    // setErrorMessage("");
     setUserFeedbackMessage("");
 
     try {
@@ -73,7 +73,7 @@ export default function CheckoutForm() {
       }, 1000);
     } catch (err) {
       console.log("error:", err);
-      setErrorMessage("Payment failed: " + error);
+      // setErrorMessage("Payment failed: " + error);
     }
   };
 
@@ -97,13 +97,13 @@ export default function CheckoutForm() {
         <p className="text-sm italic text-primary-blue w-full">Please checkout to complete your booking</p>
       </div>
       <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="cardNumber" label="Card Number" placeholder="1234 5678 9012 3456" error={errors.cardNumber} register={register} errorMessage={errors.cardNumber && errors.cardNumber.message} watch={watch} trigger={trigger} />
-        <StringInput type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} watch={watch} trigger={trigger} />
-        <StringInput type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} watch={watch} trigger={trigger} />
+        <StringInput disabled={scopedLoader} type="text" id="cardNumber" label="Card Number" placeholder="1234 5678 9012 3456" error={errors.cardNumber} register={register} errorMessage={errors.cardNumber && errors.cardNumber.message} watch={watch} trigger={trigger} />
+        <StringInput disabled={scopedLoader} type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} watch={watch} trigger={trigger} />
+        <StringInput disabled={scopedLoader} type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} watch={watch} trigger={trigger} />
         <div className="flex items-center justify-between my-6">
-          <RoundBtn type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
+          <RoundBtn disabled={scopedLoader} type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
         </div>
-        {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+        {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${error ? "text-danger" : "text-primary-green"} text-xs text-center`}>{error ? error : userFeedbackMessage}</p>}
       </form>
     </div>
   );

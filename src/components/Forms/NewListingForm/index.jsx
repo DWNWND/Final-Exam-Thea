@@ -10,6 +10,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaParking, FaWifi } from "react-icons/fa";
 import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils";
 import { SmallSpinnerLoader } from "../../Loaders";
+import Accordion from "../../Accordion/ListingDetailsAccordion";
 
 //FIX THE LISTING PREVIEW TO BE THE SAME STYLING AND INFORMATION AS IN THE SINGLE VENUE PAGE + ALSO ADD USER/OWNER INFO // ALSO DISABLE AND STYLE DISABLED SUBMIT BUTTON WHEN LOADING
 
@@ -58,7 +59,6 @@ const newListingSchema = [
 export default function NewListingForm() {
   const { scopedLoader, error, callApi } = useApiCall();
   const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const [formStep, setFormStep] = useState(0);
   const navigate = useNavigate();
@@ -66,19 +66,6 @@ export default function NewListingForm() {
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [availabilityOpen, setAvailabilityOpen] = useState(false);
   const [hostDetailsOpen, setHostDetailsOpen] = useState(false);
-
-  function toggleAmenities() {
-    setAmenitiesOpen(!amenitiesOpen);
-  }
-  function toggleDescription() {
-    setDescriptionOpen(!descriptionOpen);
-  }
-  function toggleAvailability() {
-    setAvailabilityOpen(!availabilityOpen);
-  }
-  function toggleHostDetails() {
-    setHostDetailsOpen(!hostDetailsOpen);
-  }
 
   const todayString = formatDateForFlatpickr(new Date());
   const tomorrowString = formatDateForFlatpickr(new Date(new Date().setDate(new Date().getDate() + 1)));
@@ -141,7 +128,6 @@ export default function NewListingForm() {
       }, 1000);
     } catch (error) {
       console.log("error:", error);
-      setErrorMessage("Failed to publish listing: " + error);
     }
   };
 
@@ -326,70 +312,37 @@ export default function NewListingForm() {
                     <p>★ {watch("rating")}</p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Details title="Amenities" toggleState={amenitiesOpen} toggleFunc={toggleAmenities}>
-                    <div className="flex flex-col mt-3 gap-2 p-4">
-                      <p className="flex items-center gap-4">
-                        {watch("meta.breakfast") && (
-                          <>
-                            <MdEmojiFoodBeverage />
-                            Breakfast included
-                          </>
-                        )}
-                      </p>
-                      <p className="flex items-center gap-4">
-                        {watch("meta.parking") && (
-                          <>
-                            <FaParking />
-                            Free parking
-                          </>
-                        )}
-                      </p>
-                      <p className="flex items-center gap-4">
-                        {watch("meta.pets") && (
-                          <>
-                            <MdOutlinePets />
-                            Pets allowed
-                          </>
-                        )}
-                      </p>
-                      <p className="flex items-center gap-4">
-                        {watch("meta.wifi") && (
-                          <>
-                            <FaWifi />
-                            Free WiFi
-                          </>
-                        )}
-                      </p>
-                    </div>
-                  </Details>
-                  <Details title="Description" toggleState={descriptionOpen} toggleFunc={toggleDescription}>
-                    <div className="flex flex-col mt-3  p-4">
-                      <p className="">{watch("description")}</p>
-                    </div>
-                  </Details>
-                  <Details title="Host details" toggleState={hostDetailsOpen} toggleFunc={toggleHostDetails}>
-                    <div className="flex mt-3 gap-4 items-center p-4">
-                      {/* <div>
-                  <img src={venue.owner.avatar.url} className="max-w-20 max-h-20 rounded-full"></img>
+                <div className="p-6 bg-white bg-opacity-70 border border-comp rounded-lg text-primary-blue mb-4">
+                  <h3 className="uppercase font-semibold">Details</h3>
+                  <p>{watch("description")}</p>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <p className="font-semibold">{venue.owner.name}</p>
-                  <p className="">{venue.owner.bio}</p>
-                  <p className="">Contact host via: {venue.owner.email}</p>
-                </div> */}
-                    </div>
-                  </Details>
-                  <Details title="Availability" toggleState={availabilityOpen} toggleFunc={toggleAvailability}>
-                    <div className="flex mt-3 gap-4 p-4 py-10 bg-comp rounded-lg justify-center">{/* <div className="flex flex-col gap-1 w-full items-center"> {travelSearchData.travelDates && travelSearchData.travelDates.startDate && <BookingCalendar reserved={bookingReserved} />}</div> */}</div>
-                  </Details>
+                <div className=" p-6 bg-white bg-opacity-70 border border-comp rounded-lg text-primary-blue">
+                  <h3 className="uppercase font-semibold">Amenities</h3>
+                  <div className="flex flex-col mt-2 justify-between md:flex-row gap-4 md:gap-8">
+                    <p className={`flex items-center gap-4 ${watch("meta.breakfast") ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                      <MdEmojiFoodBeverage />
+                      Breakfast included
+                    </p>
+                    <p className={`flex items-center gap-4 ${watch("meta.parkign") ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                      <FaParking />
+                      Free parking
+                    </p>
+                    <p className={`flex items-center gap-4 ${watch("meta.pets") ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                      <MdOutlinePets />
+                      Pets allowed
+                    </p>
+                    <p className={`flex items-center gap-4 ${watch("meta.wifi") ? "text-primary-blue" : "text-comp-purple line-through"} `}>
+                      <FaWifi />
+                      Free WiFi
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
             <button type="submit" className={`bg-primary-green text-white rounded-full uppercase p-2 mt-5 ${error ? "opacity-50" : "opacity-100"}`}>
               Publish listing
             </button>
-            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
+            {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${error ? "text-danger" : "text-primary-green"} text-xs text-center`}>{error ? error : userFeedbackMessage}</p>}
           </>
         )}
       </form>
