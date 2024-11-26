@@ -4,7 +4,7 @@ import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
 import "flatpickr/dist/themes/material_green.css";
 import { useTravelDatesStore } from "../../../../stores";
-import {formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr} from "../../../../utils/";
+import { formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr } from "../../../../utils/";
 
 export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }) {
   const { savedDates, setSavedDates, initialDates, setInitialDates, defaultFlatpickrDates, setDefaultFlatpickrDates } = useTravelDatesStore();
@@ -13,7 +13,6 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
   const todayString = formatDateForFlatpickr(today);
 
   useEffect(() => {
-    // const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
@@ -24,22 +23,35 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
       const dateRangeArrYYYYMMDD = generateAllDatesArr(startYYYYMMDD, endYYYYMMDD);
       const startDisplay = formatDateForDisplay(today); //for display
       const endDisplay = formatDateForDisplay(tomorrow); //for display
+
       setSavedDates({
         endYYYYMMDD: endYYYYMMDD,
         startYYYYMMDD: startYYYYMMDD,
         endDisplay: endDisplay,
         startDisplay: startDisplay,
-        endDateObj: today,
-        startDateObj: tomorrow,
+        endDateObj: tomorrow,
+        startDateObj: today,
         dateRangeArrYYYYMMDD: dateRangeArrYYYYMMDD,
+      });
+
+      //force a reload of the logic
+      setInitialDates({
+        todayDateObj: today,
+        tomorrowDateObj: tomorrow,
       });
       setDefaultFlatpickrDates(`${startYYYYMMDD} to ${endYYYYMMDD}`);
     };
     const updateDatesIfPast = () => {
+      const stripTime = (date) => {
+        const d = new Date(date);
+        d.setHours(0, 0, 0, 0); // Set time to 00:00:00
+        return d;
+      };
+
       // Determine if dates are in the past or if endDate is same as startDate
-      const startDateInPast = savedDates.startDateObj && new Date(savedDates.startDateObj) < new Date(today); //do these have to be Date objects to find the difference?
-      const endDateInPast = savedDates.endDateObj && new Date(savedDates.endDateObj) < new Date(savedDates.startDateObj); //do these have to be Date objects to find the difference?
-      const endDateIsSameAsStartDate = savedDates.endDateObj && new Date(savedDates.endDateObj).toDateString() === new Date(savedDates.startDateObj).toDateString();
+      const startDateInPast = savedDates.startDateObj && stripTime(savedDates.startDateObj) < stripTime(today);
+      const endDateInPast = savedDates.endDateObj && stripTime(savedDates.endDateObj) < stripTime(savedDates.startDateObj);
+      const endDateIsSameAsStartDate = savedDates.endDateObj && stripTime(savedDates.endDateObj).getTime() === stripTime(savedDates.startDateObj).getTime();
 
       if (endDateInPast) {
         // endDate is in the past (all dates must be invalid)
@@ -68,7 +80,7 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
       }
       if (endDateIsSameAsStartDate) {
         // endDate and startDate is the same (if there has been a glitch and the dates are the same, update endDate to the next day)
-        const newEndDate = new Date(savedDates.startDateObj.setDate(savedDates.startDateObj.getDate() + 1));
+        const newEndDate = new Date(new Date(savedDates.startDateObj).setDate(new Date(savedDates.startDateObj).getDate() + 1));
         const endYYYYMMDD = formatDateForFlatpickr(newEndDate);
         const dateRangeArrYYYYMMDD = generateAllDatesArr(savedDates.startYYYYMMDD, endYYYYMMDD);
         const endDisplay = formatDateForDisplay(newEndDate); //for display
@@ -76,6 +88,9 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
           endYYYYMMDD: endYYYYMMDD,
           endDateObj: newEndDate,
           endDisplay: endDisplay,
+          startDateObj: savedDates.startDateObj,
+          startYYYYMMDD: savedDates.startYYYYMMDD,
+          startDisplay: savedDates.startDisplay,
           dateRangeArrYYYYMMDD: dateRangeArrYYYYMMDD,
         });
         setDefaultFlatpickrDates(`${savedDates.startYYYYMMDD} to ${endYYYYMMDD}`);
@@ -85,9 +100,9 @@ export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, e
       }
     };
     // Check on component mount/reload (if no dates are saved, initialize them, if they are saved, check if they are correct)
-    if (!savedDates || savedDates.dateRangeArrYYYYMMDD.length === 0) {
+    if (!savedDates || !savedDates.endYYYYMMDD || !savedDates.startYYYYMMDD) {
       initializeDates();
-    } else {
+    } else if (savedDates && savedDates.endYYYYMMDD) {
       updateDatesIfPast();
     }
     // Set up interval to check for past dates every 10 minutes
