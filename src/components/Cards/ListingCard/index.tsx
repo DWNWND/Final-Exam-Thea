@@ -3,25 +3,51 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { ListingCardSkeletonLoader } from "../../Loaders";
 
-interface Media {
-  url: string;
-  alt: string;
-}
-
-interface Location {
-  city: string;
-  country: string;
-}
-
 interface Listing {
   id: string;
   name: string;
+  description: string;
   price: number;
+  maxGuests: number;
   rating: number;
-  location: Location;
-  media: Media[];
+  location: {
+    address: string;
+    city: string;
+    zip: string;
+    country: string;
+  };
+  meta: {
+    wifi: boolean;
+    parking: boolean;
+    breakfast: boolean;
+    pets: boolean;
+  };
+  media: {
+    url: string;
+    alt: string;
+  }[];
   bookings: { id: string }[];
 }
+
+// interface Media {
+//   url: string;
+//   alt: string;
+// }
+
+// interface Location {
+//   city: string;
+//   country: string;
+// }
+
+// interface Listing {
+//   id: string;
+//   name: string;
+//   price: number;
+//   rating: number;
+//   location: Location;
+//   media: Media[];
+//   bookings?: { id: string }[];
+// }
 
 interface ListingCardProps {
   listing?: Listing; // Listing can be undefined during loading
