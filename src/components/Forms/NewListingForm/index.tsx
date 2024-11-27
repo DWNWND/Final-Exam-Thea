@@ -344,14 +344,14 @@ export default function NewListingForm() {
                   <label htmlFor="media[0].url" className="block text-primary-green mb-2">
                     Image url
                   </label>
-                  <input placeholder="https://www.example.com/image.jpg" id="media[0].url" {...register("media.0.url")} className={`placeholder:italic placeholder:font-light font-light text-primary-green border active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errorCheck ? "border-danger" : "focus:border-primary-green active:border-primary-green"}`} />
-                  {errorCheck && <p className="text-danger text-xs mt-2">{errorCheck}</p>}
+                  <input type="url" placeholder="https://www.example.com/image.jpg" id="media[0].url" {...register("media.0.url")} className={`placeholder:italic placeholder:font-light font-light text-primary-green border active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errorCheck ? "border-danger" : "focus:border-primary-green active:border-primary-green"}`} />
+                  {/* {errorCheck && <p className="text-danger text-xs mt-2">{errorCheck}</p>} */}
                 </div>
                 <div>
                   <label htmlFor="media[0].alt" className="block text-primary-green mb-2">
                     Description
                   </label>
-                  <input placeholder="Our magical cabin" id="media[0].alt" {...register("media.0.alt")} className={`  placeholder:italic placeholder:font-light font-light text-primary-green border active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errorCheck ? "border-danger" : "focus:border-primary-green active:border-primary-green"}`} />
+                  <input type="text" placeholder="Our magical cabin" id="media[0].alt" {...register("media.0.alt")} className={`  placeholder:italic placeholder:font-light font-light text-primary-green border active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errorCheck ? "border-danger" : "focus:border-primary-green active:border-primary-green"}`} />
                 </div>
                 {errorCheck && <p className="text-danger text-xs mt-2">{errorCheck}</p>}
               </div>
