@@ -36,9 +36,22 @@ export default function MyProfile() {
 
   const fetchBookings = async () => {
     const result = await callApi(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
-    const activeBookings = result.data.filter((booking) => new Date(booking.dateTo) > new Date());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to the start of the day
+
+    const activeBookings = result.data.filter((booking) => {
+      const dateTo = new Date(booking.dateTo);
+      dateTo.setHours(0, 0, 0, 0); // Compare only the date portion
+      return dateTo >= today;
+    });
+
+    const inactiveBookings = result.data.filter((booking) => {
+      const dateTo = new Date(booking.dateTo);
+      dateTo.setHours(0, 0, 0, 0); // Compare only the date portion
+      return dateTo < today;
+    });
+
     setActiveBookingsArray(activeBookings);
-    const inactiveBookings = result.data.filter((booking) => new Date(booking.dateTo) < new Date());
     setInactiveBookingsArray(inactiveBookings);
     setUserBookings(result.data);
   };
