@@ -1,11 +1,11 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import RegisterForm from "../../components/Forms/RegisterForm/";
+import RegisterForm from "../../components/Forms/RegisterForm";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores";
-import MainElement from "../../components/MainElement/";
+import MainElement from "../../components/MainElement";
 
-export default function Register() {
+export default function Register(): JSX.Element {
   const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
 

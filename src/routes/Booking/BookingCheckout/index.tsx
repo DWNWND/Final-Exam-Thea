@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import { useAuthStore, useBookingDataStore } from "../../../stores";
 import { useNavigate } from "react-router-dom";
 
-export default function BookingCheckout() {
+export default function BookingCheckout(): JSX.Element {
   const { accessToken } = useAuthStore();
-  const navigate = useNavigate();
   const { bookingData, selectedListing } = useBookingDataStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!accessToken || !bookingData.venueId) {

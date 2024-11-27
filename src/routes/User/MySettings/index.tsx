@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SettingsForm from "../../../components/Forms/UserSettingsForm";
 import MainElement from "../../../components/MainElement";
 
-export default function MySettings() {
+export default function MySettings(): JSX.Element {
   const { accessToken, userName } = useAuthStore();
   const navigate = useNavigate();
 

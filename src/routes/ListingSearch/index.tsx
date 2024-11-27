@@ -1,15 +1,15 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import ListSearchForm from "../../components/Forms/TravelSearch/ListSearchForm/";
+import ListSearchForm from "../../components/Forms/TravelSearch/ListSearchForm";
 import { useTravelSearchStore } from "../../stores";
-import { DataProvider } from "../../components/DataProvider/";
-import MainElement from "../../components/MainElement/";
+import { DataProvider } from "../../components/DataProvider";
+import MainElement from "../../components/MainElement";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ListSearch from "../../components/Lists/ListSearch";
 
 //FIX LOADER AND ERROR
 
-export default function ListingSearch() {
+export default function ListingSearch(): JSX.Element {
   const { travelSearchData } = useTravelSearchStore();
   const navigate = useNavigate();
 

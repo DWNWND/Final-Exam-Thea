@@ -6,7 +6,7 @@ import NewListingForm from "../../../components/Forms/NewListingForm";
 import MainElement from "../../../components/MainElement";
 import { RoundBtn } from "../../../components/Buttons";
 
-export default function NewListing() {
+export default function NewListing(): JSX.Element {
   const { accessToken, userName, venueManager } = useAuthStore();
   const navigate = useNavigate();
 
