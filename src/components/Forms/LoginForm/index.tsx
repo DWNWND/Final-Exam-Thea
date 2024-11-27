@@ -31,8 +31,6 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-    trigger,
-    watch,
   } = useForm<LoginFormInputs>({
     mode: "onChange",
     resolver: yupResolver(loginSchema),
@@ -85,7 +83,6 @@ export default function LoginForm() {
           <input disabled={scopedLoader} placeholder="example@example.com" type="text" id="email" {...register("email")} className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.email?.message && "border-danger"}`} />
           {errors.email?.message && <p className="text-danger text-xs mt-2">{errors.email?.message}</p>}
         </div>
-
         <div className="relative">
           <label htmlFor="password" className="block text-primary-green mb-2">
             Password
@@ -93,9 +90,6 @@ export default function LoginForm() {
           <input disabled={scopedLoader} placeholder="• • • • • • •" type="password" id="password" {...register("password")} className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.password?.message && "border-danger"}`} />
           {errors.password?.message && <p className="text-danger text-xs mt-2">{errors.password?.message}</p>}
         </div>
-
-        {/* <StringInput disabled={scopedLoader} type="email" id="email" label="Email address" placeholder="example@example.com" register={register} errorMessage={errors.email?.message} trigger={trigger} watch={watch} />
-        <StringInput disabled={scopedLoader} type="password" id="password" label="Password" placeholder="• • • • • • •" register={register} errorMessage={errors.password?.message} trigger={trigger} watch={watch} /> */}
         <div className="flex items-center justify-between">
           <RoundBtn type="submit" innerText="Login" bgColor="primary-green" textColor="white" disabled={scopedLoader} />
         </div>
