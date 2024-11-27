@@ -4,62 +4,62 @@ import { persist, createJSONStorage } from "zustand/middleware";
 interface DefaultFlatpickrDates {
   defaultFlatpickrDates: string;
 }
+
 interface InitialDates {
-  todayDateObj: object | Date;
-  tomorrowDateObj: object | Date;
+  todayDateObj: Date;
+  tomorrowDateObj: Date;
 }
+
 interface SavedDates {
   endYYYYMMDD: string;
   startYYYYMMDD: string;
   endDisplay: string;
   startDisplay: string;
-  endDateObj: object | Date;
-  startDateObj: object | Date;
+  endDateObj: Date;
+  startDateObj: Date;
   dateRangeArrYYYYMMDD: string[];
 }
 
 interface TravelDatesStoreState {
   savedDates: SavedDates;
   initialDates: InitialDates;
-  defaultFlatpickrDates: DefaultFlatpickrDates;
+  defaultFlatpickrDates: string;
 
-  setDefaultFlatpickrDates: (defaultFlatpickrDates: DefaultFlatpickrDates) => void;
+  setDefaultFlatpickrDates: (defaultFlatpickrDates: string) => void;
   setInitialDates: (initialDates: InitialDates) => void;
-  setTodayDateObj: (todayDateObj: InitialDates["todayDateObj"]) => void;
-  setTomorrowDateObj: (tomorrowDateObj: InitialDates["tomorrowDateObj"]) => void;
+  setTodayDateObj: (todayDateObj: Date) => void;
+  setTomorrowDateObj: (tomorrowDateObj: Date) => void;
 
   setSavedDates: (savedDates: SavedDates) => void;
-  setStartDateObj: (startDateObj: SavedDates["startDateObj"]) => void;
-  setEndDateObj: (endDateObj: SavedDates["endDateObj"]) => void;
-  setStartYYYYMMDD: (startYYYYMMDD: SavedDates["startYYYYMMDD"]) => void;
-  setEndYYYYMMDD: (endYYYYMMDD: SavedDates["endYYYYMMDD"]) => void;
-  setStartDisplay: (startDisplay: SavedDates["startDisplay"]) => void;
-  setEndDisplay: (endDisplay: SavedDates["endDisplay"]) => void;
-  setDateRangeArrYYYYMMDD: (dateRangeArrYYYYMMDD: SavedDates["dateRangeArrYYYYMMDD"]) => void;
+  setStartDateObj: (startDateObj: Date) => void;
+  setEndDateObj: (endDateObj: Date) => void;
+  setStartYYYYMMDD: (startYYYYMMDD: string) => void;
+  setEndYYYYMMDD: (endYYYYMMDD: string) => void;
+  setStartDisplay: (startDisplay: string) => void;
+  setEndDisplay: (endDisplay: string) => void;
+  setDateRangeArrYYYYMMDD: (dateRangeArrYYYYMMDD: string[]) => void;
   clearTravelDatesStore: () => void;
 }
 
 export const useTravelDatesStore = create<TravelDatesStoreState>()(
   persist(
     (set) => ({
-      defaultFlatpickrDates: {
-        defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
-      },
+      defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
       initialDates: {
-        todayDateObj: {},
-        tomorrowDateObj: {},
+        todayDateObj: new Date(),
+        tomorrowDateObj: new Date(),
       },
       savedDates: {
         endYYYYMMDD: "",
         startYYYYMMDD: "",
         endDisplay: "",
         startDisplay: "",
-        endDateObj: {},
-        startDateObj: {},
+        endDateObj: new Date(),
+        startDateObj: new Date(),
         dateRangeArrYYYYMMDD: [],
       },
 
-      setDefaultFlatpickrDates: (defaultFlatpickrDates) => set({ defaultFlatpickrDates: defaultFlatpickrDates }),
+      setDefaultFlatpickrDates: (defaultFlatpickrDates) => set({ defaultFlatpickrDates }),
       setInitialDates: (initialDates) => set({ initialDates }),
       setTodayDateObj: (todayDateObj) =>
         set((state) => ({
@@ -101,20 +101,18 @@ export const useTravelDatesStore = create<TravelDatesStoreState>()(
         })),
       clearTravelDatesStore: () =>
         set({
-          defaultFlatpickrDates: {
-            defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
-          },
+          defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
           initialDates: {
-            todayDateObj: {},
-            tomorrowDateObj: {},
+            todayDateObj: new Date(),
+            tomorrowDateObj: new Date(),
           },
           savedDates: {
             endYYYYMMDD: "",
             startYYYYMMDD: "",
             endDisplay: "",
             startDisplay: "",
-            endDateObj: {},
-            startDateObj: {},
+            endDateObj: new Date(),
+            startDateObj: new Date(),
             dateRangeArrYYYYMMDD: [],
           },
         }),
@@ -125,3 +123,131 @@ export const useTravelDatesStore = create<TravelDatesStoreState>()(
     }
   )
 );
+
+// import { create } from "zustand";
+// import { persist, createJSONStorage } from "zustand/middleware";
+
+// interface DefaultFlatpickrDates {
+//   defaultFlatpickrDates: string;
+// }
+// interface InitialDates {
+//   todayDateObj: object | Date;
+//   tomorrowDateObj: object | Date;
+// }
+// interface SavedDates {
+//   endYYYYMMDD: string;
+//   startYYYYMMDD: string;
+//   endDisplay: string;
+//   startDisplay: string;
+//   endDateObj: object | Date;
+//   startDateObj: object | Date;
+//   dateRangeArrYYYYMMDD: string[];
+// }
+
+// interface TravelDatesStoreState {
+//   savedDates: SavedDates;
+//   initialDates: InitialDates;
+//   defaultFlatpickrDates: DefaultFlatpickrDates;
+
+//   setDefaultFlatpickrDates: (defaultFlatpickrDates: DefaultFlatpickrDates) => void;
+//   setInitialDates: (initialDates: InitialDates) => void;
+//   setTodayDateObj: (todayDateObj: InitialDates["todayDateObj"]) => void;
+//   setTomorrowDateObj: (tomorrowDateObj: InitialDates["tomorrowDateObj"]) => void;
+
+//   setSavedDates: (savedDates: SavedDates) => void;
+//   setStartDateObj: (startDateObj: SavedDates["startDateObj"]) => void;
+//   setEndDateObj: (endDateObj: SavedDates["endDateObj"]) => void;
+//   setStartYYYYMMDD: (startYYYYMMDD: SavedDates["startYYYYMMDD"]) => void;
+//   setEndYYYYMMDD: (endYYYYMMDD: SavedDates["endYYYYMMDD"]) => void;
+//   setStartDisplay: (startDisplay: SavedDates["startDisplay"]) => void;
+//   setEndDisplay: (endDisplay: SavedDates["endDisplay"]) => void;
+//   setDateRangeArrYYYYMMDD: (dateRangeArrYYYYMMDD: SavedDates["dateRangeArrYYYYMMDD"]) => void;
+//   clearTravelDatesStore: () => void;
+// }
+
+// export const useTravelDatesStore = create<TravelDatesStoreState>()(
+//   persist(
+//     (set) => ({
+//       defaultFlatpickrDates: {
+//         defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
+//       },
+//       initialDates: {
+//         todayDateObj: {},
+//         tomorrowDateObj: {},
+//       },
+//       savedDates: {
+//         endYYYYMMDD: "",
+//         startYYYYMMDD: "",
+//         endDisplay: "",
+//         startDisplay: "",
+//         endDateObj: {},
+//         startDateObj: {},
+//         dateRangeArrYYYYMMDD: [],
+//       },
+
+//       setDefaultFlatpickrDates: (defaultFlatpickrDates) => set({ defaultFlatpickrDates: defaultFlatpickrDates }),
+//       setInitialDates: (initialDates) => set({ initialDates }),
+//       setTodayDateObj: (todayDateObj) =>
+//         set((state) => ({
+//           initialDates: { ...state.initialDates, todayDateObj },
+//         })),
+//       setTomorrowDateObj: (tomorrowDateObj) =>
+//         set((state) => ({
+//           initialDates: { ...state.initialDates, tomorrowDateObj },
+//         })),
+
+//       setSavedDates: (savedDates) => set({ savedDates }),
+//       setStartDateObj: (startDateObj) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, startDateObj },
+//         })),
+//       setEndDateObj: (endDateObj) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, endDateObj },
+//         })),
+//       setStartYYYYMMDD: (startYYYYMMDD) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, startYYYYMMDD },
+//         })),
+//       setEndYYYYMMDD: (endYYYYMMDD) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, endYYYYMMDD },
+//         })),
+//       setStartDisplay: (startDisplay) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, startDisplay },
+//         })),
+//       setEndDisplay: (endDisplay) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, endDisplay },
+//         })),
+//       setDateRangeArrYYYYMMDD: (dateRangeArrYYYYMMDD) =>
+//         set((state) => ({
+//           savedDates: { ...state.savedDates, dateRangeArrYYYYMMDD },
+//         })),
+//       clearTravelDatesStore: () =>
+//         set({
+//           defaultFlatpickrDates: {
+//             defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
+//           },
+//           initialDates: {
+//             todayDateObj: {},
+//             tomorrowDateObj: {},
+//           },
+//           savedDates: {
+//             endYYYYMMDD: "",
+//             startYYYYMMDD: "",
+//             endDisplay: "",
+//             startDisplay: "",
+//             endDateObj: {},
+//             startDateObj: {},
+//             dateRangeArrYYYYMMDD: [],
+//           },
+//         }),
+//     }),
+//     {
+//       name: "travel-dates-store",
+//       storage: createJSONStorage(() => localStorage),
+//     }
+//   )
+// );
