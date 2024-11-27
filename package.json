@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.7.9",
+    "@types/react-flatpickr": "^3.8.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-error-boundary": "^4.1.2",
