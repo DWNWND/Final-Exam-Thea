@@ -65,7 +65,6 @@ export default function DetailsForm() {
         setUser(null); // Handle cases where data is unavailable
       }
     };
-
     fetchUserData();
   }, [accessToken]);
 
