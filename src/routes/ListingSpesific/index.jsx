@@ -6,8 +6,7 @@ import { useParams } from "react-router-dom";
 import { useApiCall } from "../../hooks";
 import { ImageModal, BookingModal } from "../../components/Modals";
 import { FaRegHeart, FaShare } from "react-icons/fa";
-import SelectTravelDates from "../../components/Forms/TravelSearch/Filters/SelectTravelDates/";
-import NumberOfGuests from "../../components/Forms/TravelSearch/Filters/NumberOfGuests/";
+import { NumberOfGuests, SelectTravelDates } from "../../components/Forms/TravelSearch/Filters";
 
 import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion";
 import { calculateNights } from "../../utils/";

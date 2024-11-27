@@ -13,7 +13,7 @@ interface SelectTravelDatesProps {
   editDates?: boolean;
 }
 
-export default function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }: SelectTravelDatesProps) {
+export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates = true }: SelectTravelDatesProps) {
   const { savedDates, setSavedDates, initialDates, setInitialDates, defaultFlatpickrDates, setDefaultFlatpickrDates } = useTravelDatesStore();
 
   const today = new Date();

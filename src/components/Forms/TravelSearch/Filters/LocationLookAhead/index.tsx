@@ -7,7 +7,7 @@ interface LocationLookAheadProps {
   color: string; // Define the expected type for the `color` prop
 }
 
-export default function LocationLookAhead({ color }: LocationLookAheadProps) {
+export function LocationLookAhead({ color }: LocationLookAheadProps) {
   const { setLocation, travelSearchData } = useTravelSearchStore();
   const [searchQuery, setSearchQuery] = useState<string>(travelSearchData.location || "");
 

@@ -27,7 +27,7 @@ interface NumberOfGuestsProps {
   mainSearch?: boolean; // Optional prop, defaults to true
 }
 
-export default function NumberOfGuests({ color, mainSearch = true }: NumberOfGuestsProps) {
+export function NumberOfGuests({ color, mainSearch = true }: NumberOfGuestsProps) {
   const { setNumberOfGuests, travelSearchData } = useTravelSearchStore();
   const initialState = travelSearchData.numberOfGuests;
 

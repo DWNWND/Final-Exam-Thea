@@ -8,7 +8,7 @@ interface MoreFiltersProps {
   mainSearch?: boolean; // Optional, defaults to true
 }
 
-export default function MoreFilters({ color, mainSearch = true }: MoreFiltersProps) {
+export function MoreFilters({ color, mainSearch = true }: MoreFiltersProps) {
   const [openMoreFilters, setOpenMoreFilters] = useState<boolean>(false);
 
   const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useTravelSearchStore();
