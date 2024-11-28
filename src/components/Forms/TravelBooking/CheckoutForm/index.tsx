@@ -42,7 +42,7 @@ export default function CheckoutForm(): JSX.Element {
     resolver: yupResolver(checkoutSchema),
   });
 
-  const onSubmit = async (data: CheckoutFormInputs) => {
+  const onSubmit = async () => {
     setUserFeedbackMessage("");
 
     try {

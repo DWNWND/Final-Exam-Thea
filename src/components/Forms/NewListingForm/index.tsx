@@ -249,7 +249,7 @@ export default function NewListingForm(): JSX.Element {
         )}
         {formStep === 2 && (
           <section>
-            <h2 className="mb-1 mt-3 text-xl md:text-2xl text-center text-primary-green">What's your nightly price?</h2>
+            <h2 className="mb-1 mt-3 text-xl md:text-2xl text-center text-primary-green">What is your nightly price?</h2>
             <label htmlFor="price" className="block text-primary-green mb-2">
               NOK/night
             </label>

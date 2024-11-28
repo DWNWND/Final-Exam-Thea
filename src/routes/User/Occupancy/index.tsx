@@ -10,7 +10,6 @@ import BookingCalendar from "../../../components/BookingCalendar";
 import { OccupancyOverviewSkeletonLoader, BigSpinnerLoader } from "../../../components/Loaders";
 import { RoundBtn } from "../../../components/Buttons";
 import { ListingSpesific, BookingsData } from "../../../types";
-import { set } from "react-hook-form";
 
 export default function Occupancy(): JSX.Element {
   const { accessToken } = useAuthStore();

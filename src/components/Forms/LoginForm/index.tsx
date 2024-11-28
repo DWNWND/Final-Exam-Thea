@@ -65,8 +65,8 @@ export default function LoginForm(): JSX.Element {
       } else {
         navigate("/user/" + result.data.name);
       }
-    } catch (apiError: any) {
-      console.log("error logging in");
+    } catch (err) {
+      console.log("error logging in", err);
     }
   };
 

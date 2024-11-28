@@ -6,14 +6,12 @@ import ListNewest from "../../components/Lists/ListNewest";
 import { DataProvider } from "../../components/DataProvider";
 import MainElement from "../../components/MainElement";
 import { useBookingDataStore, useTravelSearchStore, useTravelDatesStore, useNavigationStore } from "../../stores";
-import { useApiCall } from "../../hooks";
 
 export default function Home(): JSX.Element {
   const { clearTravelSearchStore } = useTravelSearchStore();
   const { clearBookingDataStore } = useBookingDataStore();
   const { clearTravelDatesStore, setInitialDates } = useTravelDatesStore();
   const { clearNavigationHistory } = useNavigationStore();
-  const { error } = useApiCall();
 
   //think about adding this on more routes
   useEffect(() => {

@@ -80,7 +80,7 @@ export default function RegisterForm(): JSX.Element {
         navigate(`/user/${resultLogin.data.name}`);
       }
     } catch (err) {
-      console.log("error regestering in");
+      console.log("error regestering in", err);
     }
   };
 

@@ -7,7 +7,7 @@ const apiKey = import.meta.env.VITE_API_KEY;
 interface ApiResponse<T> {
   success: boolean;
   data?: T;
-  error?: any;
+  error?: object | string;
   statusCode?: number;
 }
 

@@ -1,5 +1,5 @@
 import { useScreenSizeCheckHook } from "../../../hooks/";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { OpenMenuContext } from "../../../contexts/";
 import { useAuthStore } from "../../../stores";
@@ -8,7 +8,6 @@ import { RoundBtn, SquareBtn } from "../../Buttons";
 export default function FixedBtnDisplay(): JSX.Element {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
   const { userName, accessToken } = useAuthStore();
-  const location = useLocation();
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);

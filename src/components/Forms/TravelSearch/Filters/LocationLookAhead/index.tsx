@@ -58,8 +58,8 @@ export function LocationLookAhead({ color }: LocationLookAheadProps): JSX.Elemen
                 </li>
               ))
             ) : (
-              <li className={`hover:font-semibold p-2 cursor-pointer text-${color}`} onClick={() => setSearchQuery("")}>
-                No location matching "{searchQuery}" found.
+              <li className={`p-2 text-${color}`} onClick={() => setSearchQuery("")}>
+                No location matching &quot;{searchQuery}&quot; found.
               </li>
             )}
           </ul>

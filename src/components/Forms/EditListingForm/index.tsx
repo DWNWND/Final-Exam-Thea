@@ -14,6 +14,30 @@ interface EditListingFormProps {
   setListingName: (name: string) => void;
 }
 
+interface UpdateListingData {
+  name: string;
+  description: string;
+  price: number;
+  maxGuests: number;
+  rating: number;
+  location: {
+    address: string;
+    city: string;
+    zip: string;
+    country: string;
+  };
+  meta: {
+    wifi?: boolean;
+    parking?: boolean;
+    breakfast?: boolean;
+    pets?: boolean;
+  };
+  media?: {
+    url: string;
+    alt: string;
+  }[];
+}
+
 const editListingSchema = yup.object().shape({
   name: yup.string().min(4, "Please enter a valid property name. Minimum 4 characters.").required("Property name is required"),
   description: yup.string().min(4, "Please enter a valid property description").required("Property description is required"),
@@ -90,7 +114,7 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
     fetchListing();
   }, []);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: UpdateListingData) => {
     setUserFeedbackUpdateMessage("");
 
     try {
