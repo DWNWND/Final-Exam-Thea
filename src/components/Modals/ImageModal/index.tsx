@@ -9,14 +9,16 @@ interface ImageModalProps {
 export function ImageModal({ image, alt, toggle }: ImageModalProps): JSX.Element {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[100]">
-      <div className="relative md:mx-6 z-[100] max-w-screen-lg mx-auto p-4 md:p-10">
-        <button className="absolute top-4 right-4 md:top-10 md:right-10 text-white text-3xl" onClick={toggle}>
+      <div className="relative rounded-lg p-4 md:p-6 lg:p-8 max-w-4xl w-full mx-auto flex flex-col items-center z-[100]">
+        <button className="absolute top-4 right-4 text-white text-3xl hover:text-red-400" onClick={toggle}>
           <IoIosClose />
         </button>
-        <img src={image} alt={alt} className="rounded-lg object-contain" />
-        {alt && <p className="text-white text-center">Description: {alt}</p>}
+        <div className="w-full flex justify-center">
+          <img src={image} alt={alt} className="rounded-lg max-w-full max-h-[75vh] object-contain" />
+        </div>
+        {alt && <p className="text-white text-center mt-4">{alt}</p>}
       </div>
-      <div className="absolute h-full w-full bg-black bg-opacity-75 z-[0]" onClick={toggle}></div>
+      <div className="absolute inset-0 bg-black bg-opacity-75" onClick={toggle} aria-hidden="true"></div>
     </div>
   );
 }
