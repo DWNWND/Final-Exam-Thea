@@ -1,4 +1,4 @@
-import { useForm, FieldErrors } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,6 @@ import { SmallSpinnerLoader } from "../../Loaders";
 import { useBookingDataStore, useNavigationStore, useAuthStore } from "../../../stores";
 import { useEffect } from "react";
 
-// Validation schema for registration
 const registerSchema = yup.object({
   userName: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
   email: yup.string().email("Please enter a valid email").required("Email is required"),
@@ -20,7 +19,6 @@ const registerSchema = yup.object({
     .required("Confirm password is required"),
 });
 
-// Define the form input types
 interface RegisterFormInputs {
   userName: string;
   email: string;
@@ -28,7 +26,7 @@ interface RegisterFormInputs {
   confirmPassword: string;
 }
 
-export default function RegisterForm() {
+export default function RegisterForm(): JSX.Element {
   const { scopedLoader, error, setError, callApi } = useApiCall();
   const navigate = useNavigate();
   const { selectedListing } = useBookingDataStore();

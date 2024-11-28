@@ -14,25 +14,21 @@ export default function FixedBtnDisplay(): JSX.Element {
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const handleScroll = () => {
-    if (scrollTimeout) clearTimeout(scrollTimeout); // Clear previous timeout to debounce
+    if (scrollTimeout) clearTimeout(scrollTimeout);
 
     const currentScrollY = window.scrollY;
-    const isAtTop = currentScrollY < 10; // Adjust threshold if needed
+    const isAtTop = currentScrollY < 10;
 
     const timeout = setTimeout(() => {
       if (isAtTop) {
-        setIsVisible(true); // Always show header when near the top
+        setIsVisible(true);
       } else if (currentScrollY > lastScrollY) {
-        // Scrolling down, hide header
         setIsVisible(false);
       } else {
-        // Scrolling up, show header
         setIsVisible(true);
       }
-
       setLastScrollY(currentScrollY);
-    }, 50); // Delay in ms, adjust for sensitivity
-
+    }, 50);
     setScrollTimeout(timeout);
   };
 
@@ -40,17 +36,14 @@ export default function FixedBtnDisplay(): JSX.Element {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (scrollTimeout) clearTimeout(scrollTimeout); // Clean up timeout on unmount
+      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, [lastScrollY, scrollTimeout]);
 
   const isMobile = useScreenSizeCheckHook();
 
   return (
-    <div
-      className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-3 bg-white`}  
-                  ${isMobile && isMenuOpen && "translate-y-full"} 
-                  z-50 transition-transform duration-300`}>
+    <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-3 bg-white`} ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
       <ul className="flex flex-row gap-3 md:gap-4" onClick={() => setIsMenuOpen(false)}>
         <li className="w-full">
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>

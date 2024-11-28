@@ -2,14 +2,12 @@ import { useReducer, useEffect } from "react";
 import { HiOutlinePlusSm, HiOutlineMinusSm } from "react-icons/hi";
 import { useTravelSearchStore } from "../../../../../stores";
 
-// Define the state and action types
 interface State {
   guests: number;
 }
 
 type Action = { type: "increment" } | { type: "decrement" };
 
-// Reducer function
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "increment":
@@ -21,13 +19,12 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-// Props interface
 interface NumberOfGuestsProps {
-  color: string; // Specifies the color class name
-  mainSearch?: boolean; // Optional prop, defaults to true
+  color: string;
+  mainSearch?: boolean;
 }
 
-export function NumberOfGuests({ color, mainSearch = true }: NumberOfGuestsProps) {
+export function NumberOfGuests({ color, mainSearch = true }: NumberOfGuestsProps): JSX.Element {
   const { setNumberOfGuests, travelSearchData } = useTravelSearchStore();
   const initialState = travelSearchData.numberOfGuests;
 
@@ -39,19 +36,13 @@ export function NumberOfGuests({ color, mainSearch = true }: NumberOfGuestsProps
 
   return (
     <div className={`w-full md:w-auto flex justify-center md:justify-start items-center gap-4 lg:gap-2`}>
-      {/* Decrement button */}
       <button className={`hover:shadow-md rounded-full w-full ${mainSearch ? "lg:h-10 lg:w-10 bg-white" : ""} flex justify-center text-xl items-center text-${color} border-${color} border p-2`} type="button" onClick={() => dispatch({ type: "decrement" })}>
         <HiOutlineMinusSm className={`text-${color}`} />
       </button>
-
-      {/* Guests input (read-only) */}
       <input type="number" readOnly className={`text-center font-semibold flex justify-center bg-transparent items-center content-center text-${color}`} id="guests" name="guests" min="1" max="25" value={state.guests} />
-
-      {/* Increment button */}
       <button className={`hover:shadow-md rounded-full w-full ${mainSearch ? "lg:h-10 lg:w-10 bg-white" : ""} flex justify-center text-xl items-center text-${color} border-${color} border p-2`} type="button" onClick={() => dispatch({ type: "increment" })}>
         <HiOutlinePlusSm className={`text-${color}`} />
       </button>
-
       <p className={`italic text-${color}`}>guests</p>
     </div>
   );

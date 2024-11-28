@@ -4,10 +4,10 @@ import { useTravelSearchStore } from "../../../../../stores";
 import { searchableLocations } from "../../../../../assets/locations/searchableLocations";
 
 interface LocationLookAheadProps {
-  color: string; // Define the expected type for the `color` prop
+  color: string;
 }
 
-export function LocationLookAhead({ color }: LocationLookAheadProps) {
+export function LocationLookAhead({ color }: LocationLookAheadProps): JSX.Element {
   const { setLocation, travelSearchData } = useTravelSearchStore();
   const [searchQuery, setSearchQuery] = useState<string>(travelSearchData.location || "");
 

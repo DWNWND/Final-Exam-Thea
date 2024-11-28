@@ -8,8 +8,8 @@ export function useNavigateBackHook(): () => void {
   const handleBack = () => {
     const previousRoute = useNavigationStore.getState().history.slice(-2, -1)[0];
     if (previousRoute) {
-      goBack(); // Update history only if there's a previous route
-      navigate(previousRoute); // Navigate to the previous route
+      goBack();
+      navigate(previousRoute);
     } else {
       console.log("No previous route available");
     }
