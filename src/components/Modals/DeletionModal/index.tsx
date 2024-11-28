@@ -1,18 +1,19 @@
-import  { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useApiCall } from "../../../hooks";
 import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
 import { IoIosClose } from "react-icons/io";
+import { useAuthStore } from "../../../stores";
 
 interface DeletionModalProps {
   toggle: () => void;
-  id: string;
-  userName: string;
 }
 
-export function DeletionModal({ toggle, id, userName }: DeletionModalProps): JSX.Element {
+export function DeletionModal({ toggle }: DeletionModalProps): JSX.Element {
   const { callApi, scopedLoader } = useApiCall();
+  const { userName } = useAuthStore();
+  const { id } = useParams();
 
   const [errorDeletionMessage, setErrorDeletionMessage] = useState<string>("");
   const [userFeedbackDeletionMessage, setUserFeedbackDeletionMessage] = useState<string>("");
