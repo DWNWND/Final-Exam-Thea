@@ -3,19 +3,7 @@ import { useApiCall } from "../../hooks";
 import { DataContext } from "../../contexts/";
 import { searchableLocations } from "../../assets/locations/searchableLocations";
 import { capitalizeWords } from "../../utils";
-
-interface Location {
-  city: string;
-  country: string;
-}
-
-interface Listing {
-  id: string;
-  name: string;
-  price: number;
-  location: Location;
-  [key: string]: any; // Additional fields from the API
-}
+import { ListingSpesific } from "../../types";
 
 interface DataProviderProps {
   children: ReactNode;
@@ -23,8 +11,8 @@ interface DataProviderProps {
 
 export function DataProvider({ children }: DataProviderProps) {
   const { loading, setLoading, error, callApi } = useApiCall();
-  const [allListingsArr, setAllListingsArr] = useState<Listing[]>([]);
-  const [displayedListings, setDisplayedListings] = useState<Listing[]>([]);
+  const [allListingsArr, setAllListingsArr] = useState<ListingSpesific[]>([]);
+  const [displayedListings, setDisplayedListings] = useState<ListingSpesific[]>([]);
 
   useEffect(() => {
     setLoading(true);

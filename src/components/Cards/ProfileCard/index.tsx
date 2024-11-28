@@ -1,23 +1,12 @@
 import { Link } from "react-router-dom";
 import { SquareBtn } from "../../Buttons";
+import { UserSpesific } from "../../../types";
 
-interface Avatar {
-  url: string;
+interface ProfileCardCompProps {
+  user: UserSpesific;
 }
 
-interface User {
-  name: string;
-  email: string;
-  bio: string;
-  avatar: Avatar;
-  venueManager?: boolean;
-}
-
-interface ProfileCardProps {
-  user: User;
-}
-
-export function ProfileCard({ user }: ProfileCardProps) {
+export function ProfileCard({ user }: ProfileCardCompProps): JSX.Element {
   return (
     <div className="bg-comp-purple p-6 rounded-lg shadow-md w-full h-fit xl:sticky xl:top-20">
       {user.venueManager && (
