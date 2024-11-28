@@ -1,24 +1,12 @@
 import { formatDateForDisplay } from "../../../utils";
+import { BookingsData } from "../../../types";
 
-interface Customer {
-  name: string;
-  email: string;
-}
-
-interface Booking {
-  id: string;
-  dateFrom: string; // ISO date string
-  dateTo: string; // ISO date string
-  customer: Customer;
-  guests: number;
-}
-
-interface OccupancyBookingCardProps {
-  booking: Booking;
+interface OccupancyBookingCardCompProps {
+  booking: BookingsData;
   active?: boolean;
 }
 
-export function OccupancyBookingCard({ booking, active = true }: OccupancyBookingCardProps) {
+export function OccupancyBookingCard({ booking, active = true }: OccupancyBookingCardCompProps): JSX.Element {
   return (
     <div className="bg-white rounded-lg shadow-sm relative">
       {!active && <div className="absolute h-full w-full top-0 right-0 p-2 bg-comp-gray rounded-lg opacity-40"></div>}

@@ -1,4 +1,4 @@
-import { useForm, FieldErrors } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,8 @@ import { RoundBtn } from "../../../Buttons";
 import { useApiCall } from "../../../../hooks";
 import { useEffect, useState } from "react";
 import { DetailsFormSkeletonLoader } from "../../../Loaders";
+import { UserSpesific } from "../../../../types";
 
-// Validation schema
 const detailsSchema = yup.object({
   firstName: yup.string().min(3, "Firstname must be at least 3 characters").required("Firstname is required"),
   lastName: yup.string().min(3, "Lastname must be at least 3 characters").required("Lastname is required"),
@@ -19,7 +19,6 @@ const detailsSchema = yup.object({
   email: yup.string().email("Please enter a valid email").required("Email is required"),
 });
 
-// Define form inputs
 interface DetailsFormInputs {
   firstName: string;
   lastName: string;
@@ -28,37 +27,19 @@ interface DetailsFormInputs {
   email: string;
 }
 
-interface User {
-  avatar: {
-    url: string;
-    alt: string;
-  };
-  banner: {
-    url: string;
-    alt: string;
-  };
-  bio: string;
-  email: string;
-  name: string;
-  venueManager: boolean;
-  _count: {
-    bookings: number;
-    venues: number;
-  };
-}
-export default function DetailsForm() {
+export default function DetailsForm(): JSX.Element {
   const { accessToken, userName } = useAuthStore();
   const { clearTravelSearchStore } = useTravelSearchStore();
   const { selectedListing, bookingData, setBookingEmail } = useBookingDataStore();
   const { loading, scopedLoader, callApi } = useApiCall();
   const { setPreviousRoute, getLastPreviousRoute } = useNavigationStore();
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserSpesific | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const result = await callApi<User>(`/holidaze/profiles/${userName}`);
+      const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}`);
       if (result?.data) {
         setUser(result.data); // Set user data when available
       } else {

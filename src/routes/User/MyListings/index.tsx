@@ -5,47 +5,16 @@ import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 import { ListingCard } from "../../../components/Cards";
 import { SmallSpinnerLoader } from "../../../components/Loaders";
-import ErrorFallback from "../../../components/ErrorFallback";
+import GeneralErrorFallback from "../../../components/ErrorFallback/GeneralErrorFallback";
 import MainElement from "../../../components/MainElement";
-
-interface Listing {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  maxGuests: number;
-  // media: Array<{ url: string; alt: string }>;
-  // bookings?: Array<{
-  //   id: string;
-  //   dateFrom: string;
-  //   dateTo: string;
-  // }>;
-  rating: number;
-  location: {
-    address: string;
-    city: string;
-    zip: string;
-    country: string;
-  };
-  meta: {
-    wifi: boolean;
-    parking: boolean;
-    breakfast: boolean;
-    pets: boolean;
-  };
-  media: {
-    url: string;
-    alt: string;
-  }[];
-  bookings: { id: string }[];
-}
+import { ListingSpesific } from "../../../types";
 
 export default function MyListings(): JSX.Element {
   const { accessToken, userName } = useAuthStore();
   const { loading, error, callApi } = useApiCall();
 
-  const [allListings, setAllListings] = useState<Listing[]>([]);
-  const [displayedListings, setDisplayedListings] = useState<Listing[]>([]);
+  const [allListings, setAllListings] = useState<ListingSpesific[]>([]);
+  const [displayedListings, setDisplayedListings] = useState<ListingSpesific[]>([]);
   const [loadMoreLoader, setLoadMoreLoader] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -84,14 +53,14 @@ export default function MyListings(): JSX.Element {
         <meta name="description" content="View all your published Holidaze listings." />
       </Helmet>
       <MainElement>
-        {error && <ErrorFallback errorMessage={error} />}
+        {error && <GeneralErrorFallback errorMessage={error} />}
         <div className="flex flex-col gap-2 bg-comp-green shadow-md p-8 rounded-lg">
           <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My active listings</h2>
           <p className="text-black">{`Showing ${displayedListings.length < allListings.length ? displayedListings.length : allListings.length} of ${allListings.length} ${allListings.length > 1 ? "listings" : "listing"}`}</p>
           {displayedListings && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-4 ">
               {displayedListings.map((listing) => (
-                <ListingCard listing={listing} key={listing.id} loading={loading} />
+                <ListingCard listing={listing} key={listing.id} loading={loading} myListings={true} />
               ))}
             </div>
           )}

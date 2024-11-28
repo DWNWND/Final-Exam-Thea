@@ -1,20 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-interface TravelSearchData {
-  location: string;
-  numberOfGuests: number;
-  freeWifi: boolean;
-  petsAllowed: boolean;
-  freeParking: boolean;
-  freeBreakfast: boolean;
-  price100: boolean;
-  price100to200: boolean;
-  price200to300: boolean;
-  price300to400: boolean;
-  price400to500: boolean;
-  price500: boolean;
-}
+import { TravelSearchData } from "../../types";
 
 interface TravelSearchStoreState {
   travelSearchData: TravelSearchData;

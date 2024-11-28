@@ -3,41 +3,19 @@ import { Link } from "react-router-dom";
 import { ArrowRightBtn, SquareBtn } from "../../Buttons";
 import { formatDateForDisplay } from "../../../utils";
 import { ListingCardSkeletonLoader } from "../../Loaders";
+import { DateRange, BookingSpesificListing } from "../../../types";
 
-interface Media {
-  url: string;
-  alt: string;
-}
-
-interface Location {
-  city: string;
-  country: string;
-}
-
-interface Booking {
-  id: string;
-  name: string;
-  price: number;
-  rating: number;
-  location: Location;
-  media: Media[];
-}
-
-interface BookingDates {
-  startDate: string; // ISO format or adjust type if different
-  endDate: string; // ISO format or adjust type if different
-}
-
-interface BookingCardProps {
-  booking: Booking;
+interface BookingCardCompProps {
+  booking: BookingSpesificListing;
   bookingId: string;
-  bookingDates?: BookingDates | null;
+  bookingDates?: DateRange | null;
   loading: boolean;
-  setSelectedBooking: (booking: { name: string, id: string }) => void;
+  setSelectedBooking: (booking: { name: string; id: string }) => void;
   setCancellationModal?: (value: boolean) => void;
 }
 
-export function BookingCard({ booking, bookingId, bookingDates = null, loading, setSelectedBooking, setCancellationModal = () => {} }: BookingCardProps) {
+//CHECK THE LOADING STATE HERE, IS IT CORRECT, AND IS IT NECESSARY TO HAVE IT HERE?
+export function BookingCard({ booking, bookingId, bookingDates = null, loading, setSelectedBooking, setCancellationModal = () => {} }: BookingCardCompProps): JSX.Element {
   const [inactiveBooking, setInactiveBooking] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(false);
   const [checkOutToday, setCheckOutToday] = useState(false);

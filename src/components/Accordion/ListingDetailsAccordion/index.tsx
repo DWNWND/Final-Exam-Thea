@@ -5,40 +5,18 @@ import { useTravelDatesStore } from "../../../stores";
 import BookingCalendar from "../../BookingCalendar";
 import { ArrowDownBtn } from "../../Buttons";
 import { SelectTravelDates } from "../../Forms/TravelSearch/Filters";
-
-type CalendarDate = string | Date;
-
-interface Listing {
-  meta: {
-    breakfast: boolean;
-    parking: boolean;
-    pets: boolean;
-    wifi: boolean;
-  };
-  description: string;
-  owner: {
-    avatar: {
-      url: string;
-    };
-    name: string;
-    bio: string;
-    email: string;
-  };
-}
-
-interface ReservedDate {
-  startDate: CalendarDate;
-  endDate: CalendarDate;
-}
+import { ListingSpesific, DateRange } from "../../../types";
 
 interface ListingDetailsAccordionProps {
-  listing: Listing;
-  listingReserved: ReservedDate[];
+  listing: ListingSpesific;
+  listingReserved: DateRange[];
   listingIsAvailable: boolean;
 }
 
-export default function ListingDetailsAccordion({ listing, listingReserved, listingIsAvailable }: ListingDetailsAccordionProps) {
+export default function ListingDetailsAccordion({ listing, listingReserved, listingIsAvailable }: ListingDetailsAccordionProps): JSX.Element {
   const { savedDates } = useTravelDatesStore();
+
+  console.log("listing", listing);
 
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
   const [descriptionOpen, setDescriptionOpen] = useState(false);
@@ -57,7 +35,6 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
 
   return (
     <div className="flex flex-col gap-2 text-primary-blue">
-      {/* Amenities Section */}
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleAmenities}>
           <span className="uppercase font-semibold">Amenities</span>
@@ -84,8 +61,6 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
           </div>
         </div>
       </div>
-
-      {/* Details Section */}
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleDescription}>
           <span className="uppercase font-semibold">Details</span>
@@ -97,8 +72,6 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
           </div>
         </div>
       </div>
-
-      {/* Host Details Section */}
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleHostDetails}>
           <span className="uppercase font-semibold">Host details</span>
@@ -119,8 +92,6 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
           </div>
         </div>
       </div>
-
-      {/* Availability Section */}
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleAvailability}>
           <span className="uppercase font-semibold">Availability</span>

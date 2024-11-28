@@ -3,19 +3,13 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import MainElement from "../../../components/MainElement";
-import ErrorFallback from "../../../components/ErrorFallback";
+import GeneralErrorFallback from "../../../components/ErrorFallback/GeneralErrorFallback";
 import { useApiCall } from "../../../hooks";
 import { BigSpinnerLoader } from "../../../components/Loaders";
 import { CancellationModal } from "../../../components/Modals";
 import { BookingCard } from "../../../components/Cards";
 import { RoundBtn } from "../../../components/Buttons";
-
-interface Booking {
-  id: string;
-  dateFrom: string;
-  dateTo: string;
-  venue: any;
-}
+import { BookingSpesific } from "../../../types";
 
 interface SelectedBooking {
   name: string;
@@ -34,11 +28,11 @@ export default function MyBookings(): JSX.Element {
   const [activeBookingsFilter, setActiveBookingsFilter] = useState(true);
   const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState(false);
 
-  const [allBookings, setAllBookings] = useState<Booking[]>([]);
-  const [activeBookingsArray, setActiveBookingsArray] = useState<Booking[]>([]);
-  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<Booking[]>([]);
-  const [displayedActiveBookings, setDisplayedActiveBookings] = useState<Booking[]>([]);
-  const [displayedInactiveBookings, setDisplayedInactiveBookings] = useState<Booking[]>([]);
+  const [allBookings, setAllBookings] = useState<BookingSpesific[]>([]);
+  const [activeBookingsArray, setActiveBookingsArray] = useState<BookingSpesific[]>([]);
+  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<BookingSpesific[]>([]);
+  const [displayedActiveBookings, setDisplayedActiveBookings] = useState<BookingSpesific[]>([]);
+  const [displayedInactiveBookings, setDisplayedInactiveBookings] = useState<BookingSpesific[]>([]);
 
   const initialDisplayCount = 10;
 
@@ -50,17 +44,18 @@ export default function MyBookings(): JSX.Element {
 
   const fetchBookings = async () => {
     const result = await callApi(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
+    console.log(result.data);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set time to the start of the day
 
-    const activeBookings = result.data.filter((booking: Booking) => {
+    const activeBookings = result.data.filter((booking: BookingSpesific) => {
       const dateTo = new Date(booking.dateTo);
       dateTo.setHours(0, 0, 0, 0); // Compare only the date portion
       return dateTo >= today;
     });
 
-    const inactiveBookings = result.data.filter((booking: Booking) => {
+    const inactiveBookings = result.data.filter((booking: BookingSpesific) => {
       const dateTo = new Date(booking.dateTo);
       dateTo.setHours(0, 0, 0, 0); // Compare only the date portion
       return dateTo < today;
@@ -124,7 +119,7 @@ export default function MyBookings(): JSX.Element {
         <meta name="description" content="View all your Holidaze bookings." />
       </Helmet>
       <MainElement>
-        {error && <ErrorFallback errorMessage={error} />}
+        {error && <GeneralErrorFallback errorMessage={error} />}
         {allBookings.length > 0 && (
           <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-8 rounded-lg">
             <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>

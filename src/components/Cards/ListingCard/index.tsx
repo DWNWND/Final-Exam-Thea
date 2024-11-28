@@ -2,60 +2,15 @@ import { ArrowRightBtn, SquareBtn } from "../../Buttons";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { ListingCardSkeletonLoader } from "../../Loaders";
+import { ListingSpesific } from "../../../types";
 
-interface Listing {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  maxGuests: number;
-  rating: number;
-  location: {
-    address: string;
-    city: string;
-    zip: string;
-    country: string;
-  };
-  meta: {
-    wifi: boolean;
-    parking: boolean;
-    breakfast: boolean;
-    pets: boolean;
-  };
-  media: {
-    url: string;
-    alt: string;
-  }[];
-  bookings: { id: string }[];
-}
-
-// interface Media {
-//   url: string;
-//   alt: string;
-// }
-
-// interface Location {
-//   city: string;
-//   country: string;
-// }
-
-// interface Listing {
-//   id: string;
-//   name: string;
-//   price: number;
-//   rating: number;
-//   location: Location;
-//   media: Media[];
-//   bookings?: { id: string }[];
-// }
-
-interface ListingCardProps {
-  listing?: Listing; // Listing can be undefined during loading
+interface ListingCardCompProps {
+  listing?: ListingSpesific; // Listing can be undefined during loading
   loading: boolean;
   myListings?: boolean;
 }
 
-export function ListingCard({ listing, loading, myListings = false }: ListingCardProps) {
+export function ListingCard({ listing, loading, myListings = false }: ListingCardCompProps): JSX.Element {
   const { userName, venueManager } = useAuthStore();
 
   return (

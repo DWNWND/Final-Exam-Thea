@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import MainElement from "../../components/MainElement";
 import { useBookingDataStore, useAuthStore, useTravelDatesStore, useTravelSearchStore } from "../../stores";
@@ -9,50 +9,11 @@ import { FaRegHeart, FaShare } from "react-icons/fa";
 import { NumberOfGuests, SelectTravelDates } from "../../components/Forms/TravelSearch/Filters";
 import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion";
 import { calculateNights } from "../../utils";
+import { ListingSpesific } from "../../types";
 
 interface BookingRange {
   startDate: Date;
   endDate: Date;
-}
-
-// interface Listing {
-//   name: string;
-//   location: {
-//     city: string;
-//     country: string;
-//   };
-//   price: number;
-//   rating: number;
-//   media: { url: string; alt: string }[];
-//   owner: { name: string };
-//   bookings: { dateFrom: string; dateTo: string }[];
-// }
-
-interface Listing {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  maxGuests: number;
-  rating: number;
-  location: {
-    address: string;
-    city: string;
-    zip: string;
-    country: string;
-  };
-  meta: {
-    wifi: boolean;
-    parking: boolean;
-    breakfast: boolean;
-    pets: boolean;
-  };
-  media: {
-    url: string;
-    alt: string;
-  }[];
-  bookings: { id: string; dateFrom: string; dateTo: string }[];
-  owner: { name: string; email: string; avatar: { url: string; alt: string }; bio: string };
 }
 
 export default function ListingSpecific(): JSX.Element {
@@ -64,7 +25,7 @@ export default function ListingSpecific(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const { loading, error, callApi } = useApiCall();
 
-  const [listing, setListing] = useState<Listing | null>(null);
+  const [listing, setListing] = useState<ListingSpesific | null>(null);
   const [yourListing, setYourListing] = useState(false);
   const [editDates, setEditDates] = useState(false);
   const [imageModal, setImageModal] = useState(false);
@@ -87,10 +48,11 @@ export default function ListingSpecific(): JSX.Element {
     const fetchSingleListing = async () => {
       const result = await callApi(`/holidaze/venues/${id}?_bookings=true&_owner=true`);
       setListing(result.data);
+      console.log(result.data);
     };
 
     fetchSingleListing();
-  }, [id, callApi, setInitialDates]);
+  }, [id]);
 
   useEffect(() => {
     if (listing) {

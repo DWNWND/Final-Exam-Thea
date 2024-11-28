@@ -1,41 +1,13 @@
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { DataContext } from "../../../contexts";
-import ErrorFallback from "../../ErrorFallback";
+import GeneralErrorFallback from "../../ErrorFallback/GeneralErrorFallback";
 import { SelectCategoryBtns } from "../../Buttons";
 import { ListingCard } from "../../Cards";
+import { DataContextType } from "../../../types";
 
-// Define the shape of the DataContext
-
-interface Media {
-  url: string;
-  alt: string;
-}
-
-interface Location {
-  city: string;
-  country: string;
-}
-
-interface Listing {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  rating: number;
-  location: Location;
-  media: Media[];
-  bookings: { id: string }[];
-}
-
-interface DataContextType {
-  displayedListings: Listing[];
-  loading: boolean;
-  error: string | null;
-}
-
-export default function ListCategorized() {
-  const { displayedListings, loading, error } = useContext(DataContext) as DataContextType; // Type the context
+export default function ListCategorized(): JSX.Element {
+  const { displayedListings, loading, error } = useContext(DataContext) as DataContextType;
   const [filters, setFilters] = useState<string>("unique listings");
 
   return (
@@ -43,7 +15,7 @@ export default function ListCategorized() {
       <SelectCategoryBtns filters={filters} setFilters={setFilters} />
       <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">{filters}</h2>
       {error ? (
-        <ErrorFallback errorMessage={error} />
+        <GeneralErrorFallback errorMessage={error} />
       ) : (
         <>
           {displayedListings && displayedListings.length >= 2 && (

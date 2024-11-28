@@ -2,32 +2,10 @@ import { useParams } from "react-router-dom";
 import { useBookingDataStore, useTravelSearchStore } from "../../../stores";
 import { calculateNights, formatDateForDisplay } from "../../../utils";
 
-interface Media {
-  url: string;
-  alt: string;
-}
-
-interface SelectedListing {
-  name: string;
-  price: number;
-  media: Media[];
-}
-
-interface BookingData {
-  dateFrom: string; // ISO string format
-  dateTo: string; // ISO string format
-}
-
-interface TravelSearchData {
-  numberOfGuests: number;
-}
-
-export function BookingConfirmationCard() {
+export function BookingConfirmationCard(): JSX.Element {
   const { id } = useParams<{ id: string }>();
-  const { travelSearchData } = useTravelSearchStore() as {
-    travelSearchData: TravelSearchData;
-  };
-  const { bookingData, bookingEmail, selectedListing } = useBookingDataStore()
+  const { travelSearchData } = useTravelSearchStore();
+  const { bookingData, bookingEmail, selectedListing } = useBookingDataStore();
 
   const startDate = new Date(bookingData.dateFrom);
   const formattedStartDate = formatDateForDisplay(startDate);
@@ -42,17 +20,11 @@ export function BookingConfirmationCard() {
     <div>
       <div className="relative">
         <div className="absolute inset-x-0 top-10 flex flex-col justify-center items-center gap-4 z-30">
-          <p className="text-primary-blue bg-white p-4 px-8 rounded-full text-2xl">
-            Booking reference: {id}
-          </p>
+          <p className="text-primary-blue bg-white p-4 px-8 rounded-full text-2xl">Booking reference: {id}</p>
         </div>
         <div className="w-full h-full">
           <div className="absolute bg-black bg-opacity-20 w-full h-96 md:h-[22rem] rounded-t-lg"></div>
-          <img
-            src={selectedListing.media && selectedListing.media.length > 0 ? selectedListing.media[0].url : ""}
-            alt={selectedListing.media && selectedListing.media.length > 0 ? selectedListing.media[0].alt : ""}
-            className="w-full h-96 md:h-[22rem] object-cover rounded-t-lg"
-          />
+          <img src={selectedListing.media && selectedListing.media.length > 0 ? selectedListing.media[0].url : ""} alt={selectedListing.media && selectedListing.media.length > 0 ? selectedListing.media[0].alt : ""} className="w-full h-96 md:h-[22rem] object-cover rounded-t-lg" />
         </div>
       </div>
       <div className="bg-comp-purple rounded-b-lg p-8 flex flex-col items-center gap-4">
@@ -67,7 +39,6 @@ export function BookingConfirmationCard() {
     </div>
   );
 }
-
 
 // import { useParams } from "react-router-dom";
 // import { useBookingDataStore, useTravelSearchStore } from "../../../stores";

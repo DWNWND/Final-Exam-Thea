@@ -3,38 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import MainElement from "../../../components/MainElement";
-import ErrorFallback from "../../../components/ErrorFallback";
+import GeneralErrorFallback from "../../../components/ErrorFallback/GeneralErrorFallback";
 import { useApiCall } from "../../../hooks";
 import { OccupancyBookingCard } from "../../../components/Cards";
 import BookingCalendar from "../../../components/BookingCalendar";
 import { OccupancyOverviewSkeletonLoader, BigSpinnerLoader } from "../../../components/Loaders";
 import { RoundBtn } from "../../../components/Buttons";
-
-interface Customer {
-  name: string;
-  email: string;
-}
-
-interface Booking {
-  id: string;
-  dateFrom: string; // ISO date string
-  dateTo: string; // ISO date string
-  customer: Customer;
-  guests: number;
-}
-
-interface Listing {
-  id: string;
-  name: string;
-  price: number;
-  rating: number;
-  location: {
-    city: string;
-    country: string;
-  };
-  media: { url: string; alt: string }[];
-  bookings: Booking[];
-}
+import { ListingSpesific, BookingsData } from "../../../types";
+import { set } from "react-hook-form";
 
 export default function Occupancy(): JSX.Element {
   const { accessToken } = useAuthStore();
@@ -44,12 +20,12 @@ export default function Occupancy(): JSX.Element {
   const [activeBookingsFilter, setActiveBookingsFilter] = useState(true);
   const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState(false);
 
-  const [listing, setListing] = useState<Listing | null>(null);
+  const [listing, setListing] = useState<ListingSpesific | null>(null);
   const [listingReserved, setListingReserved] = useState<{ startDate: Date; endDate: Date }[]>([]);
-  const [activeBookingsArray, setActiveBookingsArray] = useState<Booking[]>([]);
-  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<Booking[]>([]);
-  const [displayedActiveBookings, setDisplayedActiveBookings] = useState<Booking[]>([]);
-  const [displayedInactiveBookings, setDisplayedInactiveBookings] = useState<Booking[]>([]);
+  const [activeBookingsArray, setActiveBookingsArray] = useState<BookingsData[]>([]);
+  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<BookingsData[]>([]);
+  const [displayedActiveBookings, setDisplayedActiveBookings] = useState<BookingsData[]>([]);
+  const [displayedInactiveBookings, setDisplayedInactiveBookings] = useState<BookingsData[]>([]);
   const [loadMoreLoader, setLoadMoreLoader] = useState(false);
 
   const navigate = useNavigate();
@@ -59,14 +35,13 @@ export default function Occupancy(): JSX.Element {
     if (!accessToken) {
       navigate("/");
     }
-  }, [accessToken, navigate]);
+  }, [accessToken]);
 
   useEffect(() => {
     const fetchOccupancyData = async () => {
-      const result = await callApi<Listing>(`/holidaze/venues/${id}?_bookings=true`);
+      const result = await callApi<ListingSpesific>(`/holidaze/venues/${id}?_bookings=true`);
       if (result.data) {
         setListing(result.data);
-
         const reserved = result.data.bookings.map((booking) => ({
           startDate: new Date(booking.dateFrom),
           endDate: new Date(booking.dateTo),
@@ -78,10 +53,17 @@ export default function Occupancy(): JSX.Element {
 
         const inactiveBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) < new Date());
         setInactiveBookingsArray(inactiveBookings);
-      }
 
-      fetchOccupancyData();
+        if (activeBookings.length === 0) {
+          setInactiveBookingsFilter(true);
+          setActiveBookingsFilter(false);
+        } else if (inactiveBookings.length === 0) {
+          setInactiveBookingsFilter(false);
+          setActiveBookingsFilter(true);
+        }
+      }
     };
+    fetchOccupancyData();
   }, []);
 
   useEffect(() => {
@@ -127,7 +109,7 @@ export default function Occupancy(): JSX.Element {
           <OccupancyOverviewSkeletonLoader />
         ) : (
           <>
-            {error && <ErrorFallback errorMessage={error} />}
+            {error && <GeneralErrorFallback errorMessage={error} />}
             {listing && (
               <div className="flex flex-col md:flex-row w-full gap-8">
                 <div className="w-full xl:sticky xl:top-6 flex flex-col gap-8">
@@ -180,6 +162,7 @@ export default function Occupancy(): JSX.Element {
                           {loadMoreLoader && <BigSpinnerLoader />}
                         </>
                       )}
+                      {activeBookingsArray.length === 0 && <p className="text-center text-xl text-primary-blue">No active bookings</p>}
                     </>
                   )}
                   {inactiveBookingsFilter && (
@@ -195,6 +178,7 @@ export default function Occupancy(): JSX.Element {
                             Load more bookings
                           </button>
                           {loadMoreLoader && <BigSpinnerLoader />}
+                          {inactiveBookingsArray.length === 0 && <p className="text-center text-xl text-primary-blue">No active bookings</p>}
                         </>
                       )}
                     </>

@@ -1,46 +1,18 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DataContext } from "../../../contexts";
-import ErrorFallback from "../../ErrorFallback";
+import GeneralErrorFallback from "../../ErrorFallback/GeneralErrorFallback";
 import { ListingCard } from "../../Cards";
+import { DataContextType } from "../../../types";
 
-// Define the shape of the DataContext
-
-interface Location {
-  city: string;
-  country: string;
-}
-
-interface Media {
-  url: string;
-  alt: string;
-}
-
-interface Listing {
-  id: string;
-  name: string;
-  description: string;
-  rating: number;
-  price: number;
-  location: Location;
-  media: Media[];
-  bookings: { id: string }[];
-}
-
-interface DataContextType {
-  displayedListings: Listing[];
-  loading: boolean;
-  error: string | null;
-}
-
-export default function ListNewest() {
-  const { displayedListings, loading, error } = useContext(DataContext) as DataContextType; // Type the context
+export default function ListNewest(): JSX.Element {
+  const { displayedListings, loading, error } = useContext(DataContext) as DataContextType;
 
   return (
     <section className="p-4 py-12 bg-comp-green">
       <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">Our newest Listings</h2>
       {error ? (
-        <ErrorFallback errorMessage={error} />
+        <GeneralErrorFallback errorMessage={error} />
       ) : (
         <>
           {displayedListings && displayedListings.length >= 2 && (
@@ -50,7 +22,9 @@ export default function ListNewest() {
                   <ListingCard listing={listing} key={listing.id} loading={loading} />
                 ))}
               </div>
-              <Link to="/#" className="lg:ml-4 text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
+              <Link to="/#" className="lg:ml-4 text-center lg:text-left block mt-4 underline text-black">
+                View all listings from this category
+              </Link>
             </>
           )}
         </>

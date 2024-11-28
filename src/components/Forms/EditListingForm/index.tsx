@@ -7,36 +7,13 @@ import { CheckboxInput, StringInput } from "../../Inputs";
 import { useAuthStore } from "../../../stores";
 import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader, EditListingFormSkeletonLoader } from "../../Loaders";
-import ErrorFallback from "../../ErrorFallback";
+import GeneralErrorFallback from "../../ErrorFallback/GeneralErrorFallback";
 import { useApiCall } from "../../../hooks";
 import { DeletionModal } from "../../Modals";
+import { ListingSpesific } from "../../../types";
 
 interface EditListingFormProps {
   setListingName: (name: string) => void;
-}
-interface ListingData {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  maxGuests: number;
-  rating: number;
-  location: {
-    address: string;
-    city: string;
-    zip: string;
-    country: string;
-  };
-  meta: {
-    wifi: boolean;
-    parking: boolean;
-    breakfast: boolean;
-    pets: boolean;
-  };
-  media?: {
-    url?: string;
-    alt?: string;
-  }[];
 }
 
 const editListingSchema = yup.object().shape({
@@ -65,14 +42,14 @@ const editListingSchema = yup.object().shape({
   ),
 });
 
-export default function EditListingForm({ setListingName }: EditListingFormProps) {
+export default function EditListingForm({ setListingName }: EditListingFormProps): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const { userName } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
 
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState("");
   const [deletionModal, setDeletionModal] = useState(false);
-  const [listing, setListing] = useState<ListingData | null>(null);
+  const [listing, setListing] = useState<ListingSpesific | null>(null);
 
   const navigate = useNavigate();
 
@@ -153,7 +130,7 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
         <EditListingFormSkeletonLoader />
       ) : (
         <>
-          {error && <ErrorFallback errorMessage={error} />}
+          {error && <GeneralErrorFallback errorMessage={error} />}
           {listing && (
             <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
               <div className="flex justify-between items-center w-full mb-6">
@@ -296,7 +273,7 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
               </form>
             </div>
           )}
-          {deletionModal && <DeletionModal toggle={toggleDeletionModal} loading={scopedLoader} />}
+          {deletionModal && <DeletionModal toggle={toggleDeletionModal} />}
         </>
       )}
     </>

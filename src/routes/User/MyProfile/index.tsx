@@ -4,70 +4,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 import MainElement from "../../../components/MainElement";
-import ErrorFallback from "../../../components/ErrorFallback";
+import GeneralErrorFallback from "../../../components/ErrorFallback/GeneralErrorFallback";
 import { CancellationModal } from "../../../components/Modals";
 import { RoundBtn, SquareBtn } from "../../../components/Buttons";
 import { BookingCard, ListingCard, ProfileCard } from "../../../components/Cards";
-
-interface Booking {
-  id: string;
-  dateFrom: string;
-  dateTo: string;
-  venue: {
-    id: string;
-    name: string;
-    price: number;
-    rating: number;
-    location: {
-      city: string;
-      country: string;
-    };
-    media: {
-      url: string;
-      alt: string;
-    }[];
-  };
-}
-
-interface Listing {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  maxGuests: number;
-  // media: Array<{ url: string; alt: string }>;
-  // bookings?: Array<{
-  //   id: string;
-  //   dateFrom: string;
-  //   dateTo: string;
-  // }>;
-  rating: number;
-  location: {
-    address: string;
-    city: string;
-    zip: string;
-    country: string;
-  };
-  meta: {
-    wifi: boolean;
-    parking: boolean;
-    breakfast: boolean;
-    pets: boolean;
-  };
-  media: {
-    url: string;
-    alt: string;
-  }[];
-  bookings: { id: string }[];
-}
-
-interface User {
-  name: string;
-  email: string;
-  venueManager: boolean;
-  bio: string;
-  avatar: { url: string; alt: string };
-}
+import { BookingSpesific, ListingSpesific, UserSpesific } from "../../../types";
 
 interface SelectedBooking {
   name: string;
@@ -78,15 +19,15 @@ export default function MyProfile(): JSX.Element {
   const { userName, accessToken, logOut, setVenueManager } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
 
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserSpesific | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<SelectedBooking | null>(null);
   const [cancellationModal, setCancellationModal] = useState<boolean>(false);
-  const [userBookings, setUserBookings] = useState<Booking[]>([]);
-  const [userListings, setUserListings] = useState<Listing[]>([]);
+  const [userBookings, setUserBookings] = useState<BookingSpesific[]>([]);
+  const [userListings, setUserListings] = useState<ListingSpesific[]>([]);
   const [activeBookingsFilter, setActiveBookingsFilter] = useState<boolean>(true);
   const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState<boolean>(false);
-  const [activeBookingsArray, setActiveBookingsArray] = useState<Booking[]>([]);
-  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<Booking[]>([]);
+  const [activeBookingsArray, setActiveBookingsArray] = useState<BookingSpesific[]>([]);
+  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<BookingSpesific[]>([]);
 
   const navigate = useNavigate();
 
@@ -100,7 +41,7 @@ export default function MyProfile(): JSX.Element {
   }, [accessToken]);
 
   const fetchBookings = async () => {
-    const result = await callApi<Booking[]>(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
+    const result = await callApi<BookingSpesific[]>(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Set time to the start of the day
     if (result.data) {
@@ -123,15 +64,16 @@ export default function MyProfile(): JSX.Element {
   };
 
   const fetchUser = async () => {
-    const result = await callApi<User>(`/holidaze/profiles/${userName}`);
+    const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}`);
     if (result.data) {
+      console.log("user", result.data);
       setUser(result.data);
       setVenueManager(result.data.venueManager);
     }
   };
 
   const fetchListings = async () => {
-    const result = await callApi<Listing[]>(`/holidaze/profiles/${userName}/venues?_bookings=true`);
+    const result = await callApi<ListingSpesific[]>(`/holidaze/profiles/${userName}/venues?_bookings=true`);
     if (result.data) {
       setUserListings(result.data);
     }
@@ -171,7 +113,7 @@ export default function MyProfile(): JSX.Element {
         <meta name="description" content="View your Holidaze account details, manage your listings, track bookings, and stay updated with your activity." />
       </Helmet>
       <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
-        {error && <ErrorFallback errorMessage={error} />}
+        {error && <GeneralErrorFallback errorMessage={error} />}
         <section className="flex flex-col gap-2 lg:max-w-md">
           {user && (
             <div className="xl:sticky xl:top-6 xl:pb-9">

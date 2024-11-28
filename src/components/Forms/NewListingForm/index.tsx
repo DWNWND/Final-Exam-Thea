@@ -9,11 +9,7 @@ import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils";
 import { SmallSpinnerLoader } from "../../Loaders";
-
-type MediaItem = {
-  url: string;
-  alt: string;
-};
+import { Media } from "../../../types";
 
 type Step0 = { name: string };
 type Step1 = { description: string };
@@ -37,7 +33,7 @@ type Step6 = {
   };
 };
 type Step7 = {
-  media: MediaItem[];
+  media: Media[];
 };
 
 type StepInputs = Step0 | Step1 | Step2 | Step3 | Step4 | Step5 | Step6 | Step7;
@@ -91,7 +87,7 @@ const newListingSchema: SchemaList = [
   }),
 ];
 
-export default function NewListingForm() {
+export default function NewListingForm(): JSX.Element {
   const { scopedLoader, error, callApi } = useApiCall();
   const [userFeedbackMessage, setUserFeedbackMessage] = useState<string>("");
 

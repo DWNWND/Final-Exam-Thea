@@ -7,8 +7,8 @@ import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
+import { UserSpesific } from "../../../types";
 
-// Define schema
 const updateSettingsSchema = yup.object({
   bio: yup.string().min(3, "Bio must be at least 3 characters").required("Bio is required"),
   avatar: yup.object({
@@ -22,26 +22,6 @@ const updateSettingsSchema = yup.object({
   venueManager: yup.boolean().default(false),
 });
 
-interface User {
-  avatar: {
-    url: string;
-    alt: string;
-  };
-  banner: {
-    url: string;
-    alt: string;
-  };
-  bio: string;
-  email: string;
-  name: string;
-  venueManager: boolean;
-  _count: {
-    bookings: number;
-    venues: number;
-  };
-}
-
-// Define form inputs type
 interface SettingsFormInputs {
   bio: string;
   avatar: {
@@ -55,8 +35,8 @@ interface SettingsFormInputs {
   venueManager: boolean;
 }
 
-export default function SettingsForm() {
-  const [user, setUser] = useState<User | null>(null);
+export default function SettingsForm(): JSX.Element {
+  const [user, setUser] = useState<UserSpesific | null>(null);
   const { userName, setVenueManager } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState<string>("");
@@ -77,7 +57,7 @@ export default function SettingsForm() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const result = await callApi<User>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+        const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
         if (result?.data) {
           setUser(result.data); // Set user data when available
         } else {
