@@ -12,6 +12,7 @@ import { calculateNights } from "../../utils";
 import { ListingSpesific } from "../../types";
 import { BigSpinnerLoader } from "../../components/Loaders";
 import GeneralErrorFallback from "../../components/ErrorFallback/GeneralErrorFallback";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 interface BookingRange {
   startDate: Date;
@@ -36,6 +37,7 @@ export default function ListingSpecific(): JSX.Element {
   const [listingReserved, setListingReserved] = useState<BookingRange[]>([]);
   const [nights, setNights] = useState(0);
   const [listingIsAvailable, setListingIsAvailable] = useState(true);
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     const today = new Date();
@@ -84,6 +86,18 @@ export default function ListingSpecific(): JSX.Element {
   const toggleImageModal = () => setImageModal(!imageModal);
   const toggleBookingModal = () => setBookingModal(!bookingModal);
 
+  const handleNextImage = () => {
+    if (listing?.media) {
+      setCurrentImage((index) => (index + 1) % listing.media.length);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (listing?.media) {
+      setCurrentImage((index) => (index === 0 ? listing.media.length - 1 : index - 1));
+    }
+  };
+
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
@@ -96,7 +110,7 @@ export default function ListingSpecific(): JSX.Element {
         {listing && (
           <>
             <div>
-              {imageModal && <ImageModal image={listing.media?.[0]?.url || ""} alt={listing.media?.[0]?.alt || ""} toggle={toggleImageModal} />}
+              {imageModal && <ImageModal image={listing.media?.[currentImage]?.url || ""} alt={listing.media?.[currentImage]?.alt || ""} toggle={toggleImageModal} />}
               <div className="flex flex-col md:flex-row gap-3 mb-4">
                 <div className={`flex w-full md:max-w-64`}>
                   <button onClick={toggleEditDates} className={`text-nowrap flex py-2 justify-center w-full h-full uppercase rounded hover:shadow-md cursor-pointer transition-max-height duration-500 ease-in-out items-center overflow-hidden ${!editDates ? "px-4 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 px-0"} bg-white text-primary-blue border border-primary-blue`}>
@@ -117,8 +131,18 @@ export default function ListingSpecific(): JSX.Element {
                 </div>
                 <div className="cursor-pointer" onClick={toggleImageModal}>
                   <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg"></div>
-                  <img src={listing.media?.[0]?.url || ""} alt={listing.media?.[0]?.alt || ""} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
+                  <img src={listing.media?.[currentImage]?.url || ""} alt={listing.media?.[currentImage]?.alt || ""} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
                 </div>
+                {listing.media.length > 1 && (
+                  <>
+                    <button className="absolute top-[45%] flex items-center justify-center gap-2 h-9 w-9 md:h-14 md:w-14 m-4 font-bold text-xl md:text-2xl text-primary-blue bg-white bg-opacity-50 hover:bg-opacity-100 transition ease-in-out border border-primary-blue rounded-full hover:shadow-md" onClick={handlePrevImage}>
+                      <FaArrowLeft />
+                    </button>
+                    <button className="absolute top-[45%] right-0 flex items-center justify-center gap-2 h-9 w-9 md:h-14 md:w-14 m-4 font-bold text-xl md:text-2xl text-primary-blue bg-white bg-opacity-50 hover:bg-opacity-100 transition ease-in-out border border-primary-blue rounded-full hover:shadow-md" onClick={handleNextImage}>
+                      <FaArrowRight />
+                    </button>
+                  </>
+                )}
                 <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-[10rem]">
                   <button type="button" className={`${travelSearchData.numberOfGuests > listing.maxGuests || !listingIsAvailable || yourListing ? "bg-white text-comp-purple cursor-not-allowed" : "font-semibold bg-primary-blue text-white shadow-sm hover:shadow-lg hover:scale-105 cursor-pointer"} text-xl md:text-2xl py-3 mt-4 md:mt-0 z-30 w-full px-20 uppercase h-full text-nowrap flex justify-center items-center rounded-full transition-all duration-300 ease-in-out`} onClick={toggleBookingModal} disabled={travelSearchData.numberOfGuests > listing.maxGuests || !listingIsAvailable || yourListing}>
                     {!yourListing ? (travelSearchData.numberOfGuests > listing.maxGuests || !listingIsAvailable ? "Unavailable" : "Book") : "Book"}
