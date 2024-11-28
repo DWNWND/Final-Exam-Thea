@@ -235,7 +235,7 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
 
             <h2 className="text-primary-green text-lg">Media</h2>
             {fields.map((field, index) => (
-              <div key={field.id} className="flex flex-col gap-4">
+              <div key={field.id} className="flex flex-col gap-4  bg-comp-gray p-4 rounded-lg">
                 <label htmlFor={`media.${index}.url`} className="text-primary-green">
                   Image URL
                 </label>
@@ -248,13 +248,13 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
                 <input {...register(`media.${index}.alt`)} placeholder="Enter image description" className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.media?.[index]?.url && "border-danger"}`} />
                 {errors.media?.[index]?.alt && <p className="text-danger text-xs">{errors.media[index].alt.message}</p>}
 
-                <button type="button" onClick={() => remove(index)} className="w-full bg-white border border-primary-green text-primary-green  hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button type="button" onClick={() => remove(index)} className="w-full  border border-primary-green text-primary-green py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                   Remove Media
                 </button>
               </div>
             ))}
 
-            <button type="button" onClick={() => append({ url: "", alt: "" })} className="w-full bg-white border border-primary-green text-primary-green n hover:text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button type="button" onClick={() => append({ url: "", alt: "" })} className="w-full bg-white border border-primary-green text-primary-green  py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Add Media
             </button>
             <button type="submit" className="w-full bg-primary-green text-white  py-2 px-4 rounded-full shadow-md uppercase">
