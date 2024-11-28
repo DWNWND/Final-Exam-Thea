@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "../ErrorFallback";
+import ErrorBoundryFallback from "../ErrorFallback/ErrorBoundryFallback";
 import Header from "./Header";
 import Footer from "./Footer";
 import FixedBtnDisplay from "./FixedBtnDisplay";
@@ -21,14 +21,14 @@ export default function Layout(): JSX.Element {
 
   return (
     <>
-      {/* <ErrorBoundary FallbackComponent={ErrorFallback}> */}
-      <OpenMenuContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
-        <Header />
-        <Outlet />
-        {isMobile && <FixedBtnDisplay />}
-        <Footer />
-      </OpenMenuContext.Provider>
-      {/* </ErrorBoundary> */}
+      <ErrorBoundary FallbackComponent={ErrorBoundryFallback}>
+        <OpenMenuContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
+          <Header />
+          <Outlet />
+          {isMobile && <FixedBtnDisplay />}
+          <Footer />
+        </OpenMenuContext.Provider>
+      </ErrorBoundary>
     </>
   );
 }
