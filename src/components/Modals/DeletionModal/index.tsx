@@ -57,8 +57,8 @@ export function DeletionModal({ toggle }: DeletionModalProps): JSX.Element {
         <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to delete this listing?</h2>
         <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
         <div className="flex justify-end gap-4">
-          <SquareBtn clickFunc={toggle} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-          <SquareBtn clickFunc={handleDelete} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
+          <SquareBtn disabled={scopedLoader} clickFunc={toggle} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+          <SquareBtn disabled={scopedLoader} clickFunc={handleDelete} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
         </div>
         {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorDeletionMessage ? "text-danger" : "text-primary-green"} text-xs text-center mt-3`}>{errorDeletionMessage || userFeedbackDeletionMessage}</p>}
       </div>
