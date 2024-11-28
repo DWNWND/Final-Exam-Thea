@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import { CiCalendar } from "react-icons/ci";
 import "flatpickr/dist/themes/material_green.css";
+import { CiCalendar } from "react-icons/ci";
 import { useTravelDatesStore } from "../../../../../stores";
 import { formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr } from "../../../../../utils";
 
-// Define the type for props
 interface SelectTravelDatesProps {
   toggleDatesFunc?: () => void;
   color: string;
@@ -31,13 +30,13 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
       const endDisplay = formatDateForDisplay(tomorrow);
 
       setSavedDates({
-        endYYYYMMDD,
-        startYYYYMMDD,
-        endDisplay,
-        startDisplay,
+        endYYYYMMDD: endYYYYMMDD,
+        startYYYYMMDD: startYYYYMMDD,
+        endDisplay: endDisplay,
+        startDisplay: startDisplay,
         endDateObj: tomorrow,
         startDateObj: today,
-        dateRangeArrYYYYMMDD,
+        dateRangeArrYYYYMMDD: dateRangeArrYYYYMMDD,
       });
 
       setInitialDates({
@@ -48,55 +47,59 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
     };
 
     const updateDatesIfPast = () => {
-      const stripTime = (date: Date) => {
-        const d = new Date(date);
-        d.setHours(0, 0, 0, 0); // Set time to 00:00:00
-        return d;
+      const stripTime = (date: string | Date): Date => {
+        const parsedDate = typeof date === "string" ? new Date(date) : date;
+        parsedDate.setHours(0, 0, 0, 0); // Set time to 00:00:00
+        return parsedDate;
       };
 
-      const startDateInPast = savedDates.startDateObj && stripTime(savedDates.startDateObj) < stripTime(today);
-      const endDateInPast = savedDates.endDateObj && stripTime(savedDates.endDateObj) < stripTime(savedDates.startDateObj);
-      const endDateIsSameAsStartDate = savedDates.endDateObj && stripTime(savedDates.endDateObj).getTime() === stripTime(savedDates.startDateObj).getTime();
+      const startDateObj = savedDates.startDateObj ? stripTime(savedDates.startDateObj) : null;
+      const endDateObj = savedDates.endDateObj ? stripTime(savedDates.endDateObj) : null;
+
+      const startDateInPast = startDateObj && startDateObj < stripTime(today);
+      const endDateInPast = endDateObj && startDateObj && endDateObj < startDateObj;
+      const endDateIsSameAsStartDate = endDateObj && startDateObj && endDateObj.getTime() === startDateObj.getTime();
 
       if (endDateInPast) {
         initializeDates();
       }
 
       if (startDateInPast) {
-        const newStartDate = today;
-        const newStartDateIsSameAsEndDate = savedDates.endDateObj && savedDates.endDateObj === newStartDate;
-        const newEndDate = newStartDateIsSameAsEndDate ? new Date(newStartDate.getTime() + 24 * 60 * 60 * 1000) : savedDates.endDateObj;
-
+        const newStartDate = startDateInPast ? today : startDateObj;
+        const newStartDateIsSameAsEndDate = newStartDate && newStartDate === endDateObj;
+        const newEndDate = newStartDateIsSameAsEndDate ? new Date(newStartDate.setDate(newStartDate.getDate() + 1)) : savedDates.endDateObj;
+        const endYYYYMMDD = formatDateForFlatpickr(newEndDate);
         const startYYYYMMDD = formatDateForFlatpickr(newStartDate);
-        const endYYYYMMDD = formatDateForFlatpickr(newEndDate!);
+        const endDisplay = formatDateForDisplay(newEndDate);
         const startDisplay = formatDateForDisplay(newStartDate);
-        const endDisplay = formatDateForDisplay(newEndDate!);
         const dateRangeArrYYYYMMDD = generateAllDatesArr(startYYYYMMDD, endYYYYMMDD);
-
         setSavedDates({
+          endYYYYMMDD: endYYYYMMDD,
+          startYYYYMMDD: startYYYYMMDD,
+          endDateObj: newEndDate,
           startDateObj: newStartDate,
-          endDateObj: newEndDate!,
-          startYYYYMMDD,
-          endYYYYMMDD,
-          startDisplay,
-          endDisplay,
-          dateRangeArrYYYYMMDD,
+          endDisplay: endDisplay,
+          startDisplay: startDisplay,
+          dateRangeArrYYYYMMDD: dateRangeArrYYYYMMDD,
         });
+
         setDefaultFlatpickrDates(`${startYYYYMMDD} to ${endYYYYMMDD}`);
       }
 
       if (endDateIsSameAsStartDate) {
-        const newEndDate = new Date(savedDates.startDateObj!.getTime() + 24 * 60 * 60 * 1000);
+        const newEndDate = new Date(startDateObj.getTime() + 24 * 60 * 60 * 1000);
         const endYYYYMMDD = formatDateForFlatpickr(newEndDate);
         const dateRangeArrYYYYMMDD = generateAllDatesArr(savedDates.startYYYYMMDD, endYYYYMMDD);
         const endDisplay = formatDateForDisplay(newEndDate);
 
         setSavedDates({
-          ...savedDates,
+          endYYYYMMDD: endYYYYMMDD,
           endDateObj: newEndDate,
-          endYYYYMMDD,
-          endDisplay,
-          dateRangeArrYYYYMMDD,
+          endDisplay: endDisplay,
+          startDateObj: savedDates.startDateObj,
+          startYYYYMMDD: savedDates.startYYYYMMDD,
+          startDisplay: savedDates.startDisplay,
+          dateRangeArrYYYYMMDD: dateRangeArrYYYYMMDD,
         });
         setDefaultFlatpickrDates(`${savedDates.startYYYYMMDD} to ${endYYYYMMDD}`);
       } else {
