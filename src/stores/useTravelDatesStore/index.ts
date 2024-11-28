@@ -1,13 +1,9 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-interface DefaultFlatpickrDates {
-  defaultFlatpickrDates: string;
-}
-
 interface InitialDates {
-  todayDateObj: Date;
-  tomorrowDateObj: Date;
+  todayDateObj: string | Date;
+  tomorrowDateObj: string | Date;
 }
 
 interface SavedDates {
@@ -15,8 +11,8 @@ interface SavedDates {
   startYYYYMMDD: string;
   endDisplay: string;
   startDisplay: string;
-  endDateObj: Date;
-  startDateObj: Date;
+  endDateObj: string | Date;
+  startDateObj: string | Date;
   dateRangeArrYYYYMMDD: string[];
 }
 
@@ -46,16 +42,16 @@ export const useTravelDatesStore = create<TravelDatesStoreState>()(
     (set) => ({
       defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
       initialDates: {
-        todayDateObj: new Date(),
-        tomorrowDateObj: new Date(),
+        todayDateObj: "",
+        tomorrowDateObj: "",
       },
       savedDates: {
         endYYYYMMDD: "",
         startYYYYMMDD: "",
         endDisplay: "",
         startDisplay: "",
-        endDateObj: new Date(),
-        startDateObj: new Date(),
+        endDateObj: "",
+        startDateObj: "",
         dateRangeArrYYYYMMDD: [],
       },
 
@@ -103,16 +99,16 @@ export const useTravelDatesStore = create<TravelDatesStoreState>()(
         set({
           defaultFlatpickrDates: "YYYY-MM-DD to YYYY-MM-DD",
           initialDates: {
-            todayDateObj: new Date(),
-            tomorrowDateObj: new Date(),
+            todayDateObj: "",
+            tomorrowDateObj: "",
           },
           savedDates: {
             endYYYYMMDD: "",
             startYYYYMMDD: "",
             endDisplay: "",
             startDisplay: "",
-            endDateObj: new Date(),
-            startDateObj: new Date(),
+            endDateObj: "",
+            startDateObj: "",
             dateRangeArrYYYYMMDD: [],
           },
         }),
