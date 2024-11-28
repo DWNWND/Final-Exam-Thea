@@ -1,4 +1,4 @@
-import { useForm, FieldErrors } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -10,30 +10,22 @@ import { useState } from "react";
 import { SmallSpinnerLoader } from "../../../Loaders";
 import { useApiCall } from "../../../../hooks";
 
-// Validation schema for checkout
 const checkoutSchema = yup.object({
-  cardNumber: yup
-    .string()
-    .matches(/^\d{16}$/, "Card number must be exactly 16 digits")
-    .required("Card number is required"),
+  cardNumber: yup.number().min(16).max(16).required("Card number is required"),
   expiryDate: yup
     .string()
     .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Expiry date must be in MM/YY format")
     .required("Expiry date is required"),
-  cvv: yup
-    .string()
-    .matches(/^\d{3,4}$/, "CVV must be 3 or 4 digits")
-    .required("CVV is required"),
+  cvv: yup.number().min(3).max(4).required("CVV is required"),
 });
 
-// Define input types
 interface CheckoutFormInputs {
-  cardNumber: string;
+  cardNumber: number;
   expiryDate: string;
-  cvv: string;
+  cvv: number;
 }
 
-export default function CheckoutForm() {
+export default function CheckoutForm(): JSX.Element {
   const { travelSearchData } = useTravelSearchStore();
   const { scopedLoader, error, callApi } = useApiCall();
   const { bookingData, selectedListing, setSuccessfulBookingId } = useBookingDataStore();
