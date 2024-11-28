@@ -14,7 +14,7 @@ export default function BookingCheckout(): JSX.Element {
     if (!accessToken || !bookingData.venueId) {
       navigate("/");
     }
-  }, [accessToken]);
+  }, [accessToken, bookingData]);
 
   return (
     <HelmetProvider>

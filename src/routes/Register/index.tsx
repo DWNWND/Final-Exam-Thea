@@ -13,7 +13,7 @@ export default function Register(): JSX.Element {
     if (accessToken) {
       navigate("/user/" + userName);
     }
-  }, []);
+  }, [accessToken]);
 
   return (
     <HelmetProvider>

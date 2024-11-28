@@ -3,14 +3,7 @@ import VisaLogo from "../../../assets/logos/visa-logo.png";
 import MastercardLogo from "../../../assets/logos/mastercard-logo.png";
 import KlarnaLogo from "../../../assets/logos/klarna-logo.png";
 import PaypalLogo from "../../../assets/logos/paypal-logo.png";
-
-function CopyRight(): JSX.Element {
-  return (
-    <div className="py-1 mt-12 w-full bg-desatBlue flex justify-center items-center text-primary-blue">
-      <p>&copy; 2024 Thea Oland</p>
-    </div>
-  );
-}
+import CopyRight from "./CopyRight";
 
 export default function Footer(): JSX.Element {
   return (

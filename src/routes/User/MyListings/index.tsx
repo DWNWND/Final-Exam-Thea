@@ -27,11 +27,12 @@ export default function MyListings(): JSX.Element {
     }
   }, [accessToken]);
 
+  const fetchListings = async () => {
+    const result = await callApi(`/holidaze/profiles/${userName}/venues?_bookings=true`);
+    setAllListings(result.data);
+  };
+
   useEffect(() => {
-    const fetchListings = async () => {
-      const result = await callApi(`/holidaze/profiles/${userName}/venues?_bookings=true`);
-      setAllListings(result.data);
-    };
     fetchListings();
   }, []);
 

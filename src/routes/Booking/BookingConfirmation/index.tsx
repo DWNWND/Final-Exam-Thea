@@ -18,7 +18,7 @@ export default function BookingConfirmation(): JSX.Element {
     if (!accessToken || !successfulBookingId) {
       navigate("/");
     }
-  }, [accessToken]);
+  }, [accessToken, successfulBookingId]);
 
   useEffect(() => {
     clearNavigationHistory();

@@ -39,6 +39,11 @@ export default function ListingSpecific(): JSX.Element {
   const [listingIsAvailable, setListingIsAvailable] = useState(true);
   const [currentImage, setCurrentImage] = useState(0);
 
+  const fetchSingleListing = async () => {
+    const result = await callApi(`/holidaze/venues/${id}?_bookings=true&_owner=true`);
+    setListing(result.data);
+  };
+
   useEffect(() => {
     const today = new Date();
     const tomorrow = new Date();
@@ -48,11 +53,6 @@ export default function ListingSpecific(): JSX.Element {
       todayDateObj: today,
       tomorrowDateObj: tomorrow,
     });
-
-    const fetchSingleListing = async () => {
-      const result = await callApi(`/holidaze/venues/${id}?_bookings=true&_owner=true`);
-      setListing(result.data);
-    };
 
     fetchSingleListing();
   }, [id]);

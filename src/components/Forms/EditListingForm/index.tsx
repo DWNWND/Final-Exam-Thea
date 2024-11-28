@@ -105,12 +105,13 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
     }
   }, [listing]);
 
+  const fetchListing = async () => {
+    const result = await callApi(`/holidaze/venues/${id}`);
+    setListing(result.data);
+    setListingName(result.data.name);
+  };
+
   useEffect(() => {
-    const fetchListing = async () => {
-      const result = await callApi(`/holidaze/venues/${id}`);
-      setListing(result.data);
-      setListingName(result.data.name);
-    };
     fetchListing();
   }, []);
 

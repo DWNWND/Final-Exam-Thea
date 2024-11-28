@@ -36,15 +36,16 @@ export default function DetailsForm(): JSX.Element {
   const [user, setUser] = useState<UserSpesific | null>(null);
   const navigate = useNavigate();
 
+  const fetchUserData = async () => {
+    const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}`);
+    if (result?.data) {
+      setUser(result.data);
+    } else {
+      setUser(null);
+    }
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}`);
-      if (result?.data) {
-        setUser(result.data);
-      } else {
-        setUser(null);
-      }
-    };
     fetchUserData();
   }, [accessToken]);
 

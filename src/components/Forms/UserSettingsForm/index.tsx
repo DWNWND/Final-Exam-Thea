@@ -50,19 +50,20 @@ export default function SettingsForm(): JSX.Element {
     resolver: yupResolver(updateSettingsSchema),
   });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
-        if (result?.data) {
-          setUser(result.data);
-        } else {
-          console.error("Error fetching user data:", result?.error);
-        }
-      } catch (err) {
-        console.error("Error fetching user data:", err);
+  const fetchUserData = async () => {
+    try {
+      const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+      if (result?.data) {
+        setUser(result.data);
+      } else {
+        console.error("Error fetching user data:", result?.error);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+    }
+  };
+
+  useEffect(() => {
     fetchUserData();
   }, []);
 

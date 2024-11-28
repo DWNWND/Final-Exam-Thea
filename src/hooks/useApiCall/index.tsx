@@ -7,7 +7,7 @@ const apiKey = import.meta.env.VITE_API_KEY;
 interface ApiResponse<T> {
   success: boolean;
   data?: T;
-  error?: object | string;
+  error?: Error | string;
   statusCode?: number;
 }
 
@@ -33,7 +33,7 @@ export function useApiCall() {
     return headers;
   };
 
-  const callApi = async <T = any,>(url: string, options: RequestInit = {}): Promise<ApiResponse<T>> => {
+  const callApi = async <T = any /* eslint-disable-line @typescript-eslint/no-explicit-any */,>(url: string, options: RequestInit = {}): Promise<ApiResponse<T>> => {
     setError(null);
 
     if (!options.method) {
@@ -60,9 +60,9 @@ export function useApiCall() {
         const data = await response.json();
         return { success: true, data: data.data };
       }
-    } catch (err: any) {
-      console.log("error", err);
-      console.error("API Error:", err.message || "Unknown error");
+    } catch (err: any /* eslint-disable-line @typescript-eslint/no-explicit-any */) {
+      // console.log("error", err);
+      // console.error("API Error:", err.message || "Unknown error");
       setError(err.message || "An unexpected error occurred");
       return { success: false, error: err.message };
     } finally {

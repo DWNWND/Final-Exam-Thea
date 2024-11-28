@@ -36,34 +36,35 @@ export default function Occupancy(): JSX.Element {
     }
   }, [accessToken]);
 
-  useEffect(() => {
-    const fetchOccupancyData = async () => {
-      const result = await callApi<ListingSpesific>(`/holidaze/venues/${id}?_bookings=true`);
-      if (result.data) {
-        setListing(result.data);
-        const reserved = result.data.bookings.map((booking) => ({
-          startDate: new Date(booking.dateFrom),
-          endDate: new Date(booking.dateTo),
-        }));
-        setListingReserved(reserved);
+  const fetchOccupancyData = async () => {
+    const result = await callApi<ListingSpesific>(`/holidaze/venues/${id}?_bookings=true`);
+    if (result.data) {
+      setListing(result.data);
+      const reserved = result.data.bookings.map((booking) => ({
+        startDate: new Date(booking.dateFrom),
+        endDate: new Date(booking.dateTo),
+      }));
+      setListingReserved(reserved);
 
-        const activeBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) > new Date());
-        setActiveBookingsArray(activeBookings);
+      const activeBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) > new Date());
+      setActiveBookingsArray(activeBookings);
 
-        const inactiveBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) < new Date());
-        setInactiveBookingsArray(inactiveBookings);
+      const inactiveBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) < new Date());
+      setInactiveBookingsArray(inactiveBookings);
 
-        if (activeBookings.length === 0) {
-          setInactiveBookingsFilter(true);
-          setActiveBookingsFilter(false);
-        } else if (inactiveBookings.length === 0) {
-          setInactiveBookingsFilter(false);
-          setActiveBookingsFilter(true);
-        }
+      if (activeBookings.length === 0) {
+        setInactiveBookingsFilter(true);
+        setActiveBookingsFilter(false);
+      } else if (inactiveBookings.length === 0) {
+        setInactiveBookingsFilter(false);
+        setActiveBookingsFilter(true);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     fetchOccupancyData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setDisplayedActiveBookings(activeBookingsArray.slice(0, initialDisplayCount));

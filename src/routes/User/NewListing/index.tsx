@@ -14,7 +14,7 @@ export default function NewListing(): JSX.Element {
     if (!accessToken) {
       navigate("/login");
     }
-  }, []);
+  }, [accessToken]);
 
   return (
     <HelmetProvider>

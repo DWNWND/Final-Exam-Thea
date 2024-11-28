@@ -14,12 +14,13 @@ export function DataProvider({ children }: DataProviderProps) {
   const [allListingsArr, setAllListingsArr] = useState<ListingSpesific[]>([]);
   const [displayedListings, setDisplayedListings] = useState<ListingSpesific[]>([]);
 
+  const fetchAllListings = async () => {
+    const result = await callApi("/holidaze/venues/?sort=created&sortOrder=desc");
+    setAllListingsArr(result.data);
+  };
+
   useEffect(() => {
     setLoading(true);
-    const fetchAllListings = async () => {
-      const result = await callApi("/holidaze/venues/?sort=created&sortOrder=desc");
-      setAllListingsArr(result.data);
-    };
     fetchAllListings();
   }, []);
 
