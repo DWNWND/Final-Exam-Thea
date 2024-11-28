@@ -1,10 +1,9 @@
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { StringInput } from "../../Inputs";
 import { RoundBtn } from "../../Buttons";
-import { useEffect } from "react";
 import { SmallSpinnerLoader } from "../../Loaders";
 import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
@@ -20,7 +19,7 @@ const loginSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
 });
 
-export default function LoginForm() {
+export default function LoginForm(): JSX.Element {
   const { scopedLoader, error, setError, callApi } = useApiCall();
   const { setAccessToken, setUserName } = useAuthStore();
   const { getLastPreviousRoute } = useNavigationStore();

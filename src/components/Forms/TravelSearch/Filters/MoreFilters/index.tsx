@@ -4,11 +4,11 @@ import { CheckboxInput } from "../../../../Inputs";
 import { ArrowDownBtn } from "../../../../Buttons";
 
 interface MoreFiltersProps {
-  color: string; // Specifies the color class name
-  mainSearch?: boolean; // Optional, defaults to true
+  color: string;
+  mainSearch?: boolean;
 }
 
-export function MoreFilters({ color, mainSearch = true }: MoreFiltersProps) {
+export function MoreFilters({ color, mainSearch = true }: MoreFiltersProps): JSX.Element  {
   const [openMoreFilters, setOpenMoreFilters] = useState<boolean>(false);
 
   const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useTravelSearchStore();
