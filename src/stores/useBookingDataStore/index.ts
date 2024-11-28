@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-interface BookingData {
+interface BookingDataStore {
   dateFrom: string;
   dateTo: string;
   guests: number;
@@ -9,11 +9,11 @@ interface BookingData {
 }
 
 interface BookingDataStoreState {
-  bookingData: BookingData;
+  bookingData: BookingDataStore;
   successfulBookingId: string;
   bookingEmail: string;
   selectedListing: Record<string, any>;
-  setBookingData: (bookingData: BookingData) => void;
+  setBookingData: (bookingData: BookingDataStore) => void;
   setSuccessfulBookingId: (successfulBookingId: string) => void;
   setBookingEmail: (bookingEmail: string) => void;
   clearBookingDataStore: () => void;
