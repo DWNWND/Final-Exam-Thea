@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { StringInput } from "../../Inputs";
+import { useEffect } from "react";
 import { RoundBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
 import { useAuthStore } from "../../../stores";
@@ -30,10 +30,20 @@ export default function LoginForm(): JSX.Element {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<LoginFormInputs>({
     mode: "onChange",
     resolver: yupResolver(loginSchema),
   });
+
+  const emailField = watch("email");
+  const passwordField = watch("password");
+
+  useEffect(() => {
+    if (error) {
+      setError("");
+    }
+  }, [emailField, passwordField]);
 
   const onSubmit = async (data: LoginFormInputs) => {
     setError("");
