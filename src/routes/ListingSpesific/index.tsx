@@ -130,7 +130,7 @@ export default function ListingSpecific(): JSX.Element {
                   </div>
                 </div>
                 <div className="cursor-pointer" onClick={toggleImageModal}>
-                  <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-t-lg"></div>
+                  <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-lg"></div>
                   <img src={listing.media?.[currentImage]?.url || ""} alt={listing.media?.[currentImage]?.alt || ""} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
                 </div>
                 {listing.media.length > 1 && (
@@ -141,6 +141,12 @@ export default function ListingSpecific(): JSX.Element {
                     <button className="absolute top-[45%] right-0 flex items-center justify-center gap-2 h-9 w-9 md:h-14 md:w-14 m-4 font-bold text-xl md:text-2xl text-primary-blue bg-white bg-opacity-50 hover:bg-opacity-100 transition ease-in-out border border-primary-blue rounded-full hover:shadow-md" onClick={handleNextImage}>
                       <FaArrowRight />
                     </button>
+
+                    <div className="flex justify-center gap-2 absolute bottom-16 w-full">
+                      {listing.media.map((_, index) => (
+                        <div key={index} className={`w-3 h-3 border border-primary-blue rounded-full ${index === currentImage ? "bg-white " : "bg-comp-purple "}`}></div>
+                      ))}
+                    </div>
                   </>
                 )}
                 <div className="absolute inset-x-0 -bottom-6 flex flex-col justify-center items-center gap-4 px-6 md:px-[10rem]">
