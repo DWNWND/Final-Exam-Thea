@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useApiCall } from "../../../hooks";
-import { StringInput } from "../../Inputs";
 import { RoundBtn } from "../../Buttons";
 import { SmallSpinnerLoader } from "../../Loaders";
 import { useBookingDataStore, useNavigationStore, useAuthStore } from "../../../stores";
