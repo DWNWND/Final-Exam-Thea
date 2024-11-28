@@ -1,6 +1,6 @@
 export function capitalizeWords(str: string): string {
   const newString = str
-    .toLowerCase() // Ensure the rest of the word is lowercase
+    .toLowerCase()
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
