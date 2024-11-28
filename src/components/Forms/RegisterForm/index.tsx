@@ -9,6 +9,7 @@ import { SmallSpinnerLoader } from "../../Loaders";
 import { useBookingDataStore, useNavigationStore, useAuthStore } from "../../../stores";
 import { useEffect } from "react";
 
+//ADD NOROFF VALIDATION ON EMAIL
 const registerSchema = yup.object({
   userName: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
   email: yup.string().email("Please enter a valid email").required("Email is required"),
