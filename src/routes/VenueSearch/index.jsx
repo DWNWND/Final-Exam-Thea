@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import ListSearchForm from "../../components/SearchForm/ListSearchForm";
+import ListSearchForm from "../../components/Forms/SearchForm/ListSearchForm";
 import { DataContext } from "../../components/DataProvider";
 import { useContext } from "react";
 import ListSearch from "../../components/Venues/ListSearch";

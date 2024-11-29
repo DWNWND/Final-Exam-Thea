@@ -1,7 +1,7 @@
 import LocationLookAhead from "../LocationLookAhead/index.jsx";
 import SelectTravelDates from "../SelectTravelDates/index.jsx";
 import NumberOfGuests from "../NumberOfGuests/index.jsx";
-import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
+import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import MoreFilters from "../MoreFilters/index.jsx";
 import { useNavigate } from "react-router-dom";
 

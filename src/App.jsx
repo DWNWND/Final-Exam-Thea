@@ -1,8 +1,9 @@
 import { Layout } from "./components";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./utils/ScrollToTop";
 import "./App.css";
+import useInactivityTimer from "./hooks/useInactivityTimer";
 
 const router = createBrowserRouter([
   {
@@ -18,12 +19,12 @@ const router = createBrowserRouter([
       { path: "booking/success", element: <routes.BookingSuccess /> },
       { path: "login", element: <routes.Login /> },
       { path: "register", element: <routes.Register /> },
-      { path: ":username", element: <routes.MyProfile /> },
+      { path: "/user/:username", element: <routes.MyProfile /> },
       // { path: ":username/edit/:venueid", element: <routes.EditVenue /> },
       // { path: ":username/new/venue", element: <routes.NewVenue /> },
-      { path: ":username/settings", element: <routes.MySettings /> },
+      { path: "/user/:username/settings", element: <routes.MySettings /> },
       // { path: ":username/my-venues", element: <routes.MyVenues /> },
-      { path: ":username/my-bookings", element: <routes.MyBookings /> },
+      { path: "/user/:username/bookings", element: <routes.MyBookings /> },
       // { path: "contact", element: <routes.Contact /> },
       { path: "*", element: <routes.RouteNotFound /> },
     ],
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  useInactivityTimer();
+
   return (
     <RouterProvider router={router}>
       <ScrollToTop />

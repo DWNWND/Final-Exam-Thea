@@ -8,6 +8,7 @@ import useAuth from "../../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 
 // Validation schema
+// remeber to implement validation on email etc.
 const schema = yup.object().shape({
   email: yup.string().email("Please enter a valid email").required("Email is required"),
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
@@ -15,7 +16,7 @@ const schema = yup.object().shape({
 
 export default function LoginForm() {
   const { login, loading, error } = useAuth();
-  const { setIsLoggedIn } = useAuthStore();
+  const { setIsLoggedIn, userName } = useAuthStore();
   const navigate = useNavigate();
 
   const {
@@ -31,12 +32,11 @@ export default function LoginForm() {
 
     if (!loading && !error) {
       setIsLoggedIn(true);
-      navigate("/" + data.userName);
+      navigate("/user/" + userName);
     }
   };
 
   //add more levels of userFeedback for the different errorcodes
-  console.log("errors", error);
 
   return (
     <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4 h-svh flex items-center flex-col justify-center">

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
-import { useSearchStore } from "../../../stores/useSearchStore.js";
+import { useSearchStore } from "../../../../stores/useSearchStore.js";
+import Checkbox from "../../../Inputs/Checkbox/index.jsx";
 
 export default function MoreFilters({ color, mainSearch }) {
   const [openMoreFilters, setOpenMoreFilters] = useState(false);
@@ -55,13 +56,13 @@ export default function MoreFilters({ color, mainSearch }) {
   );
 }
 
-function Checkbox({ innerText, id, onChangeFunc, color, checked }) {
-  return (
-    <div className="flex items-center">
-      <input id={id} type="checkbox" className="h-6 w-6 cursor-pointer" onChange={onChangeFunc} defaultChecked={checked} />
-      <label htmlFor={id} className={`ml-2 text-nowrap text-${color} cursor-pointer`}>
-        {innerText}
-      </label>
-    </div>
-  );
-}
+// function Checkbox({ innerText, id, onChangeFunc, color, checked }) {
+//   return (
+//     <div className="flex items-center">
+//       <input id={id} type="checkbox" className="h-6 w-6 cursor-pointer" onChange={onChangeFunc} defaultChecked={checked} />
+//       <label htmlFor={id} className={`ml-2 text-nowrap text-${color} cursor-pointer`}>
+//         {innerText}
+//       </label>
+//     </div>
+//   );
+// }

@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { NavBtn } from "../../Buttons";
 import { useContext } from "react";
 import { OpenMenuContext } from "../../../contexts";
+import useAuthStore from "../../../stores/useAuthStore";
 
 export default function FixedBtnDisplay() {
   const { isMenuOpen } = useContext(OpenMenuContext);
+  const { userName, accessToken } = useAuthStore();
 
   const isMobile = useCheckScreenSize();
   // temporarily:
@@ -25,8 +27,8 @@ export default function FixedBtnDisplay() {
           <NavBtn innerText="Nok" tailw="rounded bg-white" color="primary-green" />
         </li>
         <li className="w-full">
-          <Link to="/login">
-            <NavBtn innerText="Login" tailw="rounded-full bg-white" color="primary-green" />
+          <Link to={accessToken ? `/user/${userName}` : "/login"}>
+            <NavBtn innerText={accessToken ? "my profile" : "Login"} tailw={`${accessToken ? "bg-comp-green" : "bg-white"} rounded-full`} color="primary-green" />
           </Link>
         </li>
       </ul>

@@ -8,6 +8,7 @@ import useAuth from "../../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
 
 // Validation schema for registration
+// remeber to implement validation on email etc.
 const registerSchema = yup.object().shape({
   userName: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
   email: yup.string().email("Please enter a valid email").required("Email is required"),

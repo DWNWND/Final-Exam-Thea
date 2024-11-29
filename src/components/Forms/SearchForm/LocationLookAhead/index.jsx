@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { useSearchStore } from "../../../stores/useSearchStore.js";
-import { searchableLocations } from "../../../assets/locations/searchableLocations.js";
+import { useSearchStore } from "../../../../stores/useSearchStore.js";
+import { searchableLocations } from "../../../../assets/locations/searchableLocations.js";
 
 export default function LocationLookAhead({ color }) {
   const { setLocation, travelSearchData } = useSearchStore();
@@ -17,7 +17,7 @@ export default function LocationLookAhead({ color }) {
   return (
     <div className="relative w-full flex">
       <div className={`flex justify-between items-center rounded-full border-${color} border px-3  bg-white w-full`}>
-        <input required autoComplete="off" className={`p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-${color} placeholder:text-${color}`}  value={searchQuery}  id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
+        <input required autoComplete="off" className={`p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-${color} placeholder:text-${color}`} value={searchQuery} id="searchInput" type="search" placeholder="Where do you want to go?" aria-label="Search by City" onChange={(e) => setSearchQuery(e.target.value.trim())} />
         <IoIosSearch className={`text-2xl text-${color}`} />
       </div>
       {searchQuery.length > 0 && (

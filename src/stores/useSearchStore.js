@@ -35,9 +35,8 @@ export const useSearchStore = create(
       setPrice300to400: (price300to400) => set((state) => ({ travelSearchData: { ...state.travelSearchData, price300to400 } })),
       setPrice400to500: (price400to500) => set((state) => ({ travelSearchData: { ...state.travelSearchData, price400to500 } })),
       setPrice500: (price500) => set((state) => ({ travelSearchData: { ...state.travelSearchData, price500 } })),
-
       // Clear form data
-      clearFormData: () => set({ travelSearchData: {} }),
+      clearTravelSearchStore: () => set({ travelSearchData: {} }),
     }),
     {
       name: "travel-search-data", // Storage key

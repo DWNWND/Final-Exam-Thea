@@ -1,5 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import MainSearchForm from "../../components/SearchForm/MainSearchForm";
+import MainSearchForm from "../../components/Forms/SearchForm/MainSearchForm";
 import style from "./Home.module.css";
 import SelectBtns from "../../components/Buttons/SelectBtn";
 import { useState } from "react";
