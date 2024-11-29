@@ -8,17 +8,17 @@ import { persist } from "zustand/middleware";
 const useAuthStore = create(
   persist(
     (set) => ({
-      isLoggedIn: false,
+      // isLoggedIn: false,
       accessToken: null,
       userName: null,
-      // venueManager: false,
+      venueManager: null,
       // user: null,
 
-      setIsLoggedIn: () => set({ isLoggedIn: true }),
-      setIsLoggedOut: () => set({ isLoggedIn: false }),
+      // setIsLoggedIn: () => set({ isLoggedIn: true }),
+      // setIsLoggedOut: () => set({ isLoggedIn: false }),
       setUserName: (name) => set({ userName: name }),
       setAccessToken: (token) => set({ accessToken: token }),
-      // setVenueManager: (bool) => set({ venueManager: bool }),
+      setVenueManager: (bool) => set({ venueManager: bool }),
       // setUser: (user) => set({ user: user }),
       logOut: () => set({ isLoggedIn: false, accessToken: null, userName: null, user: null }),
     }),

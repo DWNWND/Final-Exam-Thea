@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: "login", element: <routes.Login /> },
       { path: "register", element: <routes.Register /> },
       { path: "/user/:username", element: <routes.MyProfile /> },
-      // { path: ":username/edit/:venueid", element: <routes.EditVenue /> },
+      { path: "/user/:username/edit/:id", element: <routes.EditListing /> },
       { path: "/user/:username/new/listing", element: <routes.NewListing /> },
       { path: "/user/:username/settings", element: <routes.MySettings /> },
       // { path: ":username/my-venues", element: <routes.MyVenues /> },

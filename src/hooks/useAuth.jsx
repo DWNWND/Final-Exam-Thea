@@ -43,7 +43,7 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      // setVenueManager(response.data.venueManager);
+      setVenueManager(response.data.venueManager);
       return { success: true };
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
@@ -65,7 +65,7 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      // setVenueManager(response.data.venueManager);
+      setVenueManager(response.data.venueManager);
       return { success: true };
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {

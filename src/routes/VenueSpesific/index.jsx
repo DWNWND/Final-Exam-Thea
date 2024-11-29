@@ -9,7 +9,7 @@ import Loader from "../../components/Loader/index.jsx";
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-
+//in singe venue i fetch the data here, while in the edit profile and edit listing i fetch it one level down in the form component??? - fix this??? Here i also use a differen hook to fetch the data???
 export default function VenueSpesific() {
   const { id } = useParams();
   const { data: singleVenueData, isLoading: singleVenueIsLoading, isError: singleVenueIsError } = useFetch(`${apiBaseUrl}/holidaze/venues/${id}?_bookings=true&_owner=true`);
