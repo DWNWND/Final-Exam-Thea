@@ -3,17 +3,23 @@ import { DataContext } from "../../../contexts";
 import { ListingCard } from "../../Cards";
 import { useTravelSearchStore } from "../../../stores";
 import { ListingSpesific, DataContextType, TravelSearchData } from "../../../types";
+import { RoundBtn } from "../../Buttons";
+import { capitalizeWords } from "../../../utils";
 
 export default function ListSearch(): JSX.Element {
   const { travelSearchData } = useTravelSearchStore();
   const { displayedListings, loading } = useContext(DataContext) as DataContextType;
+
   const [filteredListings, setFilteredListings] = useState<ListingSpesific[]>([]);
   const [displayListings, setDisplayListings] = useState<ListingSpesific[]>([]);
+
+  const [filters, setFilters] = useState<string>("all listings");
+
   const initialDisplayCount = 10;
   const searchQuery = travelSearchData;
 
   useEffect(() => {
-    const locationMatches = displayedListings.filter((listing) => {
+    const filtersMatches = displayedListings.filter((listing) => {
       if (searchQuery.location.toLowerCase() && searchQuery.location.toLowerCase() !== listing.location.city.toLowerCase()) {
         return false;
       }
@@ -40,14 +46,23 @@ export default function ListSearch(): JSX.Element {
       });
 
       if (!priceFilters.some((filter) => searchQuery[filter.key as keyof TravelSearchData]) || priceMatch) {
-        return true;
+        if (filters.toLowerCase().includes("unique")) {
+          return listing.name.toLowerCase().includes("unique") || listing.description.toLowerCase().includes("unique");
+        } else if (filters.toLowerCase().includes("luxury")) {
+          return listing.name.toLowerCase().includes("luxury") || listing.description.toLowerCase().includes("luxury");
+        } else if (filters.toLowerCase().includes("rated")) {
+          return listing.rating === 5;
+        } else {
+          return true;
+        }
       }
       return false;
     });
 
-    setFilteredListings(locationMatches);
-    setDisplayListings(locationMatches.slice(0, initialDisplayCount));
-  }, [displayedListings, searchQuery]);
+    console.log("filtersMatches", filtersMatches);
+    setFilteredListings(filtersMatches);
+    setDisplayListings(filtersMatches.slice(0, initialDisplayCount));
+  }, [displayedListings, searchQuery, filters]);
 
   const handleLoadMore = (): void => {
     const newCount = displayListings.length + 10;
@@ -56,15 +71,25 @@ export default function ListSearch(): JSX.Element {
 
   return (
     <section className="w-full">
-      <h1 className="font-bold text-2xl text-black">Results for {travelSearchData.location}</h1>
-      <p className="text-black my-4">{`Showing ${displayListings.length} of ${filteredListings.length} listings (matching your search)`}</p>
+      <h1 className="font-bold text-2xl text-primary-blue">{travelSearchData.location ? `Results for ${travelSearchData.location}` : capitalizeWords(filters)}</h1>
+      <p className=" text-primary-blue my-4">{`Showing ${displayListings.length} of ${filteredListings.length} listings ${travelSearchData.location ? "(matching your search)" : ""}`}</p>
+      <div className="flex flex-col gap-2 pt-4 pb-8 lg:flex-row md:justify-center lg:justify-start">
+        <RoundBtn clickFunc={() => setFilters("all listings")} tailw="py-2" innerText="All listings" bgColor={filters === "all listings" ? "primary-blue" : "white"} textColor={filters === "all listings" ? "white" : "primary-blue"} borderColor="primary-blue" />
+        <RoundBtn clickFunc={() => setFilters("unique listings")} tailw="py-2" innerText="Unique listings" bgColor={filters === "unique listings" ? "primary-blue" : "white"} textColor={filters === "unique listings" ? "white" : "primary-blue"} borderColor="primary-blue" />
+        <RoundBtn clickFunc={() => setFilters("luxury stays")} tailw="py-2" innerText="Luxury stays" bgColor={filters === "luxury stays" ? "primary-blue" : "white"} textColor={filters === "luxury stays" ? "white" : "primary-blue"} borderColor="primary-blue" />
+        <RoundBtn clickFunc={() => setFilters("top rated properties")} tailw="py-2" innerText="Top rated properties" bgColor={filters === "top rated properties" ? "primary-blue" : "white"} textColor={filters === "top rated properties" ? "white" : "primary-blue"} borderColor="primary-blue" />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {displayListings.map((listing) => (
-          <ListingCard listing={listing} key={listing.id} loading={loading} />
-        ))}
+        {displayListings && displayListings.length > 0 && (
+          <>
+            {displayListings.map((listing) => (
+              <ListingCard listing={listing} key={listing.id} loading={loading} />
+            ))}
+          </>
+        )}
       </div>
       {filteredListings.length > displayListings.length && (
-        <button onClick={handleLoadMore} className="mt-4 px-4 py-2 bg-primary-green text-white rounded-lg">
+        <button onClick={handleLoadMore} className="mt-4 px-4 py-2 w-full border border-primary-blue text-primary-blue rounded-lg">
           Load more listings
         </button>
       )}
