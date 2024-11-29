@@ -12,7 +12,7 @@ export default function ProfileLinks({ venueManager }) {
   }
 
   return (
-    <>
+    <div className="flex flex-col p-6 gap-2 ">
       <Link to="/" className="text-primary-blue underline text-lg">
         Book your next stay
       </Link>
@@ -30,6 +30,6 @@ export default function ProfileLinks({ venueManager }) {
       <Link className="text-primary-blue underline text-lg" onClick={() => handleLogOut()}>
         Log out
       </Link>
-    </>
+    </div>
   );
 }
