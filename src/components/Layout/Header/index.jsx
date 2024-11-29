@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 // import styles from "./Header.module.css";
 import useCheckScreenSize from "../../../hooks/useCheckScreenSize";
+import FixedBtnDisplay from "../FixedBtnDisplay";
 
 export default function Header() {
   const isMobile = useCheckScreenSize();
@@ -24,7 +25,10 @@ export default function Header() {
       <Link to="/">
         <img src={LogoIcon} className="h-auto w-auto object-contain" alt="Holidaize logo, click to go to home page" />
       </Link>
-      <HamburgerMenu />
+      <div className="flex items-center gap-4">
+        <FixedBtnDisplay isMobile={isMobile} />
+        <HamburgerMenu />
+      </div>
     </header>
   );
 }

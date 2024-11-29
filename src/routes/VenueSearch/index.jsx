@@ -1,6 +1,7 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import ListSearchForm from "../../components/SearchForm/ListSearchForm";
 
-export default function ListingSearch() {
+export default function VenueSearch() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
@@ -9,7 +10,10 @@ export default function ListingSearch() {
         {/* add search details */}
       </Helmet>
       <div>
-        <h1>Listing Search</h1>
+        <h1>Venue Search</h1>
+        <section>
+          <ListSearchForm />
+        </section>
       </div>
     </HelmetProvider>
   );

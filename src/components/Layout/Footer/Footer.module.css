@@ -1,18 +1,3 @@
-footer {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  padding: 1.5rem;
-  gap: 1.5rem;
-  /* z-index: 99; */
-
-  @media screen and (min-width: 768px) {
-    position: relative;
-    border-top: none;
-    padding: 4rem;
-  }
-}
-
 .footerCol {
   h3 {
     font-size: 1.5rem;

@@ -1,6 +1,6 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-export default function ListingSpesific() {
+export default function VenueSpesific() {
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
@@ -9,7 +9,7 @@ export default function ListingSpesific() {
         {/* add listing name */}
       </Helmet>
       <div>
-        <h1>Listing Spesific</h1>
+        <h1>Venue Spesific</h1>
       </div>
     </HelmetProvider>
   );

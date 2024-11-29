@@ -15,8 +15,8 @@ function CopyRight() {
 
 export default function Footer() {
   return (
-    <footer>
-      <div className="flex flex-col gap-8 lg:flex-row lg:gap-20">
+    <footer className="p-4 w-full">
+      <div className="flex flex-col gap-8 md:flex-row lg:gap-20">
         <div className={`${styles.footerCol} flex flex-col gap-2`}>
           <h3>Customer care</h3>
           <ul className="flex flex-col gap-1">
