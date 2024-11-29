@@ -9,6 +9,9 @@ import claculateNightsBetween from "../../../../utils/calcNights/claculateNights
 import useAuthStore from "../../../../stores/useAuthStore.js";
 import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
 import RoundBtn from "../../../Buttons/RoundBtn";
+import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
+import { useEffect } from "react";
+import { useState } from "react";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -25,6 +28,19 @@ export default function DetailsForm() {
   const { travelSearchData, selectedVenue } = useSearchStore();
   const { setBookingData } = useBookingDataStore();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  const { loading, setLoading, error, fetchUser } = useAuthedFetch(accessToken);
+
+  const fetchData = async () => {
+    const response = await fetchUser(`/holidaze/profiles/${userName}`);
+    console.log("response66:", response);
+    setUser(response.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [accessToken]);
 
   const startDate = new Date(travelSearchData.travelDates.startDate);
   const formattedStartDate = formatDateForDisplay(startDate);
@@ -39,6 +55,8 @@ export default function DetailsForm() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    trigger,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -58,7 +76,7 @@ export default function DetailsForm() {
 
   //add more levels of userFeedback for the different errorcodes
   return (
-    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm">
+    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
       {/* <p className="text-danger text-xs"></p> */}
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
         <p className="font-semibold">{selectedVenue.name}</p>
@@ -74,12 +92,13 @@ export default function DetailsForm() {
         <h1 className="text-2xl uppercase text-primary-green w-full">Your details</h1>
         <p className="text-sm italic text-primary-blue w-full">Please enter your details to complete your booking</p>
       </div>
+      {/* fix the default value of the email to actually be the email */}
       <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="firstName" label="First name" placeholder="Kari" error={errors.firstName} register={register} errorMessage={errors.firstName && errors.firstName.message} />
-        <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" error={errors.lastName} register={register} errorMessage={errors.lastName && errors.lastName.message} />
-        <StringInput type="email" id="email" label="Email address" defaultValue={accessToken && userName} placeholder="example@example.com" error={errors.email} register={register} errorMessage={errors.email && errors.email.message} />
-        <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" error={errors.checkIn} register={register} errorMessage={errors.checkIn && errors.checkIn.message} />
-        <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" error={errors.specialRequests} register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} />
+        <StringInput type="text" id="firstName" label="First name" defaultValue={user && user.name} placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
+        <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" register={register} errorMessage={errors.lastName && errors.lastName.message} trigger={trigger} watch={watch} />
+        <StringInput type="email" id="email" label="Email address" defaultValue={user && user.email} placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
+        <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" register={register} errorMessage={errors.checkIn && errors.checkIn.message} trigger={trigger} watch={watch} />
+        <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between my-6">
           <RoundBtn type="submit" innerText="Next" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
         </div>

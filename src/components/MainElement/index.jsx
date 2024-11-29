@@ -1,7 +1,7 @@
 import { OpenMenuContext } from "../../contexts";
 import { useContext } from "react";
 
-export default function MainElement({ children, tailw, homePage = false }) {
+export default function MainElement({ children, tailw, noPadding = false }) {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
 
   return (
@@ -11,7 +11,7 @@ export default function MainElement({ children, tailw, homePage = false }) {
         onClick={() => setIsMenuOpen(false)} // Optional: Close the menu when clicking the backdrop
       ></div>
 
-      <main className={`${!homePage && "pt-24 p-4 pb-12 md:px-8"} transition duration-1000 ease-in-out  min-h-screen bg-desatBlue ${tailw} ${isMenuOpen ? "blur-sm" : "blur-none"}`}>{children}</main>
+      <main className={`${!noPadding && "pt-24 p-4 pb-12 md:px-8"} transition duration-1000 ease-in-out  min-h-screen bg-desatBlue ${tailw} ${isMenuOpen ? "blur-sm" : "blur-none"}`}>{children}</main>
     </div>
   );
 }

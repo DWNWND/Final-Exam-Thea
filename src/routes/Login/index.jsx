@@ -21,8 +21,10 @@ export default function Login() {
         <meta name="description" content="" />
         <title>Login | Holidayz</title>
       </Helmet>
-      <MainElement tailw="flex items-center justify-center">
-        <LoginForm />
+      <MainElement noPadding={true} tailw="flex items-center justify-center">
+        <section className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
+          <LoginForm />
+        </section>
       </MainElement>
     </HelmetProvider>
   );

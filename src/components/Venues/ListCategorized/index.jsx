@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import VenueCard from "../VenueCard";
 import { useContext } from "react";
-import { DataContext } from "../../../components/DataProvider";
+import { DataContext } from "../../../contexts";
 import Loader from "../../../components/Loader";
 
 export default function ListCategorized({ filters }) {
-  const { venues, isLoading, isError } = useContext(DataContext);
+  const { venues, isLoading, setIsLoading, isError } = useContext(DataContext);
 
   return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : (
+    // <>
+    //   {isLoading ? (
+    //     <Loader />
+    //   ) : (
         <>
           {venues && venues.length >= 2 && (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -29,13 +29,13 @@ export default function ListCategorized({ filters }) {
                 })
                 .slice(0, 4)
                 .map((venue) => (
-                  <VenueCard venue={venue} key={venue.id} />
+                  <VenueCard venue={venue} key={venue.id} isLoading={isLoading} setIsLoading={setIsLoading} />
                 ))}
             </div>
           )}
           <Link className="lg:ml-4 text-center lg:text-left block mt-4 underline text-black">View all listings from this category</Link>
         </>
-      )}
-    </>
+    //   )}
+    // </>
   );
 }

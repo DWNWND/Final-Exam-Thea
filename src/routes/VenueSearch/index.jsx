@@ -1,7 +1,5 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import ListSearchForm from "../../components/Forms/SearchTravel/ListSearchForm/index.jsx";
-import { DataContext } from "../../components/DataProvider";
-import { useContext } from "react";
 import ListSearch from "../../components/Venues/ListSearch";
 import { useSearchStore } from "../../stores/useSearchStore.js";
 import { DataProvider } from "../../components/DataProvider";
@@ -15,6 +13,7 @@ export default function VenueSearch() {
       <Helmet prioritizeSeoTags>
         <meta name="description" content="" />
         <title>Stays in {travelSearchData.location} | Holidayz</title>
+        {/* add description as well */}
         {/* add search details */}
       </Helmet>
       <MainElement tailw="flex flex-col lg:flex-row gap-8">
