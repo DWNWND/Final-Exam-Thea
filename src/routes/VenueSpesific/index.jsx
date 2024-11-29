@@ -41,7 +41,7 @@ export default function VenueSpesific() {
             <title> {singleVenue.name} | Holidayz</title>
             {/* add Venue title */}
           </Helmet>
-          <main className="p-4 mb-12 pt-16">{singleVenueIsLoading ? <Loader /> : <SingleVenue venue={singleVenue} />}</main>
+          <main className="p-4 mb-12 pt-20">{singleVenueIsLoading ? <Loader /> : <SingleVenue venue={singleVenue} />}</main>
         </HelmetProvider>
       )}
     </>

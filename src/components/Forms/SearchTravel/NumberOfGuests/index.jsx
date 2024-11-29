@@ -17,7 +17,7 @@ function reducer(state, action) {
   }
 }
 
-export default function NumberOfGuests({ register, setValue, color, mainSearch }) {
+export default function NumberOfGuests({ color, mainSearch, tailw }) {
   const { setNumberOfGuests, travelSearchData } = useSearchStore();
   const initialState = travelSearchData.numberOfGuests;
 
@@ -26,11 +26,11 @@ export default function NumberOfGuests({ register, setValue, color, mainSearch }
   useEffect(() => {
     // setValue("numberOfGuests", state.guests);
     setNumberOfGuests(state.guests);
-  }, [state.guests, setValue]);
+  }, [state.guests]);
 
   //add labels to the form inputs?
   return (
-    <div className="w-full md:w-auto flex justify-center items-center gap-4 lg:gap-2">
+    <div className={`w-full md:w-auto flex justify-center items-center gap-4 lg:gap-2`}>
       <button
         className={`hover:shadow-md rounded-full w-full ${mainSearch && "lg:h-10 lg:w-10"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`}
         type="button"
