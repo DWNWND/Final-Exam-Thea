@@ -53,24 +53,18 @@ export default function FixedBtnDisplay(): JSX.Element {
             <li>
               <Link to="/search">
                 <RoundBtn innerText="Book your next holiday" bgColor="primary-green" borderColor="primary-green" textColor="white" />
-                {/* <SquareBtn innerText="Book your next holiday" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" /> */}
               </Link>
             </li>
           </>
         )}
-        <li>
+        <li className={`${isMobile && "w-full"}`}>
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>
             <SquareBtn innerText="List your place" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
           </Link>
         </li>
-        {/* <li className="w-full">
-          <SquareBtn innerText="Nok" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-        </li> */}
-        <li>
+        <li className={`${isMobile && "w-full"}`}>
           <Link to={accessToken ? `/user/${userName}` : "/login"}>
             <SquareBtn innerText={accessToken ? "My profile" : "Login/register"} tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
-
-            {/* <RoundBtn innerText={accessToken ? "My profile" : "Login"} bgColor="primary-green" borderColor="primary-green" textColor="white" /> */}
           </Link>
         </li>
       </ul>
