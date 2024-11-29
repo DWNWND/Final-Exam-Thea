@@ -1,7 +1,7 @@
 interface SquareBtnProps {
   innerText: string;
   tailw?: string;
-  clickFunc?: (prop?: any) => void;
+  clickFunc?: (prop?: string) => void;
   bgColor?: string;
   textColor?: string;
   borderColor?: string;
@@ -9,7 +9,7 @@ interface SquareBtnProps {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   width?: string;
-  funcProp?: any;
+  funcProp?: string;
 }
 
 export function SquareBtn({ innerText, tailw = "", clickFunc = () => {}, bgColor = "white", textColor = "primary-green", borderColor = "primary-green", transition = "transition duration-300 ease-in-out", disabled = false, type = "button", width = "auto", funcProp = null }: SquareBtnProps) {
