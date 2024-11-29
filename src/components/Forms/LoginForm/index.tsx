@@ -60,7 +60,7 @@ export default function LoginForm(): JSX.Element {
 
       const lastPreviousRoute = getLastPreviousRoute();
 
-      if (selectedListing && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
+      if (selectedListing.id && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
         navigate("/booking/details");
       } else {
         navigate("/user/" + result.data.name);

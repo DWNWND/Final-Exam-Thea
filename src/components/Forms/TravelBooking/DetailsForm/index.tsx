@@ -55,7 +55,7 @@ export default function DetailsForm(): JSX.Element {
     if (previousRoute && (previousRoute.includes("login") || previousRoute.includes("register"))) {
       setPreviousRoute(`/listing/${selectedListing.id}`);
     }
-  }, []);
+  }, [selectedListing.id]);
 
   const {
     register,

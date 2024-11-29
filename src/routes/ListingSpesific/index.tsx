@@ -62,18 +62,21 @@ export default function ListingSpecific(): JSX.Element {
       setSelectedListing(listing);
       setYourListing(userName === listing.owner.name);
 
-      const reserved = listing.bookings.map((booking) => ({
+      const reserved = listing.bookings?.map((booking) => ({
         startDate: new Date(booking.dateFrom),
         endDate: new Date(booking.dateTo),
       }));
-      setListingReserved(reserved);
 
-      const checkAvailability = () => {
-        const checkStartDate = new Date(savedDates.startDateObj);
-        const checkEndDate = new Date(savedDates.endDateObj);
-        return reserved.every((range) => checkEndDate < range.startDate || checkStartDate > range.endDate);
-      };
-      setListingIsAvailable(checkAvailability());
+      if (reserved) {
+        setListingReserved(reserved);
+
+        const checkAvailability = () => {
+          const checkStartDate = new Date(savedDates.startDateObj);
+          const checkEndDate = new Date(savedDates.endDateObj);
+          return reserved.every((range) => checkEndDate < range.startDate || checkStartDate > range.endDate);
+        };
+        setListingIsAvailable(checkAvailability());
+      }
 
       const nights = calculateNights(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);
       const price = nights * listing.price;
