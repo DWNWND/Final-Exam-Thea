@@ -5,8 +5,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 export function ArrowLeftBtn() {
   const handleBack = useNavigateBackHook();
   const { hasPreviousRoute } = useNavigationStore();
+  
+  const previousRoute = hasPreviousRoute();
 
-  if (!hasPreviousRoute) {
+  if (!previousRoute) {
     return null;
   }
 
