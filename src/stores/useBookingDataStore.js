@@ -10,8 +10,12 @@ const useBookingDataStore = create(
         guests: 0,
         venueId: "",
       },
+      successfulBookingId: "",
+      bookingEmail: "",
       // Set individual fields
       setBookingData: (bookingData) => set((state) => ({ bookingData })),
+      setSuccessfulBookingId: (successfulBookingId) => set((state) => ({ successfulBookingId })),
+      setBookingEmail: (bookingEmail) => set((state) => ({ bookingEmail })),
       // Clear form data
       clearBookingData: () => set({ bookingData: {} }),
     }),

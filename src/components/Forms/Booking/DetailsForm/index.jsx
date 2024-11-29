@@ -12,6 +12,7 @@ import RoundBtn from "../../../Buttons/RoundBtn";
 import useAuthedFetch from "../../../../hooks/useAuthedFetch.jsx";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigationStore } from "../../../../stores/useNavigationStore.js";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -31,15 +32,16 @@ export default function DetailsForm() {
   const [user, setUser] = useState(null);
 
   const { loading, setLoading, error, fetchUser } = useAuthedFetch(accessToken);
+  const setPreviousRoute = useNavigationStore((state) => state.setPreviousRoute);
 
   const fetchData = async () => {
     const response = await fetchUser(`/holidaze/profiles/${userName}`);
-    console.log("response66:", response);
     setUser(response.data);
   };
 
   useEffect(() => {
     fetchData();
+    setPreviousRoute(`/venue/${selectedVenue.id}`);
   }, [accessToken]);
 
   const startDate = new Date(travelSearchData.travelDates.startDate);
@@ -54,12 +56,34 @@ export default function DetailsForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     trigger,
+    reset,
   } = useForm({
+    mode: "onChange",
     resolver: yupResolver(schema),
+    defaultValues: {
+      firstName: user?.name || "",
+      lastName: "",
+      email: user?.email || "",
+      checkIn: "12:00",
+      specialRequests: "",
+    },
   });
+
+  useEffect(() => {
+    if (user) {
+      // Update default values dynamically when user data is available
+      reset({
+        firstName: user.name,
+        lastName: "",
+        email: user.email,
+        checkIn: "12:00",
+        specialRequests: "",
+      });
+    }
+  }, [user, reset]);
 
   // const login = useAuthStore((state) => state.login);
 
@@ -71,6 +95,7 @@ export default function DetailsForm() {
       venueId: selectedVenue.id,
     };
     setBookingData(booking);
+    setBookingEmail(watch("email"));
     navigate("/booking/checkout");
   };
 
@@ -94,13 +119,14 @@ export default function DetailsForm() {
       </div>
       {/* fix the default value of the email to actually be the email */}
       <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="firstName" label="First name" defaultValue={user && user.name} placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
+        <StringInput type="text" id="firstName" label="First name" placeholder="Kari" register={register} errorMessage={errors.firstName && errors.firstName.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" register={register} errorMessage={errors.lastName && errors.lastName.message} trigger={trigger} watch={watch} />
-        <StringInput type="email" id="email" label="Email address" defaultValue={user && user.email} placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
+        <StringInput type="email" id="email" label="Email address" placeholder="example@example.com" register={register} errorMessage={errors.email && errors.email.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" register={register} errorMessage={errors.checkIn && errors.checkIn.message} trigger={trigger} watch={watch} />
         <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} trigger={trigger} watch={watch} />
         <div className="flex items-center justify-between my-6">
-          <RoundBtn type="submit" innerText="Next" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
+          <RoundBtn type="submit" innerText="Next" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
+          {/* {loading ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>} */}
         </div>
       </form>
     </div>

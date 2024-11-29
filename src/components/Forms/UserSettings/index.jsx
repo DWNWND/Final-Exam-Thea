@@ -132,7 +132,7 @@ export default function SettingsForm() {
       )}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
             <h2 className="text-xl font-bold mb-4 text-primary-green">Are you sure you want to delete your profile?</h2>
             <p className="text-sm mb-6 text-primary-green">This action cannot be undone.</p>
             <div className="flex justify-end gap-4">

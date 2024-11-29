@@ -10,6 +10,8 @@ import StringInput from "../../Inputs/String";
 import RoundBtn from "../../Buttons/RoundBtn";
 import { useState } from "react";
 import SmallLoader from "../../SmallLoader";
+import { useSearchStore } from "../../../stores/useSearchStore.js";
+import { useNavigationStore } from "../../../stores/useNavigationStore.js";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -28,6 +30,9 @@ export default function RegisterForm() {
   const { setIsLoggedIn } = useAuthStore();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const { selectedVenue } = useSearchStore();
+  const getLastPreviousRoute = useNavigationStore((state) => state.getLastPreviousRoute);
+  const lastPreviousRoute = getLastPreviousRoute();
 
   const {
     register,
@@ -45,7 +50,11 @@ export default function RegisterForm() {
     // Check if there was an error
     if (!loading && !error && result.success) {
       // Assume login returns an object with a success property
-      navigate("/user/" + data.userName);
+      if (selectedVenue && lastPreviousRoute === `/venue/${selectedVenue.id}`) {
+        navigate("/booking/details");
+      } else {
+        navigate("/user/" + data.userName);
+      }
     } else if (!result.success) {
       setErrorMessage(result.error.errors[0].message);
 

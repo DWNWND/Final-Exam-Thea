@@ -10,6 +10,8 @@ import useAuthStore from "../../../../stores/useAuthStore.js";
 import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
 import useApiCall from "../../../../hooks/useApiCall.jsx";
 import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
+import { useState } from "react";
+import SmallLoader from "../../../SmallLoader/index.jsx";
 
 const url = import.meta.env.VITE_API_BASE_URL;
 
@@ -31,11 +33,46 @@ const schema = yup.object().shape({
 });
 
 export default function CheckoutForm() {
-  const { accessToken, userName } = useAuthStore();
+  const { accessToken } = useAuthStore();
   const { travelSearchData, selectedVenue } = useSearchStore();
   const { callApiWith, loading, error } = useApiCall(accessToken);
-  const { bookingData } = useBookingDataStore();
+  const { bookingData, successfulBookingId, setSuccessfulBookingId } = useBookingDataStore();
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [userFeedbackMessage, setUserFeedbackMessage] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+    trigger,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async () => {
+    try {
+      const sendData = async () => {
+        const response = await callApiWith(`${url}/holidaze/bookings`, {
+          method: "POST",
+          body: JSON.stringify(bookingData),
+        });
+        setSuccessfulBookingId(response.data.id);
+      };
+
+      await sendData();
+
+      if (!loading && !error && successfulBookingId) {
+        setErrorMessage("");
+        setUserFeedbackMessage("Payment successful");
+        navigate(`/booking/confirmation/${successfulBookingId}`);
+      }
+    } catch (error) {
+      setErrorMessage("Booking failed: " + error);
+      setUserFeedbackMessage("");
+    }
+  };
 
   const startDate = new Date(travelSearchData.travelDates.startDate);
   const formattedStartDate = formatDateForDisplay(startDate);
@@ -46,34 +83,8 @@ export default function CheckoutForm() {
   const nights = claculateNightsBetween(travelSearchData.travelDates.startDate, travelSearchData.travelDates.endDate);
   const price = nights * selectedVenue.price;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  // const login = useAuthStore((state) => state.login);
-
-  const onSubmit = () => {
-    const sendData = async () => {
-      const response = await callApiWith(`${url}/holidaze/bookings`, {
-        method: "POST",
-        body: JSON.stringify(bookingData),
-      });
-      console.log("response:", response);
-    };
-    sendData();
-
-    if (!loading && !error) {
-      navigate(`/booking/confirmation`);
-    }
-  };
-
-  //add more levels of userFeedback for the different errorcodes
   return (
-    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm">
+    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm h-full">
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
         <p className="font-semibold">{selectedVenue.name}</p>
         <p>
@@ -89,14 +100,13 @@ export default function CheckoutForm() {
         <p className="text-sm italic text-primary-blue w-full">Please checkout to complete your booking</p>
       </div>
       <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-        <StringInput type="text" id="cardNumber" label="Card Number" placeholder="1234 5678 9012 3456" error={errors.cardNumber} register={register} errorMessage={errors.cardNumber && errors.cardNumber.message} />
-        <StringInput type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} />
-        <StringInput type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} />
+        <StringInput type="text" id="cardNumber" label="Card Number" placeholder="1234 5678 9012 3456" error={errors.cardNumber} register={register} errorMessage={errors.cardNumber && errors.cardNumber.message} watch={watch} trigger={trigger} />
+        <StringInput type="text" id="expiryDate" label="Expiry Date" placeholder="MM/YY" error={errors.expiryDate} register={register} errorMessage={errors.expiryDate && errors.expiryDate.message} watch={watch} trigger={trigger} />
+        <StringInput type="text" id="cvv" label="CVV" placeholder="123" error={errors.cvv} register={register} errorMessage={errors.cvv && errors.cvv.message} watch={watch} trigger={trigger} />
         <div className="flex items-center justify-between my-6">
-          <RoundBtn type="submit" innerText="Complete payment" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
+          <RoundBtn type="submit" innerText="pay" bgColor={isValid ? "primary-blue" : "comp-gray"} textColor={isValid ? "white" : "primary-light"} borderColor={isValid ? "primary-blue" : "comp"} disabled={!isValid} />
         </div>
-        {loading && <p className="text-danger">{loading && "Loading..."}</p>}
-        {error && <p className="text-danger">{error && error}</p>}
+        {loading ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>}
       </form>
     </div>
   );
