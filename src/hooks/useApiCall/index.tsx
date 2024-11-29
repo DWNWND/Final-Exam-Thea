@@ -4,8 +4,8 @@ import { useAuthStore } from "../../stores";
 // const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 // const apiKey = import.meta.env.VITE_API_KEY;
 
-const apiBaseUrl = process.env.API_BASE_URL;
-const apiKey = process.env.API_KEY;
+const apiBaseUrl = import.meta.env.API_BASE_URL;
+const apiKey = import.meta.env.API_KEY;
 
 interface ApiResponse<T> {
   success: boolean;
