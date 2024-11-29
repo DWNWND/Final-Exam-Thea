@@ -92,7 +92,7 @@ export default function SettingsForm(): JSX.Element {
           </div>
           <form className="flex flex-col gap-6 w-full" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center">
-              <input disabled={scopedLoader} id="venueManager" type="checkbox" checked={user.venueManager} className="h-6 w-6 cursor-pointer" {...register("venueManager")} />
+              <input disabled={scopedLoader} id="venueManager" type="checkbox" defaultChecked={user.venueManager} className="h-6 w-6 cursor-pointer" {...register("venueManager")} />
               <label htmlFor="venueManager" className={`ml-2 text-nowrap text-primary-green cursor-pointer`}>
                 Register as a venue manager
               </label>

@@ -57,11 +57,11 @@ export function CancellationModal({ booking, toggle }: CancellationModalProps): 
           </button>
           <h2 className="text-xl font-bold mb-4 text-primary-blue">Are you sure you want to cancel your booking at {booking.name}?</h2>
           <p className="text-sm mb-6 text-primary-blue">This action cannot be undone.</p>
-          <div className="flex justify-end gap-4 mb-5">
+          <div className="flex justify-end gap-4">
             <SquareBtn disabled={scopedLoader} clickFunc={toggle} type="button" width="full" innerText="No" tailw="hover:bg-primary-blue hover:text-white" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
             <SquareBtn disabled={scopedLoader} clickFunc={handleCancellation} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white" bgColor="white" textColor="danger" borderColor="danger" />
           </div>
-          {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorCancellationMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorCancellationMessage || userFeedbackCancellationMessage}</p>}
+          {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${errorCancellationMessage ? "text-danger" : "text-primary-green"} text-xs text-center mt-3`}>{errorCancellationMessage || userFeedbackCancellationMessage}</p>}
         </div>
       )}
     </div>

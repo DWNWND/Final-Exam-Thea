@@ -55,7 +55,7 @@ export default function MyListings(): JSX.Element {
       </Helmet>
       <MainElement>
         {error && <GeneralErrorFallback errorMessage={error} />}
-        <div className="flex flex-col gap-2 bg-comp-green shadow-md p-8 rounded-lg">
+        <div className="flex flex-col gap-2 bg-comp-green shadow-md p-4 md:p-8 rounded-lg">
           <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My active listings</h2>
           <p className="text-black">{`Showing ${displayedListings.length < allListings.length ? displayedListings.length : allListings.length} of ${allListings.length} ${allListings.length > 1 ? "listings" : "listing"}`}</p>
           {displayedListings && (
