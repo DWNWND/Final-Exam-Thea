@@ -4,7 +4,7 @@ import ProfileLinks from "../../../components/User/ProfileLinks";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore.js";
-import useFetchUser from "../../../hooks/useFetchUser";
+import useFetchUser from "../../../hooks/useApiCall.jsx";
 
 const url = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,7 +15,8 @@ export default function MyProfile() {
   const { callApiWith } = useFetchUser(accessToken);
 
   if (!accessToken) {
-    return null;
+    navigate("/");
+    // return null;
   }
 
   const fetchData = async () => {

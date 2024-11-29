@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       { path: "register", element: <routes.Register /> },
       { path: "/user/:username", element: <routes.MyProfile /> },
       // { path: ":username/edit/:venueid", element: <routes.EditVenue /> },
-      // { path: ":username/new/venue", element: <routes.NewVenue /> },
+      { path: "/user/:username/new/listing", element: <routes.NewListing /> },
       { path: "/user/:username/settings", element: <routes.MySettings /> },
       // { path: ":username/my-venues", element: <routes.MyVenues /> },
       { path: "/user/:username/bookings", element: <routes.MyBookings /> },
@@ -32,7 +32,8 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  useInactivityTimer();
+  //fix the inactivity timer to redirect to homepage when logging out and to alert inactivity before logging out
+  // useInactivityTimer();
 
   return (
     <RouterProvider router={router}>

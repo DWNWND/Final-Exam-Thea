@@ -6,7 +6,7 @@ import * as yup from "yup";
 import Checkbox from "../../Inputs/Checkbox";
 import StringInput from "../../Inputs/String";
 import useAuthStore from "../../../stores/useAuthStore.js";
-import useFetchUser from "../../../hooks/useFetchUser";
+import useFetchUser from "../../../hooks/useApiCall.jsx";
 
 const url = import.meta.env.VITE_API_BASE_URL;
 

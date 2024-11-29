@@ -1,3 +1,3 @@
 export default function ListVenues({ venues }) {
-  console.log("bookings", bookings);
+  console.log("bookings", venues);
 }

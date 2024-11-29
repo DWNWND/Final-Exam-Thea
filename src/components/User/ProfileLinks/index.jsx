@@ -18,7 +18,7 @@ export default function ProfileLinks({ venueManager }) {
       </Link>
       <>
         {venueManager ? (
-          <Link to={`/user/${userName}/newListing`} className="text-primary-blue underline text-lg">
+          <Link to={`/user/${userName}/new/listing`} className="text-primary-blue underline text-lg">
             Publish new listing
           </Link>
         ) : (
