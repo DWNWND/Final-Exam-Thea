@@ -99,7 +99,7 @@ export interface ListingSpesific {
   meta: Meta;
   location: Location;
   owner: CustomerOrOwner;
-  bookings: BookingsData[];
+  bookings?: BookingsData[];
 }
 
 //USED IN: ListSearch, useTravelSearchStore
