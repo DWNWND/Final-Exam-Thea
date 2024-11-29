@@ -13,12 +13,6 @@ export default function ListingSearch(): JSX.Element {
   const { travelSearchData } = useTravelSearchStore();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!travelSearchData.location) {
-      navigate("/");
-    }
-  }, [travelSearchData.location]);
-
   return (
     <HelmetProvider>
       <Helmet prioritizeSeoTags>
