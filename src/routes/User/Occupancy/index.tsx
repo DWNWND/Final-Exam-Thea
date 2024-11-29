@@ -14,7 +14,7 @@ import { ListingSpesific, BookingsData } from "../../../types";
 export default function Occupancy(): JSX.Element {
   const { accessToken } = useAuthStore();
   const { loading, error, callApi } = useApiCall();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
 
   const [activeBookingsFilter, setActiveBookingsFilter] = useState(true);
   const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState(false);
@@ -40,25 +40,38 @@ export default function Occupancy(): JSX.Element {
     const result = await callApi<ListingSpesific>(`/holidaze/venues/${id}?_bookings=true`);
     if (result.data) {
       setListing(result.data);
-      const reserved = result.data.bookings.map((booking) => ({
+
+      const reserved = result.data.bookings?.map((booking) => ({
         startDate: new Date(booking.dateFrom),
         endDate: new Date(booking.dateTo),
       }));
-      setListingReserved(reserved);
-
-      const activeBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) > new Date());
-      setActiveBookingsArray(activeBookings);
-
-      const inactiveBookings = result.data.bookings.filter((booking) => new Date(booking.dateTo) < new Date());
-      setInactiveBookingsArray(inactiveBookings);
-
-      if (activeBookings.length === 0) {
-        setInactiveBookingsFilter(true);
-        setActiveBookingsFilter(false);
-      } else if (inactiveBookings.length === 0) {
-        setInactiveBookingsFilter(false);
-        setActiveBookingsFilter(true);
+      if (reserved) {
+        setListingReserved(reserved);
       }
+      const activeBookings = result.data.bookings?.filter((booking) => new Date(booking.dateTo) > new Date());
+      if (activeBookings) {
+        setActiveBookingsArray(activeBookings);
+        if (activeBookings.length === 0) {
+          setInactiveBookingsFilter(true);
+          setActiveBookingsFilter(false);
+        } else {
+          setActiveBookingsFilter(true);
+          setInactiveBookingsFilter(false);
+        }
+      }
+
+      const inactiveBookings = result.data.bookings?.filter((booking) => new Date(booking.dateTo) < new Date());
+      if (inactiveBookings) {
+        setInactiveBookingsArray(inactiveBookings);
+      }
+
+      // if (activeBookings.length === 0) {
+      //   setInactiveBookingsFilter(true);
+      //   setActiveBookingsFilter(false);
+      // } else if (inactiveBookings.length === 0) {
+      //   setInactiveBookingsFilter(false);
+      //   setActiveBookingsFilter(true);
+      // }
     }
   };
 
