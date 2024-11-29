@@ -3,10 +3,12 @@ import { useApiCall } from "../../hooks";
 import { ListingSpesific } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { SmallSpinnerLoader } from "../Loaders";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { OpenMenuContext } from "../../contexts/";
 
 export default function ListingSpesificSearch(): JSX.Element {
   const { loading, error, callApi } = useApiCall();
+  const { setIsMenuOpen } = useContext(OpenMenuContext);
   const navigate = useNavigate();
 
   const [typedSearchQuery, setTypedSearchQuery] = useState<string>("");
@@ -24,7 +26,7 @@ export default function ListingSpesificSearch(): JSX.Element {
         <input
           required
           autoComplete="off"
-          className={`p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green`}
+          className={`p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green text-center md:text-left`}
           value={typedSearchQuery}
           id="searchInput"
           type="search"
@@ -64,6 +66,7 @@ export default function ListingSpesificSearch(): JSX.Element {
                             setLocationListOpen(false);
                             setSearchResult([]);
                             setTypedSearchQuery("");
+                            setIsMenuOpen(false);
                           }}>
                           {listings.name}
                         </li>
