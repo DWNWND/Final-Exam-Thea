@@ -126,8 +126,12 @@ export default function NewListingForm(): JSX.Element {
     name: "media",
   });
 
-  const nextStep = async (data: StepInputs) => {
-    setFormData((prev) => ({ ...prev, ...data }));
+  // const nextStep = async (data: StepInputs) => {
+  //   setFormData((prev) => ({ ...prev, ...data }));
+  //   setFormStep((cur) => cur + 1);
+  // };
+
+  const nextStep = () => {
     setFormStep((cur) => cur + 1);
   };
 
@@ -368,14 +372,22 @@ export default function NewListingForm(): JSX.Element {
             </section>
           </>
         )}
-        <div className="flex justify-between items-center">
-          <SquareBtn innerText="Back" type="button" clickFunc={prevStep} disabled={formStep === 0} />
-          <div className="flex justify-center gap-2 ">
+        <div>
+          <div className="flex justify-center gap-2">
             {newListingSchema.map((_, index) => (
               <div key={index} className={`w-2 h-2 rounded-full ${index <= formStep ? "bg-primary-green" : "bg-comp-green"}`}></div>
             ))}
           </div>
-          <SquareBtn innerText="Next" type="button" clickFunc={nextStep} disabled={!isValid || formStep === 8} />
+        </div>
+        <div className="flex justify-between items-center gap-4">
+          <button type="button" onClick={prevStep} disabled={formStep === 0} className={`text-nowrap flex justify-center p-2 px-4 w-full md:w-auto items-center h-full uppercase rounded ${formStep === 0 ? "opacity-30" : "hover:shadow-md"} cursor-pointer text-primary-green border border-primary-green transition duration-300 ease-in-out`}>
+            Back
+          </button>
+          <button type="button" onClick={nextStep} disabled={!isValid || formStep === 8} className={`text-nowrap flex justify-center p-2 px-4 w-full md:w-auto items-center h-full uppercase rounded ${!isValid || formStep === 8 ? "opacity-30" : "hover:shadow-md"} cursor-pointer text-primary-green border border-primary-green transition duration-300 ease-in-out`}>
+            Next
+          </button>
+          {/* <SquareBtn innerText="Back" type="button" clickFunc={prevStep} disabled={formStep === 0} />
+          <SquareBtn innerText="Next" type="button" clickFunc={nextStep} disabled={!isValid || formStep === 8} /> */}
         </div>
         {formStep === 8 && (
           <>
