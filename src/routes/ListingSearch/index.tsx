@@ -11,7 +11,6 @@ import ListSearch from "../../components/Lists/ListSearch";
 
 export default function ListingSearch(): JSX.Element {
   const { travelSearchData } = useTravelSearchStore();
-  const navigate = useNavigate();
 
   return (
     <HelmetProvider>
