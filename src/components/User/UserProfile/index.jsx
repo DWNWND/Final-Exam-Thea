@@ -4,6 +4,7 @@ import useAuthStore from "../../../stores/useAuthStore";
 import ListVenues from "../ListVenues";
 import { Link } from "react-router-dom";
 import ProfileLinks from "../ProfileLinks";
+import SquareBtn from "../../Buttons/SquareBtn";
 
 export default function UserProfile({ user }) {
   const { userName, accessToken } = useAuthStore();
@@ -14,13 +15,12 @@ export default function UserProfile({ user }) {
 
   return (
     <>
-      <div className="bg-comp-purple p-6 rounded-3xl md:py-10 shadow-md w-full h-fit xl:sticky xl:top-20">
+      <div className="bg-comp-purple p-6 rounded-lg shadow-md w-full h-fit xl:sticky xl:top-20">
         {user.venueManager && <VenueManagerBadge />}
         <UserDetails user={user} />
         <SettingsBtn userName={userName} />
       </div>
       {/* <div className="p-4 italic">User registered: {user && user.createdAt}</div> */}
-
     </>
   );
 }
@@ -35,9 +35,13 @@ function VenueManagerBadge() {
 
 function SettingsBtn({ userName }) {
   return (
-    <Link to={`/user/${userName}/settings`} className="block text-center w-full border-primary-blue border text-primary-blue text-lg px-3 py-2 rounded-lg">
-      my settings
+    <Link to={`/user/${userName}/settings`}>
+      <SquareBtn innerText="my settings" width="full" tailw="lowercase" bgColor="transparent" textColor="primary-purple" />
     </Link>
+
+    // <Link to={`/user/${userName}/settings`} className="block text-center w-full border-primary-blue border text-primary-blue text-lg px-3 py-2 rounded-lg">
+    //   my settings
+    // </Link>
   );
 }
 

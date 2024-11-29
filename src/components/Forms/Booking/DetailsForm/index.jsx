@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import CtaBtn from "../../../Buttons/CtaBtn/index.jsx";
 import { useNavigate } from "react-router-dom";
 import StringInput from "../../../Inputs/String";
 import { useSearchStore } from "../../../../stores/useSearchStore.js";
@@ -9,6 +8,7 @@ import formatDateForDisplay from "../../../../utils/dateUtils/formatDateForDispl
 import claculateNightsBetween from "../../../../utils/calcNights/claculateNightsBetween.js";
 import useAuthStore from "../../../../stores/useAuthStore.js";
 import useBookingDataStore from "../../../../stores/useBookingDataStore.js";
+import RoundBtn from "../../../Buttons/RoundBtn";
 
 // Validation schema for registration
 // remeber to implement validation on email etc.
@@ -58,8 +58,8 @@ export default function DetailsForm() {
 
   //add more levels of userFeedback for the different errorcodes
   return (
-    <div className="max-w-md mx-auto pb-8 mb-4 flex items-center flex-col justify-center">
-      <p className="text-danger text-xs"></p>
+    <div className="flex flex-col gap-6 max-w-[50rem] w-full m-4 p-8 bg-white rounded-lg shadow-sm">
+      {/* <p className="text-danger text-xs"></p> */}
       <div className="w-full flex flex-col gap-1 bg-comp-purple p-4 rounded-lg">
         <p className="font-semibold">{selectedVenue.name}</p>
         <p>
@@ -74,14 +74,14 @@ export default function DetailsForm() {
         <h1 className="text-2xl uppercase text-primary-green w-full">Your details</h1>
         <p className="text-sm italic text-primary-blue w-full">Please enter your details to complete your booking</p>
       </div>
-      <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <form className="w-full flex flex-col gap-4 md:gap-6" onSubmit={handleSubmit(onSubmit)}>
         <StringInput type="text" id="firstName" label="First name" placeholder="Kari" error={errors.firstName} register={register} errorMessage={errors.firstName && errors.firstName.message} />
         <StringInput type="text" id="lastName" label="Last name" placeholder="Nordmann" error={errors.lastName} register={register} errorMessage={errors.lastName && errors.lastName.message} />
         <StringInput type="email" id="email" label="Email address" defaultValue={accessToken && userName} placeholder="example@example.com" error={errors.email} register={register} errorMessage={errors.email && errors.email.message} />
         <StringInput type="text" id="checkIn" label="Check in time" placeholder="14:00" error={errors.checkIn} register={register} errorMessage={errors.checkIn && errors.checkIn.message} />
         <StringInput type="text" id="specialRequests" label="Special requests" placeholder="Please let us know if you have any special requests" error={errors.specialRequests} register={register} errorMessage={errors.specialRequests && errors.specialRequests.message} />
-        <div className="flex items-center justify-between">
-          <CtaBtn type="submit" innerText="Next" tailw="mt-4 md:mt-0 rounded-full bg-primary-green" mainCta={true} color={"primary-green"} />
+        <div className="flex items-center justify-between my-6">
+          <RoundBtn type="submit" innerText="Next" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
         </div>
       </form>
     </div>

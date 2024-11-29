@@ -10,6 +10,10 @@ export default {
       black: "#19161A",
       white: "#ffffff",
       whiteTransparent: "rgba(255, 255, 255, 0.8)",
+      sageGreen: "#D7E4D1",
+      minimalGray: "#F5F5F5",
+      paleTan: "#F4E3D7",
+      desatBlue: "#E6EBEF",
       primary: {
         green: "#2D521E",
         blue: "#27346A",
@@ -22,7 +26,7 @@ export default {
         purple: "#CCCBDB",
         gray: "#EFF1EE",
         green: "#C0D1B9",
-        greenDark: "#B2BDAE"
+        greenDark: "#B2BDAE",
       },
       success: "#4A9948",
       warning: "#C78910",

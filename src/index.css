@@ -11,6 +11,10 @@
   margin: 0;
 }
 
+body {
+  overscroll-behavior: none;
+}
+
 html {
   scroll-behavior: smooth; /* This enables smooth scrolling */
 }
@@ -29,9 +33,6 @@ html {
   font-weight: 800;
 }
 
-/* body, html {
-  overflow-x: hidden;
-} */
 
 /* global checkbox styling */
 /* Default styling for checkbox */

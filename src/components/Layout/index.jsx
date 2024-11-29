@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback, DataProvider } from "../";
+import { ErrorFallback } from "../";
 import Header from "./Header";
 import Footer from "./Footer";
 import FixedBtnDisplay from "./FixedBtnDisplay";

@@ -3,6 +3,7 @@ import RegisterForm from "../../components/Forms/Register";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../stores/useAuthStore.js";
+import MainElement from "../../components/MainElement/index.jsx";
 
 export default function Register() {
   const { accessToken, userName } = useAuthStore();
@@ -20,9 +21,9 @@ export default function Register() {
         <meta name="description" content="" />
         <title>Register New User| Holidayz</title>
       </Helmet>
-      <main className="">
+      <MainElement tailw="flex items-center justify-center">
         <RegisterForm />
-      </main>
+      </MainElement>
     </HelmetProvider>
   );
 }

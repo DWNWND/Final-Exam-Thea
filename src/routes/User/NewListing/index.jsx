@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import NewListingForm from "../../../components/Forms/NewListing";
+import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function NewListing() {
   const { accessToken } = useAuthStore();
@@ -20,10 +21,10 @@ export default function NewListing() {
         <meta name="description" content="" />
         <title>New Listing | Holidayz</title>
       </Helmet>
-      <main className="p-4 pt-20">
+      <MainElement tailw="bg-comp">
         <h1 className="hidden uppercase text-2xl text-primary-green text-center mb-6">New Listing</h1>
         <NewListingForm />
-      </main>
+      </MainElement>
     </HelmetProvider>
   );
 }

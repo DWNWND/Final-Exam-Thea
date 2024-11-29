@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 
 // Define the Zustand store with persist middleware
 // Remove the userName(and remember to fix it in the login and register forms)
+// Remove the isLoggedIn?
 // you probably dont need to save all the user info in the store, just the token
 const useAuthStore = create(
   persist(

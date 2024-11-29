@@ -2,6 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../../stores/useAuthStore.js";
+import MainElement from "../../../components/MainElement/index.jsx";
 
 export default function MyBookings() {
   const { accessToken } = useAuthStore();
@@ -19,9 +20,9 @@ export default function MyBookings() {
         <meta name="description" content="" />
         <title>My Bookings| Holidayz</title>
       </Helmet>
-      <div>
+      <MainElement>
         <h1>My Bookings</h1>
-      </div>
+        </MainElement>
     </HelmetProvider>
   );
 }

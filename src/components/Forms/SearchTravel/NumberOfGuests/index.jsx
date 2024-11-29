@@ -30,9 +30,9 @@ export default function NumberOfGuests({ color, mainSearch, tailw }) {
 
   //add labels to the form inputs?
   return (
-    <div className={`w-full md:w-auto flex justify-center items-center gap-4 lg:gap-2`}>
+    <div className={`w-full md:w-auto flex justify-center md:justify-start items-center gap-4 lg:gap-2`}>
       <button
-        className={`hover:shadow-md rounded-full w-full ${mainSearch && "lg:h-10 lg:w-10"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`}
+        className={`hover:shadow-md rounded-full w-full ${mainSearch && "lg:h-10 lg:w-10 bg-white"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`}
         type="button"
         onClick={() => {
           dispatch({ type: "decrement" });
@@ -41,7 +41,7 @@ export default function NumberOfGuests({ color, mainSearch, tailw }) {
       </button>
       <input type="number" readOnly className={`text-center font-semibold flex justify-center bg-transparent items-center content-center text-${color}`} id="guests" name="guests" min="1" max="25" value={state.guests} />
       <button
-        className={`hover:shadow-md rounded-full  w-full ${mainSearch && "lg:h-10 lg:w-10"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`}
+        className={`hover:shadow-md rounded-full  w-full ${mainSearch && "lg:h-10 lg:w-10 bg-white"} flex justify-center text-xl items-center text-${color} border-${color} border p-2`}
         type="button"
         onClick={() => {
           dispatch({ type: "increment" });
