@@ -31,7 +31,7 @@ export default function ListSearchForm() {
   const formattedEndDate = formatDateForDisplay(endDate);
 
   return (
-    <div className="bg-primary-blue p-6 rounded-3xl md:m-10 md:py-10 shadow-md w-full h-fit xl:sticky xl:top-4">
+    <div className="bg-primary-blue p-6 rounded-3xl lg:m-10 md:py-10 shadow-md w-full h-fit xl:sticky xl:top-4">
       <h1 className="text-center text-2xl font-bold text-white">
         from: {formattedStartDate} <br></br> to: {formattedEndDate}
       </h1>

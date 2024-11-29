@@ -20,9 +20,9 @@ export default function Register() {
         <meta name="description" content="" />
         <title>Register New User| Holidayz</title>
       </Helmet>
-      <div>
+      <main className="">
         <RegisterForm />
-      </div>
+      </main>
     </HelmetProvider>
   );
 }

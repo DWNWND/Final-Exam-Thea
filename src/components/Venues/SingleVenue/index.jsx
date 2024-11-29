@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { MdOutlinePets, MdEmojiFoodBeverage } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
-import SelectTravelDates from "../../Forms/SearchForm/SelectTravelDates/index.jsx";
+import SelectTravelDates from "../../Forms/SearchTravel/SelectTravelDates/index.jsx";
 import formatDateForDisplay from "../../../utils/dateUtils/formatDateForDisplay.js";
 import claculateNightsBetween from "../../../utils/calcNights/claculateNightsBetween.js";
 import BookingCalendar from "../../BookingCalendar/index.jsx";

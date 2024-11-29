@@ -17,12 +17,14 @@ export default function Header() {
 
   return (
     <header className={`fixed w-full flex items-center justify-between p-4 bg-gray-800 z-50 ${isMenuOpen ? "bg-white" : "bg-whiteTransparent"}`}>
-      <div className={`${!hasPreviousRoute ? "hidden" : "w-6"}`}>
-        <BackBtn tailw={`flex text-primary-green text-3xl`} />
+      <div className="flex flex-row items-center gap-8">
+        <div className={`${!hasPreviousRoute ? "hidden" : "w-6"}`}>
+          <BackBtn tailw={`flex text-primary-green text-3xl`} />
+        </div>
+        <Link to="/" className={` ${!hasPreviousRoute ? "mx-auto" : "absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none"}`}>
+          <img src={LogoIcon} className="h-auto w-auto object-contain" alt="Holidaize logo, click to go to home page" />
+        </Link>
       </div>
-      <Link to="/">
-        <img src={LogoIcon} className="h-auto w-auto object-contain" alt="Holidaize logo, click to go to home page" />
-      </Link>
       <div className="flex items-center gap-4">
         {!isMobile && <FixedBtnDisplay />}
         <HamburgerMenu />

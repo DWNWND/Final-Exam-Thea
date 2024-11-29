@@ -23,7 +23,8 @@ export default function useAuth() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Something went wrong");
+        console.log("errorData", errorData);
+        throw new Error(errorData.errors[0].message || "Error when calling API");
       }
 
       return await response.json();
@@ -42,10 +43,12 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      setVenueManager(response.data.venueManager);
+      // setVenueManager(response.data.venueManager);
+      return { success: true };
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
-      setError(err.message);
+      setError(err);
+      return { success: false, error: err };
     } finally {
       setLoading(false);
     }
@@ -61,10 +64,12 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      setVenueManager(response.data.venueManager);
+      // setVenueManager(response.data.venueManager);
+      return { success: true };
       // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       setError(err);
+      return { success: false, error: err };
     } finally {
       setLoading(false);
     }

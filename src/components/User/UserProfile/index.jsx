@@ -6,55 +6,46 @@ import useAuthStore from "../../../stores/useAuthStore";
 import ListVenues from "../ListVenues";
 import { Link } from "react-router-dom";
 
-const url = import.meta.env.VITE_API_BASE_URL;
 
-export default function UserProfile() {
+export default function UserProfile({ user }) {
   const [selector, setSelector] = useState("bookings");
-  const [user, setUser] = useState(null);
   const { userName, accessToken } = useAuthStore();
-  const { callApiWith } = useFetchUser(accessToken);
 
   if (!accessToken) {
     return null;
   }
-  
-  const fetchData = async () => {
-    const response = await callApiWith(`${url}/holidaze/profiles/${userName}?_venues=true&_bookings=true`, {
-      method: "GET",
-    });
-    setUser(response.data);
-  };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const fetchData = async () => {
+  //   const response = await callApiWith(`${url}/holidaze/profiles/${userName}?_venues=true&_bookings=true`, {
+  //     method: "GET",
+  //   });
+  //   setUser(response.data);
+  // };
 
-  console.log("user", user);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <>
-      {user && (
-        <>
-          <div className="bg-comp-purple rounded-lg p-4">
-            {user.venueManager && <VenueManagerBadge />}
-            <UserDetails user={user} />
-            <SettingsBtn userName={userName} />
-          </div>
-          {/* <div className="p-4 italic">User registered: {user && user.createdAt}</div> */}
-          {user.bookings.length > 1 && user.venues.length > 1 && <SelectionBtns selector={selector} setSelector={setSelector} />}
-          {user.bookings.length > 1 ? (
-            <ListBookings bookings={user.bookings} />
-          ) : (
-            <div className="flex flex-col justify-center items-center my-6 gap-4">
-              <p className="italic text-center">You currently have no bookings</p>
-              <Link to="/" className="text-primary-blue underline text-lg">
-                Start planning your next adventure now!
-              </Link>
-            </div>
-          )}
-          {user.venues.length > 1 && <ListVenues venues={user.venues} />}
-        </>
+      <div className="bg-comp-purple rounded-lg p-4">
+        {user.venueManager && <VenueManagerBadge />}
+        <UserDetails user={user} />
+        <SettingsBtn userName={userName} />
+      </div>
+      {/* <div className="p-4 italic">User registered: {user && user.createdAt}</div> */}
+      {user.bookings.length > 1 && user.venues.length > 1 && <SelectionBtns selector={selector} setSelector={setSelector} />}
+      {user.bookings.length > 1 ? (
+        <ListBookings bookings={user.bookings} />
+      ) : (
+        <div className="flex flex-col justify-center items-center my-6 gap-4">
+          <p className="italic text-center">You currently have no bookings</p>
+          <Link to="/" className="text-primary-blue underline text-lg">
+            Start planning your next adventure now!
+          </Link>
+        </div>
       )}
+      {user.venues.length > 1 && <ListVenues venues={user.venues} />}
     </>
   );
 }

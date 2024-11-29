@@ -16,7 +16,7 @@ export default function ListSearch() {
   useEffect(() => {
     const matches = venues.filter((venue) => {
       // Location filter
-      if (searchQuery.location && searchQuery.location !== venue.location.city) return false;
+      if (searchQuery.location.toLowerCase() && searchQuery.location.toLowerCase() !== venue.location.city.toLowerCase()) return false;
 
       // Amenities filter
       const amenities = [
