@@ -11,6 +11,8 @@ interface AuthStoreState {
   logOut: () => void;
 }
 
+type PersistedAuthStoreState = Partial<AuthStoreState>;
+
 export const useAuthStore = create<AuthStoreState>()(
   persist(
     (set) => ({
@@ -27,18 +29,18 @@ export const useAuthStore = create<AuthStoreState>()(
     {
       name: "auth-storage",
       storage: createJSONStorage(() => localStorage),
-      version: 1, // Add a version number
-      migrate: (persistedState: any, version: number) => {
-        // Handle old state migration logic here
+      version: 1,
+      migrate: (persistedState, version): PersistedAuthStoreState => {
+        const state = persistedState as PersistedAuthStoreState;
+
         if (version === 0) {
-          // Clear old keys
           return {
             accessToken: null,
             userName: null,
             venueManager: null,
           };
         }
-        return persistedState; // Return existing state if no migration is needed
+        return state;
       },
     }
   )
