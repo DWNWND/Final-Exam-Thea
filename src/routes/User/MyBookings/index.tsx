@@ -119,13 +119,13 @@ export default function MyBookings(): JSX.Element {
       <MainElement>
         {error && <GeneralErrorFallback errorMessage={error} />}
         {allBookings.length > 0 && (
-          <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-8 rounded-lg">
+          <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-4 md:p-8 rounded-lg">
             <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>
             {activeBookingsFilter && <p className="text-black">{`Showing ${displayedActiveBookings.length} of ${activeBookingsArray.length} bookings`}</p>}
             {inactiveBookingsFilter && <p className="text-black">{`Showing ${displayedInactiveBookings.length} of ${inactiveBookingsArray.length} bookings`}</p>}
-            <div className="flex gap-6 my-4">
-              <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" width="full" tailw="lowercase" bgColor={activeBookingsFilter ? "primary-blue" : "white"} textColor={activeBookingsFilter ? "white" : "primary-blue"} />
-              <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tailw="lowercase" bgColor={inactiveBookingsFilter ? "primary-blue" : "white"} textColor={inactiveBookingsFilter ? "white" : "primary-blue"} />
+            <div className="flex gap-2 md:gap-6 my-4 flex-col md:flex-row">
+              <RoundBtn clickFunc={toggleActiveBookings} borderColor="primary-blue" innerText="active bookings" width="full" tailw="lowercase" bgColor={activeBookingsFilter ? "primary-blue" : "white"} textColor={activeBookingsFilter ? "white" : "primary-blue"} />
+              <RoundBtn clickFunc={toggleInactiveBookings} borderColor="primary-blue" innerText="inactive bookings" width="full" tailw="lowercase" bgColor={inactiveBookingsFilter ? "primary-blue" : "white"} textColor={inactiveBookingsFilter ? "white" : "primary-blue"} />
             </div>
             {activeBookingsFilter && displayedActiveBookings.length > 0 && (
               <>
