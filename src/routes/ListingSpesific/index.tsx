@@ -121,7 +121,7 @@ export default function ListingSpecific(): JSX.Element {
                   </button>
                   <SelectTravelDates toggleDatesFunc={toggleEditDates} editDates={editDates} color="primary-blue" />
                 </div>
-                <NumberOfGuests color="primary-blue" mainSearch={false} />
+                <NumberOfGuests color="primary-blue"/>
               </div>
               <div className="relative">
                 <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer" onClick={toggleImageModal}>
