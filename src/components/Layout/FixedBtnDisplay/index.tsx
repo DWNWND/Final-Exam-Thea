@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from "react";
 import { OpenMenuContext } from "../../../contexts/";
 import { useAuthStore } from "../../../stores";
 import { RoundBtn, SquareBtn } from "../../Buttons";
+import ListingSpesificSearch from "../../ListingSpesificSearch";
 
 export default function FixedBtnDisplay(): JSX.Element {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
@@ -45,14 +46,19 @@ export default function FixedBtnDisplay(): JSX.Element {
     <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-3 bg-white`} ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
       <ul className="flex flex-row gap-3 md:gap-4" onClick={() => setIsMenuOpen(false)}>
         {!isMobile && (
-          <li>
-            <Link to="/search">
-              <RoundBtn innerText="Book your next holiday" bgColor="primary-green" borderColor="primary-green" textColor="white" />
-              {/* <SquareBtn innerText="Book your next holiday" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" /> */}
-            </Link>
-          </li>
+          <>
+            <li>
+              <ListingSpesificSearch />
+            </li>
+            <li>
+              <Link to="/search">
+                <RoundBtn innerText="Book your next holiday" bgColor="primary-green" borderColor="primary-green" textColor="white" />
+                {/* <SquareBtn innerText="Book your next holiday" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" /> */}
+              </Link>
+            </li>
+          </>
         )}
-        <li className="w-full">
+        <li>
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>
             <SquareBtn innerText="List your place" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
           </Link>
@@ -60,8 +66,8 @@ export default function FixedBtnDisplay(): JSX.Element {
         {/* <li className="w-full">
           <SquareBtn innerText="Nok" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
         </li> */}
-        <li className="w-full">
-          <Link to={accessToken ? `/user/${userName}` : "/login"} className="w-full">
+        <li>
+          <Link to={accessToken ? `/user/${userName}` : "/login"}>
             <SquareBtn innerText={accessToken ? "My profile" : "Login/register"} tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
 
             {/* <RoundBtn innerText={accessToken ? "My profile" : "Login"} bgColor="primary-green" borderColor="primary-green" textColor="white" /> */}
