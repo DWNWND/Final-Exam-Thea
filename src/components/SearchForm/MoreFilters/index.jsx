@@ -3,9 +3,9 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { useSearchStore } from "../../../stores/useSearchStore.js";
 
-export default function MoreFilters({ register, setValue, color, mainSearch }) {
+export default function MoreFilters({ color, mainSearch }) {
   const [openMoreFilters, setOpenMoreFilters] = useState(false);
-  const { formData } = useSearchStore();
+  const { travelSearchData, setFreeWifi, setPetsAllowed, setFreeParking, setFreeBreakfast, setPrice100, setPrice100to200, setPrice200to300, setPrice300to400, setPrice400to500, setPrice500 } = useSearchStore();
 
   function handleClick() {
     setOpenMoreFilters(!openMoreFilters);
@@ -23,12 +23,12 @@ export default function MoreFilters({ register, setValue, color, mainSearch }) {
             <div className={`text-${color} uppercase font-semibold text-lg`}>Filters</div>
             <div className={`flex flex-col gap-2 ${mainSearch && "lg:flex-row lg:gap-6"}`}>
               <div className={`flex flex-col gap-2  xl:flex-row xl:gap-6`}>
-                <Checkbox color={color} checked={formData.freeWifi} innerText="Free wifi" id="freeWifi" onChangeFunc={(e) => setValue("freeWifi", e.target.checked)} />
-                <Checkbox color={color} checked={formData.freeParking} innerText="Free parking" id="freeParking" onChangeFunc={(e) => setValue("freeParking", e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.freeWifi} innerText="Free wifi" id="freeWifi" onChangeFunc={(e) => setFreeWifi(e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.freeParking} innerText="Free parking" id="freeParking" onChangeFunc={(e) => setFreeParking(e.target.checked)} />
               </div>
               <div className="flex flex-col gap-2 xl:flex-row xl:gap-6">
-                <Checkbox color={color} checked={formData.petsAllowed} innerText="Pets allowed" id="petsAllowed" onChangeFunc={(e) => setValue("petsAllowed", e.target.checked)} />
-                <Checkbox color={color} checked={formData.freeBreakfast} innerText="Breakfast included" id="freeBreakfast" onChangeFunc={(e) => setValue("freeBreakfast", e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.petsAllowed} innerText="Pets allowed" id="petsAllowed" onChangeFunc={(e) => setPetsAllowed(e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.freeBreakfast} innerText="Breakfast included" id="freeBreakfast" onChangeFunc={(e) => setFreeBreakfast(e.target.checked)} />
               </div>
             </div>
           </div>
@@ -36,16 +36,16 @@ export default function MoreFilters({ register, setValue, color, mainSearch }) {
             <div className={`text-${color} uppercase font-semibold text-lg`}>Price range /night</div>
             <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
               <div className="flex flex-col gap-2">
-                <Checkbox color={color} checked={formData.price100} innerText="kr 0 - 100" id="priceRange1" onChangeFunc={(e) => setValue("price100", e.target.checked)} />
-                <Checkbox color={color} checked={formData.price100to200} innerText="kr 100 - 200" id="priceRange2" onChangeFunc={(e) => setValue("price100to200", e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.price100} innerText="kr 0 - 100" id="priceRange1" onChangeFunc={(e) => setPrice100(e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.price100to200} innerText="kr 100 - 200" id="priceRange2" onChangeFunc={(e) => setPrice100to200(e.target.checked)} />
               </div>
               <div className="flex flex-col gap-2">
-                <Checkbox color={color} checked={formData.price200to300} innerText="kr 200 - 300" id="priceRange3" onChangeFunc={(e) => setValue("price200to300", e.target.checked)} />
-                <Checkbox color={color} checked={formData.price300to400} innerText="kr 300 - 400" id="priceRange4" onChangeFunc={(e) => setValue("price300to400", e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.price200to300} innerText="kr 200 - 300" id="priceRange3" onChangeFunc={(e) => setPrice200to300(e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.price300to400} innerText="kr 300 - 400" id="priceRange4" onChangeFunc={(e) => setPrice300to400(e.target.checked)} />
               </div>
               <div className="flex flex-col gap-2">
-                <Checkbox color={color} checked={formData.price400to500} innerText="kr 400 - 500" id="priceRange5" onChangeFunc={(e) => setValue("price400to500", e.target.checked)} />
-                <Checkbox color={color} checked={formData.price500} innerText="kr 500 - up" id="priceRange6" onChangeFunc={(e) => setValue("price500", e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.price400to500} innerText="kr 400 - 500" id="priceRange5" onChangeFunc={(e) => setPrice400to500(e.target.checked)} />
+                <Checkbox color={color} checked={travelSearchData.price500} innerText="kr 500 - up" id="priceRange6" onChangeFunc={(e) => setPrice500(e.target.checked)} />
               </div>
             </div>
           </div>

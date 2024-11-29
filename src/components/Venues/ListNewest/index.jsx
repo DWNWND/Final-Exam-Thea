@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import VenueCard from "../VenueCard";
+import { useContext } from "react";
+import { DataContext } from "../../../components/DataProvider";
 
-export default function ListNewest({ venues }) {
+
+export default function ListNewest() {
+  const { venues } = useContext(DataContext);
+
   return (
     <>
       <h2 className="font-bold text-2xl text-primary-green uppercase mb-4">Our newest Listings</h2>
