@@ -18,7 +18,7 @@ export default function Home() {
       </Helmet>
       <main>
         <DataProvider>
-          <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center h-screen`}>
+          <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center min-h-screen`}>
             <MainSearchForm />
           </section>
           <section id="categorizedListings" className="p-4 pb-12">

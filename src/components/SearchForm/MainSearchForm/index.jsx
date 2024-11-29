@@ -19,7 +19,7 @@ export default function MainSearchForm() {
       <form onSubmit={(e) => searchFunc(e)} className="flex flex-col gap-4 md:gap-8" id="search-travel-form">
         <div className="flex flex-col lg:flex-row gap-4">
           <LocationLookAhead color="primary-green" />
-          <SelectTravelDates color="primary-green" />
+          <SelectTravelDates color="primary-green" tailw={"px-3"} />
           <NumberOfGuests color="primary-green" mainSearch={true} />
           <CtaBtn type="submit" innerText="Search" tailw="mt-4 md:mt-0 rounded-full bg-primary-green lg:max-w-8" mainCta={true} />
         </div>

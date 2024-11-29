@@ -2,17 +2,29 @@ import { useState, useEffect } from "react";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
-export default function useFetch(url) {
+export default function useFetch(url, headers) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const headers = {
-    // headers: {
-    //   // Authorization: `Bearer ${accessToken}`,
-    //   "X-Noroff-API-Key": apiKey.data.key,
-    // },
-  };
+  // const headers = (action) => {
+  //   if (action === "auth") {
+  //     return {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         "X-Noroff-API-Key": apiKey,
+  //       },
+  //     };
+  //   }
+  //   if (action === "post") {
+  //     return {
+  //       method: POST,
+  //       body: JSON.stringify({ email, password }),
+  //     };
+  //   } else if (!action) {
+  //     return null;
+  //   }
+  // };
 
   useEffect(() => {
     async function getData() {

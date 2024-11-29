@@ -4,12 +4,14 @@ import * as yup from "yup";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 
 // Validation schema for registration
 const registerSchema = yup.object().shape({
-  username: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
+  userName: yup.string().min(3, "Username must be at least 3 characters").required("Username is required"),
   email: yup.string().email("Please enter a valid email").required("Email is required"),
-  password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+  password: yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -17,6 +19,10 @@ const registerSchema = yup.object().shape({
 });
 
 export default function RegisterForm() {
+  const { registerNewUser, loading, error } = useAuth();
+  const { setIsLoggedIn } = useAuthStore();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -25,16 +31,20 @@ export default function RegisterForm() {
     resolver: yupResolver(registerSchema),
   });
 
-  const login = useAuthStore((state) => state.login);
+  // const login = useAuthStore((state) => state.login);
 
   const onSubmit = (data) => {
-    const userData = {
-      username: data.username,
-      email: data.email,
-    };
-    login(userData); // Simulate a successful registration
-    console.log("User registered:", userData);
+    console.log("username:", data.userName);
+    registerNewUser(data.userName, data.email, data.password);
+
+    if (!loading && !error) {
+      setIsLoggedIn(true);
+      navigate("/" + data.userName);
+    }
   };
+
+  //add more levels of userFeedback for the different errorcodes
+  console.log("errors", error);
 
   return (
     <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4  h-svh flex items-center flex-col justify-center">
@@ -44,8 +54,8 @@ export default function RegisterForm() {
           <label htmlFor="username" className="block text-primary-green mb-2">
             Username
           </label>
-          <input type="text" id="username" placeholder="Your username" {...register("username")} className={`placeholder:italic placeholder:font-light text-primary-green border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.username ? "border-danger" : "border-primary-green"}`} />
-          {errors.username && <p className="text-danger text-xs mt-1">{errors.username.message}</p>}
+          <input type="text" id="userName" placeholder="Your username" {...register("userName")} className={`placeholder:italic placeholder:font-light text-primary-green border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${errors.userName ? "border-danger" : "border-primary-green"}`} />
+          {errors.userName && <p className="text-danger text-xs mt-1">{errors.userName.message}</p>}
         </div>
 
         <div className="mb-4">

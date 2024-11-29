@@ -4,6 +4,8 @@ import * as yup from "yup";
 import useAuthStore from "../../../stores/useAuthStore.js";
 import CtaBtn from "../../Buttons/CtaBtn/index.jsx";
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth.jsx";
+import { useNavigate } from "react-router-dom";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -12,6 +14,10 @@ const schema = yup.object().shape({
 });
 
 export default function LoginForm() {
+  const { login, loading, error } = useAuth();
+  const { setIsLoggedIn } = useAuthStore();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -20,14 +26,17 @@ export default function LoginForm() {
     resolver: yupResolver(schema),
   });
 
-  const login = useAuthStore((state) => state.login);
+  const onSubmit = async (data) => {
+    login(data.email, data.password);
 
-  const onSubmit = (data) => {
-    // Simulate successful login
-    const userData = { email: data.email };
-    login(userData);
-    console.log("User logged in:", userData);
+    if (!loading && !error) {
+      setIsLoggedIn(true);
+      navigate("/" + data.userName);
+    }
   };
+
+  //add more levels of userFeedback for the different errorcodes
+  console.log("errors", error);
 
   return (
     <div className="max-w-md mx-auto px-8 pt-6 pb-8 mb-4 h-svh flex items-center flex-col justify-center">
