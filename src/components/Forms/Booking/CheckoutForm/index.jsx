@@ -13,11 +13,10 @@ import RoundBtn from "../../../Buttons/RoundBtn/index.jsx";
 import { useState } from "react";
 import SmallLoader from "../../../SmallLoader/index.jsx";
 
-const url = import.meta.env.VITE_API_BASE_URL;
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-// Validation schema for registration
-// remeber to implement validation on email etc.
-const schema = yup.object().shape({
+// remeber to implement noroff validation on email etc.
+const checkoutSchema = yup.object().shape({
   cardNumber: yup
     .string()
     .matches(/^\d{16}$/, "Card number must be exactly 16 digits")
@@ -48,25 +47,27 @@ export default function CheckoutForm() {
     watch,
     trigger,
   } = useForm({
-    resolver: yupResolver(schema),
+    mode: "onChange",
+    resolver: yupResolver(checkoutSchema),
   });
 
   const onSubmit = async () => {
     try {
       const sendData = async () => {
-        const response = await callApiWith(`${url}/holidaze/bookings`, {
+        const response = await callApiWith(`${apiBaseUrl}/holidaze/bookings`, {
           method: "POST",
           body: JSON.stringify(bookingData),
         });
         setSuccessfulBookingId(response.data.id);
+        return response.data.id;
       };
 
-      await sendData();
+      const bookingId = await sendData();
 
-      if (!loading && !error && successfulBookingId) {
+      if (!loading && !error && bookingId) {
         setErrorMessage("");
         setUserFeedbackMessage("Payment successful");
-        navigate(`/booking/confirmation/${successfulBookingId}`);
+        navigate(`/booking/confirmation/${bookingId}`);
       }
     } catch (error) {
       setErrorMessage("Booking failed: " + error);

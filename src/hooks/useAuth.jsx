@@ -4,7 +4,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const apiKey = import.meta.env.VITE_VITE_API_KEY;
 
 export default function useAuth() {
-  const { setAccessToken, setUserName, setVenueManager } = useAuthStore();
+  const { setAccessToken, setUserName } = useAuthStore();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,14 +22,11 @@ export default function useAuth() {
     if (!response.ok) {
       const errorData = await response.json();
 
-      //consle.log for debugging
-      console.log("errro catched in apiCall", errorData);
-
+      console.log("error catched in apiCall", errorData);
       const error = new Error("Error when calling API");
       error.data = errorData; // Attach the original error object
       throw error;
     }
-
     return await response.json();
   };
 
@@ -43,12 +40,10 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      setVenueManager(response.data.venueManager);
+      console.log("response from login:", response);
       return { success: true };
-      // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       console.log("error catched in login func", err.data);
-      // setError(err.data);
       return { success: false, error: err.data };
     } finally {
       setLoading(false);
@@ -65,12 +60,9 @@ export default function useAuth() {
       });
       setAccessToken(response.data.accessToken);
       setUserName(response.data.name);
-      setVenueManager(response.data.venueManager);
       return { success: true };
-      // Handle any other logic like saving token, redirecting, etc.
     } catch (err) {
       console.log("error catched in register func", err.data);
-      // setError(err);
       return { success: false, error: err.data };
     } finally {
       setLoading(false);

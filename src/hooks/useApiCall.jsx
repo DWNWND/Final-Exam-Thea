@@ -39,7 +39,11 @@ export default function useApiCall(token) {
           console.error("Error logged", errorData.errors[0].message);
           throw new Error(errorData.errors[0].message || "An error occurred");
         } else if (response.ok) {
-          return await response.json();
+          if (response.status === 204) {
+            return null;
+          } else {
+            return await response.json();
+          }
         }
       } catch (err) {
         setError(err.message || "An unexpected error occurred");

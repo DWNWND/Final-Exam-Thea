@@ -67,7 +67,7 @@ export default function BookingConfirmation() {
             <p className="text-primary-blue">Booking details were sent to: {bookingEmail}</p>
           </div>
           <Link to="/" className="block mt-5">
-            <RoundBtn innerText="Browse more stays" bgColor="white" textColor="primary-blue" />
+            <RoundBtn innerText="Browse more stays" bgColor="primary-blue" textColor="white" />
           </Link>
         </div>
       </MainElement>

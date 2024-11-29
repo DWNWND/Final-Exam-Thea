@@ -60,6 +60,7 @@ export default function SettingsForm() {
     fetchData();
   }, []);
 
+  //right now there is no functionality to delete a profile from the api, so this is just a mockup
   const handleDelete = async () => {
     // setLoading(true);
     try {
@@ -139,6 +140,7 @@ export default function SettingsForm() {
               <SquareBtn clickFunc={() => setShowModal(false)} type="button" width="full" innerText="No" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
               <SquareBtn clickFunc={() => handleDelete()} type="button" width="full" innerText="Yes" tailw="hover:bg-danger hover:text-white bg-opacity-50" bgColor="white" textColor="danger" borderColor="danger" />
             </div>
+            {/* {loadingCancellation ? <SmallLoader /> : <p className={`${errorMessage ? "text-danger" : "text-primary-green"} text-xs text-center`}>{errorMessage ? errorMessage : userFeedbackMessage}</p>} */}
           </div>
         </div>
       )}
