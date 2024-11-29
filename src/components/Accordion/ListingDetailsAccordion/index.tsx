@@ -77,10 +77,10 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
         </h2>
         <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${hostDetailsOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className={accordionContentStyle}>
-            <div>
-              <img src={listing.owner.avatar.url} className="min-w-20 min-h-20 max-w-30 max-h-30 object-cover rounded-full" alt="Host avatar" />
+            <div className="m-auto md:m-0">
+              <img src={listing.owner.avatar.url} className="w-44 h-44 object-cover rounded-full" alt="Host avatar" />
             </div>
-            <div className="flex flex-col gap-1 justify-center">
+            <div className="flex flex-col gap-1 justify-center text-center md:text-left">
               <p className="font-semibold uppercase text-lg">{listing.owner.name}</p>
               <p className="italic font-light">{listing.owner.bio}</p>
               <a href={`mailto:${listing.owner.email}`} className="underline">
