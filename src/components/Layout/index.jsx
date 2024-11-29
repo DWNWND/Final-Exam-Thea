@@ -1,16 +1,19 @@
 import { Outlet } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback, DataProvider } from "../";
+import Header from "./Header";
+import Footer from "./Footer";
 
-export function Layout() {
+export default function Layout() {
   return (
-    <div>
+    <>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <h1>Layout</h1>
         <DataProvider>
+          <Header />
           <Outlet />
+          <Footer />
         </DataProvider>
       </ErrorBoundary>
-    </div>
+    </>
   );
 }
