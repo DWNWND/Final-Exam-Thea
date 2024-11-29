@@ -114,7 +114,7 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
 
     const interval = setInterval(updateDatesIfPast, 10 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [initialDates]);
+  }, [initialDates, savedDates]);
 
   return (
     <div className={`flex justify-between items-center rounded-full border-${color} border bg-white w-full transition-max-height duration-500 ease-in-out overflow-hidden ${editDates ? "px-3 max-w-full opacity-100" : "px-0 max-w-0 opacity-0"}`}>

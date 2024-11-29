@@ -16,7 +16,7 @@ export default function BookingDetails(): JSX.Element {
     if (!accessToken || !bookingData.venueId) {
       navigate("/");
     }
-  }, []);
+  }, [accessToken, bookingData.venueId]);
 
   return (
     <HelmetProvider>
