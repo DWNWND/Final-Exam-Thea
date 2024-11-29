@@ -2,8 +2,7 @@ import { useReducer, useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { CiCalendar } from "react-icons/ci";
-import 'flatpickr/dist/themes/material_green.css';
-
+import "flatpickr/dist/themes/material_green.css";
 
 const initialState = {
   dateRange: [null, null], // Store both start and end date in an array
@@ -58,7 +57,7 @@ function dateReducer(state, action) {
   }
 }
 
-export default function SelectTravelDates({ register, setValue }) {
+export default function SelectTravelDates({ register, setValue, color }) {
   const [state, dispatch] = useReducer(dateReducer, initialState);
 
   // Initialize with today's date as start date
@@ -70,6 +69,7 @@ export default function SelectTravelDates({ register, setValue }) {
     dispatch({ type: "setStartDate", payload: startDateStr });
     dispatch({ type: "setEndDate", payload: initialEndDate });
     dispatch({ type: "setAllDatesInRange", payload: [startDateStr, initialEndDate] });
+    register("allDatesInRange", { value: state.allDatesInRange });
   }, [startDateStr, initialEndDate]);
 
   useEffect(() => {
@@ -83,9 +83,9 @@ export default function SelectTravelDates({ register, setValue }) {
   }, [state.allDatesInRange, setValue]);
 
   return (
-    <div className="flex justify-between items-center rounded-full border-primary-green border px-3  bg-white w-full">
+    <div className={`flex justify-between items-center rounded-full border-${color} border px-3  bg-white w-full`}>
       <Flatpickr
-        className="p-2 bg-transparent w-full font-semibold text-primary-green"
+        className={`p-2 bg-transparent w-full font-semibold text-${color}`}
         options={{
           mode: "range", // Enable range selection
           minDate: startDateStr, // Disable dates before today
@@ -99,7 +99,7 @@ export default function SelectTravelDates({ register, setValue }) {
         }}
       />
       {/* Hidden inputs for react-hook-form */}
-      <CiCalendar className="text-2xl text-primary-green" />
+      <CiCalendar className={`text-2xl text-${color}`} />
       <input type="hidden" {...register("allDatesInRange")} />
     </div>
   );

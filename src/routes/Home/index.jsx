@@ -18,7 +18,7 @@ export default function Home() {
         <meta name="description" content="" />
         <title>Home | Holidayz</title>
       </Helmet>
-      <div>
+      <main>
         <section id="searchHeader" className={`${style.searchSection} p-4 py-20 flex justify-center items-center`}>
           <MainSearchForm />
         </section>
@@ -29,7 +29,7 @@ export default function Home() {
         <section id="newestListings" className="p-4 py-12 bg-comp-green">
           <ListNewest venues={venues} />
         </section>
-      </div>
+      </main>
     </HelmetProvider>
   );
 }
