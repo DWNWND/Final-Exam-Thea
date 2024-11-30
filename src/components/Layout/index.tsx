@@ -8,6 +8,7 @@ import { useScreenSizeCheckHook } from "../../hooks";
 import { OpenMenuContext } from "../../contexts/";
 import { useState, useEffect } from "react";
 import { useNavigationStore } from "../../stores";
+import { ScrollToTop } from "../../utils";
 
 export default function Layout(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -23,6 +24,7 @@ export default function Layout(): JSX.Element {
     <>
       <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
         <OpenMenuContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
+          <ScrollToTop />
           <Header />
           <Outlet />
           {isMobile && <FixedBtnDisplay />}

@@ -137,7 +137,7 @@ export default function MyProfile(): JSX.Element {
                         </Link>
                       )}
                     </>
-                    <p className="text-primary-blue underline text-lg" onClick={() => handleLogOut()}>
+                    <p className="text-primary-blue underline text-lg cursor-pointer" onClick={() => handleLogOut()}>
                       Log out
                     </p>
                   </div>
