@@ -22,7 +22,7 @@ export default function BookingCheckout(): JSX.Element {
         <title>{`Booking Checkout | ${selectedListing.name && selectedListing.name} | Holidaze`}</title>
         <meta name="description" content="Checkout to secure your room." />
       </Helmet>
-      <MainElement tailw="flex justify-center">
+      <MainElement tail="flex justify-center">
         <CheckoutForm />
       </MainElement>
     </HelmetProvider>

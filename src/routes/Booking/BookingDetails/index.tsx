@@ -24,7 +24,7 @@ export default function BookingDetails(): JSX.Element {
         <title>{`Booking Details | ${selectedListing.name && selectedListing.name} | Holidaze`}</title>
         <meta name="description" content="Book your next stay with Holidaze." />
       </Helmet>
-      <MainElement tailw="flex justify-center">
+      <MainElement tail="flex justify-center">
         <DetailsForm />
       </MainElement>
     </HelmetProvider>

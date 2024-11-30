@@ -74,7 +74,7 @@ export default function MyProfile(): JSX.Element {
   };
 
   const fetchListings = async () => {
-    const result = await callApi<ListingSpecific[]>(`/holidaze/profiles/${userName}/venues?_bookings=true`);
+    const result = await callApi<ListingSpecificProps[]>(`/holidaze/profiles/${userName}/venues?_bookings=true`);
     if (result.data) {
       setUserListings(result.data);
     }
@@ -113,7 +113,7 @@ export default function MyProfile(): JSX.Element {
         <title>{`My Profile | ${userName} | Holidaze`}</title>
         <meta name="description" content="View your Holidaze account details, manage your listings, track bookings, and stay updated with your activity." />
       </Helmet>
-      <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
+      <MainElement tail="flex flex-col gap-8 lg:flex-row min-h-screen">
         {loading ? (
           <BigSpinnerLoader />
         ) : (
@@ -153,8 +153,8 @@ export default function MyProfile(): JSX.Element {
                     {activeBookingsFilter && <p className="text-black">{`Showing ${activeBookingsArray.length < maxBookingsShown ? activeBookingsArray.length : maxBookingsShown} of ${activeBookingsArray.length} ${activeBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
                     {inactiveBookingsFilter && <p className="text-black">{`Showing ${inactiveBookingsArray.length < maxBookingsShown ? inactiveBookingsArray.length : maxBookingsShown} of ${inactiveBookingsArray.length} ${inactiveBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
                     <div className="flex gap-2 xl:gap-6  my-4 flex-col md:flex-row">
-                      <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" width="full" tailw="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} textColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} />
-                      <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tailw="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} textColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} />
+                      <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" width="full" tail="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} textColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} />
+                      <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tail="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} textColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} />
                     </div>
                     {activeBookingsFilter && (
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
@@ -172,7 +172,7 @@ export default function MyProfile(): JSX.Element {
                     )}
                     {userBookings && userBookings.length > maxBookingsShown && (
                       <Link to={`/user/${userName}/mybookings`} className="mt-3">
-                        <SquareBtn innerText="view all bookings" width="full" tailw="lowercase" bgColor="" borderColor="primary-blue" textColor="primary-blue" />
+                        <SquareBtn innerText="view all bookings" width="full" tail="lowercase" bgColor="" borderColor="primary-blue" textColor="primary-blue" />
                       </Link>
                     )}
                   </div>
@@ -197,7 +197,7 @@ export default function MyProfile(): JSX.Element {
                     )}
                     {userListings && userListings.length > maxListingsShown && (
                       <Link to={`/user/${userName}/mylistings`} className="mt-3">
-                        <SquareBtn innerText="view all listings" width="full" tailw="lowercase" borderColor="primary-green" bgColor="" textColor="primary-green" />
+                        <SquareBtn innerText="view all listings" width="full" tail="lowercase" borderColor="primary-green" bgColor="" textColor="primary-green" />
                       </Link>
                     )}
                   </div>

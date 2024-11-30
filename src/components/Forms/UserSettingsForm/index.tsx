@@ -132,7 +132,7 @@ export default function SettingsForm(): JSX.Element {
                     {errors.banner?.alt?.message && <p className="text-danger text-xs mt-2">{errors.avatar?.alt?.message}</p>}
                   </div>
                 </div>
-                <SquareBtn disabled={scopedLoader} type="submit" innerText="Save changes" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+                <SquareBtn disabled={scopedLoader} type="submit" innerText="Save changes" tail="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
                 {scopedLoader ? <SmallSpinnerLoader /> : <p className={`${error ? "text-danger" : "text-primary-green"} text-xs text-center`}>{error || userFeedbackUpdateMessage}</p>}
               </form>
             </div>

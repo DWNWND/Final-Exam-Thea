@@ -124,8 +124,8 @@ export default function MyBookings(): JSX.Element {
             {activeBookingsFilter && <p className="text-black">{`Showing ${displayedActiveBookings.length} of ${activeBookingsArray.length} bookings`}</p>}
             {inactiveBookingsFilter && <p className="text-black">{`Showing ${displayedInactiveBookings.length} of ${inactiveBookingsArray.length} bookings`}</p>}
             <div className="flex gap-2 xl:gap-6  my-4 flex-col md:flex-row">
-              <RoundBtn clickFunc={toggleActiveBookings} borderColor="primary-blue" innerText="active bookings" width="full" tailw="lowercase" bgColor={activeBookingsFilter ? "primary-blue" : "white"} textColor={activeBookingsFilter ? "white" : "primary-blue"} />
-              <RoundBtn clickFunc={toggleInactiveBookings} borderColor="primary-blue" innerText="inactive bookings" width="full" tailw="lowercase" bgColor={inactiveBookingsFilter ? "primary-blue" : "white"} textColor={inactiveBookingsFilter ? "white" : "primary-blue"} />
+              <RoundBtn clickFunc={toggleActiveBookings} borderColor="primary-blue" innerText="active bookings" width="full" tail="lowercase" bgColor={activeBookingsFilter ? "primary-blue" : "white"} textColor={activeBookingsFilter ? "white" : "primary-blue"} />
+              <RoundBtn clickFunc={toggleInactiveBookings} borderColor="primary-blue" innerText="inactive bookings" width="full" tail="lowercase" bgColor={inactiveBookingsFilter ? "primary-blue" : "white"} textColor={inactiveBookingsFilter ? "white" : "primary-blue"} />
             </div>
             {activeBookingsFilter && displayedActiveBookings.length > 0 && (
               <>

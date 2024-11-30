@@ -60,7 +60,7 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
         <>
           {booking && (
             <div className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
-              <ArrowRightBtn href={`/listing/${booking.id}`} booking={true} tailw={`z-40 ${inactiveBooking && "opacity-60"}`} />
+              <ArrowRightBtn href={`/listing/${booking.id}`} booking={true} tail={`z-40 ${inactiveBooking && "opacity-60"}`} />
               <Link to={`/listing/${booking.id}`} className="h-48 w-full z-30 rounded-lg">
                 <div className="bg-black w-full rounded-t-lg h-48 z-20 opacity-40 absolute"></div>
                 {inactiveBooking && <div className="absolute w-full h-full bg-comp-gray opacity-40 rounded-lg z-20 transition duration-300 ease-in-out hover:opacity-0"></div>}
@@ -107,7 +107,7 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                     <p className="text-nowrap">★ {booking.rating}</p>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">{!inactiveBooking && !currentBooking && !checkOutToday && <SquareBtn clickFunc={cancelBookingPrompt} innerText="Cancel booking" width="full" tailw="lowercase z-40" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />}</div>
+                <div className="flex flex-col gap-2">{!inactiveBooking && !currentBooking && !checkOutToday && <SquareBtn clickFunc={cancelBookingPrompt} innerText="Cancel booking" width="full" tail="lowercase z-40" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />}</div>
               </div>
             </div>
           )}

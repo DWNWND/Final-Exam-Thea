@@ -114,7 +114,7 @@ export interface ButtonProps {
   clickFunc: () => void;
   innerText?: string;
   width?: "full" | "auto";
-  tailw?: string;
+  tail?: string;
   bgColor?: string;
   textColor?: string;
   borderColor?: string;

@@ -21,7 +21,7 @@ export default function Register(): JSX.Element {
         <title>Register New User | Holidaze</title>
         <meta name="description" content="Join Holidaze and start your journey today. Create an account to explore accommodations, manage bookings, and list your own properties effortlessly" />
       </Helmet>
-      <MainElement noPadding={true} tailw="flex items-center justify-center">
+      <MainElement noPadding={true} tail="flex items-center justify-center">
         <section className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
           <RegisterForm />
         </section>

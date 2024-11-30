@@ -21,7 +21,7 @@ export default function Login(): JSX.Element {
         <title>Login | Holidaze</title>
         <meta name="description" content="Log in to access your Holidaze account, manage your bookings, and update your listings. Experience seamless control over your accommodations with our user-friendly platform." />
       </Helmet>
-      <MainElement noPadding={true} tailw="flex items-center justify-center">
+      <MainElement noPadding={true} tail="flex items-center justify-center">
         <section className="backgroundImage p-4 py-20 flex justify-center items-center min-h-screen w-full">
           <LoginForm />
         </section>
