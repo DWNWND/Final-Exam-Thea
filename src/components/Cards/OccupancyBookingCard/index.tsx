@@ -11,9 +11,9 @@ export function OccupancyBookingCard({ booking, active = true }: OccupancyBookin
     <div className="bg-white rounded-lg shadow-sm relative">
       {!active && <div className="absolute h-full w-full top-0 right-0 p-2 bg-comp-gray rounded-lg opacity-40"></div>}
       <div className="rounded-t-lg px-4 py-6 bg-primary-blue">
-        <p className="text-center text-2xl font-bold text-white">
+        <h3 className="text-center text-2xl font-bold text-white">
           {formatDateForDisplay(booking.dateFrom)} - {formatDateForDisplay(booking.dateTo)}
-        </p>
+        </h3>
       </div>
       <div className="p-6 flex flex-col gap-3">
         <div>

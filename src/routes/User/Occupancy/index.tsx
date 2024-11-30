@@ -119,7 +119,7 @@ export default function Occupancy(): JSX.Element {
               <div className="flex flex-col md:flex-row w-full gap-8">
                 <div className="w-full xl:sticky xl:top-6 flex flex-col gap-8">
                   <div className="rounded-lg shadow-sm bg-white relative flex flex-col w-full">
-                    <Link to={`/listing/${listing.id}`} className="h-full w-full absolute opacity-20 z-20 rounded-lg">
+                    <Link to={`/listing/${listing.id}`} className="h-full w-full absolute opacity-40 z-20 rounded-lg">
                       <div className="bg-black w-full rounded-t-lg hover:bg-opacity-0 max-h-48 md:max-h-[80rem]" />
                     </Link>
                     <div className="relative">
@@ -129,7 +129,7 @@ export default function Occupancy(): JSX.Element {
                     <div className="p-4 flex flex-col gap-4">
                       <div className="flex justify-between">
                         <div>
-                          <h3 className="text-xl font-bold text-black hover:underline">{listing.name}</h3>
+                          <h2 className="text-xl font-bold text-black hover:underline">{listing.name}</h2>
                           <p className="text-black">
                             {listing.location.city}, {listing.location.country}
                           </p>
@@ -145,7 +145,7 @@ export default function Occupancy(): JSX.Element {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 bg-comp-purple shadow-md p-4 md:p-8 rounded-lg w-full">
-                  <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase">Occupancy:</h2>
+                  <h1 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase">Occupancy:</h1>
                   {activeBookingsFilter && <p className="text-black">{`Showing ${displayedActiveBookings.length} of ${activeBookingsArray.length}`}</p>}
                   {inactiveBookingsFilter && <p className="text-black">{`Showing ${displayedInactiveBookings.length} of ${inactiveBookingsArray.length}`}</p>}
                   <div className="flex gap-2 xl:gap-6 flex-col md:flex-row my-4">

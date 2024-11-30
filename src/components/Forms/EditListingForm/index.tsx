@@ -150,9 +150,9 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
             <div className="max-w-[50rem] mx-auto flex items-center flex-col m-4 p-8 bg-white rounded-lg shadow-sm w-full">
               <div className="flex justify-between items-center w-full mb-6">
                 <h1 className="text-2xl uppercase text-primary-green">Edit listing</h1>
-                <div className="underline hover:text-danger text-primary-light cursor-pointer" onClick={toggleDeletionModal}>
+                <button type="button" onClick={toggleDeletionModal} className="w-auto bg-white border hover:text-danger hover:border-danger border-primary-green text-primary-green  py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                   Delete listing
-                </div>
+                </button>
               </div>
               <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
                 <div className="relative">
@@ -263,13 +263,13 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
                     <label htmlFor={`media.${index}.url`} className="text-primary-green">
                       Image URL
                     </label>
-                    <input {...register(`media.${index}.url`)} placeholder="Enter image URL" className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.media?.[index]?.url && "border-danger"}`} />
+                    <input {...register(`media.${index}.url`)} id={`media.${index}.url`} placeholder="Enter image URL" className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.media?.[index]?.url && "border-danger"}`} />
                     {errors.media?.[index]?.url && <p className="text-danger text-xs">{errors.media[index].url.message}</p>}
 
                     <label htmlFor={`media.${index}.alt`} className="text-primary-green">
                       Image Description
                     </label>
-                    <input {...register(`media.${index}.alt`)} placeholder="Enter image description" className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.media?.[index]?.url && "border-danger"}`} />
+                    <input {...register(`media.${index}.alt`)} id={`media.${index}.alt`} placeholder="Enter image description" className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.media?.[index]?.url && "border-danger"}`} />
                     {errors.media?.[index]?.alt && <p className="text-danger text-xs">{errors.media[index].alt.message}</p>}
 
                     <button type="button" onClick={() => remove(index)} className="w-full  border border-primary-green text-primary-green py-2 px-4 rounded focus:outline-none focus:shadow-outline">

@@ -127,6 +127,7 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
               dateFormat: "Y-m-d",
               defaultDate: defaultFlatpickrDates,
             }}
+            aria-label="Select travel dates"
             onChange={(selectedDates: Date[]) => {
               if (selectedDates.length === 2) {
                 const [start, end] = selectedDates;
