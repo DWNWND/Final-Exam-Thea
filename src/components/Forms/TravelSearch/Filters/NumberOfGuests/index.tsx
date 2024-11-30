@@ -43,7 +43,9 @@ export function NumberOfGuests({ color, mainSearch = true }: NumberOfGuestsProps
       <button className={`hover:shadow-md rounded-full w-full ${mainSearch ? "lg:h-10 lg:w-10 bg-white bg-opacity-50 hover:bg-opacity-100 " : ""} flex transition ease-in-out justify-center text-xl items-center text-${color} border-${color} border p-2`} type="button" onClick={() => dispatch({ type: "increment" })}>
         <HiOutlinePlusSm className={`text-${color}`} />
       </button>
-      <p className={`italic text-${color}`}>guests</p>
+      <label htmlFor="guests" className={`italic text-${color}`}>
+        guests
+      </label>
     </div>
   );
 }

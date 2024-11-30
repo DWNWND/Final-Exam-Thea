@@ -21,13 +21,14 @@ export function ListingCard({ listing, loading, myListings = false }: ListingCar
         <>
           {listing && (
             <div key={listing.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
-              <Link to={`/listing/${listing.id}`} className="h-48 w-full absolute z-30 rounded-lg"></Link>
-              <div className="bg-black w-full rounded-t-lg h-48 z-20 opacity-20 absolute"></div>
-              <div className="relative">
-                <ArrowRightBtn href={`/listing/${listing.id}`} listing={true} tailw="z-30" />
-                <img src={listing.media.length > 0 ? listing.media[0].url : ""} alt={listing.media.length > 0 ? listing.media[0].alt : ""} className="w-full h-48 object-cover rounded-t-lg" />
-                <p className="absolute font-bold text-2xl text-white bottom-2 right-2 z-30">kr {listing.price}/night</p>
-              </div>
+              <ArrowRightBtn href={`/listing/${listing.id}`} listing={true} tailw="z-40" />
+              <Link to={`/listing/${listing.id}`} className="h-48 w-full z-30 rounded-lg">
+                <div className="bg-black w-full rounded-t-lg h-48 z-40 opacity-30 absolute"></div>
+                <div className="relative">
+                  <img src={listing.media.length > 0 ? listing.media[0].url : ""} alt={listing.media.length > 0 ? listing.media[0].alt : ""} className="w-full h-48 object-cover rounded-t-lg" />
+                  <p className="absolute font-bold text-2xl text-white bottom-2 right-2 z-40">kr {listing.price}/night</p>
+                </div>
+              </Link>
               <div className="p-4 flex flex-col gap-4">
                 <div className="flex justify-between cursor-default">
                   <div>

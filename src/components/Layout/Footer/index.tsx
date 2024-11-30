@@ -11,7 +11,7 @@ export default function Footer(): JSX.Element {
       <div className="flex flex-col justify-between gap-8 md:flex-row lg:gap-20">
         <div className="flex flex-col justify-evenly gap-8 md:flex-row lg:gap-20">
           <div className="flex flex-col gap-2">
-            <h3 className="uppercase font-semibold text-primary-blue text-xl">Customer care</h3>
+            <h2 className="uppercase font-semibold text-primary-blue text-xl">Customer care</h2>
             <ul className="flex flex-col gap-1">
               <li>
                 <Link to="/support" className="hover:underline">
@@ -31,7 +31,7 @@ export default function Footer(): JSX.Element {
             </ul>
           </div>
           <div className="flex flex-col gap-2">
-            <h3 className="uppercase font-semibold text-primary-blue text-xl">Lazz</h3>
+            <h2 className="uppercase font-semibold text-primary-blue text-xl">Lazz</h2>
             <ul className="flex flex-col gap-1">
               <li>
                 <Link to="/contact" className="hover:underline">
@@ -57,7 +57,7 @@ export default function Footer(): JSX.Element {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <h3 className="uppercase font-semibold text-primary-blue text-xl">Payment options</h3>
+          <h2 className="uppercase font-semibold text-primary-blue text-xl">Payment options</h2>
           <div className="flex gap-6">
             <img src={VisaLogo} alt="Visa logo, to show that you can pay with visa" />
             <img src={MastercardLogo} alt="Mastercard logo, to show that you can pay with Mastercard" />

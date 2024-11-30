@@ -19,7 +19,7 @@ export default {
         blue: "#27346A",
         light: "#769089",
         dark: "#696A5C",
-        cta: "#F44336",
+        cta: "#D32F2F",
       },
       comp: {
         DEFAULT: "#ecebff",
@@ -30,7 +30,7 @@ export default {
       },
       success: "#4A9948",
       warning: "#C78910",
-      danger: "#F44336",
+      danger: "#D32F2F",
     },
     extend: {},
   },

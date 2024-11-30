@@ -128,15 +128,15 @@ export default function ListingSpecific(): JSX.Element {
                   </div>
                   <div className="relative">
                     <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer" onClick={toggleImageModal}>
-                      <h1 className="text-center text-2xl font-bold text-white">
+                      <p className="text-center text-2xl font-bold text-white">
                         {savedDates.startDisplay} - {savedDates.endDisplay}
-                      </h1>
+                      </p>
                       <div className="rounded-full font-bold p-4 bg-white text-primary-blue flex items-center justify-center w-48">
                         kr {totalPrice} ({nights} {nights > 1 ? "nights" : "night"})
                       </div>
                     </div>
                     <div className="cursor-pointer" onClick={toggleImageModal}>
-                      <div className="absolute bg-black bg-opacity-20 w-full h-full rounded-lg"></div>
+                      <div className="absolute bg-black bg-opacity-40 w-full h-full rounded-lg"></div>
                       <img src={listing.media?.[currentImage]?.url || ""} alt={listing.media?.[currentImage]?.alt || ""} className="w-full h-96 md:h-[42rem] object-cover rounded-lg" />
                     </div>
                     {listing.media.length > 1 && (
@@ -171,7 +171,7 @@ export default function ListingSpecific(): JSX.Element {
                   )}
                   <div className="p-4 mb-2 md:my-6 flex justify-between">
                     <div>
-                      <h3 className="text-xl font-bold text-black">{listing.name}</h3>
+                      <h1 className="text-xl font-bold text-black">{listing.name}</h1>
                       <p className="text-black">
                         {listing.location.city}, {listing.location.country}
                       </p>
