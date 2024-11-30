@@ -59,7 +59,6 @@ export default function ListSearch(): JSX.Element {
       return false;
     });
 
-    console.log("filtersMatches", filtersMatches);
     setFilteredListings(filtersMatches);
     setDisplayListings(filtersMatches.slice(0, initialDisplayCount));
   }, [displayedListings, searchQuery, filters]);

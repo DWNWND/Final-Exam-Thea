@@ -13,7 +13,6 @@ export function useInactivityCheckHook(): void {
     timer.current = setTimeout(() => {
       logOut();
       clearTravelSearchStore();
-      console.log("Store cleared due to inactivity");
     }, INACTIVITY_LIMIT);
   };
 

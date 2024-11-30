@@ -9,7 +9,7 @@ interface ArrowDownBtnProps {
   mainSearch?: boolean;
 }
 
-export function ArrowDownBtn({ innerText = "", tailw = "", clickFunc = () => {}, open = false, link = false, mainSearch = true }: ArrowDownBtnProps) {
+export function ArrowDownBtn({ innerText = "", tailw = "", clickFunc = () => {}, open = false, link = false, mainSearch = true }: ArrowDownBtnProps): JSX.Element {
   const buttonClasses = `p-1 px-3 w-auto max-w-auto rounded text-nowrap flex items-center justify-center ${link ? "" : "border lg:hover:shadow-md"} cursor-pointer transition duration-300 ease-in-out ${mainSearch && "border-primary-green text-primary-green"} ${!mainSearch && "border-white text-white"} ${tailw} `;
 
   return (

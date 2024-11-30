@@ -9,6 +9,7 @@ import { CancellationModal } from "../../../components/Modals";
 import { RoundBtn, SquareBtn } from "../../../components/Buttons";
 import { BookingCard, ListingCard, ProfileCard } from "../../../components/Cards";
 import { BookingSpesific, ListingSpesific, UserSpesific } from "../../../types";
+import { BigSpinnerLoader } from "../../../components/Loaders";
 
 interface SelectedBooking {
   name: string;
@@ -113,93 +114,99 @@ export default function MyProfile(): JSX.Element {
         <meta name="description" content="View your Holidaze account details, manage your listings, track bookings, and stay updated with your activity." />
       </Helmet>
       <MainElement tailw="flex flex-col gap-8 lg:flex-row min-h-screen">
-        {error && <GeneralErrorFallback errorMessage={error} />}
-        <section className="flex flex-col gap-2 lg:max-w-md">
-          {user && (
-            <div className="xl:sticky xl:top-6 xl:pb-9">
-              <div className="flex flex-col mb-6 p-2 gap-2 ">
-                <Link to="/" className="text-primary-blue underline text-lg">
-                  Book your next stay
-                </Link>
-                <>
-                  {user.venueManager ? (
-                    <Link to={`/user/${userName}/new/listing`} className="text-primary-blue underline text-lg">
-                      Publish new listing
+        {loading ? (
+          <BigSpinnerLoader />
+        ) : (
+          <>
+            {error && <GeneralErrorFallback errorMessage={error} />}
+            <section className="flex flex-col gap-2 lg:max-w-md">
+              {user && (
+                <div className="xl:sticky xl:top-6 xl:pb-9">
+                  <div className="flex flex-col mb-6 p-2 gap-2 ">
+                    <Link to="/" className="text-primary-blue underline text-lg">
+                      Book your next stay
                     </Link>
-                  ) : (
-                    <Link to={`/user/${userName}/settings`} className="text-primary-blue underline text-lg">
-                      Register as a venue manager
-                    </Link>
-                  )}
-                </>
-                <p className="text-primary-blue underline text-lg" onClick={() => handleLogOut()}>
-                  Log out
-                </p>
-              </div>
-              <ProfileCard user={user} />
-            </div>
-          )}
-        </section>
-        <section className="w-full pb-10">
-          <div className="flex flex-col gap-12">
-            {userBookings && userBookings.length >= 1 ? (
-              <div className="flex flex-col gap-2">
-                <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>
-                {activeBookingsFilter && <p className="text-black">{`Showing ${activeBookingsArray.length < maxBookingsShown ? activeBookingsArray.length : maxBookingsShown} of ${activeBookingsArray.length} ${activeBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
-                {inactiveBookingsFilter && <p className="text-black">{`Showing ${inactiveBookingsArray.length < maxBookingsShown ? inactiveBookingsArray.length : maxBookingsShown} of ${inactiveBookingsArray.length} ${inactiveBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
-                <div className="flex gap-2 xl:gap-6  my-4 flex-col md:flex-row">
-                  <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" width="full" tailw="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} textColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} />
-                  <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tailw="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} textColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} />
+                    <>
+                      {user.venueManager ? (
+                        <Link to={`/user/${userName}/new/listing`} className="text-primary-blue underline text-lg">
+                          Publish new listing
+                        </Link>
+                      ) : (
+                        <Link to={`/user/${userName}/settings`} className="text-primary-blue underline text-lg">
+                          Register as a venue manager
+                        </Link>
+                      )}
+                    </>
+                    <p className="text-primary-blue underline text-lg" onClick={() => handleLogOut()}>
+                      Log out
+                    </p>
+                  </div>
+                  <ProfileCard user={user} />
                 </div>
-                {activeBookingsFilter && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                    {activeBookingsArray.slice(0, maxBookingsShown).map((booking) => (
-                      <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
-                    ))}
+              )}
+            </section>
+            <section className="w-full pb-10">
+              <div className="flex flex-col gap-12">
+                {userBookings && userBookings.length >= 1 ? (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase ">My bookings</h2>
+                    {activeBookingsFilter && <p className="text-black">{`Showing ${activeBookingsArray.length < maxBookingsShown ? activeBookingsArray.length : maxBookingsShown} of ${activeBookingsArray.length} ${activeBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
+                    {inactiveBookingsFilter && <p className="text-black">{`Showing ${inactiveBookingsArray.length < maxBookingsShown ? inactiveBookingsArray.length : maxBookingsShown} of ${inactiveBookingsArray.length} ${inactiveBookingsArray.length > 1 ? "bookings" : "booking"}`}</p>}
+                    <div className="flex gap-2 xl:gap-6  my-4 flex-col md:flex-row">
+                      <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" width="full" tailw="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} textColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} />
+                      <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tailw="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} textColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} />
+                    </div>
+                    {activeBookingsFilter && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                        {activeBookingsArray.slice(0, maxBookingsShown).map((booking) => (
+                          <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                        ))}
+                      </div>
+                    )}
+                    {inactiveBookingsFilter && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                        {inactiveBookingsArray.slice(0, maxBookingsShown).map((booking) => (
+                          <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
+                        ))}
+                      </div>
+                    )}
+                    {userBookings && userBookings.length > maxBookingsShown && (
+                      <Link to={`/user/${userName}/mybookings`} className="mt-3">
+                        <SquareBtn innerText="view all bookings" width="full" tailw="lowercase" bgColor="" borderColor="primary-blue" textColor="primary-blue" />
+                      </Link>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex flex-col justify-center items-center my-6 gap-4">
+                    <p className="italic text-center">You currently have no bookings</p>
+                    <Link to="/" className="text-primary-blue underline text-lg">
+                      Start planning your next adventure now!
+                    </Link>
                   </div>
                 )}
-                {inactiveBookingsFilter && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                    {inactiveBookingsArray.slice(0, maxBookingsShown).map((booking) => (
-                      <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
-                    ))}
+                {userListings.length >= 1 && (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My listings</h2>
+                    <p className="text-black">{`Showing ${userListings.length < maxListingsShown ? userListings.length : maxListingsShown} of ${userListings.length} ${userListings.length > 1 ? "listings" : "listing"}`}</p>
+                    {userListings && userListings.length >= 1 && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                        {userListings.slice(0, maxListingsShown).map((listing) => (
+                          <ListingCard key={listing.id} listing={listing} loading={loading} myListings={true} />
+                        ))}
+                      </div>
+                    )}
+                    {userListings && userListings.length > maxListingsShown && (
+                      <Link to={`/user/${userName}/mylistings`} className="mt-3">
+                        <SquareBtn innerText="view all listings" width="full" tailw="lowercase" borderColor="primary-green" bgColor="" textColor="primary-green" />
+                      </Link>
+                    )}
                   </div>
                 )}
-                {userBookings && userBookings.length > maxBookingsShown && (
-                  <Link to={`/user/${userName}/mybookings`} className="mt-3">
-                    <SquareBtn innerText="view all bookings" width="full" tailw="lowercase" bgColor="" borderColor="primary-blue" textColor="primary-blue" />
-                  </Link>
-                )}
               </div>
-            ) : (
-              <div className="flex flex-col justify-center items-center my-6 gap-4">
-                <p className="italic text-center">You currently have no bookings</p>
-                <Link to="/" className="text-primary-blue underline text-lg">
-                  Start planning your next adventure now!
-                </Link>
-              </div>
-            )}
-            {userListings.length >= 1 && (
-              <div className="flex flex-col gap-2">
-                <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My listings</h2>
-                <p className="text-black">{`Showing ${userListings.length < maxListingsShown ? userListings.length : maxListingsShown} of ${userListings.length} ${userListings.length > 1 ? "listings" : "listing"}`}</p>
-                {userListings && userListings.length >= 1 && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
-                    {userListings.slice(0, maxListingsShown).map((listing) => (
-                      <ListingCard key={listing.id} listing={listing} loading={loading} myListings={true} />
-                    ))}
-                  </div>
-                )}
-                {userListings && userListings.length > maxListingsShown && (
-                  <Link to={`/user/${userName}/mylistings`} className="mt-3">
-                    <SquareBtn innerText="view all listings" width="full" tailw="lowercase" borderColor="primary-green" bgColor="" textColor="primary-green" />
-                  </Link>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-        {cancellationModal && <CancellationModal booking={selectedBooking} toggle={handleExitCancellation} />}
+            </section>
+            {cancellationModal && <CancellationModal booking={selectedBooking} toggle={handleExitCancellation} />}
+          </>
+        )}
       </MainElement>
     </HelmetProvider>
   );

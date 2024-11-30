@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import "flatpickr/dist/themes/material_green.css";
 import { CiCalendar } from "react-icons/ci";
 import { useTravelDatesStore } from "../../../../../stores";
 import { formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr } from "../../../../../utils";
@@ -48,7 +47,7 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
   const updateDatesIfPast = () => {
     const stripTime = (date: string | Date): Date => {
       const parsedDate = typeof date === "string" ? new Date(date) : date;
-      parsedDate.setHours(0, 0, 0, 0); // Set time to 00:00:00
+      parsedDate.setHours(0, 0, 0, 0);
       return parsedDate;
     };
 

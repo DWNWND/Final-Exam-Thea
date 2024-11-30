@@ -44,7 +44,7 @@ export default function FixedBtnDisplay(): JSX.Element {
   }, [lastScrollY]);
 
   const isMobile = useScreenSizeCheckHook();
-  const buttonClasses = `text-nowrap flex justify-center p-2 px-4 w-full md:w-auto items-center h-full uppercase rounded xl:hover:shadow-md cursor-pointer transition duration-300 ease-in-out border border-primary-green`;
+  const buttonClasses = `text-nowrap flex justify-center p-2 px-4 w-full items-center h-full uppercase rounded xl:hover:shadow-md cursor-pointer transition duration-300 ease-in-out border border-primary-green`;
   const buttonActiveClasses = `text-white bg-primary-green`;
   const buttonInactiveClasses = `text-primary-green bg-white`;
 

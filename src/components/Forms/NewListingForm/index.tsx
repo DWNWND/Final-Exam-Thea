@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { useApiCall } from "../../../hooks";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SquareBtn } from "../../Buttons";
 import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils";
@@ -126,11 +125,6 @@ export default function NewListingForm(): JSX.Element {
     name: "media",
   });
 
-  // const nextStep = async (data: StepInputs) => {
-  //   setFormData((prev) => ({ ...prev, ...data }));
-  //   setFormStep((cur) => cur + 1);
-  // };
-
   const nextStep = () => {
     setFormStep((cur) => cur + 1);
   };
@@ -151,27 +145,23 @@ export default function NewListingForm(): JSX.Element {
       rating: parseFloat(String(finalData.rating)),
     };
 
-    try {
-      const result = await callApi(`/holidaze/venues`, {
-        method: "POST",
-        body: JSON.stringify(processedData),
-      });
+    const result = await callApi(`/holidaze/venues`, {
+      method: "POST",
+      body: JSON.stringify(processedData),
+    });
 
-      let countdown = 3;
-      setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
+    let countdown = 3;
+    setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
 
-      const countdownInterval = setInterval(() => {
-        countdown -= 1;
-        if (countdown > 0) {
-          setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
-        } else {
-          clearInterval(countdownInterval);
-          navigate(`/listing/${result.data.id}`);
-        }
-      }, 1000);
-    } catch (err) {
-      console.error("Error:", err);
-    }
+    const countdownInterval = setInterval(() => {
+      countdown -= 1;
+      if (countdown > 0) {
+        setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
+      } else {
+        clearInterval(countdownInterval);
+        navigate(`/listing/${result.data.id}`);
+      }
+    }, 1000);
   };
 
   const checkValidation = () => {

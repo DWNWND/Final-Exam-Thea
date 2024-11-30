@@ -6,8 +6,6 @@ import { BookingConfirmationCard } from "../../../components/Cards";
 import { Link, useNavigate } from "react-router-dom";
 import { RoundBtn } from "../../../components/Buttons";
 
-//ADD LOADER AND ERROR HANDLING
-
 export default function BookingConfirmation(): JSX.Element {
   const { accessToken } = useAuthStore();
   const { successfulBookingId, selectedListing } = useBookingDataStore();

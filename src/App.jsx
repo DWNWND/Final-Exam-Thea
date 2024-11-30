@@ -2,7 +2,7 @@ import Layout from "./components/Layout";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ScrollToTop } from "./utils/";
-import { useAuthStore } from "./stores";
+import { useInactivityCheckHook } from "./hooks";
 
 const router = createBrowserRouter([
   {
@@ -24,27 +24,13 @@ const router = createBrowserRouter([
       { path: "/user/:username/settings", element: <routes.MySettings /> },
       { path: "/user/:username/mylistings", element: <routes.MyListings /> },
       { path: "/user/:username/mybookings", element: <routes.MyBookings /> },
-      // { path: "contact", element: <routes.Contact /> },
       { path: "*", element: <routes.RouteNotFound /> },
     ],
   },
 ]);
 
 export default function App() {
-  const { logOut } = useAuthStore();
-  //fix the inactivity timer to redirect to homepage when logging out and to alert inactivity before logging out
-  // useInactivityCheckHook();
-
-  //logout when the user closes the tab
-  // useEffect(() => {
-  //   const handleUnload = () => {
-  //     logOut();
-  //   };
-  //   window.addEventListener("unload", handleUnload);
-  //   return () => {
-  //     window.removeEventListener("unload", handleUnload);
-  //   };
-  // }, []);
+  useInactivityCheckHook();
 
   return (
     <RouterProvider router={router}>

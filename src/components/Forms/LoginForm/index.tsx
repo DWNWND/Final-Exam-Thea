@@ -50,26 +50,20 @@ export default function LoginForm(): JSX.Element {
     const { email, password } = data;
     const lowerCaseTrimmedEmail = email.toLowerCase().trim();
 
-    console.log(lowerCaseTrimmedEmail);
+    const result = await callApi(`/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({ email: lowerCaseTrimmedEmail, password }),
+    });
 
-    try {
-      const result = await callApi(`/auth/login`, {
-        method: "POST",
-        body: JSON.stringify({ email: lowerCaseTrimmedEmail, password }),
-      });
+    setAccessToken(result.data.accessToken);
+    setUserName(result.data.name);
 
-      setAccessToken(result.data.accessToken);
-      setUserName(result.data.name);
+    const lastPreviousRoute = getLastPreviousRoute();
 
-      const lastPreviousRoute = getLastPreviousRoute();
-
-      if (selectedListing.id && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
-        navigate("/booking/details");
-      } else {
-        navigate("/user/" + result.data.name);
-      }
-    } catch (err) {
-      console.log("error logging in", err);
+    if (selectedListing.id && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
+      navigate("/booking/details");
+    } else {
+      navigate("/user/" + result.data.name);
     }
   };
 

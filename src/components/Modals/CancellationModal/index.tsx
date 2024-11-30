@@ -43,7 +43,6 @@ export function CancellationModal({ booking, toggle }: CancellationModalProps): 
         }
       }, 1000);
     } catch (error) {
-      console.error("Error:", error);
       setErrorCancellationMessage(`Cancellation failed: ${error}`);
     }
   };

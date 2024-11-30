@@ -64,14 +64,6 @@ export default function Occupancy(): JSX.Element {
       if (inactiveBookings) {
         setInactiveBookingsArray(inactiveBookings);
       }
-
-      // if (activeBookings.length === 0) {
-      //   setInactiveBookingsFilter(true);
-      //   setActiveBookingsFilter(false);
-      // } else if (inactiveBookings.length === 0) {
-      //   setInactiveBookingsFilter(false);
-      //   setActiveBookingsFilter(true);
-      // }
     }
   };
 
