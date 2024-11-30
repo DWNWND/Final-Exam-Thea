@@ -39,7 +39,6 @@ export default function SettingsForm(): JSX.Element {
   const { userName, setVenueManager } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState<string>("");
-  // const [updateSuccess, setUpdateSuccess] = useState<boolean>(false);
 
   const {
     register,
@@ -74,7 +73,6 @@ export default function SettingsForm(): JSX.Element {
         method: "PUT",
         body: JSON.stringify(data),
       });
-      // setUpdateSuccess(true);
       setVenueManager(data.venueManager);
       setUserFeedbackUpdateMessage("Profile successfully updated.");
     } catch (err) {
