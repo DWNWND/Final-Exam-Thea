@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { ListingSpesific } from "../../types";
+import { ListingSpecificProps } from "../../types";
 
 interface BookingDataStore {
   dateFrom: string;
@@ -13,12 +13,12 @@ interface BookingDataStoreState {
   bookingData: BookingDataStore;
   successfulBookingId: string;
   bookingEmail: string;
-  selectedListing: ListingSpesific;
+  selectedListing: ListingSpecificProps;
   setBookingData: (bookingData: BookingDataStore) => void;
   setSuccessfulBookingId: (successfulBookingId: string) => void;
   setBookingEmail: (bookingEmail: string) => void;
   clearBookingDataStore: () => void;
-  setSelectedListing: (listing: ListingSpesific) => void;
+  setSelectedListing: (listing: ListingSpecificProps) => void;
 }
 
 export const useBookingDataStore = create<BookingDataStoreState>()(

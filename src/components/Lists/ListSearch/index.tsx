@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts";
 import { ListingCard } from "../../Cards";
 import { useTravelSearchStore } from "../../../stores";
-import { ListingSpesific, DataContextType, TravelSearchData } from "../../../types";
+import { ListingSpecificProps, DataContextType, TravelSearchData } from "../../../types";
 import { RoundBtn } from "../../Buttons";
 import { capitalizeWords } from "../../../utils";
 
@@ -10,8 +10,8 @@ export default function ListSearch(): JSX.Element {
   const { travelSearchData } = useTravelSearchStore();
   const { displayedListings, loading } = useContext(DataContext) as DataContextType;
 
-  const [filteredListings, setFilteredListings] = useState<ListingSpesific[]>([]);
-  const [displayListings, setDisplayListings] = useState<ListingSpesific[]>([]);
+  const [filteredListings, setFilteredListings] = useState<ListingSpecificProps[]>([]);
+  const [displayListings, setDisplayListings] = useState<ListingSpecificProps[]>([]);
 
   const [filters, setFilters] = useState<string>("all listings");
 
@@ -25,7 +25,7 @@ export default function ListSearch(): JSX.Element {
       }
 
       const amenities: (keyof TravelSearchData)[] = ["freeWifi", "petsAllowed", "freeParking", "freeBreakfast"];
-      const amenitiesMatch = amenities.every((amenity) => !travelSearchData[amenity] || travelSearchData[amenity] === listing.meta[amenity.replace("free", "").toLowerCase() as keyof ListingSpesific["meta"]]);
+      const amenitiesMatch = amenities.every((amenity) => !travelSearchData[amenity] || travelSearchData[amenity] === listing.meta[amenity.replace("free", "").toLowerCase() as keyof ListingSpecific["meta"]]);
       if (!amenitiesMatch) return false;
 
       if (listing.maxGuests < searchQuery.numberOfGuests) return false;

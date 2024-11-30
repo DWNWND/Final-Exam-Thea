@@ -9,7 +9,7 @@ import { OccupancyBookingCard } from "../../../components/Cards";
 import BookingCalendar from "../../../components/BookingCalendar";
 import { OccupancyOverviewSkeletonLoader, BigSpinnerLoader } from "../../../components/Loaders";
 import { RoundBtn } from "../../../components/Buttons";
-import { ListingSpesific, BookingsData } from "../../../types";
+import { ListingSpecificProps, BookingsData } from "../../../types";
 
 export default function Occupancy(): JSX.Element {
   const { accessToken } = useAuthStore();
@@ -19,7 +19,7 @@ export default function Occupancy(): JSX.Element {
   const [activeBookingsFilter, setActiveBookingsFilter] = useState(true);
   const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState(false);
 
-  const [listing, setListing] = useState<ListingSpesific | null>(null);
+  const [listing, setListing] = useState<ListingSpecificProps | null>(null);
   const [listingReserved, setListingReserved] = useState<{ startDate: Date; endDate: Date }[]>([]);
   const [activeBookingsArray, setActiveBookingsArray] = useState<BookingsData[]>([]);
   const [inactiveBookingsArray, setInactiveBookingsArray] = useState<BookingsData[]>([]);
@@ -37,7 +37,7 @@ export default function Occupancy(): JSX.Element {
   }, [accessToken]);
 
   const fetchOccupancyData = async () => {
-    const result = await callApi<ListingSpesific>(`/holidaze/venues/${id}?_bookings=true`);
+    const result = await callApi<ListingSpecific>(`/holidaze/venues/${id}?_bookings=true`);
     if (result.data) {
       setListing(result.data);
 

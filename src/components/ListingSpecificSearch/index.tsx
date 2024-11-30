@@ -1,19 +1,19 @@
 import { IoIosSearch } from "react-icons/io";
 import { useApiCall } from "../../hooks";
-import { ListingSpesific } from "../../types";
+import { ListingSpecificProps } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { SmallSpinnerLoader } from "../Loaders";
 import { useState, useContext } from "react";
 import { OpenMenuContext } from "../../contexts/";
 
-export default function ListingSpesificSearch(): JSX.Element {
+export default function ListingSpecificSearch(): JSX.Element {
   const { loading, error, callApi } = useApiCall();
   const { setIsMenuOpen } = useContext(OpenMenuContext);
   const navigate = useNavigate();
 
   const [typedSearchQuery, setTypedSearchQuery] = useState<string>("");
   const [locationListOpen, setLocationListOpen] = useState<boolean>(false);
-  const [searchResult, setSearchResult] = useState<ListingSpesific[]>([]);
+  const [searchResult, setSearchResult] = useState<ListingSpecificProps[]>([]);
 
   const fetchSearchedListings = async (searchQuery2: string) => {
     const result = await callApi(`/holidaze/venues/search?q=${searchQuery2}`);

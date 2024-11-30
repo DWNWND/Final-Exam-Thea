@@ -9,7 +9,7 @@ import { SmallSpinnerLoader } from "../../../components/Loaders";
 import { CancellationModal } from "../../../components/Modals";
 import { BookingCard } from "../../../components/Cards";
 import { RoundBtn } from "../../../components/Buttons";
-import { BookingSpesific } from "../../../types";
+import { BookingSpecific } from "../../../types";
 
 interface SelectedBooking {
   name: string;
@@ -28,11 +28,11 @@ export default function MyBookings(): JSX.Element {
   const [activeBookingsFilter, setActiveBookingsFilter] = useState(true);
   const [inactiveBookingsFilter, setInactiveBookingsFilter] = useState(false);
 
-  const [allBookings, setAllBookings] = useState<BookingSpesific[]>([]);
-  const [activeBookingsArray, setActiveBookingsArray] = useState<BookingSpesific[]>([]);
-  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<BookingSpesific[]>([]);
-  const [displayedActiveBookings, setDisplayedActiveBookings] = useState<BookingSpesific[]>([]);
-  const [displayedInactiveBookings, setDisplayedInactiveBookings] = useState<BookingSpesific[]>([]);
+  const [allBookings, setAllBookings] = useState<BookingSpecific[]>([]);
+  const [activeBookingsArray, setActiveBookingsArray] = useState<BookingSpecific[]>([]);
+  const [inactiveBookingsArray, setInactiveBookingsArray] = useState<BookingSpecific[]>([]);
+  const [displayedActiveBookings, setDisplayedActiveBookings] = useState<BookingSpecific[]>([]);
+  const [displayedInactiveBookings, setDisplayedInactiveBookings] = useState<BookingSpecific[]>([]);
 
   const initialDisplayCount = 10;
 
@@ -47,13 +47,13 @@ export default function MyBookings(): JSX.Element {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const activeBookings = result.data.filter((booking: BookingSpesific) => {
+    const activeBookings = result.data.filter((booking: BookingSpecific) => {
       const dateTo = new Date(booking.dateTo);
       dateTo.setHours(0, 0, 0, 0);
       return dateTo >= today;
     });
 
-    const inactiveBookings = result.data.filter((booking: BookingSpesific) => {
+    const inactiveBookings = result.data.filter((booking: BookingSpecific) => {
       const dateTo = new Date(booking.dateTo);
       dateTo.setHours(0, 0, 0, 0);
       return dateTo < today;

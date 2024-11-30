@@ -6,7 +6,7 @@ import { useAuthStore } from "../../../stores";
 import { useApiCall } from "../../../hooks";
 import { SquareBtn } from "../../Buttons";
 import { SmallSpinnerLoader, SettingsFormSkeletonLoader } from "../../Loaders";
-import { UserSpesific } from "../../../types";
+import { UserSpecific } from "../../../types";
 
 interface SettingsFormInputs {
   bio: string;
@@ -35,7 +35,7 @@ const updateSettingsSchema = yup.object({
 });
 
 export default function SettingsForm(): JSX.Element {
-  const [user, setUser] = useState<UserSpesific | null>(null);
+  const [user, setUser] = useState<UserSpecific | null>(null);
   const { userName, setVenueManager } = useAuthStore();
   const { loading, scopedLoader, error, callApi } = useApiCall();
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState<string>("");
@@ -50,7 +50,7 @@ export default function SettingsForm(): JSX.Element {
   });
 
   const fetchUserData = async () => {
-    const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+    const result = await callApi<UserSpecific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
     if (result?.data) {
       setUser(result.data);
     }

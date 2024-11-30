@@ -8,7 +8,7 @@ import { SmallSpinnerLoader, EditListingFormSkeletonLoader } from "../../Loaders
 import GeneralErrorFallback from "../../ErrorFallback/GeneralErrorFallback";
 import { useApiCall } from "../../../hooks";
 import { DeletionModal } from "../../Modals";
-import { ListingSpesific } from "../../../types";
+import { ListingSpecificProps } from "../../../types";
 
 interface EditListingFormProps {
   setListingName: (name: string) => void;
@@ -71,7 +71,7 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
 
   const [userFeedbackUpdateMessage, setUserFeedbackUpdateMessage] = useState<string>("");
   const [deletionModal, setDeletionModal] = useState<boolean>(false);
-  const [listing, setListing] = useState<ListingSpesific | null>(null);
+  const [listing, setListing] = useState<ListingSpecificProps | null>(null);
 
   const navigate = useNavigate();
 

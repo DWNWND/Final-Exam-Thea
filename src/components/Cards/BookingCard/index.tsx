@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { ArrowRightBtn, SquareBtn } from "../../Buttons";
 import { formatDateForDisplay } from "../../../utils";
 import { ListingCardSkeletonLoader } from "../../Loaders";
-import { DateRange, BookingSpesificListing } from "../../../types";
+import { DateRange, BookingSpecificListing } from "../../../types";
 
 interface BookingCardCompProps {
-  booking: BookingSpesificListing;
+  booking: BookingSpecificListing;
   bookingId: string;
   bookingDates?: DateRange | null;
   loading: boolean;
