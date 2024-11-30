@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-import "flatpickr/dist/themes/material_green.css";
 import { CiCalendar } from "react-icons/ci";
 import { useTravelDatesStore } from "../../../../../stores";
 import { formatDateForDisplay, formatDateForFlatpickr, generateAllDatesArr } from "../../../../../utils";
