@@ -17,7 +17,7 @@ export default function ListSearchForm(): JSX.Element {
         from: {savedDates.startDisplay} <br /> to: {savedDates.endDisplay}
       </h1>
       <p className="text-white text-center my-4">{travelSearchData.numberOfGuests} guests</p>
-      <ArrowDownBtn clickFunc={toggleOpenEditSearch} innerText="Edit search" tailw="uppercase" mainSearch={false} open={openEditSearch} />
+      <ArrowDownBtn clickFunc={toggleOpenEditSearch} innerText="Edit search" tail="uppercase" mainSearch={false} open={openEditSearch} />
       <form className={`flex flex-col gap-4 md:gap-8 transition-max-height duration-500 ease-in-out overflow-hidden ${openEditSearch ? "max-h-[1000px] opacity-100  mt-6" : "max-h-0 opacity-0"}`} id="update-search-travel-form">
         <div className="flex flex-col gap-4">
           <LocationLookAhead color="primary-blue" />

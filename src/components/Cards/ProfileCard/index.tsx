@@ -25,7 +25,7 @@ export function ProfileCard({ user }: ProfileCardCompProps): JSX.Element {
         </div>
       </div>
       <Link to={`/user/${user.name}/settings`}>
-        <SquareBtn innerText="my settings" width="full" tailw="lowercase" bgColor="transparent" textColor="primary-purple" />
+        <SquareBtn innerText="my settings" width="full" tail="lowercase" bgColor="transparent" textColor="primary-purple" />
       </Link>
     </div>
   );

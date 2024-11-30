@@ -1,7 +1,6 @@
 import Layout from "./components/Layout";
 import * as routes from "./routes";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { ScrollToTop } from "./utils/";
 import { useInactivityCheckHook } from "./hooks";
 
 const router = createBrowserRouter([
@@ -32,9 +31,5 @@ const router = createBrowserRouter([
 export default function App() {
   useInactivityCheckHook();
 
-  return (
-    <RouterProvider router={router}>
-      <ScrollToTop />
-    </RouterProvider>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 }

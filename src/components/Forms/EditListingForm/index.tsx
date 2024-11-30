@@ -207,7 +207,7 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
                   <label htmlFor="location.city" className="block text-primary-green mb-2">
                     City
                   </label>
-                  <input disabled={scopedLoader} placeholder="New Amterdam" type="text" id="location.city" {...register("location.city")} defaultValue={listing.location.city} className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.location?.message && "border-danger"}`} />
+                  <input disabled={scopedLoader} placeholder="New Amsterdam" type="text" id="location.city" {...register("location.city")} defaultValue={listing.location.city} className={`focus:border-primary-green active:border-primary-green placeholder:italic placeholder:font-light font-light text-primary-green border active:text-primary-green focus:text-primary-green active:font-normal focus:font-normal border-comp-greenDark rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none ${errors.location?.message && "border-danger"}`} />
                   {errors.location?.message && <p className="text-danger text-xs mt-2">{errors.location?.message}</p>}
                 </div>
 

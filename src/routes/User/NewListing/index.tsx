@@ -22,7 +22,7 @@ export default function NewListing(): JSX.Element {
         <title>{`New Listing | ${userName} | Holidaze`}</title>
         <meta name="description" content="Create and publish your property listing with ease. Start sharing your unique space today and connect with travelers worldwide!" />
       </Helmet>
-      <MainElement tailw="bg-comp">
+      <MainElement tail="bg-comp">
         {venueManager ? (
           <section>
             <h1 className="hidden uppercase text-2xl text-primary-green text-center mb-6">New Listing</h1>
@@ -31,7 +31,7 @@ export default function NewListing(): JSX.Element {
         ) : (
           <section>
             <h1 className="uppercase text-2xl text-primary-green text-center mb-6 mt-10">You have to register as a venue manager to publish listings</h1>
-            <RoundBtn innerText="Register as Venue Manager" bgColor="primary-green" tailw="m-auto" textColor="white" clickFunc={() => navigate(`/user/${userName}/settings`)} />
+            <RoundBtn innerText="Register as Venue Manager" bgColor="primary-green" tail="m-auto" textColor="white" clickFunc={() => navigate(`/user/${userName}/settings`)} />
           </section>
         )}
       </MainElement>

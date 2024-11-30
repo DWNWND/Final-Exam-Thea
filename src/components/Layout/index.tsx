@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorBoundryFallback from "../ErrorFallback/ErrorBoundryFallback";
+import ErrorBoundaryFallback from "../ErrorFallback/ErrorBoundaryFallback";
 import Header from "./Header";
 import Footer from "./Footer";
 import FixedBtnDisplay from "./FixedBtnDisplay";
@@ -8,6 +8,7 @@ import { useScreenSizeCheckHook } from "../../hooks";
 import { OpenMenuContext } from "../../contexts/";
 import { useState, useEffect } from "react";
 import { useNavigationStore } from "../../stores";
+import { ScrollToTop } from "../../utils";
 
 export default function Layout(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -21,8 +22,9 @@ export default function Layout(): JSX.Element {
 
   return (
     <>
-      <ErrorBoundary FallbackComponent={ErrorBoundryFallback}>
+      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
         <OpenMenuContext.Provider value={{ isMenuOpen, setIsMenuOpen }}>
+          <ScrollToTop />
           <Header />
           <Outlet />
           {isMobile && <FixedBtnDisplay />}

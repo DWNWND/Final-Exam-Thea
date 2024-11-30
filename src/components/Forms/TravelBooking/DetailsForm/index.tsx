@@ -19,8 +19,8 @@ interface DetailsFormInputs {
 }
 
 const detailsSchema = yup.object({
-  firstName: yup.string().min(3, "Firstname must be at least 3 characters").required("Firstname is required"),
-  lastName: yup.string().min(3, "Lastname must be at least 3 characters").required("Lastname is required"),
+  firstName: yup.string().min(3, "First name must be at least 3 characters").required("First name is required"),
+  lastName: yup.string().min(3, "Last name must be at least 3 characters").required("Last name is required"),
   checkIn: yup.string().required("Please provide check-in time"),
   specialRequests: yup.string(),
   email: yup.string().email("Please enter a valid email").required("Email is required"),

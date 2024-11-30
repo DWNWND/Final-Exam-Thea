@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import LogoIcon from "../../../assets/logos/holidaize-logo.svg";
+import LogoIcon from "../../../assets/logos/holidaze-logo.svg";
 import { useScreenSizeCheckHook } from "../../../hooks";
 import FixedBtnDisplay from "../FixedBtnDisplay";
 import HamburgerBtn from "./HamburgerBtn";
@@ -57,7 +57,7 @@ export default function Header(): JSX.Element {
             <ArrowLeftBtn />
           </div>
           <Link to="/" className={`${!previousRoute ? "mx-auto" : "absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none"}`}>
-            <img src={LogoIcon} className="h-auto w-auto object-contain" alt="Holidaize logo, click to go to home page" />
+            <img src={LogoIcon} className="h-auto w-auto object-contain" alt="Holidaze logo, click to go to home page" />
           </Link>
         </div>
         <div className="flex items-center gap-4">

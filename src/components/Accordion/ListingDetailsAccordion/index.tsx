@@ -36,7 +36,7 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleAmenities}>
           <span className="uppercase font-semibold">Amenities</span>
-          <ArrowDownBtn tailw="text-primary-blue border-none" mainSearch={false} link={true} open={amenitiesOpen} />
+          <ArrowDownBtn tail="text-primary-blue border-none" mainSearch={false} link={true} open={amenitiesOpen} />
         </h2>
         <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${amenitiesOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className={accordionContentStyle}>
@@ -62,7 +62,7 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleDescription}>
           <span className="uppercase font-semibold">Details</span>
-          <ArrowDownBtn tailw="text-primary-blue border-none" mainSearch={false} link={true} open={descriptionOpen} />
+          <ArrowDownBtn tail="text-primary-blue border-none" mainSearch={false} link={true} open={descriptionOpen} />
         </h2>
         <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${descriptionOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className={accordionContentStyle}>
@@ -73,7 +73,7 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleHostDetails}>
           <span className="uppercase font-semibold">Host details</span>
-          <ArrowDownBtn tailw="text-primary-blue border-none" mainSearch={false} link={true} open={hostDetailsOpen} />
+          <ArrowDownBtn tail="text-primary-blue border-none" mainSearch={false} link={true} open={hostDetailsOpen} />
         </h2>
         <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${hostDetailsOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className={accordionContentStyle}>
@@ -93,7 +93,7 @@ export default function ListingDetailsAccordion({ listing, listingReserved, list
       <div className={accordionBoxStyle}>
         <h2 className="flex items-center gap-2 justify-between cursor-pointer" onClick={toggleAvailability}>
           <span className="uppercase font-semibold">Availability</span>
-          <ArrowDownBtn tailw="text-primary-blue border-none" mainSearch={false} link={true} open={availabilityOpen} />
+          <ArrowDownBtn tail="text-primary-blue border-none" mainSearch={false} link={true} open={availabilityOpen} />
         </h2>
         <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${availabilityOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
           <div className={accordionContentStyle}>

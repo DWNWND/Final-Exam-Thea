@@ -7,7 +7,7 @@ import CopyRight from "./CopyRight";
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="pt-10 pb-24 md:pb-5 w-full bg-desatBlue p-8">
+    <footer className="pt-10 pb-24 md:pb-5 w-full bg-background p-8">
       <div className="flex flex-col justify-between gap-8 md:flex-row lg:gap-20">
         <div className="flex flex-col justify-evenly gap-8 md:flex-row lg:gap-20">
           <div className="flex flex-col gap-2">
@@ -31,11 +31,11 @@ export default function Footer(): JSX.Element {
             </ul>
           </div>
           <div className="flex flex-col gap-2">
-            <h2 className="uppercase font-semibold text-primary-blue text-xl">Lazz</h2>
+            <h2 className="uppercase font-semibold text-primary-blue text-xl">Holidaze</h2>
             <ul className="flex flex-col gap-1">
               <li>
                 <Link to="/contact" className="hover:underline">
-                  About Holidaize
+                  About Holidaze
                 </Link>
               </li>
               <li>

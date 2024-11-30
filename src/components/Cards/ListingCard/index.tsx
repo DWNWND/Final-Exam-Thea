@@ -21,14 +21,11 @@ export function ListingCard({ listing, loading, myListings = false }: ListingCar
         <>
           {listing && (
             <div key={listing.id} className="rounded-lg shadow-sm bg-white hover:shadow-lg transition duration-300 ease-in-out relative flex flex-col">
-              <ArrowRightBtn href={`/listing/${listing.id}`} listing={true} tailw="z-40" />
+              <ArrowRightBtn href={`/listing/${listing.id}`} listing={true} tail="z-40" />
               <Link to={`/listing/${listing.id}`} className="h-48 w-full z-30 rounded-lg">
                 <div className="bg-black w-full rounded-t-lg h-48 z-40 opacity-30 absolute"></div>
                 <div className="relative">
                   <img src={listing.media.length > 0 ? listing.media[0].url : ""} alt={listing.media.length > 0 ? listing.media[0].alt : ""} className="w-full h-48 object-cover rounded-t-lg" />
-                  <div className="absolute font-bold text-2xl text-white bottom-2 right-2 z-40 bg-primary-green p-2 px-6 rounded-full">
-                    <p>kr {listing.price}/night</p>
-                  </div>
                 </div>
               </Link>
               <div className="p-4 flex flex-col gap-4">
@@ -43,13 +40,16 @@ export function ListingCard({ listing, loading, myListings = false }: ListingCar
                     <p className="text-nowrap ">★ {listing.rating}</p>
                   </div>
                 </div>
+                <div className="font-bold text-2xl text-primary-green text-center mb-3">
+                  <p>kr {listing.price}/night</p>
+                </div>
                 {myListings && (
                   <div className="flex flex-col gap-2">
                     <Link to={`/user/${userName}/occupancy/${listing.id}`} className="z-40">
-                      <SquareBtn innerText={listing.bookings && listing.bookings.length >= 1 ? "Check occupancy" : "This property has no bookings yet"} tailw={listing.bookings && listing.bookings.length < 1 ? "hover:shadow-none cursor-default lowercase" : "lowercase"} borderColor={listing.bookings && listing.bookings.length >= 1 ? "primary-green" : "none"} width="full" bgColor="" textColor="primary-green" disabled={listing.bookings && listing.bookings.length < 1} />
+                      <SquareBtn innerText={listing.bookings && listing.bookings.length >= 1 ? "Check occupancy" : "This property has no bookings yet"} tail={listing.bookings && listing.bookings.length < 1 ? "hover:shadow-none cursor-default lowercase" : "lowercase"} borderColor={listing.bookings && listing.bookings.length >= 1 ? "primary-green" : "none"} width="full" bgColor="" textColor="primary-green" disabled={listing.bookings && listing.bookings.length < 1} />
                     </Link>
                     <Link to={venueManager ? `/user/${userName}/edit/${listing.id}` : ""} className="z-40">
-                      <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tailw={!venueManager ? "hover:shadow-none cursor-default lowercase" : "lowercase"} bgColor="" textColor="primary-green" />
+                      <SquareBtn innerText={venueManager ? "Edit listing" : "Register as venue manager to edit listing"} borderColor={venueManager ? "primary-green" : "none"} disabled={!venueManager} width="full" tail={!venueManager ? "hover:shadow-none cursor-default lowercase" : "lowercase"} bgColor="" textColor="primary-green" />
                     </Link>
                   </div>
                 )}
