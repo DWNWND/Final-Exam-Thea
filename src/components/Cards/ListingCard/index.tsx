@@ -2,10 +2,10 @@ import { ArrowRightBtn, SquareBtn } from "../../Buttons";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../../../stores";
 import { ListingCardSkeletonLoader } from "../../Loaders";
-import { ListingSpesific } from "../../../types";
+import { ListingSpecificProps } from "../../../types";
 
 interface ListingCardCompProps {
-  listing?: ListingSpesific;
+  listing?: ListingSpecificProps;
   loading: boolean;
   myListings?: boolean;
 }

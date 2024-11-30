@@ -3,9 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { OpenMenuContext } from "../../../contexts/";
 import { useAuthStore } from "../../../stores";
-import { SquareBtn } from "../../Buttons";
-import ListingSpesificSearch from "../../ListingSpesificSearch";
-import path from "path";
+import ListingSpecificSearch from "../../ListingSpecificSearch";
 
 export default function FixedBtnDisplay(): JSX.Element {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
@@ -54,7 +52,7 @@ export default function FixedBtnDisplay(): JSX.Element {
         {!isMobile && (
           <>
             <li>
-              <ListingSpesificSearch />
+              <ListingSpecificSearch />
             </li>
             <li>
               <Link to="/search">

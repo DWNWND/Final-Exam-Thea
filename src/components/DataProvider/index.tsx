@@ -3,7 +3,7 @@ import { useApiCall } from "../../hooks";
 import { DataContext } from "../../contexts/";
 import { searchableLocations } from "../../assets/locations/searchableLocations";
 import { capitalizeWords } from "../../utils";
-import { ListingSpesific } from "../../types";
+import { ListingSpecificProps } from "../../types";
 
 interface DataProviderProps {
   children: ReactNode;
@@ -11,8 +11,8 @@ interface DataProviderProps {
 
 export function DataProvider({ children }: DataProviderProps) {
   const { loading, setLoading, error, callApi } = useApiCall();
-  const [allListingsArr, setAllListingsArr] = useState<ListingSpesific[]>([]);
-  const [displayedListings, setDisplayedListings] = useState<ListingSpesific[]>([]);
+  const [allListingsArr, setAllListingsArr] = useState<ListingSpecificProps[]>([]);
+  const [displayedListings, setDisplayedListings] = useState<ListingSpecificProps[]>([]);
 
   const fetchAllListings = async () => {
     const result = await callApi("/holidaze/venues/?sort=created&sortOrder=desc");

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { SquareBtn } from "../../Buttons";
-import { UserSpesific } from "../../../types";
+import { UserSpecific } from "../../../types";
 
 interface ProfileCardCompProps {
-  user: UserSpesific;
+  user: UserSpecific;
 }
 
 export function ProfileCard({ user }: ProfileCardCompProps): JSX.Element {

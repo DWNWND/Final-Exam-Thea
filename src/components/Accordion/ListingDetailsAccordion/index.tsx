@@ -5,10 +5,10 @@ import { useTravelDatesStore } from "../../../stores";
 import BookingCalendar from "../../BookingCalendar";
 import { ArrowDownBtn } from "../../Buttons";
 import { SelectTravelDates } from "../../Forms/TravelSearch/Filters";
-import { ListingSpesific, DateRange } from "../../../types";
+import { ListingSpecificProps, DateRange } from "../../../types";
 
 interface ListingDetailsAccordionProps {
-  listing: ListingSpesific;
+  listing: ListingSpecificProps;
   listingReserved: DateRange[];
   listingIsAvailable: boolean;
 }

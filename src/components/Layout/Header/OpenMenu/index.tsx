@@ -2,8 +2,7 @@ import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { OpenMenuContext } from "../../../../contexts/";
 import { useAuthStore } from "../../../../stores";
-import { SquareBtn, RoundBtn } from "../../../Buttons";
-import ListingSpesificSearch from "../../../ListingSpesificSearch";
+import ListingSpecificSearch from "../../../ListingSpecificSearch";
 import { useScreenSizeCheckHook } from "../../../../hooks";
 
 export default function OpenMenu(): JSX.Element {
@@ -33,7 +32,7 @@ export default function OpenMenu(): JSX.Element {
               </Link>
             </li>
             <li className="mb-5">
-              <ListingSpesificSearch />
+              <ListingSpecificSearch />
             </li>
           </>
         )}

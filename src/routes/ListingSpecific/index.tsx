@@ -9,7 +9,7 @@ import { FaRegHeart, FaShare } from "react-icons/fa";
 import { NumberOfGuests, SelectTravelDates } from "../../components/Forms/TravelSearch/Filters";
 import ListingDetailsAccordion from "../../components/Accordion/ListingDetailsAccordion";
 import { calculateNights } from "../../utils";
-import { ListingSpesific } from "../../types";
+import { ListingSpecificProps } from "../../types";
 import { BigSpinnerLoader } from "../../components/Loaders";
 import GeneralErrorFallback from "../../components/ErrorFallback/GeneralErrorFallback";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
@@ -28,7 +28,7 @@ export default function ListingSpecific(): JSX.Element {
   const { id } = useParams();
   const { loading, error, callApi } = useApiCall();
 
-  const [listing, setListing] = useState<ListingSpesific | null>(null);
+  const [listing, setListing] = useState<ListingSpecificProps | null>(null);
   const [yourListing, setYourListing] = useState(false);
   const [editDates, setEditDates] = useState(false);
   const [imageModal, setImageModal] = useState(false);

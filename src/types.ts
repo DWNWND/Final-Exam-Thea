@@ -35,7 +35,7 @@ interface CustomerOrOwner {
   banner: Media;
 }
 
-export interface UserSpesific {
+export interface UserSpecific {
   name: string;
   email: string;
   venueManager: boolean;
@@ -54,18 +54,18 @@ export interface BookingsData {
   customer: CustomerOrOwner;
 }
 
-export interface BookingSpesific {
+export interface BookingSpecific {
   id: string;
   dateFrom: string;
   dateTo: string;
   guests: number;
   created: string;
   updated: string;
-  venue: BookingSpesificListing;
+  venue: BookingSpecificListing;
   customer: CustomerOrOwner;
 }
 
-export interface BookingSpesificListing {
+export interface BookingSpecificListing {
   id: string;
   name: string;
   description: string;
@@ -79,7 +79,7 @@ export interface BookingSpesificListing {
   media: Media[];
 }
 
-export interface ListingSpesific {
+export interface ListingSpecificProps {
   id: string;
   name: string;
   description: string;
@@ -122,8 +122,8 @@ export interface ButtonProps {
 }
 
 export interface DataContextType {
-  displayedListings: ListingSpesific[];
-  setDisplayedListings: Dispatch<SetStateAction<ListingSpesific[]>>;
+  displayedListings: ListingSpecificProps[];
+  setDisplayedListings: Dispatch<SetStateAction<ListingSpecificProps[]>>;
   loading: boolean;
   error: string | null;
 }

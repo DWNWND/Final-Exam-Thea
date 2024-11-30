@@ -8,7 +8,7 @@ import { RoundBtn } from "../../../Buttons";
 import { useApiCall } from "../../../../hooks";
 import { useEffect, useState } from "react";
 import { DetailsFormSkeletonLoader } from "../../../Loaders";
-import { UserSpesific } from "../../../../types";
+import { UserSpecific } from "../../../../types";
 
 interface DetailsFormInputs {
   firstName: string;
@@ -33,11 +33,11 @@ export default function DetailsForm(): JSX.Element {
   const { loading, scopedLoader, callApi } = useApiCall();
   const { setPreviousRoute, getLastPreviousRoute } = useNavigationStore();
 
-  const [user, setUser] = useState<UserSpesific | null>(null);
+  const [user, setUser] = useState<UserSpecific | null>(null);
   const navigate = useNavigate();
 
   const fetchUserData = async () => {
-    const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}`);
+    const result = await callApi<UserSpecific>(`/holidaze/profiles/${userName}`);
     if (result?.data) {
       setUser(result.data);
     } else {

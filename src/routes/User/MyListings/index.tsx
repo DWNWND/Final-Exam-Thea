@@ -7,14 +7,14 @@ import { ListingCard } from "../../../components/Cards";
 import { SmallSpinnerLoader } from "../../../components/Loaders";
 import GeneralErrorFallback from "../../../components/ErrorFallback/GeneralErrorFallback";
 import MainElement from "../../../components/MainElement";
-import { ListingSpesific } from "../../../types";
+import { ListingSpecificProps } from "../../../types";
 
 export default function MyListings(): JSX.Element {
   const { accessToken, userName } = useAuthStore();
   const { loading, error, callApi } = useApiCall();
 
-  const [allListings, setAllListings] = useState<ListingSpesific[]>([]);
-  const [displayedListings, setDisplayedListings] = useState<ListingSpesific[]>([]);
+  const [allListings, setAllListings] = useState<ListingSpecificProps[]>([]);
+  const [displayedListings, setDisplayedListings] = useState<ListingSpecificProps[]>([]);
   const [loadMoreLoader, setLoadMoreLoader] = useState<boolean>(false);
 
   const navigate = useNavigate();
