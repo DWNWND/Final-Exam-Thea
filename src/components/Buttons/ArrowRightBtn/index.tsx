@@ -15,6 +15,7 @@ export function ArrowRightBtn({ href, listing = false, booking = false, tailw = 
       className={`${listing && "text-primary-green border-primary-green"} ${booking && "text-primary-blue border-primary-blue"} 
         ${tailw} absolute top-2 right-2 z-30 flex justify-center items-center h-9 w-9 text-xl font-bold rounded-full border bg-white bg-opacity-70 hover:bg-white hover:shadow-md`}>
       <FaArrowRight />
+      <p className="sr-only">open listing</p>
     </Link>
   );
 }
