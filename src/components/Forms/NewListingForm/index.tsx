@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { useApiCall } from "../../../hooks";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SquareBtn } from "../../Buttons";
 import { MdEmojiFoodBeverage, MdOutlinePets } from "react-icons/md";
 import { FaParking, FaWifi } from "react-icons/fa";
 import { formatDateForDisplay, formatDateForFlatpickr } from "../../../utils";
@@ -125,11 +124,6 @@ export default function NewListingForm(): JSX.Element {
     control,
     name: "media",
   });
-
-  // const nextStep = async (data: StepInputs) => {
-  //   setFormData((prev) => ({ ...prev, ...data }));
-  //   setFormStep((cur) => cur + 1);
-  // };
 
   const nextStep = () => {
     setFormStep((cur) => cur + 1);
