@@ -10,8 +10,6 @@ interface ListingCardCompProps {
   myListings?: boolean;
 }
 
-//SHOULD THE KEY BE HERE OR IN THE PARENT COMPONENT?
-
 export function ListingCard({ listing, loading, myListings = false }: ListingCardCompProps): JSX.Element {
   const { userName, venueManager } = useAuthStore();
 
