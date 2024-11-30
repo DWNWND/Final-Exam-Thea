@@ -71,7 +71,7 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                     <>
                       {checkOutToday && <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-danger z-20 uppercase">Check out today</p>}
                       {inactiveBooking && (
-                        <div className="absolute w-full text-center bottom-16 z-20">
+                        <div className="absolute w-full text-center bottom-16 z-20 bg-primary-blue bg-opacity-70 py-2">
                           <p className="text-3xl uppercase font-bold text-white">Inactive</p>
                           <p className="text-lg italic font-bold text-white">
                             {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates?.endDate || "")}
@@ -79,7 +79,7 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                         </div>
                       )}
                       {currentBooking && (
-                        <div className="absolute w-full text-center bottom-16 z-20">
+                        <div className="absolute w-full text-center bottom-16 z-20 bg-primary-blue py-2">
                           <p className="text-3xl font-bold text-white uppercase">Current stay</p>
                           <p className="text-lg font-bold text-white italic">
                             {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
@@ -87,7 +87,7 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                         </div>
                       )}
                       {!inactiveBooking && !currentBooking && !checkOutToday && (
-                        <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-white z-20">
+                        <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-white z-20 bg-primary-blue py-2">
                           {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
                         </p>
                       )}
