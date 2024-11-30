@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useAuthStore, useBookingDataStore, useTravelDatesStore, useTravelSearchStore } from "../../../stores";
-import { SquareBtn } from "../../Buttons";
 import { useNavigate } from "react-router-dom";
 
 interface BookingModalProps {
@@ -53,6 +52,8 @@ export function BookingModal({ toggle, listingIsAvailable }: BookingModalProps):
     }
   };
 
+  const buttonClasses = `transition duration-300 ease-in-out text-nowrap flex justify-center p-2 px-4 w-full md:w-full items-center h-full uppercase rounded cursor-pointer `;
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white relative p-6 rounded-lg shadow-lg w-full md:max-w-[50rem] mx-10">
@@ -62,15 +63,23 @@ export function BookingModal({ toggle, listingIsAvailable }: BookingModalProps):
         <h2 className="text-xl font-bold mb-4 text-primary-blue">Continue booking as:</h2>
         <p className="text-sm mb-6 text-primary-blue">Choose how you would like to proceed with the booking</p>
         <div className="flex flex-col justify-end gap-4">
-          {accessToken ? (
+          {accessToken && userName ? (
             <>
-              <SquareBtn clickFunc={bookPropertyFunc} funcProp={userName} type="button" width="full" innerText={`${userName}`} tailw="" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
-              <SquareBtn clickFunc={bookPropertyFunc} funcProp="changeAccount" type="button" width="full" innerText="login with a different account" tailw="lowercase" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />
+              <button type="button" onClick={() => bookPropertyFunc(userName)} className={`${buttonClasses} text-white bg-primary-green border border-primary-green`}>
+                {userName}
+              </button>
+              <button type="button" onClick={() => bookPropertyFunc("changeAccount")} className={`${buttonClasses} lowercase text-white bg-primary-blue border border-primary-blue`}>
+                login with a different account
+              </button>
             </>
           ) : (
             <>
-              <SquareBtn clickFunc={bookPropertyFunc} funcProp="register" type="button" width="full" innerText="register new user" tailw="" bgColor="primary-blue" textColor="white" borderColor="primary-blue" />
-              <SquareBtn clickFunc={bookPropertyFunc} funcProp="login" type="button" width="full" innerText="login" tailw="" bgColor="primary-green" textColor="white" borderColor="primary-green" />
+              <button type="button" onClick={() => bookPropertyFunc("register")} className={`${buttonClasses} text-white bg-primary-green border border-primary-green`}>
+                register new user
+              </button>
+              <button type="button" onClick={() => bookPropertyFunc("login")} className={`${buttonClasses}  text-primary-blue bg-white border border-primary-blue`}>
+                login
+              </button>
             </>
           )}
         </div>
