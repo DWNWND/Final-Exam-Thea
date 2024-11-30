@@ -47,7 +47,7 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
   const updateDatesIfPast = () => {
     const stripTime = (date: string | Date): Date => {
       const parsedDate = typeof date === "string" ? new Date(date) : date;
-      parsedDate.setHours(0, 0, 0, 0); // Set time to 00:00:00
+      parsedDate.setHours(0, 0, 0, 0);
       return parsedDate;
     };
 

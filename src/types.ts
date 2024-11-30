@@ -1,12 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 
-//USED IN: BookingCard, ListingDetailsAccordion, BookingCalendar, BookingCard
 export interface DateRange {
-  startDate: string | Date; // ISO format
-  endDate: string | Date; // ISO format
+  startDate: string | Date;
+  endDate: string | Date;
 }
 
-//USED IN: NewListingForm
 export interface Media {
   url: string;
   alt: string;
@@ -37,7 +35,6 @@ interface CustomerOrOwner {
   banner: Media;
 }
 
-//USED IN: ProfileCard, MyProfile, ProfileCard, DetailsForm
 export interface UserSpesific {
   name: string;
   email: string;
@@ -47,7 +44,6 @@ export interface UserSpesific {
   bio: string;
 }
 
-//USED IN: OccupancyBookingCard, OccupancyBookingCard, Occupancy
 export interface BookingsData {
   id: string;
   dateFrom: string;
@@ -58,7 +54,6 @@ export interface BookingsData {
   customer: CustomerOrOwner;
 }
 
-//USED IN: MyProfile, MyBookings
 export interface BookingSpesific {
   id: string;
   dateFrom: string;
@@ -70,7 +65,6 @@ export interface BookingSpesific {
   customer: CustomerOrOwner;
 }
 
-//USED IN: BookingCard
 export interface BookingSpesificListing {
   id: string;
   name: string;
@@ -85,7 +79,6 @@ export interface BookingSpesificListing {
   media: Media[];
 }
 
-//USED IN: MyProfile, ListingSpecific, MyListings, Occupancy, ListingDetailsAccordion, ListingCard, ListCategorized, ListNewest, ListSearch, DataProvider, EditListingForm
 export interface ListingSpesific {
   id: string;
   name: string;
@@ -102,7 +95,6 @@ export interface ListingSpesific {
   bookings?: BookingsData[];
 }
 
-//USED IN: ListSearch, useTravelSearchStore
 export interface TravelSearchData {
   location: string;
   numberOfGuests: number;
@@ -118,7 +110,6 @@ export interface TravelSearchData {
   price500?: boolean;
 }
 
-//GO TROUGH ALL OF THESE AND SEE IF THEY ARE USED
 export interface ButtonProps {
   clickFunc: () => void;
   innerText?: string;
@@ -130,7 +121,6 @@ export interface ButtonProps {
   disabled?: boolean;
 }
 
-//USED IN: DataContext, ListSearch, Home
 export interface DataContextType {
   displayedListings: ListingSpesific[];
   setDisplayedListings: Dispatch<SetStateAction<ListingSpesific[]>>;

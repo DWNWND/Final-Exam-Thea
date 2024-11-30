@@ -45,9 +45,9 @@ export const useNavigationStore = create<NavigationStoreState>()(
         set((state) => {
           const newHistory = [...state.history];
           if (newHistory.length > 0) {
-            newHistory.splice(newHistory.length - 1, 0, route); // Insert before the last route
+            newHistory.splice(newHistory.length - 1, 0, route);
           } else {
-            newHistory.push(route); // Add if history is empty
+            newHistory.push(route);
           }
           return { history: newHistory };
         }),

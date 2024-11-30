@@ -43,7 +43,6 @@ export function DeletionModal({ toggle }: DeletionModalProps): JSX.Element {
         }
       }, 1000);
     } catch (err) {
-      console.error("Error:", err);
       setErrorDeletionMessage("Failed to delete listing.");
     }
   };

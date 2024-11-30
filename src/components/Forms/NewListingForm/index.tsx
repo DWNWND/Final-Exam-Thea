@@ -145,27 +145,23 @@ export default function NewListingForm(): JSX.Element {
       rating: parseFloat(String(finalData.rating)),
     };
 
-    try {
-      const result = await callApi(`/holidaze/venues`, {
-        method: "POST",
-        body: JSON.stringify(processedData),
-      });
+    const result = await callApi(`/holidaze/venues`, {
+      method: "POST",
+      body: JSON.stringify(processedData),
+    });
 
-      let countdown = 3;
-      setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
+    let countdown = 3;
+    setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
 
-      const countdownInterval = setInterval(() => {
-        countdown -= 1;
-        if (countdown > 0) {
-          setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
-        } else {
-          clearInterval(countdownInterval);
-          navigate(`/listing/${result.data.id}`);
-        }
-      }, 1000);
-    } catch (err) {
-      console.error("Error:", err);
-    }
+    const countdownInterval = setInterval(() => {
+      countdown -= 1;
+      if (countdown > 0) {
+        setUserFeedbackMessage(`Listing published. Redirecting in ${countdown} seconds...`);
+      } else {
+        clearInterval(countdownInterval);
+        navigate(`/listing/${result.data.id}`);
+      }
+    }, 1000);
   };
 
   const checkValidation = () => {

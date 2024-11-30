@@ -10,8 +10,6 @@ export function useNavigateBackHook(): () => void {
     if (previousRoute) {
       goBack();
       navigate(previousRoute);
-    } else {
-      console.log("No previous route available");
     }
   };
 

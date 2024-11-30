@@ -54,32 +54,28 @@ export default function RegisterForm(): JSX.Element {
   }, [userNameField, emailField, passwordField, confirmPasswordField]);
 
   const onSubmit = async (data: RegisterFormInputs) => {
-    try {
-      setError("");
-      const { userName, email, password } = data;
+    setError("");
+    const { userName, email, password } = data;
 
-      await callApi(`/auth/register`, {
-        method: "POST",
-        body: JSON.stringify({ name: userName, email, password }),
-      });
+    await callApi(`/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({ name: userName, email, password }),
+    });
 
-      const resultLogin = await callApi(`/auth/login`, {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-      });
+    const resultLogin = await callApi(`/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
 
-      setAccessToken(resultLogin.data.accessToken);
-      setUserName(resultLogin.data.name);
+    setAccessToken(resultLogin.data.accessToken);
+    setUserName(resultLogin.data.name);
 
-      const lastPreviousRoute = getLastPreviousRoute();
+    const lastPreviousRoute = getLastPreviousRoute();
 
-      if (selectedListing.id && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
-        navigate("/booking/details");
-      } else {
-        navigate(`/user/${resultLogin.data.name}`);
-      }
-    } catch (err) {
-      console.log("error regestering in", err);
+    if (selectedListing.id && lastPreviousRoute && lastPreviousRoute.includes(`/listing/${selectedListing.id}`)) {
+      navigate("/booking/details");
+    } else {
+      navigate(`/user/${resultLogin.data.name}`);
     }
   };
 

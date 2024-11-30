@@ -53,29 +53,25 @@ export default function CheckoutForm(): JSX.Element {
   const onSubmit = async () => {
     setUserFeedbackMessage("");
 
-    try {
-      const result = await callApi(`/holidaze/bookings`, {
-        method: "POST",
-        body: JSON.stringify(bookingData),
-      });
+    const result = await callApi(`/holidaze/bookings`, {
+      method: "POST",
+      body: JSON.stringify(bookingData),
+    });
 
-      setSuccessfulBookingId(result.data.id);
+    setSuccessfulBookingId(result.data.id);
 
-      let countdown = 3;
-      setUserFeedbackMessage(`Payment successful. Redirecting in ${countdown} seconds...`);
+    let countdown = 3;
+    setUserFeedbackMessage(`Payment successful. Redirecting in ${countdown} seconds...`);
 
-      const countdownInterval = setInterval(() => {
-        countdown -= 1;
-        if (countdown > 0) {
-          setUserFeedbackMessage(`Payment successful. Redirecting in ${countdown} seconds...`);
-        } else {
-          clearInterval(countdownInterval);
-          navigate(`/booking/confirmation/${result.data.id}`);
-        }
-      }, 1000);
-    } catch (err) {
-      console.error("Payment failed:", err);
-    }
+    const countdownInterval = setInterval(() => {
+      countdown -= 1;
+      if (countdown > 0) {
+        setUserFeedbackMessage(`Payment successful. Redirecting in ${countdown} seconds...`);
+      } else {
+        clearInterval(countdownInterval);
+        navigate(`/booking/confirmation/${result.data.id}`);
+      }
+    }, 1000);
   };
 
   const nights = calculateNights(savedDates.startYYYYMMDD, savedDates.endYYYYMMDD);

@@ -61,8 +61,6 @@ export function useApiCall() {
         return { success: true, data: data.data };
       }
     } catch (err: any /* eslint-disable-line @typescript-eslint/no-explicit-any */) {
-      // console.log("error", err);
-      // console.error("API Error:", err.message || "Unknown error");
       setError(err.message || "An unexpected error occurred");
       return { success: false, error: err.message };
     } finally {

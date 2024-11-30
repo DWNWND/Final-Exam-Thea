@@ -45,17 +45,17 @@ export default function MyBookings(): JSX.Element {
   const fetchBookings = async () => {
     const result = await callApi(`/holidaze/profiles/${userName}/bookings?_venue=true&_customer=true&sort=dateFrom&sortOrder=asc`);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set time to the start of the day
+    today.setHours(0, 0, 0, 0);
 
     const activeBookings = result.data.filter((booking: BookingSpesific) => {
       const dateTo = new Date(booking.dateTo);
-      dateTo.setHours(0, 0, 0, 0); // Compare only the date portion
+      dateTo.setHours(0, 0, 0, 0);
       return dateTo >= today;
     });
 
     const inactiveBookings = result.data.filter((booking: BookingSpesific) => {
       const dateTo = new Date(booking.dateTo);
-      dateTo.setHours(0, 0, 0, 0); // Compare only the date portion
+      dateTo.setHours(0, 0, 0, 0);
       return dateTo < today;
     });
 

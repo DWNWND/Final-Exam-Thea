@@ -13,7 +13,6 @@ export default function Home(): JSX.Element {
   const { clearTravelDatesStore, setInitialDates } = useTravelDatesStore();
   const { clearNavigationHistory } = useNavigationStore();
 
-  //think about adding this on more routes
   useEffect(() => {
     clearTravelSearchStore();
     clearBookingDataStore();

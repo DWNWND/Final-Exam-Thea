@@ -118,27 +118,23 @@ export default function EditListingForm({ setListingName }: EditListingFormProps
   const onSubmit = async (data: UpdateListingData) => {
     setUserFeedbackUpdateMessage("");
 
-    try {
-      await callApi(`/holidaze/venues/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-      });
+    await callApi(`/holidaze/venues/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    });
 
-      let countdown = 3;
-      setUserFeedbackUpdateMessage(`Listing successfully updated. Redirecting back to profile in ${countdown} seconds...`);
+    let countdown = 3;
+    setUserFeedbackUpdateMessage(`Listing successfully updated. Redirecting back to profile in ${countdown} seconds...`);
 
-      const countdownInterval = setInterval(() => {
-        countdown -= 1;
-        if (countdown > 0) {
-          setUserFeedbackUpdateMessage(`Listing successfully updated. Redirecting back to profile in ${countdown} seconds...`);
-        } else {
-          clearInterval(countdownInterval);
-          navigate(`/user/${userName}`);
-        }
-      }, 1000);
-    } catch (err) {
-      console.error("Error updating listing:", err);
-    }
+    const countdownInterval = setInterval(() => {
+      countdown -= 1;
+      if (countdown > 0) {
+        setUserFeedbackUpdateMessage(`Listing successfully updated. Redirecting back to profile in ${countdown} seconds...`);
+      } else {
+        clearInterval(countdownInterval);
+        navigate(`/user/${userName}`);
+      }
+    }, 1000);
   };
 
   const toggleDeletionModal = () => setDeletionModal(!deletionModal);

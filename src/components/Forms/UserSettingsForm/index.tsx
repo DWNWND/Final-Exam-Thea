@@ -50,15 +50,9 @@ export default function SettingsForm(): JSX.Element {
   });
 
   const fetchUserData = async () => {
-    try {
-      const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
-      if (result?.data) {
-        setUser(result.data);
-      } else {
-        console.error("Error fetching user data:", result?.error);
-      }
-    } catch (err) {
-      console.error("Error fetching user data:", err);
+    const result = await callApi<UserSpesific>(`/holidaze/profiles/${userName}?_venues=true&_bookings=true`);
+    if (result?.data) {
+      setUser(result.data);
     }
   };
 
@@ -68,16 +62,13 @@ export default function SettingsForm(): JSX.Element {
 
   const onSubmit = async (data: SettingsFormInputs) => {
     setUserFeedbackUpdateMessage("");
-    try {
-      await callApi(`/holidaze/profiles/${userName}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-      });
-      setVenueManager(data.venueManager);
-      setUserFeedbackUpdateMessage("Profile successfully updated.");
-    } catch (err) {
-      console.error("Error updating profile:", err);
-    }
+
+    await callApi(`/holidaze/profiles/${userName}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    });
+    setVenueManager(data.venueManager);
+    setUserFeedbackUpdateMessage("Profile successfully updated.");
   };
 
   return (
