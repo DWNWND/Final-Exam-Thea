@@ -1,10 +1,11 @@
 import { useScreenSizeCheckHook } from "../../../hooks/";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { OpenMenuContext } from "../../../contexts/";
 import { useAuthStore } from "../../../stores";
-import { RoundBtn, SquareBtn } from "../../Buttons";
+import { SquareBtn } from "../../Buttons";
 import ListingSpesificSearch from "../../ListingSpesificSearch";
+import path from "path";
 
 export default function FixedBtnDisplay(): JSX.Element {
   const { isMenuOpen, setIsMenuOpen } = useContext(OpenMenuContext);
@@ -12,6 +13,8 @@ export default function FixedBtnDisplay(): JSX.Element {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
   const [scrollTimeout, setScrollTimeout] = useState<NodeJS.Timeout | null>(null);
+  const location = useLocation();
+  const pathname = location.pathname;
 
   const handleScroll = () => {
     if (scrollTimeout) clearTimeout(scrollTimeout);
@@ -41,6 +44,9 @@ export default function FixedBtnDisplay(): JSX.Element {
   }, [lastScrollY]);
 
   const isMobile = useScreenSizeCheckHook();
+  const buttonClasses = `text-nowrap flex justify-center p-2 px-4 w-full md:w-auto items-center h-full uppercase rounded xl:hover:shadow-md cursor-pointer transition duration-300 ease-in-out border border-primary-green`;
+  const buttonActiveClasses = `text-white bg-primary-green`;
+  const buttonInactiveClasses = `text-primary-green bg-white`;
 
   return (
     <div className={`${isMobile && `${isVisible ? "translate-y-0" : "translate-y-full"} fixed bottom-0 w-full shadow-2xl p-3 bg-white`} ${isMobile && isMenuOpen && "translate-y-full"} z-50 transition-transform duration-300`}>
@@ -52,19 +58,25 @@ export default function FixedBtnDisplay(): JSX.Element {
             </li>
             <li>
               <Link to="/search">
-                <RoundBtn innerText="Book your next holiday" bgColor="primary-green" borderColor="primary-green" textColor="white" />
+                <button type="button" className={`${buttonClasses} ${pathname.includes("search") ? buttonActiveClasses : buttonInactiveClasses}`}>
+                  Browse all stays
+                </button>
               </Link>
             </li>
           </>
         )}
         <li className={`${isMobile && "w-full"}`}>
           <Link to={accessToken ? `/user/${userName}/new/listing` : "/login"}>
-            <SquareBtn innerText="List your place" tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+            <button type="button" className={`${buttonClasses} ${pathname.includes("new") ? buttonActiveClasses : buttonInactiveClasses}`}>
+              List your place
+            </button>
           </Link>
         </li>
         <li className={`${isMobile && "w-full"}`}>
           <Link to={accessToken ? `/user/${userName}` : "/login"}>
-            <SquareBtn innerText={accessToken ? "My profile" : "Login/register"} tailw="hover:bg-white bg-opacity-50" bgColor="white" textColor="primary-green" borderColor="primary-green" />
+            <button type="button" className={`${buttonClasses} ${pathname.includes("login") || pathname.includes("register") || (pathname.includes("user") && !pathname.includes("new")) ? buttonActiveClasses : buttonInactiveClasses}`}>
+              {accessToken ? "My profile" : "Login"}
+            </button>
           </Link>
         </li>
       </ul>

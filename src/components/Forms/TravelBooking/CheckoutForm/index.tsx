@@ -10,18 +10,26 @@ import { SmallSpinnerLoader } from "../../../Loaders";
 import { useApiCall } from "../../../../hooks";
 
 interface CheckoutFormInputs {
-  cardNumber: number;
+  cardNumber: string;
   expiryDate: string;
-  cvv: number;
+  cvv: string;
 }
 
 const checkoutSchema = yup.object({
-  cardNumber: yup.number().min(16).max(16).required("Card number is required"),
+  cardNumber: yup
+    .string()
+    .length(16, "Card number must be exactly 16 digits")
+    .matches(/^[0-9]+$/, "Card number must contain only digits")
+    .required("Card number is required"),
   expiryDate: yup
     .string()
-    .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Expiry date must be in MM/YY format")
+    .matches(/^(0[1-9]|1[0-2])\/([0-9]{2})$/, "Expiry date must be in MM/YY format")
     .required("Expiry date is required"),
-  cvv: yup.number().min(3).max(4).required("CVV is required"),
+  cvv: yup
+    .string()
+    .length(3, "CVV must be 3 digits")
+    .matches(/^[0-9]+$/, "CVV must contain only digits")
+    .required("CVV is required"),
 });
 
 export default function CheckoutForm(): JSX.Element {

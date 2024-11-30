@@ -48,11 +48,14 @@ export default function LoginForm(): JSX.Element {
   const onSubmit = async (data: LoginFormInputs) => {
     setError("");
     const { email, password } = data;
+    const lowerCaseTrimmedEmail = email.toLowerCase().trim();
+
+    console.log(lowerCaseTrimmedEmail);
 
     try {
       const result = await callApi(`/auth/login`, {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email: lowerCaseTrimmedEmail, password }),
       });
 
       setAccessToken(result.data.accessToken);

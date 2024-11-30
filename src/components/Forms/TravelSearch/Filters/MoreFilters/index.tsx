@@ -15,7 +15,7 @@ export function MoreFilters({ color, mainSearch = true }: MoreFiltersProps): JSX
   const toggleOpenMoreFilters = () => setOpenMoreFilters(!openMoreFilters);
 
   return (
-    <div>
+    <div className="md:min-w-60">
       <ArrowDownBtn clickFunc={toggleOpenMoreFilters} innerText="More filters" link={true} mainSearch={mainSearch} open={openMoreFilters} />
       <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${openMoreFilters ? "max-h-[1000px] opacity-100 mt-6" : "max-h-0 opacity-0"}`}>
         <div className={`flex flex-col gap-6 ${mainSearch ? "md:flex-row md:gap-20 md:justify-evenly" : ""}`}>
@@ -54,7 +54,7 @@ export function MoreFilters({ color, mainSearch = true }: MoreFiltersProps): JSX
           </div>
           <div className={`flex flex-col gap-2 ${mainSearch ? "md:pb-10" : ""}`}>
             <div className={`text-${color} uppercase font-semibold text-lg`}>Price range /night</div>
-            <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
+            <div className={`flex flex-col gap-2 lg:gap-6 ${mainSearch ? "lg:flex-row" : "xl:flex-row"}`}>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center">
                   <input id="priceRange1" type="checkbox" className="h-6 w-6 cursor-pointer" onChange={(e) => setPrice100(e.target.checked)} defaultChecked={travelSearchData.price100} />

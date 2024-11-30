@@ -73,7 +73,7 @@ export default function ListSearch(): JSX.Element {
     <section className="w-full">
       <h1 className="font-bold text-2xl text-primary-blue">{travelSearchData.location ? `Results for ${travelSearchData.location}` : capitalizeWords(filters)}</h1>
       <p className=" text-primary-blue my-4">{`Showing ${displayListings.length} of ${filteredListings.length} listings ${travelSearchData.location ? "(matching your search)" : ""}`}</p>
-      <div className="flex flex-col gap-2 pt-4 pb-8 lg:flex-row md:justify-center lg:justify-start">
+      <div className="flex flex-col gap-2 pt-4 pb-8 lg:flex-row md:justify-center lg:justify-start text-sm justify-between xl:text-lg">
         <RoundBtn clickFunc={() => setFilters("all listings")} tailw="py-2" innerText="All listings" bgColor={filters === "all listings" ? "primary-blue" : "white"} textColor={filters === "all listings" ? "white" : "primary-blue"} borderColor="primary-blue" />
         <RoundBtn clickFunc={() => setFilters("unique listings")} tailw="py-2" innerText="Unique listings" bgColor={filters === "unique listings" ? "primary-blue" : "white"} textColor={filters === "unique listings" ? "white" : "primary-blue"} borderColor="primary-blue" />
         <RoundBtn clickFunc={() => setFilters("luxury stays")} tailw="py-2" innerText="Luxury stays" bgColor={filters === "luxury stays" ? "primary-blue" : "white"} textColor={filters === "luxury stays" ? "white" : "primary-blue"} borderColor="primary-blue" />

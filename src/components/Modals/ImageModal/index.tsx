@@ -10,7 +10,7 @@ export function ImageModal({ image, alt, toggle }: ImageModalProps): JSX.Element
   return (
     <div className="fixed inset-0 flex items-center justify-center z-[100]">
       <div className="relative rounded-lg p-4 md:p-6 lg:p-8 max-w-4xl w-full mx-auto flex flex-col items-center z-[100]">
-        <button className="absolute top-4 right-4 text-white text-3xl hover:text-red-400" onClick={toggle}>
+        <button className="absolute top-2 right-2 text-white text-3xl hover:text-red-400" onClick={toggle}>
           <IoIosClose />
         </button>
         <div className="w-full flex justify-center">

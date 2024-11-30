@@ -12,7 +12,7 @@ export default function ListSearchForm(): JSX.Element {
   const toggleOpenEditSearch = () => setOpenEditSearch(!openEditSearch);
 
   return (
-    <div className="bg-primary-blue p-6 rounded-lg shadow-md w-full h-fit xl:sticky xl:top-20">
+    <div className="bg-primary-blue p-6 rounded-lg shadow-md w-full h-fit lg:sticky lg:top-4 overflow-y-auto sm:max-h-[95vh]">
       <h1 className="text-center text-2xl font-bold text-white">
         from: {savedDates.startDisplay} <br /> to: {savedDates.endDisplay}
       </h1>

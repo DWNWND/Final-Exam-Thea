@@ -22,16 +22,16 @@ export default function ListingSpesificSearch(): JSX.Element {
 
   return (
     <div className="relative w-full flex">
-      <div className={`flex justify-between items-center rounded-full border-primary-green border px-3 bg-white w-full`}>
+      <div className={`flex  justify-between items-center rounded-full border-primary-green border bg-white w-full`}>
         <input
           required
           autoComplete="off"
-          className={`p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green text-center md:text-left`}
+          className={`p-2 px-4 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green`}
           value={typedSearchQuery}
           id="searchInput"
           type="search"
-          placeholder="Search listings"
-          aria-label="Search by City"
+          placeholder="Search stays"
+          aria-label="Search stays"
           onChange={(e) => {
             const searchQuerySearch = e.target.value;
             setTypedSearchQuery(searchQuerySearch);
@@ -41,7 +41,7 @@ export default function ListingSpesificSearch(): JSX.Element {
             }
           }}
         />
-        <IoIosSearch className={`text-2xl text-primary-green`} />
+        <IoIosSearch className={`text-2xl text-primary-green absolute right-3`} />
       </div>
       {locationListOpen && typedSearchQuery.length > 0 && (
         <div className={`bg-white border border-primary-green shadow-md rounded-md absolute top-12 w-full p-4 z-[100] max-h-[50vh] overflow-y-auto`}>
