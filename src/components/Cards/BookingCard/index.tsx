@@ -93,7 +93,6 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                       )}
                     </>
                   )}
-                  <p className="absolute font-bold text-2xl text-white bottom-2 right-2 z-20">kr {booking.price}/night</p>
                 </div>
               </Link>
               <div className="p-4 flex flex-col gap-4">
@@ -105,7 +104,7 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                     </p>
                   </div>
                   <div>
-                    <p className="text-nowrap text-primary-blue">★ {booking.rating}</p>
+                    <p className="text-nowrap">★ {booking.rating}</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">{!inactiveBooking && !currentBooking && !checkOutToday && <SquareBtn clickFunc={cancelBookingPrompt} innerText="Cancel booking" width="full" tailw="lowercase z-40" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />}</div>
