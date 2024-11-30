@@ -14,8 +14,6 @@ interface BookingCardCompProps {
   setCancellationModal?: (value: boolean) => void;
 }
 
-//CHECK THE LOADING STATE HERE, IS IT CORRECT, AND IS IT NECESSARY TO HAVE IT HERE?
-
 export function BookingCard({ booking, bookingId, bookingDates = null, loading, setSelectedBooking, setCancellationModal = () => {} }: BookingCardCompProps): JSX.Element {
   const [inactiveBooking, setInactiveBooking] = useState(false);
   const [currentBooking, setCurrentBooking] = useState(false);
