@@ -26,9 +26,6 @@ export function ListingCard({ listing, loading, myListings = false }: ListingCar
                 <div className="bg-black w-full rounded-t-lg h-48 z-40 opacity-30 absolute"></div>
                 <div className="relative">
                   <img src={listing.media.length > 0 ? listing.media[0].url : ""} alt={listing.media.length > 0 ? listing.media[0].alt : ""} className="w-full h-48 object-cover rounded-t-lg" />
-                  <div className="absolute font-bold text-2xl text-white bottom-2 right-2 z-40 bg-primary-green p-2 px-6 rounded-full">
-                    <p>kr {listing.price}/night</p>
-                  </div>
                 </div>
               </Link>
               <div className="p-4 flex flex-col gap-4">
@@ -42,6 +39,9 @@ export function ListingCard({ listing, loading, myListings = false }: ListingCar
                   <div>
                     <p className="text-nowrap ">★ {listing.rating}</p>
                   </div>
+                </div>
+                <div className="font-bold text-2xl text-primary-green text-center mb-3">
+                  <p>kr {listing.price}/night</p>
                 </div>
                 {myListings && (
                   <div className="flex flex-col gap-2">

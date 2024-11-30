@@ -67,32 +67,6 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                 {currentBooking && <div className="bg-black w-full rounded-t-lg h-48 z-20 opacity-20 absolute"></div>}
                 <div className="relative">
                   <img src={booking.media.length > 0 ? booking.media[0].url : ""} alt={booking.media.length > 0 ? booking.media[0].alt : ""} className="w-full h-48 object-cover rounded-t-lg" />
-                  {bookingDates && (
-                    <>
-                      {checkOutToday && <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-danger z-20 uppercase">Check out today</p>}
-                      {inactiveBooking && (
-                        <div className="absolute w-full text-center bottom-16 z-20 bg-primary-blue bg-opacity-70 py-2">
-                          <p className="text-3xl uppercase font-bold text-white">Inactive</p>
-                          <p className="text-lg italic font-bold text-white">
-                            {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates?.endDate || "")}
-                          </p>
-                        </div>
-                      )}
-                      {currentBooking && (
-                        <div className="absolute w-full text-center bottom-16 z-20 bg-primary-blue py-2">
-                          <p className="text-3xl font-bold text-white uppercase">Current stay</p>
-                          <p className="text-lg font-bold text-white italic">
-                            {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
-                          </p>
-                        </div>
-                      )}
-                      {!inactiveBooking && !currentBooking && !checkOutToday && (
-                        <p className="absolute w-full text-center bottom-20 text-3xl font-bold text-white z-20 bg-primary-blue py-2">
-                          {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
-                        </p>
-                      )}
-                    </>
-                  )}
                 </div>
               </Link>
               <div className="p-4 flex flex-col gap-4">
@@ -107,6 +81,32 @@ export function BookingCard({ booking, bookingId, bookingDates = null, loading, 
                     <p className="text-nowrap">★ {booking.rating}</p>
                   </div>
                 </div>
+                {bookingDates && (
+                  <div className="w-full text-center z-20 p-4">
+                    {checkOutToday && <p className="w-full text-center text-3xl font-bold text-danger z-20 uppercase">Check out today</p>}
+                    {inactiveBooking && (
+                      <div className="w-full text-center ">
+                        <p className="text-3xl uppercase font-bold text-black">Inactive</p>
+                        <p className="text-lg italic font-bold text-black">
+                          {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates?.endDate || "")}
+                        </p>
+                      </div>
+                    )}
+                    {currentBooking && (
+                      <div className=" w-full text-center">
+                        <p className="text-3xl font-bold text-danger uppercase">Current stay</p>
+                        <p className="text-lg font-bold text-primary-blue italic">
+                          {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
+                        </p>
+                      </div>
+                    )}
+                    {!inactiveBooking && !currentBooking && !checkOutToday && (
+                      <p className="w-full text-center text-3xl font-bold text-primary-blue">
+                        {formatDateForDisplay(bookingDates.startDate)} - {formatDateForDisplay(bookingDates.endDate)}
+                      </p>
+                    )}
+                  </div>
+                )}
                 <div className="flex flex-col gap-2">{!inactiveBooking && !currentBooking && !checkOutToday && <SquareBtn clickFunc={cancelBookingPrompt} innerText="Cancel booking" width="full" tail="lowercase z-40" bgColor="white" textColor="primary-blue" borderColor="primary-blue" />}</div>
               </div>
             </div>
