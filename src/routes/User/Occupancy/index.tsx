@@ -156,7 +156,7 @@ export default function Occupancy(): JSX.Element {
                   <h2 className="font-bold text-2xl md:text-3xl text-primary-blue uppercase">Occupancy:</h2>
                   {activeBookingsFilter && <p className="text-black">{`Showing ${displayedActiveBookings.length} of ${activeBookingsArray.length}`}</p>}
                   {inactiveBookingsFilter && <p className="text-black">{`Showing ${displayedInactiveBookings.length} of ${inactiveBookingsArray.length}`}</p>}
-                  <div className="flex gap-2 md:gap-6 flex-col md:flex-row my-4">
+                  <div className="flex gap-2 xl:gap-6 flex-col md:flex-row my-4">
                     <RoundBtn clickFunc={toggleActiveBookings} innerText="active bookings" borderColor="primary-blue" width="full" tailw="lowercase" bgColor={activeBookingsFilter ? "primary-blue" : "white"} textColor={activeBookingsFilter ? "white" : "primary-blue"} />
                     <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" borderColor="primary-blue" width="full" tailw="lowercase" bgColor={inactiveBookingsFilter ? "primary-blue" : "white"} textColor={inactiveBookingsFilter ? "white" : "primary-blue"} />
                   </div>

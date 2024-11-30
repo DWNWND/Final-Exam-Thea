@@ -117,7 +117,7 @@ export function SelectTravelDates({ toggleDatesFunc = () => {}, color, editDates
   }, [initialDates, savedDates]);
 
   return (
-    <div className={`flex justify-between items-center rounded-full border-${color} border bg-white w-full transition-max-height duration-500 ease-in-out overflow-hidden ${editDates ? "px-3 max-w-full opacity-100" : "px-0 max-w-0 opacity-0"}`}>
+    <div className={` max-h-11 flex justify-between items-center rounded-full border-${color} border bg-white w-full duration-500 ease-in-out overflow-hidden ${editDates ? "px-3 max-w-full opacity-100" : "px-0 max-w-0 opacity-0"}`}>
       {defaultFlatpickrDates && savedDates.startYYYYMMDD && savedDates.endYYYYMMDD && (
         <>
           <Flatpickr

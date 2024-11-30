@@ -20,11 +20,11 @@ export function LocationLookAhead({ color }: LocationLookAheadProps): JSX.Elemen
 
   return (
     <div className="relative w-full flex">
-      <div className={`flex justify-between items-center rounded-full border-${color} border px-3 bg-white w-full`}>
+      <div className={`flex justify-between items-center rounded-full border-${color} border bg-white w-full`}>
         <input
           required
           autoComplete="off"
-          className={`p-2 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-${color} placeholder:text-${color}`}
+          className={`p-2 px-4 rounded-full bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-${color} placeholder:text-${color}`}
           value={searchQuery}
           id="searchInput"
           type="search"
@@ -37,7 +37,7 @@ export function LocationLookAhead({ color }: LocationLookAheadProps): JSX.Elemen
             setSearchQuery(value);
           }}
         />
-        <IoIosSearch className={`text-2xl text-${color}`} />
+        <IoIosSearch className={`text-2xl text-${color} absolute right-3`} />
       </div>
       {locationListOpen && searchQuery.length > 0 && (
         <div className={`bg-white border border-${color} shadow-md rounded-md absolute top-12 w-full p-4 z-40`}>

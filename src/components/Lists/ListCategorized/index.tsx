@@ -12,7 +12,7 @@ export default function ListCategorized(): JSX.Element {
   return (
     <section className="p-4 pb-12 md:my-10">
       <SelectCategoryBtns filters={filters} setFilters={setFilters} />
-      <h2 className="font-bold text-2xl md:text-3xl md:ml-4 text-center md:text-left text-primary-green uppercase mb-6">{filters}</h2>
+      <h2 className="font-bold text-2xl md:text-3xl text-center md:text-left text-primary-green uppercase mb-6">{filters}</h2>
       {error ? (
         <GeneralErrorFallback errorMessage={error} />
       ) : (

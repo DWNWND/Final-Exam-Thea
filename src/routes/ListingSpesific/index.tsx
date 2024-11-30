@@ -114,14 +114,14 @@ export default function ListingSpecific(): JSX.Element {
           <>
             <div>
               {imageModal && <ImageModal image={listing.media?.[currentImage]?.url || ""} alt={listing.media?.[currentImage]?.alt || ""} toggle={toggleImageModal} />}
-              <div className="flex flex-col md:flex-row gap-3 mb-4">
-                <div className={`flex w-full md:max-w-64`}>
+              <div className="flex flex-col md:flex-row gap-3 mb-4 md:max-h-11">
+                <div className={`flex w-full md:max-w-64 `}>
                   <button onClick={toggleEditDates} className={`text-nowrap flex py-2 justify-center w-full h-full uppercase rounded hover:shadow-md cursor-pointer transition-max-height duration-500 ease-in-out items-center overflow-hidden ${!editDates ? "px-4 max-w-full md:max-w-64 opacity-100" : "max-w-0 w-0 opacity-0 px-0"} bg-white text-primary-blue border border-primary-blue`}>
                     Edit travel dates
                   </button>
                   <SelectTravelDates toggleDatesFunc={toggleEditDates} editDates={editDates} color="primary-blue" />
                 </div>
-                <NumberOfGuests color="primary-blue"/>
+                <NumberOfGuests color="primary-blue" />
               </div>
               <div className="relative">
                 <div className="absolute inset-x-0 top-6 flex flex-col justify-center items-center gap-4 z-30 cursor-pointer" onClick={toggleImageModal}>
