@@ -32,8 +32,8 @@ export default function MyProfile(): JSX.Element {
 
   const navigate = useNavigate();
 
-  const maxBookingsShown = 4;
-  const maxListingsShown = 4;
+  const maxBookingsShown = 6;
+  const maxListingsShown = 6;
 
   useEffect(() => {
     if (!accessToken) {
@@ -157,14 +157,14 @@ export default function MyProfile(): JSX.Element {
                       <RoundBtn clickFunc={toggleInactiveBookings} innerText="inactive bookings" width="full" tail="lowercase" borderColor="primary-blue" bgColor={`${activeBookingsFilter ? "white" : "primary-blue"}`} textColor={`${activeBookingsFilter ? "primary-blue" : "white"}`} />
                     </div>
                     {activeBookingsFilter && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
                         {activeBookingsArray.slice(0, maxBookingsShown).map((booking) => (
                           <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                         ))}
                       </div>
                     )}
                     {inactiveBookingsFilter && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
                         {inactiveBookingsArray.slice(0, maxBookingsShown).map((booking) => (
                           <BookingCard booking={booking.venue} key={booking.id} bookingDates={{ startDate: booking.dateFrom, endDate: booking.dateTo }} bookingId={booking.id} loading={loading} setSelectedBooking={setSelectedBooking} setCancellationModal={setCancellationModal} />
                         ))}
@@ -189,7 +189,7 @@ export default function MyProfile(): JSX.Element {
                     <h2 className="font-bold text-2xl md:text-3xl text-primary-green uppercase">My listings</h2>
                     <p className="text-black">{`Showing ${userListings.length < maxListingsShown ? userListings.length : maxListingsShown} of ${userListings.length} ${userListings.length > 1 ? "listings" : "listing"}`}</p>
                     {userListings && userListings.length >= 1 && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
                         {userListings.slice(0, maxListingsShown).map((listing) => (
                           <ListingCard key={listing.id} listing={listing} loading={loading} myListings={true} />
                         ))}

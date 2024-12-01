@@ -16,12 +16,12 @@ body {
 }
 
 html {
-  scroll-behavior: smooth; /* This enables smooth scrolling */
+  scroll-behavior: smooth;
 }
 
 /* https://unsplash.com/photos/birds-eye-view-of-islands-guNIjIuUcgY */
 .backgroundImage {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.21), rgba(0, 0, 0, 0.216)), url("./assets/images/denys-nevozhai-guNIjIuUcgY-unsplash.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.21), rgba(0, 0, 0, 0.216)), url("./assets/images/denys-nevozhai-guNIjIuUcgY-unsplash-compressed.jpeg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center top;
@@ -30,15 +30,15 @@ html {
 
 /* Targeting elements with data-weekend="true" */
 [data-weekend="true"] {
-  color: #8d4033 !important; /* Example color */
+  color: #8d4033 !important;
 }
 
 [data-some-month="true"] span {
-  color: var(--color-primary-blue) !important; /* Example color */
+  color: var(--color-primary-blue) !important;
 }
 
 [data-some-year="true"] span {
-  color: var(--color-primary-blue) !important; /* Example color */
+  color: var(--color-primary-blue) !important;
   font-weight: 800;
 }
 
@@ -47,20 +47,13 @@ html {
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: #666; /* Modern browsers support accent-color for checkbox color */
+  accent-color: #666;
 }
 
 /* Styling for the checked state */
 input[type="checkbox"]:checked {
-  accent-color: var(--color-comp-gray); /* Changes checkbox color when checked (for modern browsers) */
+  accent-color: var(--color-comp-gray);
 }
-
-/* Additional styling for custom effects */
-
-/* input[type="checkbox"]:checked + label {
-  color: var(--color-black); 
-  font-weight: bold;
-} */
 
 /* Remove Arrows/Spinners from Number Inputs */
 /* Chrome, Safari, Edge, Opera */

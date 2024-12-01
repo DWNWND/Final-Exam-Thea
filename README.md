@@ -1,40 +1,43 @@
 # Final-Exam-Thea
+
 My final exam in my front-end development studies at Noroff.
 
-<!-- # LAZZ | e-commerce -->
+# HOLIDAZE | Booking Application
 
-<!-- ![app-screenshot](/src/assets/images/app-screenshot-2024.png) -->
+![app-screenshot](/src/assets/images/application-screenshot.png)
 
 ## Live app
 
-<!-- This project is deployed on [Netlify](https://lazz.netlify.app/). -->
+This project is deployed on [Netlify](https://holidaze-thea-final-exam.netlify.app/).
 
-<!-- ## Course goal
+## Course goal
 
 The goal of this course was to:
-"To apply knowledge of React to build an eCom store." -->
+"To take the skills learned over the last two years and take on an extensive project where the finished product should reflect the candidate’s general development capabilities, in addition to visual and technical skills."
 
 ## Course Assignment
 
-<!-- - [Brief](/docs/Course-Assignment_Noroff-Front-end-Development.pdf)
+[Brief](/docs/Project-Exam-2-brief_Noroff-Front-end-Development.pdf)
 
-- [MarkingCriteria](/docs/Marking-Criteria_Noroff-Front-end-Development.pdf) -->
+[MarkingCriteria](/docs/Project-Exam-2-Marking-Criteria_Noroff-Front-end-Development.pdf)
 
 ## Figma Prototype
 
-<!-- [Figma desktop prototype](https://www.figma.com/proto/QzLZFuN8ybhS6xqJFQsR46/Frontend-Frameworks-CA-Thea?page-id=221%3A10&node-id=221-18&node-type=frame&viewport=765%2C407%2C0.06&t=H0zHRhsvMLRCoYQt-1&scaling=scale-down-width&content-scaling=fixed)
+[Figma desktop prototype](https://www.figma.com/proto/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?page-id=1%3A2&node-id=106-7914&node-type=frame&viewport=1338%2C758%2C0.09&t=zF6RiZrku3ctK848-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=106%3A7914)
 
-[Figma mobile prototype](https://www.figma.com/proto/QzLZFuN8ybhS6xqJFQsR46/Frontend-Frameworks-CA-Thea?page-id=221%3A11&node-id=221-1023&node-type=frame&viewport=764%2C407%2C0.2&t=yCyrknLXVWTGlfj8-1&scaling=min-zoom&content-scaling=fixed) -->
+[Figma mobile prototype](https://www.figma.com/proto/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?page-id=19%3A2&node-id=19-3&node-type=frame&viewport=743%2C369%2C0.09&t=kYiRBdV70ik9tlRG-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=19%3A3)
+
+[Main Figma file](https://www.figma.com/design/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?node-id=22-682&node-type=canvas)
 
 ## Style guide
 
-<!-- [Figma style guide](https://www.figma.com/design/QzLZFuN8ybhS6xqJFQsR46/Frontend-Frameworks-CA-Thea?node-id=15-1037&t=jJszGtxma9Ic15CA-1) -->
+[Figma style guide](https://www.figma.com/proto/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?page-id=22%3A682&node-id=435-218&node-type=frame&viewport=2184%2C2885%2C0.52&t=TPan0QYwmkUlglwm-1&scaling=min-zoom&content-scaling=fixed)
 
 ## Built with
 
-<!-- - React
-- CSS modules
-- JavaScript -->
+- React
+- Tailwind
+- JavaScript
 
 ## How to run locally
 
@@ -43,7 +46,7 @@ The goal of this course was to:
 2. Clone the repo:
 
 ```bash
-git clone https://github.com/DWNWND/Frontend-Frameworks-CA-Thea.git
+git clone https://github.com/DWNWND/Final-Exam-Thea.git
 ```
 
 3. Open the repo with VSCode
@@ -54,7 +57,7 @@ git clone https://github.com/DWNWND/Frontend-Frameworks-CA-Thea.git
 npm install
 ```
 
-5. Run build
+5. Run vite
 
 ```bash
  npm run dev
@@ -64,7 +67,7 @@ npm install
 
 1. Make a new file called `.env` in your root folder
 2. Copy the content from `.env.example` into your new `.env`file
-3. Populate the new `.env` file with your api base url and email regex
+3. Populate the new `.env` file with your api base url and api key
 
 ## Validation
 
