@@ -26,7 +26,7 @@ export default function ListingSpecificSearch(): JSX.Element {
         <input
           required
           autoComplete="off"
-          className={`p-2 px-4 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green`}
+          className={`p-2 rounded-full px-4 bg-transparent w-full placeholder:font-normal placeholder:italic font-semibold text-primary-green placeholder:text-primary-green`}
           value={typedSearchQuery}
           id="searchInput"
           type="search"
