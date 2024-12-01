@@ -2,7 +2,7 @@
 
 My final exam in my front-end development studies at Noroff.
 
-# HOLIDAZE | booking application
+# HOLIDAZE | Booking Application
 
 ![app-screenshot](/src/assets/images/application-screenshot.png)
 
