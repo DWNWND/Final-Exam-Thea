@@ -15,7 +15,7 @@ export default function ListNewest(): JSX.Element {
       ) : (
         <>
           {displayedListings && displayedListings.length >= 2 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
               {displayedListings.slice(0, 6).map((listing) => (
                 <ListingCard listing={listing} key={listing.id} loading={loading} />
               ))}
