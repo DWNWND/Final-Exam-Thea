@@ -27,6 +27,8 @@ The goal of this course was to:
 
 [Figma mobile prototype](https://www.figma.com/proto/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?page-id=19%3A2&node-id=19-3&node-type=frame&viewport=743%2C369%2C0.09&t=kYiRBdV70ik9tlRG-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=19%3A3)
 
+[Main Figma file](https://www.figma.com/design/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?node-id=22-682&node-type=canvas)
+
 ## Style guide
 
 [Figma style guide](https://www.figma.com/proto/XBcLfsGTsv1FxsJWUuzbDQ/Final-Exam-Noroff-Thea?page-id=22%3A682&node-id=435-218&node-type=frame&viewport=2184%2C2885%2C0.52&t=TPan0QYwmkUlglwm-1&scaling=min-zoom&content-scaling=fixed)
