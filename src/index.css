@@ -1,68 +1,176 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  font-family: "Source Sans 3", sans-serif;
+  font-optical-sizing: auto;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 body {
+  overscroll-behavior: none;
+}
+
+html {
+  scroll-behavior: smooth; /* This enables smooth scrolling */
+}
+
+/* https://unsplash.com/photos/birds-eye-view-of-islands-guNIjIuUcgY */
+.backgroundImage {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.21), rgba(0, 0, 0, 0.216)), url("./assets/images/denys-nevozhai-guNIjIuUcgY-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center top;
+  background-size: cover;
+}
+
+/* Targeting elements with data-weekend="true" */
+[data-weekend="true"] {
+  color: #8d4033 !important; /* Example color */
+}
+
+[data-some-month="true"] span {
+  color: var(--color-primary-blue) !important; /* Example color */
+}
+
+[data-some-year="true"] span {
+  color: var(--color-primary-blue) !important; /* Example color */
+  font-weight: 800;
+}
+
+/* global checkbox styling */
+/* Default styling for checkbox */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #666; /* Modern browsers support accent-color for checkbox color */
+}
+
+/* Styling for the checked state */
+input[type="checkbox"]:checked {
+  accent-color: var(--color-comp-gray); /* Changes checkbox color when checked (for modern browsers) */
+}
+
+/* Additional styling for custom effects */
+
+/* input[type="checkbox"]:checked + label {
+  color: var(--color-black); 
+  font-weight: bold;
+} */
+
+/* Remove Arrows/Spinners from Number Inputs */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* global line */
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-comp-green);
+}
+
+/* burger recreated from: https://github.com/march08/animated-burgers/blob/master/packages/BurgerSqueeze/dist/styles.css */
+.burger {
+  height: 3em;
+  width: 2em;
+  position: relative;
+  font-size: 12px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  -webkit-transition: 0.2s all;
+  -o-transition: 0.2s all;
+  transition: 0.2s all;
+  -webkit-tap-highlight-color: transparent;
 }
-button:hover {
-  border-color: #646cff;
+.burger .burger-lines:after {
+  left: 0;
+  top: -1em;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.burger .burger-lines:before {
+  left: 1em;
+  top: 1em;
+}
+.burger:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 150%;
+  width: 150%;
+  top: -25%;
+  left: -25%;
+}
+.burger .burger-lines {
+  top: 50%;
+  margin-top: -0.125em;
+}
+.burger .burger-lines,
+.burger .burger-lines:after,
+.burger .burger-lines:before {
+  pointer-events: none;
+  display: block;
+  content: "";
+  width: 100%;
+  border-radius: 0.25em;
+  background-color: var(--color-primary-green);
+  height: 0.25em;
+  position: absolute;
+  -webkit-transform: rotate(0);
+  -ms-transform: rotate(0);
+  transform: rotate(0);
+}
+.burger .burger-lines:after {
+  left: 0;
+  top: -0.8em;
+}
+.burger .burger-lines:before {
+  left: 0;
+  top: 0.8em;
+}
+.burger.burger-squeeze .burger-lines,
+.burger.burger-squeeze .burger-lines:after,
+.burger.burger-squeeze .burger-lines:before {
+  -webkit-transition: 0.2s top 0.2s, 0.1s left, 0.2s transform, 0.4s background-color 0.2s;
+  -o-transition: 0.2s top 0.2s, 0.1s left, 0.2s transform, 0.4s background-color 0.2s;
+  transition: 0.2s top 0.2s, 0.1s left, 0.2s transform, 0.4s background-color 0.2s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.burger.burger-squeeze.open .burger-lines,
+.burger.burger-squeeze.open .burger-lines:after,
+.burger.burger-squeeze.open .burger-lines:before {
+  -webkit-transition: 0.2s background-color, 0.2s top, 0.2s left, 0.2s transform 0.15s;
+  -o-transition: 0.2s background-color, 0.2s top, 0.2s left, 0.2s transform 0.15s;
+  transition: 0.2s background-color, 0.2s top, 0.2s left, 0.2s transform 0.15s;
+}
+
+.burger.burger-squeeze.open .burger-lines {
+  background-color: transparent;
+}
+
+.burger.burger-squeeze.open .burger-lines:before,
+.burger.burger-squeeze.open .burger-lines:after {
+  top: 0px;
+}
+
+.burger.burger-squeeze.open .burger-lines:before {
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.burger.burger-squeeze.open .burger-lines:after {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
