@@ -22,7 +22,7 @@ export default function NewListing(): JSX.Element {
         <title>{`New Listing | ${userName} | Holidaze`}</title>
         <meta name="description" content="Create and publish your property listing with ease. Start sharing your unique space today and connect with travelers worldwide!" />
       </Helmet>
-      <MainElement tail="bg-comp">
+      <MainElement tail="bg-background">
         {venueManager ? (
           <section>
             <h1 className="hidden uppercase text-2xl text-primary-green text-center mb-6">New Listing</h1>
